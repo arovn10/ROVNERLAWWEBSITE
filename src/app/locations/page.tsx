@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-export default function AboutPage() {
+export default function LocationsPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
@@ -31,10 +31,10 @@ export default function AboutPage() {
           <div className="flex items-center justify-center lg:justify-start">
             <ul className="flex space-x-6 py-4 text-sm font-medium overflow-x-auto">
               <li><Link href="/" className="text-white hover:text-blue-300 transition-colors whitespace-nowrap">HOME</Link></li>
-              <li><Link href="/about" className="text-blue-300 whitespace-nowrap">ABOUT US</Link></li>
+              <li><Link href="/about" className="text-white hover:text-blue-300 transition-colors whitespace-nowrap">ABOUT US</Link></li>
               <li><Link href="/attorneys" className="text-white hover:text-blue-300 transition-colors whitespace-nowrap">ATTORNEYS</Link></li>
               <li><Link href="/practice" className="text-white hover:text-blue-300 transition-colors whitespace-nowrap">PRACTICE</Link></li>
-              <li><Link href="/locations" className="text-white hover:text-blue-300 transition-colors whitespace-nowrap">LOCATIONS</Link></li>
+              <li><Link href="/locations" className="text-blue-300 whitespace-nowrap">LOCATIONS</Link></li>
               <li><Link href="/photo-gallery" className="text-white hover:text-blue-300 transition-colors whitespace-nowrap">PHOTO GALLERY</Link></li>
               <li><Link href="/in-the-news" className="text-white hover:text-blue-300 transition-colors whitespace-nowrap">IN THE NEWS</Link></li>
               <li><Link href="/radio-show" className="text-white hover:text-blue-300 transition-colors whitespace-nowrap">RADIO SHOW</Link></li>
@@ -47,8 +47,9 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">About Us</h1>
-          <p className="text-xl">Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt</p>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4">Locations</h1>
+          <p className="text-xl">Our Locations</p>
+          <p className="mt-4">Visit one of our law offices in your area:</p>
         </div>
       </section>
 
@@ -56,55 +57,85 @@ export default function AboutPage() {
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Main Content */}
+            {/* Office Locations */}
             <div className="lg:col-span-2">
-              <div className="bg-white p-8 rounded-lg shadow-md">
-                <div className="mb-8">
-                  <h2 className="text-3xl font-bold text-gray-800 mb-4">Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt</h2>
-                  <div className="w-24 h-1 bg-blue-600 mb-6"></div>
+              <div className="space-y-8">
+                {/* Pennsylvania Office */}
+                <div className="bg-white p-8 rounded-lg shadow-md">
+                  <div className="flex items-center mb-6">
+                    <div className="bg-blue-600 text-white p-3 rounded-full mr-4">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-800">In Pennsylvania</h2>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <h3 className="text-xl font-semibold text-blue-600">Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt</h3>
+                    <div className="text-gray-700 space-y-2">
+                      <p className="font-semibold">175 Bustleton Pike</p>
+                      <p>Feasterville, Pennsylvania 19053</p>
+                      
+                      <div className="space-y-1 mt-4">
+                        <p><span className="font-semibold">Toll Free:</span> (888) DIAL-LAW</p>
+                        <p><span className="font-semibold">Local:</span> (215) 698-1800 or (215) DIAL-LAW</p>
+                        <p><span className="font-semibold">Fax:</span> (215) 355-0940</p>
+                        <p><span className="font-semibold">E-mail:</span> <a href="mailto:rovners@dial-law.com" className="text-blue-600 hover:underline">rovners@dial-law.com</a></p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="space-y-6 text-gray-700 leading-relaxed">
-                  <p className="text-lg">
-                    When you are seriously injured there is only one law firm to call. The Law Offices of Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt. For over 40 years the Rovner Law Firm has been accomplishing its motto of getting results for many thousands of grateful and satisfied clients in Pennsylvania, New Jersey, and Florida.
-                  </p>
-
-                  <p>
-                    The firm is headed and founded by former Pennsylvania State Senator and Assistant District Attorney, Robert Rovner. Our team of over 15 lawyers plus our paralegals, investigators, experts, all with hundreds of years of combined experience, put us at the top of the Philadelphia Area legal profession.
-                  </p>
-
-                  <p>
-                    Widely recognized as one of the largest and most experienced personal injury law firms handling Wrongful Death Cases, Motor Vehicle Accidents, Premises Accidents, Products Liability, and Medical Malpractice; some of our lawyers also focus their experience in other areas from our Workers Compensation team to Divorce, Child Support, Custody, and Domestic Relations, to Criminal Defense, Social Security/Disability and general legal matters such as Real Estate, Landlord-Tenant, Wills, and Estates.
-                  </p>
-
-                  <p>
-                    Our team is always there to meet all of your legal needs from our offices in Pennsylvania and New Jersey serving the entire Philadelphia Metropolitan Area and Southern New Jersey including Pennsylvania State Senator, Bucks and Montgomery Counties.
-                  </p>
-
-                  <div className="bg-blue-50 p-6 rounded-lg">
-                    <h3 className="text-xl font-bold text-blue-800 mb-3">When you meet with an unexpected injury</h3>
-                    <p>
-                      Our injury attorneys are there with experienced support to assist you from the very start. We obtain substantial compensation in accident cases and for injured parties. <strong>We Get Results</strong>
-                    </p>
+                {/* New Jersey Office */}
+                <div className="bg-white p-8 rounded-lg shadow-md">
+                  <div className="flex items-center mb-6">
+                    <div className="bg-green-600 text-white p-3 rounded-full mr-4">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-800">In New Jersey</h2>
                   </div>
+                  
+                  <div className="space-y-4">
+                    <h3 className="text-xl font-semibold text-green-600">Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt</h3>
+                    <div className="text-gray-700 space-y-2">
+                      <p className="font-semibold">1040 North Kings Highway; Suite 205</p>
+                      <p>Cherry Hill, New Jersey 08034-1925</p>
+                      
+                      <div className="space-y-1 mt-4">
+                        <p><span className="font-semibold">Toll Free:</span> (888) DIAL-LAW</p>
+                        <p><span className="font-semibold">Local:</span> (856) 795-5111 or (856) DIAL-LAW</p>
+                        <p><span className="font-semibold">Fax:</span> (856) 429-3839</p>
+                        <p><span className="font-semibold">E-mail:</span> <a href="mailto:jersey@dial-law.com" className="text-green-600 hover:underline">jersey@dial-law.com</a></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-                  <p>
-                    In addition to providing skilled and experienced legal representation, we offer exceptionally strong client service. We will be readily accessible throughout your case, to answer any questions or address any concerns. We understand that this can be a stressful and overwhelming time and we work to reduce the difficulties of pursuing legal action.
-                  </p>
-
-                  <p>
-                    The Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt; Nash law firm approaches every case as though it were going to trial. Meanwhile in many cases our lawyers are able to resolve the matters by negotiating acceptable, even generous, settlement agreements, always looking out for the best interests of our client.
-                  </p>
-
-                  <p>
-                    If you or a love one has suffered an injury or wrongful death due to a defective product, our personal injury attorneys are prepared to evaluate your claim and help you get fair compensation for your loss. In other types of legal representation, we are there for you, working in your corner, to obtain the best possible result under the circumstances
-                  </p>
-
-                  <div className="bg-orange-50 p-6 rounded-lg border-l-4 border-orange-500">
-                    <h3 className="text-xl font-bold text-orange-800 mb-3">At the law offices of Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt, "We Get Results!"</h3>
-                    <p>
-                      If you or a loved one has been injured, or is in need of legal representation, contact us today for a free consultation to confidentially speak with one of our attorneys. All you need is to call and leave the rest to us.
-                    </p>
+                {/* Florida Office */}
+                <div className="bg-white p-8 rounded-lg shadow-md">
+                  <div className="flex items-center mb-6">
+                    <div className="bg-orange-600 text-white p-3 rounded-full mr-4">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-800">In Florida</h2>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <h3 className="text-xl font-semibold text-orange-600">Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt</h3>
+                    <div className="text-gray-700 space-y-2">
+                      <div className="space-y-1">
+                        <p><span className="font-semibold">Toll Free:</span> (888) LAW-8300</p>
+                        <p><span className="font-semibold">E-mail:</span> <a href="mailto:florida@dial-law.com" className="text-orange-600 hover:underline">florida@dial-law.com</a></p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

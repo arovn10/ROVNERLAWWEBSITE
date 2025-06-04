@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-export default function AboutPage() {
+export default function ContactPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
@@ -31,14 +31,14 @@ export default function AboutPage() {
           <div className="flex items-center justify-center lg:justify-start">
             <ul className="flex space-x-6 py-4 text-sm font-medium overflow-x-auto">
               <li><Link href="/" className="text-white hover:text-blue-300 transition-colors whitespace-nowrap">HOME</Link></li>
-              <li><Link href="/about" className="text-blue-300 whitespace-nowrap">ABOUT US</Link></li>
+              <li><Link href="/about" className="text-white hover:text-blue-300 transition-colors whitespace-nowrap">ABOUT US</Link></li>
               <li><Link href="/attorneys" className="text-white hover:text-blue-300 transition-colors whitespace-nowrap">ATTORNEYS</Link></li>
               <li><Link href="/practice" className="text-white hover:text-blue-300 transition-colors whitespace-nowrap">PRACTICE</Link></li>
               <li><Link href="/locations" className="text-white hover:text-blue-300 transition-colors whitespace-nowrap">LOCATIONS</Link></li>
               <li><Link href="/photo-gallery" className="text-white hover:text-blue-300 transition-colors whitespace-nowrap">PHOTO GALLERY</Link></li>
               <li><Link href="/in-the-news" className="text-white hover:text-blue-300 transition-colors whitespace-nowrap">IN THE NEWS</Link></li>
               <li><Link href="/radio-show" className="text-white hover:text-blue-300 transition-colors whitespace-nowrap">RADIO SHOW</Link></li>
-              <li><Link href="/contact" className="text-white hover:text-blue-300 transition-colors whitespace-nowrap">CONTACT US</Link></li>
+              <li><Link href="/contact" className="text-blue-300 whitespace-nowrap">CONTACT US</Link></li>
             </ul>
           </div>
         </div>
@@ -47,8 +47,8 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">About Us</h1>
-          <p className="text-xl">Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt</p>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4">Contact Us</h1>
+          <p className="text-xl">Contact Us</p>
         </div>
       </section>
 
@@ -56,57 +56,102 @@ export default function AboutPage() {
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Main Content */}
+            {/* Main Contact Form */}
             <div className="lg:col-span-2">
               <div className="bg-white p-8 rounded-lg shadow-md">
                 <div className="mb-8">
-                  <h2 className="text-3xl font-bold text-gray-800 mb-4">Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt</h2>
+                  <h2 className="text-3xl font-bold text-gray-800 mb-4">Contact Us</h2>
                   <div className="w-24 h-1 bg-blue-600 mb-6"></div>
+                  <p className="text-gray-700 leading-relaxed">
+                    Please complete all of the information contained in the form below to insure that we are able to contact you after reviewing your responses. The submission of your case information does not mean that our firm is representing you in your matter. No representation will commence until actual written contracts have been executed by both yourself and an authorized member of our firm. The submission of this form does not create an attorney client relationship. A member of our firm will contact you upon receipt of your information to discuss the possibility of our firm's representation of you for your legal concerns.
+                  </p>
                 </div>
 
-                <div className="space-y-6 text-gray-700 leading-relaxed">
-                  <p className="text-lg">
-                    When you are seriously injured there is only one law firm to call. The Law Offices of Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt. For over 40 years the Rovner Law Firm has been accomplishing its motto of getting results for many thousands of grateful and satisfied clients in Pennsylvania, New Jersey, and Florida.
-                  </p>
-
-                  <p>
-                    The firm is headed and founded by former Pennsylvania State Senator and Assistant District Attorney, Robert Rovner. Our team of over 15 lawyers plus our paralegals, investigators, experts, all with hundreds of years of combined experience, put us at the top of the Philadelphia Area legal profession.
-                  </p>
-
-                  <p>
-                    Widely recognized as one of the largest and most experienced personal injury law firms handling Wrongful Death Cases, Motor Vehicle Accidents, Premises Accidents, Products Liability, and Medical Malpractice; some of our lawyers also focus their experience in other areas from our Workers Compensation team to Divorce, Child Support, Custody, and Domestic Relations, to Criminal Defense, Social Security/Disability and general legal matters such as Real Estate, Landlord-Tenant, Wills, and Estates.
-                  </p>
-
-                  <p>
-                    Our team is always there to meet all of your legal needs from our offices in Pennsylvania and New Jersey serving the entire Philadelphia Metropolitan Area and Southern New Jersey including Pennsylvania State Senator, Bucks and Montgomery Counties.
-                  </p>
-
-                  <div className="bg-blue-50 p-6 rounded-lg">
-                    <h3 className="text-xl font-bold text-blue-800 mb-3">When you meet with an unexpected injury</h3>
-                    <p>
-                      Our injury attorneys are there with experienced support to assist you from the very start. We obtain substantial compensation in accident cases and for injured parties. <strong>We Get Results</strong>
-                    </p>
+                <form className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Name *</label>
+                    <input 
+                      type="text" 
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                      required
+                    />
                   </div>
 
-                  <p>
-                    In addition to providing skilled and experienced legal representation, we offer exceptionally strong client service. We will be readily accessible throughout your case, to answer any questions or address any concerns. We understand that this can be a stressful and overwhelming time and we work to reduce the difficulties of pursuing legal action.
-                  </p>
-
-                  <p>
-                    The Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt; Nash law firm approaches every case as though it were going to trial. Meanwhile in many cases our lawyers are able to resolve the matters by negotiating acceptable, even generous, settlement agreements, always looking out for the best interests of our client.
-                  </p>
-
-                  <p>
-                    If you or a love one has suffered an injury or wrongful death due to a defective product, our personal injury attorneys are prepared to evaluate your claim and help you get fair compensation for your loss. In other types of legal representation, we are there for you, working in your corner, to obtain the best possible result under the circumstances
-                  </p>
-
-                  <div className="bg-orange-50 p-6 rounded-lg border-l-4 border-orange-500">
-                    <h3 className="text-xl font-bold text-orange-800 mb-3">At the law offices of Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt, "We Get Results!"</h3>
-                    <p>
-                      If you or a loved one has been injured, or is in need of legal representation, contact us today for a free consultation to confidentially speak with one of our attorneys. All you need is to call and leave the rest to us.
-                    </p>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                    <input 
+                      type="email" 
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                      required
+                    />
                   </div>
-                </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Phone *</label>
+                    <input 
+                      type="tel" 
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Home Address</label>
+                    <input 
+                      type="text" 
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Date of Incident *</label>
+                    <input 
+                      type="date" 
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-3">Are you represented by another lawyer for this matter?</label>
+                    <div className="flex gap-6">
+                      <label className="flex items-center">
+                        <input type="radio" name="represented" value="no" className="mr-3 h-4 w-4 text-blue-600" />
+                        <span className="text-gray-700">No</span>
+                      </label>
+                      <label className="flex items-center">
+                        <input type="radio" name="represented" value="yes" className="mr-3 h-4 w-4 text-blue-600" />
+                        <span className="text-gray-700">Yes</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Facts of what happened *</label>
+                    <textarea 
+                      rows={6} 
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                      required
+                    ></textarea>
+                  </div>
+
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <p className="text-xs text-gray-600 mb-3">
+                      The submission of the information contained above in this form is not intended to create an attorney-client relationship. There will be no representation of the party submitting this above information for any potential legal claim until that party is contacted by a member of Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt ("the Firm") and a formal, written contract is signed by that party and an authorized member of the Firm. The Firm will not be liable for any time limitations or representation in any legal matter raised by the use of this internet web site.
+                    </p>
+                    <label className="flex items-start">
+                      <input type="checkbox" className="mr-3 mt-1 h-4 w-4 text-blue-600" required />
+                      <span className="text-sm text-gray-700">*I understand and agree to the above terms</span>
+                    </label>
+                  </div>
+
+                  <button 
+                    type="submit" 
+                    className="w-full bg-orange-500 hover:bg-orange-600 text-white py-4 rounded-md font-bold text-lg transition-colors shadow-md"
+                  >
+                    SEND MESSAGE
+                  </button>
+                </form>
               </div>
             </div>
 
@@ -131,57 +176,28 @@ export default function AboutPage() {
                 </ul>
               </div>
 
-              {/* Contact Form */}
+              {/* Contact Info */}
               <div className="bg-white p-6 rounded-lg shadow-md">
-                <h3 className="text-xl font-bold text-gray-800 mb-6 text-center">Contact Us!</h3>
-                <form className="space-y-4">
+                <h3 className="text-xl font-bold text-gray-800 mb-6 text-center">Contact Information</h3>
+                <div className="space-y-4 text-gray-700">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
-                    <input type="text" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    <h4 className="font-semibold text-blue-600 mb-2">Pennsylvania Office</h4>
+                    <p>175 Bustleton Pike<br />Feasterville-Trevose, PA 19053</p>
+                    <p className="text-xl font-bold text-blue-600 mt-2">215-259-5958</p>
+                    <p>rovners@dial-law.com</p>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
-                    <input type="email" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  <div className="border-t pt-4">
+                    <h4 className="font-semibold text-green-600 mb-2">New Jersey Office</h4>
+                    <p>1040 North Kings Highway; Suite 205<br />Cherry Hill, New Jersey 08034-1925</p>
+                    <p className="text-lg font-bold text-green-600 mt-2">(856) 795-5111</p>
+                    <p>jersey@dial-law.com</p>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Phone *</label>
-                    <input type="tel" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  <div className="border-t pt-4">
+                    <h4 className="font-semibold text-orange-600 mb-2">Florida Office</h4>
+                    <p className="text-lg font-bold text-orange-600">(888) LAW-8300</p>
+                    <p>florida@dial-law.com</p>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Home Address</label>
-                    <input type="text" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Date of Incident *</label>
-                    <input type="date" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Are you represented by another lawyer for this matter?</label>
-                    <div className="flex gap-4">
-                      <label className="flex items-center">
-                        <input type="radio" name="represented" value="no" className="mr-2" />
-                        No
-                      </label>
-                      <label className="flex items-center">
-                        <input type="radio" name="represented" value="yes" className="mr-2" />
-                        Yes
-                      </label>
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Facts of what happened *</label>
-                    <textarea rows={4} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                  </div>
-                  <div className="text-xs text-gray-600">
-                    <label className="flex items-start">
-                      <input type="checkbox" className="mr-2 mt-1" />
-                      *I understand and agree that the submission of this form does not create an attorney-client relationship.
-                    </label>
-                  </div>
-                  <button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-md font-bold transition-colors">
-                    SEND MESSAGE
-                  </button>
-                </form>
+                </div>
               </div>
 
               {/* Newsletter Signup */}
