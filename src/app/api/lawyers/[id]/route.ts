@@ -4,11 +4,13 @@ import { getServerSession } from "next-auth";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
+    
     const lawyer = await prisma.lawyer.findUnique({
-      where: { id: params.id },
+      where: { id: parseInt(id) },
     });
 
     if (!lawyer) {
@@ -17,7 +19,8 @@ export async function GET(
 
     return NextResponse.json(lawyer);
   } catch (error) {
-    return NextResponse.json({ error: "Failed to fetch lawyer" }, { status: 500 });
+    console.error('Error fetching lawyer:', error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
 

@@ -169,39 +169,43 @@ export default function PracticePage() {
               </div>
 
               {/* Newsletter Signup */}
-              <div className="bg-gray-100 p-6 rounded mb-8">
-                <h3 className="text-xl font-bold mb-6 text-center">Subscribe to Our Mailing List</h3>
-                <form className="space-y-4">
-                  <div className="text-sm text-gray-600 mb-4">* indicates required</div>
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <h3 className="text-lg font-bold text-gray-800 mb-4">Subscribe to Our Mailing List</h3>
+                <form className="space-y-3">
                   <div>
-                    <label className="block text-sm font-bold mb-1">Email Address *</label>
-                    <input
-                      type="email"
-                      className="w-full p-3 border border-gray-300 rounded text-sm"
-                      required
-                    />
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                    <input type="email" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                   </div>
                   <div>
-                    <label className="block text-sm font-bold mb-1">First Name</label>
-                    <input
-                      type="text"
-                      className="w-full p-3 border border-gray-300 rounded text-sm"
-                    />
+                    <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                    <input type="text" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                   </div>
                   <div>
-                    <label className="block text-sm font-bold mb-1">Last Name</label>
-                    <input
-                      type="text"
-                      className="w-full p-3 border border-gray-300 rounded text-sm"
-                    />
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                    <input type="text" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                   </div>
-                  <button
-                    type="submit"
-                    className="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700 font-bold text-sm"
-                  >
-                    Subscribe
+                  <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition-colors">
+                    SUBSCRIBE
                   </button>
                 </form>
+              </div>
+
+              {/* YouTube Video */}
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <h3 className="text-lg font-bold text-gray-800 mb-4 text-center">About Our Firm</h3>
+                <div className="aspect-video">
+                  <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src="https://www.youtube.com/embed/KIk_uZ_Jyg0?si=33lyrZ_TxX1cxrPE" 
+                    title="Rovner Law Firm Video" 
+                    frameBorder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    referrerPolicy="strict-origin-when-cross-origin" 
+                    allowFullScreen
+                    className="rounded-lg"
+                  ></iframe>
+                </div>
               </div>
 
               {/* Contact Form */}
