@@ -1,3 +1,93 @@
+/* Basic CSS test */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: #f9fafb;
+}
+
+.test-header {
+  background-color: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.test-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.test-subtitle {
+  font-size: 1.25rem;
+  color: #6b7280;
+}
+
+.test-phone {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2563eb;
+  margin-bottom: 1rem;
+}
+
+.test-button {
+  background-color: #2563eb;
+  color: white;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.test-button:hover {
+  background-color: #1d4ed8;
+}
+
+.test-nav {
+  background-color: #374151;
+  padding: 1rem;
+}
+
+.test-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.test-nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.test-nav a:hover {
+  color: #93c5fd;
+}
+
+.test-hero {
+  background-color: #2563eb;
+  color: white;
+  padding: 4rem 1rem;
+  text-align: center;
+}
+
+.test-hero h2 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.test-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
