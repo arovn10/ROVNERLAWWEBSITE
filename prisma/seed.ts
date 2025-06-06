@@ -109,78 +109,123 @@ async function main() {
     ]
   })
 
-  // Create settlement data
-  const settlements = await prisma.settlement.createMany({
-    data: [
-      {
-        title: "$113,500",
-        amount: "$113,500",
-        description: "Limited Tort Motor Vehicle Accident",
-        caseType: "AUTO ACCIDENT",
-        year: 2023
-      },
-      {
-        title: "$50,000",
-        amount: "$50,000",
-        description: "SEPTA Bus Accident",
-        caseType: "PUBLIC TRANSPORTATION",
-        year: 2023
-      },
-      {
-        title: "$185,000",
-        amount: "$185,000",
-        description: "Trip and Fall Accident",
-        caseType: "PREMISES LIABILITY",
-        year: 2023
-      },
-      {
-        title: "$140,000",
-        amount: "$140,000",
-        description: "Verbal Threshold Motor Vehicle Accident",
-        caseType: "AUTO ACCIDENT",
-        year: 2023
-      },
-      {
-        title: "$120,000",
-        amount: "$120,000",
-        description: "Fall on Slippery Floor",
-        caseType: "PREMISES LIABILITY",
-        year: 2023
-      },
-      {
-        amount: 1200000,
-        description: "Major truck accident with serious injuries",
-        caseType: "Truck Accident",
-        year: 2022
-      },
-      {
-        amount: 750000,
-        description: "Successful medical malpractice verdict",
-        caseType: "Medical Malpractice",
-        year: 2022
-      },
-      {
-        amount: 450000,
-        description: "Workplace injury with ongoing medical needs",
-        caseType: "Workers' Compensation",
-        year: 2022
-      },
-      {
-        amount: 300000,
-        description: "Limited tort coverage car accident case",
-        caseType: "Auto Accident",
-        year: 2022
-      },
-      {
-        amount: 90000,
-        description: "Unsafe property conditions injury",
-        caseType: "Premises Liability",
-        year: 2022
-      }
-    ]
-  })
+  // Create settlements
+  const settlementsData = [
+    { 
+      title: 'Limited Tort Motor Vehicle Accident',
+      amount: '$113,500', 
+      caseType: 'Limited Tort Motor Vehicle Accident',
+      description: 'Motor vehicle accident settlement for limited tort case',
+      year: 2024,
+      featured: true,
+      order: 1
+    },
+    { 
+      title: 'SEPTA Bus Accident',
+      amount: '$50,000', 
+      caseType: 'SEPTA Bus Accident',
+      description: 'SEPTA transportation accident settlement',
+      year: 2024,
+      featured: true,
+      order: 2
+    },
+    { 
+      title: 'Trip and Fall Accident',
+      amount: '$185,000', 
+      caseType: 'Trip and Fall Accident',
+      description: 'Premises liability slip and fall case',
+      year: 2024,
+      featured: true,
+      order: 3
+    },
+    { 
+      title: 'Verbal Threshold Motor Vehicle Accident',
+      amount: '$140,000', 
+      caseType: 'Verbal Threshold Motor Vehicle Accident',
+      description: 'Serious motor vehicle accident case',
+      year: 2024,
+      featured: true,
+      order: 4
+    },
+    { 
+      title: 'Fall on Slippery Floor',
+      amount: '$120,000', 
+      caseType: 'Fall on Slippery Floor',
+      description: 'Slip and fall on negligently maintained floor',
+      year: 2024,
+      featured: true,
+      order: 5
+    },
+    { 
+      title: 'Motorcycle Accident Settlement',
+      amount: '$85,000', 
+      caseType: 'Motorcycle Accident Settlement',
+      description: 'Motorcycle vs automobile collision case',
+      year: 2024,
+      featured: true,
+      order: 6
+    },
+    { 
+      title: 'Premises Liability Case',
+      amount: '$95,500', 
+      caseType: 'Premises Liability Case',
+      description: 'Property owner negligence case',
+      year: 2024,
+      featured: true,
+      order: 7
+    },
+    { 
+      title: 'Medical Malpractice Settlement',
+      amount: '$175,000', 
+      caseType: 'Medical Malpractice Settlement',
+      description: 'Medical negligence and malpractice case',
+      year: 2024,
+      featured: true,
+      order: 8
+    },
+    { 
+      title: 'Truck Accident Verdict',
+      amount: '$225,000', 
+      caseType: 'Truck Accident Verdict',
+      description: 'Commercial truck collision verdict',
+      year: 2024,
+      featured: true,
+      order: 9
+    },
+    { 
+      title: 'Workers Compensation Award',
+      amount: '$67,500', 
+      caseType: 'Workers Compensation Award',
+      description: 'Workplace injury compensation case',
+      year: 2024,
+      featured: true,
+      order: 10
+    },
+    { 
+      title: 'Product Liability Settlement',
+      amount: '$150,000', 
+      caseType: 'Product Liability Settlement',
+      description: 'Defective product injury case',
+      year: 2024,
+      featured: true,
+      order: 11
+    },
+    { 
+      title: 'Slip and Fall Case',
+      amount: '$89,750', 
+      caseType: 'Slip and Fall Case',
+      description: 'Commercial property slip and fall incident',
+      year: 2024,
+      featured: true,
+      order: 12
+    }
+  ];
 
-  console.log(`Seeded ${lawyers.count} lawyers and ${settlements.count} settlements`)
+  const settlementResult = await prisma.settlement.createMany({
+    data: settlementsData
+  });
+
+  console.log(`Seeded ${lawyers.count} lawyers and ${settlementResult.count} settlements`)
 }
 
 main()
