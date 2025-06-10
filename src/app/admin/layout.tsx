@@ -9,12 +9,29 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-gray-100 font-sans">
-      <header className="bg-blue-900 text-white shadow-md py-4 px-8 flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">Rovner Law Admin</h1>
-        <a href="/" className="text-blue-200 hover:text-white transition-colors">View Site</a>
+    <div className="min-h-screen bg-gray-50 font-sans">
+      {/* Professional Header */}
+      <header className="header border-b">
+        <div className="header-content">
+          <div className="firm-name-styled">
+            <h1>Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt</h1>
+            <h2>Admin Dashboard</h2>
+          </div>
+          <div className="header-contact">
+            <Link href="/" className="cta-button">View Website</Link>
+          </div>
+        </div>
       </header>
-      <main className="max-w-4xl mx-auto py-8 px-4">
+      {/* Sticky Admin Navigation */}
+      <nav className="navigation">
+        <ul className="nav-list">
+          <li><Link href="/admin" className="nav-link">Dashboard</Link></li>
+          <li><Link href="/admin/lawyers" className="nav-link">Lawyers</Link></li>
+          {/* Add more admin sections here if needed */}
+        </ul>
+      </nav>
+      {/* Main Content */}
+      <main className="max-w-5xl mx-auto py-10 px-4">
         {children}
       </main>
     </div>
