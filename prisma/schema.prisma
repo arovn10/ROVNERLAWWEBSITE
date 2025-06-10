@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -33,7 +32,7 @@ model Lawyer {
   experience  String?
   specialties String?
   image       String?
-  email       String?
+  email       String?  @unique
   phone       String?
   order       Int      @default(0)
   active      Boolean  @default(true)

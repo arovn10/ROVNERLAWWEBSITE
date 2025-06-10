@@ -25,60 +25,59 @@ export async function GET(
 }
 
 export async function PUT(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  request: Request,
+  { params }: { params: { id: string } }
 ) {
+  const session = await getServerSession();
+  
+  if (!session) {
+    return new NextResponse('Unauthorized', { status: 401 });
+  }
+
   try {
-    const session = await getServerSession();
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const { id } = await params;
-    const body = await request.json();
-    const { name, title, bio, education, experience, specialties, image, email, phone, order, active } = body;
-
+    const data = await request.json();
     const lawyer = await prisma.lawyer.update({
-      where: { id },
+      where: { id: params.id },
       data: {
-        name,
-        title,
-        bio,
-        education,
-        experience,
-        specialties,
-        image,
-        email,
-        phone,
-        order,
-        active,
+        name: data.name,
+        title: data.title,
+        bio: data.bio,
+        education: data.education,
+        experience: data.experience,
+        specialties: data.specialties,
+        email: data.email,
+        phone: data.phone,
+        order: data.order,
+        active: data.active,
+        image: data.image,
       },
     });
 
     return NextResponse.json(lawyer);
   } catch (error) {
-    return NextResponse.json({ error: "Failed to update lawyer" }, { status: 500 });
+    console.error('Error updating lawyer:', error);
+    return new NextResponse('Internal Server Error', { status: 500 });
   }
 }
 
 export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  request: Request,
+  { params }: { params: { id: string } }
 ) {
-  try {
-    const session = await getServerSession();
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+  const session = await getServerSession();
+  
+  if (!session) {
+    return new NextResponse('Unauthorized', { status: 401 });
+  }
 
-    const { id } = await params;
-    
+  try {
     await prisma.lawyer.delete({
-      where: { id },
+      where: { id: params.id },
     });
 
-    return NextResponse.json({ message: "Lawyer deleted successfully" });
+    return new NextResponse(null, { status: 204 });
   } catch (error) {
-    return NextResponse.json({ error: "Failed to delete lawyer" }, { status: 500 });
+    console.error('Error deleting lawyer:', error);
+    return new NextResponse('Internal Server Error', { status: 500 });
   }
 } 
