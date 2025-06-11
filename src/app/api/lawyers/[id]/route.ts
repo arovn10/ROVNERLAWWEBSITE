@@ -26,7 +26,7 @@ export async function GET(
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await getServerSession();
   
@@ -35,34 +35,29 @@ export async function PUT(
   }
 
   try {
+    const { id } = await params;
     const data = await request.json();
-    const lawyer = await prisma.lawyer.update({
-      where: { id: params.id },
+    
+    // Update the lawyer with the new data
+    const updatedLawyer = await prisma.lawyer.update({
+      where: { id },
       data: {
-        name: data.name,
-        title: data.title,
-        bio: data.bio,
-        education: data.education,
-        experience: data.experience,
-        specialties: data.specialties,
-        email: data.email,
-        phone: data.phone,
-        order: data.order,
-        active: data.active,
-        image: data.image,
+        ...data,
+        // Ensure the image URL is properly set
+        image: data.image || null,
       },
     });
 
-    return NextResponse.json(lawyer);
+    return NextResponse.json(updatedLawyer);
   } catch (error) {
     console.error('Error updating lawyer:', error);
-    return new NextResponse('Internal Server Error', { status: 500 });
+    return new NextResponse('Error updating lawyer', { status: 500 });
   }
 }
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await getServerSession();
   
@@ -71,13 +66,14 @@ export async function DELETE(
   }
 
   try {
+    const { id } = await params;
     await prisma.lawyer.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return new NextResponse(null, { status: 204 });
   } catch (error) {
     console.error('Error deleting lawyer:', error);
-    return new NextResponse('Internal Server Error', { status: 500 });
+    return new NextResponse('Error deleting lawyer', { status: 500 });
   }
 } 

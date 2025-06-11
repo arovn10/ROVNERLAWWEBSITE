@@ -4,9 +4,9 @@ import { prisma } from "@/lib/prisma";
 import LawyerForm from "@/app/admin/components/LawyerForm";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function EditLawyerPage({ params }: PageProps) {
@@ -16,8 +16,10 @@ export default async function EditLawyerPage({ params }: PageProps) {
     redirect('/admin/login');
   }
 
+  const { id } = await params;
+  
   const lawyer = await prisma.lawyer.findUnique({
-    where: { id: params.id }
+    where: { id }
   });
 
   if (!lawyer) {

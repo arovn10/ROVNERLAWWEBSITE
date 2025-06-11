@@ -2,6 +2,8 @@ const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient()
 
+const S3_BASE_URL = 'https://rovnerlawbucket.s3.us-east-1.amazonaws.com/lawyers'
+
 const lawyers = [
   {
     name: "Robert A. Rovner",
@@ -14,7 +16,7 @@ const lawyers = [
     phone: "215-259-5958",
     order: 1,
     active: true,
-    image: "/lawyers/robert-rovner.jpg"
+    image: `${S3_BASE_URL}/robert-rovner.jpg`
   },
   {
     name: "Steven L. Rovner",
@@ -27,7 +29,7 @@ const lawyers = [
     phone: "215-259-5958",
     order: 2,
     active: true,
-    image: "/lawyers/steven-rovner.jpg"
+    image: `${S3_BASE_URL}/steven-rovner.jpg`
   },
   {
     name: "Bruce S. Allen",
@@ -40,7 +42,7 @@ const lawyers = [
     phone: "215-259-5958",
     order: 3,
     active: true,
-    image: "/lawyers/bruce-allen.jpg"
+    image: `${S3_BASE_URL}/bruce-allen.jpg`
   },
   {
     name: "Howard P. Rovner",
@@ -53,7 +55,7 @@ const lawyers = [
     phone: "215-259-5958",
     order: 4,
     active: true,
-    image: "/lawyers/howard-rovner.jpg"
+    image: `${S3_BASE_URL}/howard-rovner.jpg`
   },
   {
     name: "Jeffrey I. Zimmerman",
@@ -66,7 +68,7 @@ const lawyers = [
     phone: "215-259-5958",
     order: 5,
     active: true,
-    image: "/lawyers/jeffrey-zimmerman.jpg"
+    image: `${S3_BASE_URL}/jeffrey-zimmerman.jpg`
   },
   {
     name: "Jeffrey Allen Sigman",
@@ -79,7 +81,7 @@ const lawyers = [
     phone: "215-259-5958",
     order: 6,
     active: true,
-    image: "/lawyers/jeffrey-sigman.jpg"
+    image: `${S3_BASE_URL}/jeffrey-sigman.jpg`
   },
   {
     name: "Robin Scolnick",
@@ -92,7 +94,7 @@ const lawyers = [
     phone: "215-259-5958",
     order: 7,
     active: true,
-    image: "/lawyers/robin-scolnick.jpg"
+    image: `${S3_BASE_URL}/robin-scolnick.jpg`
   },
   {
     name: "Jeffrey D. Schmidt",
@@ -105,7 +107,7 @@ const lawyers = [
     phone: "215-259-5958",
     order: 8,
     active: true,
-    image: "/lawyers/jeffrey-schmidt.jpg"
+    image: `${S3_BASE_URL}/jeffrey-schmidt.jpg`
   },
   {
     name: "David K. String",
@@ -118,7 +120,7 @@ const lawyers = [
     phone: "215-259-5958",
     order: 9,
     active: true,
-    image: "/lawyers/david-string.jpg"
+    image: `${S3_BASE_URL}/david-string.jpg`
   },
   {
     name: "Matthew A. Fleishman",
@@ -131,7 +133,7 @@ const lawyers = [
     phone: "215-259-5958",
     order: 10,
     active: true,
-    image: "/lawyers/matthew-fleishman.jpg"
+    image: `${S3_BASE_URL}/matthew-fleishman.jpg`
   },
   {
     name: "Joseph S. Lukomski",
@@ -144,7 +146,7 @@ const lawyers = [
     phone: "215-259-5958",
     order: 11,
     active: true,
-    image: "/lawyers/joseph-lukomski.jpg"
+    image: `${S3_BASE_URL}/joseph-lukomski.jpg`
   },
   {
     name: "Cheryl B. Wolf",
@@ -157,7 +159,7 @@ const lawyers = [
     phone: "215-259-5958",
     order: 12,
     active: true,
-    image: "/lawyers/cheryl-wolf.jpg"
+    image: `${S3_BASE_URL}/cheryl-wolf.jpg`
   }
 ]
 

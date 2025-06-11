@@ -8,16 +8,18 @@ import Image from 'next/image';
 interface Lawyer {
   id: string;
   name: string;
-  title?: string;
-  bio?: string;
-  education?: string;
-  experience?: string;
-  specialties?: string[] | null;
-  email?: string;
-  phone?: string;
+  title: string | null;
+  bio: string | null;
+  education: string | null;
+  experience: string | null;
+  specialties: string | null;
+  email: string | null;
+  phone: string | null;
   order: number;
   active: boolean;
-  image?: string;
+  image: string | null;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 interface LawyerFormProps {
@@ -33,7 +35,7 @@ export default function LawyerForm({ lawyer }: LawyerFormProps) {
     bio: '',
     education: '',
     experience: '',
-    specialties: [],
+    specialties: '',
     email: '',
     phone: '',
     order: 0,
@@ -85,24 +87,37 @@ export default function LawyerForm({ lawyer }: LawyerFormProps) {
     if (type === 'checkbox') {
       const checked = (e.target as HTMLInputElement).checked;
       setFormData(prev => ({ ...prev, [name]: checked }));
-    } else if (name === 'specialties') {
-      setFormData(prev => ({
-        ...prev,
-        specialties: value ? value.split(',').map(s => s.trim()) : []
-      }));
     } else {
       setFormData(prev => ({ ...prev, [name]: value }));
     }
   };
 
-  const handleImageUpload = (url: string) => {
+  const handleImageUpload = async (url: string) => {
     setFormData(prev => ({ ...prev, image: url }));
-  };
+    
+    // If we're editing an existing lawyer, update the image in the database
+    if (lawyer?.id) {
+      try {
+        const response = await fetch(`/api/lawyers/${lawyer.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ image: url }),
+        });
 
-  // Convert specialties array to string for the input field
-  const specialtiesString = Array.isArray(formData.specialties) 
-    ? formData.specialties.join(', ')
-    : '';
+        if (!response.ok) {
+          throw new Error('Failed to update lawyer image');
+        }
+
+        // Refresh the page to show the updated image
+        router.refresh();
+      } catch (error) {
+        console.error('Error updating lawyer image:', error);
+        alert('Failed to update lawyer image');
+      }
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8 bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto mt-8 border border-gray-200">
@@ -231,25 +246,18 @@ export default function LawyerForm({ lawyer }: LawyerFormProps) {
           type="text"
           name="specialties"
           id="specialties"
-          value={specialtiesString}
+          value={formData.specialties || ''}
           onChange={handleChange}
           className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
         />
       </div>
-      <div className="flex justify-end space-x-3 mt-8">
-        <button
-          type="button"
-          onClick={() => router.back()}
-          className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        >
-          Cancel
-        </button>
+      <div className="flex justify-end">
         <button
           type="submit"
           disabled={isSubmitting}
-          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+          className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isSubmitting ? 'Saving...' : 'Save Changes'}
+          {isSubmitting ? 'Saving...' : 'Save Lawyer'}
         </button>
       </div>
     </form>

@@ -43,12 +43,32 @@ model Lawyer {
 model Settlement {
   id          String   @id @default(cuid())
   title       String
-  description String?
-  amount      String
+  description String   @db.Text
+  amount      Float
+  date        DateTime
   caseType    String
-  year        Int?
-  featured    Boolean  @default(false)
-  order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model News {
+  id        String   @id @default(cuid())
+  title     String
+  content   String   @db.Text
+  date      DateTime
+  source    String
+  url       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Archive {
+  id        String   @id @default(cuid())
+  title     String
+  content   String   @db.Text
+  date      DateTime
+  category  String
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

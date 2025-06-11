@@ -19,6 +19,7 @@ export async function uploadToS3(file: File, key: string): Promise<string> {
             Key: key,
             Body: buffer,
             ContentType: file.type,
+            ACL: 'public-read',
         });
 
         await s3Client.send(command);

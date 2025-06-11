@@ -5,38 +5,46 @@ import { getServerSession } from "next-auth";
 export async function GET() {
   try {
     const settlements = await prisma.settlement.findMany({
-      orderBy: { order: 'asc' }
+      orderBy: {
+        date: 'desc'
+      }
     });
     return NextResponse.json(settlements);
   } catch (error) {
-    return NextResponse.json({ error: "Failed to fetch settlements" }, { status: 500 });
+    console.error('Error fetching settlements:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch settlements' },
+      { status: 500 }
+    );
   }
 }
 
 export async function POST(request: NextRequest) {
+  const session = await getServerSession();
+  if (!session) {
+    return NextResponse.json(
+      { error: 'Unauthorized' },
+      { status: 401 }
+    );
+  }
+
   try {
-    const session = await getServerSession();
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const body = await request.json();
-    const { title, description, amount, caseType, year, featured, order } = body;
-
+    const data = await request.json();
     const settlement = await prisma.settlement.create({
       data: {
-        title,
-        description,
-        amount,
-        caseType,
-        year,
-        featured: featured || false,
-        order: order || 0,
-      },
+        title: data.title,
+        description: data.description,
+        amount: data.amount,
+        date: new Date(data.date),
+        caseType: data.caseType
+      }
     });
-
-    return NextResponse.json(settlement, { status: 201 });
+    return NextResponse.json(settlement);
   } catch (error) {
-    return NextResponse.json({ error: "Failed to create settlement" }, { status: 500 });
+    console.error('Error creating settlement:', error);
+    return NextResponse.json(
+      { error: 'Failed to create settlement' },
+      { status: 500 }
+    );
   }
 } 

@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import Image from 'next/image';
-import { Edit, Trash2, Plus } from 'lucide-react';
+import { Edit, Trash2, Plus, LogIn, LogOut } from 'lucide-react';
 
 export default async function LawyersManagement() {
   const session = await getServerSession();
@@ -18,18 +18,26 @@ export default async function LawyersManagement() {
 
   return (
     <div className="space-y-8">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-gray-900">Manage Lawyers</h1>
-        <Link 
-          href="/admin/lawyers/new" 
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-sm font-medium transition-colors flex items-center gap-2"
-        >
-          <Plus className="h-5 w-5" /> Add Lawyer
-        </Link>
+      <div className="flex justify-between items-center mb-6">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Manage Lawyers</h1>
+          <p className="text-gray-600 mt-1">Add, edit, and organize attorney profiles</p>
+        </div>
+        <div className="flex gap-4 items-center">
+          <Link href="/api/auth/signout" className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md font-medium border border-gray-200 transition-colors">
+            <LogOut className="h-5 w-5" /> Logout
+          </Link>
+          <Link 
+            href="/admin/lawyers/new" 
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-sm font-medium transition-colors flex items-center gap-2"
+          >
+            <Plus className="h-5 w-5" /> Add Lawyer
+          </Link>
+        </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {lawyers.map(lawyer => (
-          <div key={lawyer.id} className="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center border border-gray-100">
+          <div key={lawyer.id} className="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center border border-gray-100 hover:shadow-lg transition-shadow">
             <div className="mb-4">
               {lawyer.image ? (
                 <Image
