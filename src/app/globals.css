@@ -236,10 +236,10 @@ body {
 /* Professional Hero Section with Image */
 .hero-professional {
   position: relative;
-  min-height: 500px;
+  padding: 6rem 2rem;
+  background: var(--navy-primary);
   color: white;
-  display: flex;
-  align-items: center;
+  text-align: center;
   overflow: hidden;
 }
 
@@ -264,26 +264,21 @@ body {
   z-index: 2;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 4rem 2rem;
-  text-align: center;
 }
 
 .hero-content h2 {
   font-size: 3.5rem;
   font-weight: 800;
-  margin-bottom: 1.5rem;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1rem;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .hero-content p {
-  font-size: 1.375rem;
-  font-weight: 400;
-  opacity: 0.95;
-  letter-spacing: 0.01em;
-  line-height: 1.4;
-  margin-bottom: 3rem;
+  font-size: 1.5rem;
+  color: var(--gray-100);
+  margin-bottom: 2rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .hero-stats {
@@ -1459,15 +1454,19 @@ html {
 
 .attorney-image-container {
   position: relative;
-  height: 300px;
+  width: 100%;
+  padding-top: 100%; /* Creates a square aspect ratio */
   overflow: hidden;
   background: var(--gray-100);
 }
 
 .attorney-image {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* Changed from cover to contain */
   transition: transform 0.3s ease;
 }
 
@@ -1791,5 +1790,85 @@ html {
   
   .practice-main-image-container {
     height: 180px;
+  }
+}
+
+.attorney-profile-card {
+  display: flex;
+  align-items: flex-start;
+  background: white;
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--gray-200);
+  margin-bottom: 2.5rem;
+  padding: 2.5rem;
+  gap: 2.5rem;
+}
+
+.attorney-profile-image {
+  flex: 0 0 220px;
+  width: 220px;
+  height: 260px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--gray-100);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+}
+
+.attorney-profile-content {
+  flex: 1 1 0%;
+  min-width: 0;
+}
+
+.attorney-profile-name {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--navy-primary);
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+}
+
+.attorney-profile-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--blue-accent);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.attorney-profile-specialties {
+  font-size: 1rem;
+  color: var(--gray-700);
+  margin-bottom: 1rem;
+}
+
+.attorney-profile-bio {
+  font-size: 1.05rem;
+  color: var(--gray-800);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.attorney-profile-extra {
+  font-size: 0.98rem;
+  color: var(--gray-700);
+  margin-bottom: 0.75rem;
+}
+
+@media (max-width: 900px) {
+  .attorney-profile-card {
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+  .attorney-profile-image {
+    width: 180px;
+    height: 200px;
+  }
+  .attorney-profile-content {
+    width: 100%;
   }
 }

@@ -22,42 +22,54 @@ export default async function AttorneysPage() {
         </div>
       </section>
 
-      {/* Attorneys Grid */}
+      {/* Attorneys List - Profile Card Style */}
       <section className="section">
         <div className="section-title">
           <h3>Meet Our Attorneys</h3>
           <p>Over 15 skilled attorneys with hundreds of years of combined experience</p>
         </div>
-        
-        <div className="attorneys-grid">
-          {attorneys.map((attorney) => (
-            <div key={attorney.id} className="attorney-card">
-              <div className="attorney-image-container">
-                <Image 
-                  src={attorney.image || '/photos/default-headshot.jpg'} 
-                  alt={attorney.name}
-                  width={300}
-                  height={300}
-                  className="attorney-image"
-                />
-              </div>
-              <div className="attorney-content">
-                <h3 className="attorney-name">{attorney.name}</h3>
-                <h4 className="attorney-title">{attorney.title}</h4>
-                <div className="attorney-specialties">
-                  <span className="specialties-label">Specialties:</span>
-                  <span className="specialties-text">{Array.isArray(attorney.specialties) ? attorney.specialties.join(', ') : attorney.specialties}</span>
+        {attorneys.map((attorney) => (
+          <div key={attorney.id} className="attorney-profile-card">
+            <Image
+              src={attorney.image || '/photos/default-headshot.jpg'}
+              alt={attorney.name}
+              width={220}
+              height={260}
+              className="attorney-profile-image"
+            />
+            <div className="attorney-profile-content">
+              <div className="attorney-profile-name">{attorney.name}</div>
+              <div className="attorney-profile-title">{attorney.title}</div>
+              {attorney.specialties && (
+                <div className="attorney-profile-specialties">
+                  <strong>Specialties:</strong> {Array.isArray(attorney.specialties) ? attorney.specialties.join(', ') : attorney.specialties}
                 </div>
-                <p className="attorney-bio">{attorney.bio}</p>
-                <div className="attorney-contact">
+              )}
+              {attorney.bio && (
+                <div className="attorney-profile-bio">{attorney.bio}</div>
+              )}
+              {attorney.education && (
+                <div className="attorney-profile-extra"><strong>Education:</strong> {attorney.education}</div>
+              )}
+              {attorney.experience && (
+                <div className="attorney-profile-extra"><strong>Experience:</strong> {attorney.experience}</div>
+              )}
+              {attorney.email && (
+                <div className="attorney-profile-extra"><strong>Email:</strong> {attorney.email}</div>
+              )}
+              {attorney.phone && (
+                <div className="attorney-profile-extra"><strong>Phone:</strong> {attorney.phone}</div>
+              )}
+              {attorney.name !== 'Robert A. Rovner' && (
+                <div style={{ marginTop: '1.5rem' }}>
                   <Link href="/contact" className="contact-attorney-btn">
                     Contact {attorney.name.split(' ')[0]}
                   </Link>
                 </div>
-              </div>
+              )}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </section>
 
       {/* Why Choose Our Team */}
