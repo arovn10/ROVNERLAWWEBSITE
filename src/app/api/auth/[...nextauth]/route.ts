@@ -1,4 +1,5 @@
-import NextAuth from "next-auth"
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import NextAuth from "next-auth/next"
 import CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
 import { prisma } from "@/lib/prisma"
@@ -50,16 +51,16 @@ const handler = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role
+        token.role = (user as any).role;
       }
-      return token
+      return token;
     },
     async session({ session, token }) {
-      if (token) {
-        session.user.id = token.sub || ""
-        session.user.role = token.role as string
+      if (session.user) {
+        (session.user as any).id = token.sub || "";
+        (session.user as any).role = token.role as string;
       }
-      return session
+      return session;
     }
   },
   pages: {

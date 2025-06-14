@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 
 export async function GET() {
   try {
@@ -8,7 +8,7 @@ export async function GET() {
       orderBy: { order: 'asc' }
     });
     return NextResponse.json(lawyers);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Failed to fetch lawyers" }, { status: 500 });
   }
 }
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json(lawyer, { status: 201 });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Failed to create lawyer" }, { status: 500 });
   }
 } 

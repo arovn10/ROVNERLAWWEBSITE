@@ -1,9 +1,6 @@
-import Link from 'next/link';
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import Image from 'next/image';
-import { Edit, Trash2, Plus, LogOut } from 'lucide-react';
 import LawyersManagementClient from './LawyersManagementClient';
 
 interface Lawyer {

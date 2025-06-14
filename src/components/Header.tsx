@@ -4,18 +4,20 @@ import Link from 'next/link';
 
 interface HeaderProps {
   currentPage?: string;
+  firmName?: string;
 }
 
-export default function Header({ currentPage = '' }: HeaderProps) {
+export default function Header({ currentPage = '', firmName = 'Law Firm' }: HeaderProps & { firmName?: string }) {
   return (
     <>
       {/* Professional Header */}
       <header className="header">
         <div className="header-content">
           <div className="header-titles">
-            <div className="firm-name-styled">
-              <h1>LAW OFFICES OF</h1>
-              <h2>Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt</h2>
+            <div className="firm-name-styled" style={{ maxWidth: 600 }}>
+              <h1 style={{ fontSize: '2.5rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--navy-primary)', marginBottom: '0.5rem', lineHeight: 1.1 }}>LAW OFFICES OF</h1>
+              <h2 style={{ fontSize: '1.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.03em', color: 'var(--gray-700)', lineHeight: 1.2, marginBottom: '0.5rem', wordBreak: 'break-word' }}>{firmName}</h2>
+              <div style={{ width: 120, height: 6, background: 'var(--gradient-gold)', borderRadius: 3, margin: '0.5rem 0 0 0' }} />
             </div>
           </div>
           <div className="header-contact">
@@ -40,6 +42,17 @@ export default function Header({ currentPage = '' }: HeaderProps) {
           <li><Link href="/contact" className={`nav-link ${currentPage === 'contact' ? 'active' : ''}`}>CONTACT US</Link></li>
         </ul>
       </nav>
+      <div style={{
+        width: '100%',
+        textAlign: 'center',
+        fontSize: '0.95rem',
+        color: 'var(--gray-400)',
+        fontStyle: 'italic',
+        marginTop: '0.25rem',
+        letterSpacing: '0.01em',
+      }}>
+        Programmed by Alec Rovner
+      </div>
     </>
   );
 } 

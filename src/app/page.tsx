@@ -1,25 +1,29 @@
-'use client';
+"use client";
 
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { settlements, groupSettlementsForCarousel, type Settlement } from '@/data/settlements';
+import { groupSettlementsForCarousel, type Settlement } from '@/data/settlements';
 
 export default function HomePage() {
-  // Settlement carousel state
+  const [firmName, setFirmName] = useState('Law Firm');
   const [currentSettlementGroup, setCurrentSettlementGroup] = useState(0);
-  
-  // Get grouped settlements
   const settlementGroups = groupSettlementsForCarousel(3);
 
-  // Auto-cycle through settlement groups
+  useEffect(() => {
+    fetch('/api/settings/firm-name')
+      .then(res => res.json())
+      .then(data => {
+        if (data.firmName) setFirmName(data.firmName);
+      });
+  }, []);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSettlementGroup((prev) => (prev + 1) % settlementGroups.length);
-    }, 5000); // Change every 5 seconds
-
+    }, 5000);
     return () => clearInterval(interval);
   }, [settlementGroups.length]);
 
@@ -32,9 +36,35 @@ export default function HomePage() {
   };
 
   return (
-    <div>
-      <Header currentPage="home" />
-
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex flex-col items-center justify-center font-sans">
+      <Header firmName={firmName} />
+      {/* Navigation Cards */}
+      <section className="w-full max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 py-16 px-6">
+        <Link href="/about" className="group bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-gray-200 p-10 flex flex-col items-center hover:scale-105 hover:shadow-2xl transition-all">
+          <span className="text-3xl font-bold text-blue-600 mb-4">About Us</span>
+          <p className="text-gray-600 text-center">Learn about our firm's history, values, and commitment to clients.</p>
+        </Link>
+        <Link href="/practice" className="group bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-gray-200 p-10 flex flex-col items-center hover:scale-105 hover:shadow-2xl transition-all">
+          <span className="text-3xl font-bold text-green-600 mb-4">Practice Areas</span>
+          <p className="text-gray-600 text-center">Explore the areas of law we specialize in, from injury to family law.</p>
+        </Link>
+        <Link href="/photo-gallery" className="group bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-gray-200 p-10 flex flex-col items-center hover:scale-105 hover:shadow-2xl transition-all">
+          <span className="text-3xl font-bold text-purple-600 mb-4">Photo Gallery</span>
+          <p className="text-gray-600 text-center">See our team in action and our community involvement.</p>
+        </Link>
+        <Link href="/in-the-news" className="group bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-gray-200 p-10 flex flex-col items-center hover:scale-105 hover:shadow-2xl transition-all">
+          <span className="text-3xl font-bold text-yellow-600 mb-4">In the News</span>
+          <p className="text-gray-600 text-center">Read about our firm's impact and media coverage.</p>
+        </Link>
+        <Link href="/locations" className="group bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-gray-200 p-10 flex flex-col items-center hover:scale-105 hover:shadow-2xl transition-all">
+          <span className="text-3xl font-bold text-pink-600 mb-4">Locations</span>
+          <p className="text-gray-600 text-center">Find our offices and get directions to meet with us.</p>
+        </Link>
+        <Link href="/contact" className="group bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-gray-200 p-10 flex flex-col items-center hover:scale-105 hover:shadow-2xl transition-all">
+          <span className="text-3xl font-bold text-blue-600 mb-4">Contact</span>
+          <p className="text-gray-600 text-center">Reach out for a free consultation or to ask a question.</p>
+        </Link>
+      </section>
       {/* Hero Banner with Professional Home Image - Using Alternative Banner */}
       <section className="hero-professional">
         <div className="hero-image-overlay">
@@ -67,7 +97,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* Settlement Carousel - 3 at a time without images */}
       <section className="section">
         <div className="section-title">
@@ -112,7 +141,6 @@ export default function HomePage() {
           ))}
         </div>
       </section>
-
       {/* Practice Areas with Correctly Named Professional Images */}
       <section className="section">
         <div className="section-title">
@@ -317,7 +345,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <Footer />
+      <Footer firmName={firmName} />
     </div>
   );
 }

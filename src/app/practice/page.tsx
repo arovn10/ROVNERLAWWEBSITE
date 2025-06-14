@@ -233,8 +233,8 @@ export default function PracticeAreasPage() {
                   </div>
                   
                   <div className="practice-action">
-                    <Link href="/contact" className={`practice-cta-btn practice-${area.color}`}>
-                      Get Help with {area.title}
+                    <Link href={`/practice/${area.title.toLowerCase().replace(/\s+/g, '-')}`} className="learn-more-btn">
+                      LEARN MORE
                     </Link>
                   </div>
                 </div>

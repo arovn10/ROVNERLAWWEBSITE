@@ -1,45 +1,10 @@
-import Link from 'next/link';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 export default function PhotoGalleryPage() {
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex justify-between items-center">
-            <div className="text-2xl font-bold text-gray-800">
-              LAW OFFICES OF<br />
-              <span className="text-lg">Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt</span>
-            </div>
-            <div className="text-right">
-              <div className="text-3xl font-bold text-gray-800">215-259-5958</div>
-              <button className="bg-blue-500 text-white px-6 py-2 rounded font-bold text-sm">
-                GET A FREE CONSULTATION!
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Navigation */}
-      <nav className="bg-gray-800 text-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between">
-            <ul className="flex space-x-8 py-3 text-sm font-medium">
-              <li><Link href="/" className="hover:text-blue-300">HOME</Link></li>
-              <li><Link href="/about" className="hover:text-blue-300">ABOUT US</Link></li>
-              <li><Link href="/attorneys" className="hover:text-blue-300">ATTORNEYS</Link></li>
-              <li><Link href="/practice" className="hover:text-blue-300">PRACTICE</Link></li>
-              <li><Link href="/locations" className="hover:text-blue-300">LOCATIONS</Link></li>
-              <li><Link href="/photo-gallery" className="hover:text-blue-300 text-blue-300">PHOTO GALLERY</Link></li>
-              <li><Link href="/in-the-news" className="hover:text-blue-300">IN THE NEWS</Link></li>
-              <li><Link href="/radio-show" className="hover:text-blue-300">RADIO SHOW</Link></li>
-              <li><Link href="/contact" className="hover:text-blue-300">CONTACT US</Link></li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-
+    <div>
+      <Header currentPage="photo-gallery" />
       {/* Hero Image with Page Title */}
       <section className="relative py-24 bg-cover bg-center" style={{backgroundImage: "url('/photos/attorneys-hero.jpg')"}}>
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
@@ -47,7 +12,6 @@ export default function PhotoGalleryPage() {
           <h1 className="text-5xl font-bold text-white mb-4">PHOTO GALLERY</h1>
         </div>
       </section>
-
       {/* Page Content */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4">
@@ -227,61 +191,7 @@ export default function PhotoGalleryPage() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-800 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <h4 className="font-bold mb-4">NAVIGATION</h4>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/" className="hover:text-blue-300">Home</Link></li>
-                <li><Link href="/about" className="hover:text-blue-300">About</Link></li>
-                <li><Link href="/attorneys" className="hover:text-blue-300">Attorneys</Link></li>
-                <li><Link href="/locations" className="hover:text-blue-300">Locations</Link></li>
-                <li><Link href="/photo-gallery" className="hover:text-blue-300">Photo Gallery</Link></li>
-                <li><Link href="/in-the-news" className="hover:text-blue-300">In the News</Link></li>
-                <li><Link href="/radio-show" className="hover:text-blue-300">Radio Show</Link></li>
-                <li><Link href="/contact" className="hover:text-blue-300">Contact Us</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-4">PRACTICE AREAS</h4>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/practice/personal-injury" className="hover:text-blue-300">Personal Injury</Link></li>
-                <li><Link href="/practice/auto-accidents" className="hover:text-blue-300">Automobile Accidents</Link></li>
-                <li><Link href="/practice/motorcycle-accidents" className="hover:text-blue-300">Motorcycle Accidents</Link></li>
-                <li><Link href="/practice/truck-accidents" className="hover:text-blue-300">Truck Accidents</Link></li>
-                <li><Link href="/practice/premises-liability" className="hover:text-blue-300">Premises Liability</Link></li>
-                <li><Link href="/practice/medical-malpractice" className="hover:text-blue-300">Medical Malpractice</Link></li>
-                <li><Link href="/practice/defective-products" className="hover:text-blue-300">Defective Products</Link></li>
-                <li><Link href="/practice/workers-comp" className="hover:text-blue-300">Workers' Compensation</Link></li>
-                <li><Link href="/practice/divorce-family-law" className="hover:text-blue-300">Divorce/ Family Law/ Custody</Link></li>
-                <li><Link href="/practice/criminal-defense" className="hover:text-blue-300">Criminal Defense</Link></li>
-                <li><Link href="/practice/social-security-disability" className="hover:text-blue-300">Social Security Disability</Link></li>
-                <li><Link href="/practice/general-legal-matters" className="hover:text-blue-300">General Legal Matters</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-4">CONTACT US</h4>
-              <div className="text-sm space-y-2">
-                <p>175 Bustleton Pike<br />Feasterville-Trevose, PA 19053</p>
-                <p>215-259-5958</p>
-                <p>rovners@dial-law.com</p>
-              </div>
-            </div>
-          </div>
-          <div className="border-t border-gray-700 mt-8 pt-8 text-center text-sm">
-            <p>The hiring of a lawyer is an important decision that should not be based solely upon advertisements. <Link href="/disclaimer" className="text-blue-300 underline">Click here to see our disclaimer policies</Link>.</p>
-            <p className="mt-2">©1997-2024 by Robert A. Rovner, P.C. All rights reserved. <strong>Created, Maintained and Programmed</strong> by Steven L. Rovner</p>
-          </div>
-        </div>
-      </footer>
-
-      {/* Contact Us Sidebar */}
-      <div className="fixed right-0 top-1/2 transform -translate-y-1/2 bg-orange-500 text-white p-3 rounded-l-lg shadow-lg z-50 rotate-90 origin-bottom-right">
-        <Link href="/contact" className="font-bold text-sm tracking-wider">CONTACT US!</Link>
-      </div>
+      <Footer />
     </div>
   );
 } 

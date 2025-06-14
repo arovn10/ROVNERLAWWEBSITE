@@ -1,7 +1,8 @@
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Users, Newspaper, Award, Archive, LogOut } from "lucide-react";
+import clsx from "clsx";
 
 export default async function AdminLayout({
   children,
@@ -21,55 +22,76 @@ export default async function AdminLayout({
     { href: "/admin/archives", label: "Bob Rovner Archives", icon: Archive },
   ];
 
+  // Get current path for active nav (client-side would use usePathname, but here we just style all as non-active)
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
-            <Link
-              href="/api/auth/signout"
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700"
-            >
-              <LogOut className="h-4 w-4 mr-2" />
-              Logout
-            </Link>
+    <div className="min-h-screen flex bg-gradient-to-br from-gray-100 to-blue-50 font-sans">
+      {/* Glassmorphism Sidebar */}
+      <aside className="w-72 h-screen fixed inset-y-0 left-0 z-30 flex flex-col justify-between px-0 py-0"
+        style={{
+          background: "rgba(255,255,255,0.7)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
+          borderRight: "1.5px solid rgba(200,200,200,0.25)",
+          boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.12)",
+        }}
+      >
+        <div>
+          <div className="px-8 py-8 flex items-center gap-3">
+            <span className="text-3xl font-bold tracking-tight text-gray-900 drop-shadow-sm">Admin</span>
           </div>
-        </div>
-      </header>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex gap-8">
-          {/* Sidebar Navigation */}
-          <nav className="w-64 flex-shrink-0">
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-              <ul className="divide-y divide-gray-200">
-                {navItems.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <li key={item.href}>
-                      <Link
-                        href={item.href}
-                        className="flex items-center px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
-                      >
-                        <Icon className="h-5 w-5 mr-3 text-gray-400" />
-                        {item.label}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+          <nav className="mt-8">
+            <ul className="space-y-2">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className={clsx(
+                        "flex items-center px-8 py-4 rounded-xl text-lg font-semibold gap-4 transition-all group",
+                        "hover:bg-blue-100/60 hover:text-blue-700 hover:shadow-md"
+                      )}
+                    >
+                      <span className="w-2 h-8 mr-2 rounded-full bg-blue-500 opacity-0 group-hover:opacity-100 transition-all" />
+                      <Icon className="h-7 w-7 text-gray-400 group-hover:text-blue-600 transition-colors" />
+                      <span>{item.label}</span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
           </nav>
-
-          {/* Main Content */}
-          <main className="flex-1">
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-              {children}
-            </div>
-          </main>
         </div>
+        <div className="px-8 py-6 border-t border-gray-200/60">
+          <Link
+            href="/api/auth/signout"
+            className="flex items-center gap-3 px-4 py-3 bg-red-50 hover:bg-red-100 text-red-700 rounded-xl font-semibold border border-red-100 transition-colors w-full justify-center shadow-sm"
+          >
+            <LogOut className="h-5 w-5" /> Logout
+          </Link>
+        </div>
+      </aside>
+
+      {/* Main Content Area */}
+      <div className="flex-1 ml-72 min-h-screen flex flex-col">
+        {/* Top Bar */}
+        <header className="bg-white/80 shadow-sm border-b border-gray-200 px-12 py-6 flex items-center justify-between sticky top-0 z-20 backdrop-blur-xl">
+          <div className="text-2xl font-semibold text-gray-900 tracking-tight">Admin Dashboard</div>
+          <div className="flex items-center gap-5">
+            <div className="text-base text-gray-700 font-medium">
+              {session?.user?.name || session?.user?.email || "Admin"}
+            </div>
+            <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-bold text-lg shadow-inner border border-gray-300">
+              {session?.user?.name?.[0]?.toUpperCase() || "A"}
+            </div>
+          </div>
+        </header>
+        <main className="flex-1 p-12 bg-gradient-to-br from-gray-100 to-blue-50">
+          <div className="max-w-7xl mx-auto">
+            {children}
+          </div>
+        </main>
       </div>
     </div>
   );

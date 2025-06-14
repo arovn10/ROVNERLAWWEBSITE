@@ -42,6 +42,7 @@ export default function LawyerForm({ lawyer }: LawyerFormProps) {
     active: true,
     image: ''
   });
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (lawyer) {
@@ -119,26 +120,48 @@ export default function LawyerForm({ lawyer }: LawyerFormProps) {
     }
   };
 
+  const handleDelete = async () => {
+    if (!lawyer?.id) return;
+    if (!confirm('Are you sure you want to delete this lawyer?')) return;
+    setIsSubmitting(true);
+    setError(null);
+    try {
+      const response = await fetch(`/api/lawyers/${lawyer.id}`, { method: 'DELETE' });
+      if (response.ok) {
+        router.push('/admin/lawyers');
+        router.refresh();
+      } else {
+        setError('Failed to delete lawyer');
+      }
+    } catch {
+      setError('Failed to delete lawyer');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-8 bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto mt-8 border border-gray-200">
-      <div className="flex flex-col items-center mb-6">
+    <form onSubmit={handleSubmit} className="space-y-10 bg-white p-10 rounded-2xl shadow-xl max-w-2xl mx-auto mt-8 border border-gray-100">
+      <div className="flex flex-col items-center mb-8">
         {formData.image && (
           <Image
             src={formData.image}
             alt="Profile Preview"
-            width={96}
-            height={96}
-            className="rounded-full border border-gray-300 shadow-md object-cover mb-2"
+            width={128}
+            height={128}
+            className="rounded-xl border border-gray-300 shadow-lg object-cover mb-4"
           />
         )}
-        <ImageUpload
-          currentImageUrl={formData.image}
-          onImageUpload={handleImageUpload}
-        />
+        <div className="w-full flex justify-center">
+          <ImageUpload
+            currentImageUrl={formData.image}
+            onImageUpload={handleImageUpload}
+          />
+        </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+          <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">Name</label>
           <input
             type="text"
             name="name"
@@ -146,120 +169,129 @@ export default function LawyerForm({ lawyer }: LawyerFormProps) {
             required
             value={formData.name || ''}
             onChange={handleChange}
-            className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
+            className="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 text-base"
+            placeholder="Full Name"
           />
         </div>
         <div>
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+          <label htmlFor="title" className="block text-sm font-semibold text-gray-700 mb-2">Title</label>
           <input
             type="text"
             name="title"
             id="title"
             value={formData.title || ''}
             onChange={handleChange}
-            className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
+            className="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 text-base"
+            placeholder="Attorney Title"
           />
-        </div>
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            value={formData.email || ''}
-            onChange={handleChange}
-            className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
-          />
-        </div>
-        <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-          <input
-            type="tel"
-            name="phone"
-            id="phone"
-            value={formData.phone || ''}
-            onChange={handleChange}
-            className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
-          />
-        </div>
-        <div>
-          <label htmlFor="order" className="block text-sm font-medium text-gray-700 mb-1">Display Order</label>
-          <input
-            type="number"
-            name="order"
-            id="order"
-            value={formData.order || 0}
-            onChange={handleChange}
-            className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
-          />
-        </div>
-        <div className="flex items-center mt-6">
-          <input
-            type="checkbox"
-            name="active"
-            id="active"
-            checked={formData.active}
-            onChange={handleChange}
-            className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-600"
-          />
-          <label htmlFor="active" className="ml-2 block text-sm text-gray-900">Active</label>
         </div>
       </div>
       <div>
-        <label htmlFor="bio" className="block text-sm font-medium text-gray-700 mb-1">Bio</label>
+        <label htmlFor="bio" className="block text-sm font-semibold text-gray-700 mb-2">Bio</label>
         <textarea
           name="bio"
           id="bio"
           rows={4}
           value={formData.bio || ''}
           onChange={handleChange}
-          className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
+          className="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 text-base"
+          placeholder="Short biography..."
         />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
         <div>
-          <label htmlFor="education" className="block text-sm font-medium text-gray-700 mb-1">Education</label>
+          <label htmlFor="education" className="block text-sm font-semibold text-gray-700 mb-2">Education</label>
           <textarea
             name="education"
             id="education"
             rows={3}
             value={formData.education || ''}
             onChange={handleChange}
-            className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
+            className="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 text-base"
+            placeholder="Education background..."
           />
         </div>
         <div>
-          <label htmlFor="experience" className="block text-sm font-medium text-gray-700 mb-1">Experience</label>
+          <label htmlFor="experience" className="block text-sm font-semibold text-gray-700 mb-2">Experience</label>
           <textarea
             name="experience"
             id="experience"
             rows={3}
             value={formData.experience || ''}
             onChange={handleChange}
-            className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
+            className="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 text-base"
+            placeholder="Professional experience..."
           />
         </div>
       </div>
-      <div>
-        <label htmlFor="specialties" className="block text-sm font-medium text-gray-700 mb-1">Specialties (comma-separated)</label>
-        <input
-          type="text"
-          name="specialties"
-          id="specialties"
-          value={formData.specialties || ''}
-          onChange={handleChange}
-          className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
-        />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+        <div>
+          <label htmlFor="specialties" className="block text-sm font-semibold text-gray-700 mb-2">Specialties</label>
+          <input
+            type="text"
+            name="specialties"
+            id="specialties"
+            value={formData.specialties || ''}
+            onChange={handleChange}
+            className="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 text-base"
+            placeholder="Comma-separated specialties"
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              value={formData.email || ''}
+              onChange={handleChange}
+              className="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 text-base"
+              placeholder="Email address"
+            />
+          </div>
+          <div>
+            <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">Phone</label>
+            <input
+              type="tel"
+              name="phone"
+              id="phone"
+              value={formData.phone || ''}
+              onChange={handleChange}
+              className="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 text-base"
+              placeholder="Phone number"
+            />
+          </div>
+        </div>
       </div>
-      <div className="flex justify-end">
+      <div className="flex items-center gap-6 mt-8">
         <button
           type="submit"
+          className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold shadow-md transition-colors text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           disabled={isSubmitting}
-          className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? 'Saving...' : 'Save Lawyer'}
         </button>
+        {formData.id && (
+          <button
+            type="button"
+            onClick={handleDelete}
+            className="bg-red-100 hover:bg-red-200 text-red-700 px-8 py-3 rounded-lg font-semibold shadow-md transition-colors text-base focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+            disabled={isSubmitting}
+          >
+            Delete
+          </button>
+        )}
       </div>
+      {error && (
+        <div className="rounded-lg bg-red-50 p-4 mt-6">
+          <div className="flex">
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-red-800">{error}</h3>
+            </div>
+          </div>
+        </div>
+      )}
     </form>
   );
 } 

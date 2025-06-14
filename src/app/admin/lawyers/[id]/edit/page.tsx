@@ -1,12 +1,10 @@
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import LawyerForm from "@/app/admin/components/LawyerForm";
 
 interface PageProps {
-  params: Promise<{
-    id: string;
-  }>;
+  params: { id: string };
 }
 
 export default async function EditLawyerPage({ params }: PageProps) {
@@ -16,7 +14,7 @@ export default async function EditLawyerPage({ params }: PageProps) {
     redirect('/admin/login');
   }
 
-  const { id } = await params;
+  const { id } = params;
   
   const lawyer = await prisma.lawyer.findUnique({
     where: { id }

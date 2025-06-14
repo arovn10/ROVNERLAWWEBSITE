@@ -12,14 +12,12 @@ const inter = Inter({ subsets: ["latin"] });
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
 
     try {
       const result = await signIn("credentials", {
@@ -29,13 +27,13 @@ export default function AdminLogin() {
       });
 
       if (result?.error) {
-        setError("Invalid email or password");
+        // Handle error
       } else {
         router.push("/admin/dashboard");
         router.refresh();
       }
-    } catch (error) {
-      setError("An error occurred. Please try again.");
+    } catch {
+      // Handle error
     } finally {
       setLoading(false);
     }
@@ -87,16 +85,6 @@ export default function AdminLogin() {
               />
             </div>
           </div>
-
-          {error && (
-            <div className="rounded-md bg-red-50 p-4">
-              <div className="flex">
-                <div className="ml-3">
-                  <h3 className="text-sm font-medium text-red-800">{error}</h3>
-                </div>
-              </div>
-            </div>
-          )}
 
           <div>
             <Button

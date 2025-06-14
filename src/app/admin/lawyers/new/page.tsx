@@ -1,4 +1,4 @@
-import LawyerForm from '../components/LawyerForm';
+import LawyerForm from '../../components/LawyerForm';
 
 export default function AddLawyerPage() {
   return (

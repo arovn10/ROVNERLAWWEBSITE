@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { getServerSession } from "next-auth";
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { awsConfig } from '@/lib/aws-config';
 
@@ -12,11 +11,6 @@ const s3Client = new S3Client({
 });
 
 export async function POST(request: Request) {
-  // const session = await getServerSession(authOptions);
-  // if (!session) {
-  //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  // }
-
   try {
     console.log('--- Upload API called ---');
     console.log('AWS Config:', awsConfig);
@@ -35,7 +29,6 @@ export async function POST(request: Request) {
 
     // Generate a unique filename
     const timestamp = Date.now();
-    const extension = file.name.split('.').pop();
     const uniqueFileName = `${timestamp}-${file.name.replace(/\s+/g, '-')}`;
     const key = `uploads/${uniqueFileName}`;
     console.log('Uploading to S3 with key:', key, 'ContentType:', file.type);
