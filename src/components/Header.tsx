@@ -42,17 +42,6 @@ export default function Header({ currentPage = '', firmName = 'Law Firm' }: Head
           <li><Link href="/contact" className={`nav-link ${currentPage === 'contact' ? 'active' : ''}`}>CONTACT US</Link></li>
         </ul>
       </nav>
-      <div style={{
-        width: '100%',
-        textAlign: 'center',
-        fontSize: '0.95rem',
-        color: 'var(--gray-400)',
-        fontStyle: 'italic',
-        marginTop: '0.25rem',
-        letterSpacing: '0.01em',
-      }}>
-        Programmed by Alec Rovner
-      </div>
     </>
   );
 } 

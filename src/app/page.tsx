@@ -38,77 +38,93 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex flex-col items-center justify-center font-sans">
       <Header firmName={firmName} />
-      {/* Navigation Cards */}
-      <section className="w-full max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 py-16 px-6">
-        <Link href="/about" className="group bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-gray-200 p-10 flex flex-col items-center hover:scale-105 hover:shadow-2xl transition-all">
-          <span className="text-3xl font-bold text-blue-600 mb-4">About Us</span>
-          <p className="text-gray-600 text-center">Learn about our firm's history, values, and commitment to clients.</p>
-        </Link>
-        <Link href="/practice" className="group bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-gray-200 p-10 flex flex-col items-center hover:scale-105 hover:shadow-2xl transition-all">
-          <span className="text-3xl font-bold text-green-600 mb-4">Practice Areas</span>
-          <p className="text-gray-600 text-center">Explore the areas of law we specialize in, from injury to family law.</p>
-        </Link>
-        <Link href="/photo-gallery" className="group bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-gray-200 p-10 flex flex-col items-center hover:scale-105 hover:shadow-2xl transition-all">
-          <span className="text-3xl font-bold text-purple-600 mb-4">Photo Gallery</span>
-          <p className="text-gray-600 text-center">See our team in action and our community involvement.</p>
-        </Link>
-        <Link href="/in-the-news" className="group bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-gray-200 p-10 flex flex-col items-center hover:scale-105 hover:shadow-2xl transition-all">
-          <span className="text-3xl font-bold text-yellow-600 mb-4">In the News</span>
-          <p className="text-gray-600 text-center">Read about our firm's impact and media coverage.</p>
-        </Link>
-        <Link href="/locations" className="group bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-gray-200 p-10 flex flex-col items-center hover:scale-105 hover:shadow-2xl transition-all">
-          <span className="text-3xl font-bold text-pink-600 mb-4">Locations</span>
-          <p className="text-gray-600 text-center">Find our offices and get directions to meet with us.</p>
-        </Link>
-        <Link href="/contact" className="group bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl border border-gray-200 p-10 flex flex-col items-center hover:scale-105 hover:shadow-2xl transition-all">
-          <span className="text-3xl font-bold text-blue-600 mb-4">Contact</span>
-          <p className="text-gray-600 text-center">Reach out for a free consultation or to ask a question.</p>
-        </Link>
-      </section>
-      {/* Hero Banner with Professional Home Image - Using Alternative Banner */}
-      <section className="hero-professional">
-        <div className="hero-image-overlay">
+      {/* Hero Banner with Professional Home Image and overlayed content */}
+      <section className="hero-professional" style={{ position: 'relative', minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="hero-image-overlay" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
           <Image 
             src="/photos/banner-home-new-1-1024x343.png" 
             alt="Professional Law Firm" 
-            width={1024}
-            height={343}
+            width={1920}
+            height={600}
             className="hero-background"
             priority
-            style={{ objectPosition: 'center right', objectFit: 'cover' }}
+            style={{ objectPosition: 'center', objectFit: 'cover', width: '100%', height: '100%' }}
           />
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'rgba(20, 28, 38, 0.45)',
+            zIndex: 1
+          }} />
         </div>
-        <div className="hero-content">
-          <h2>RECENT SETTLEMENTS & VERDICTS</h2>
-          <p>Over 40 Years of Fighting for Our Clients</p>
-          <div className="hero-stats">
-            <div className="stat-item">
-              <span className="stat-number">40+</span>
-              <span className="stat-label">Years of Experience</span>
+        <div className="hero-content" style={{
+          position: 'relative',
+          zIndex: 2,
+          width: '100%',
+          maxWidth: 900,
+          margin: '0 auto',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#fff',
+          textAlign: 'center',
+          padding: '2rem 1rem',
+        }}>
+          <h1 className="content-title" style={{ fontSize: 'clamp(2.5rem, 6vw, 3.5rem)', fontWeight: 800, marginBottom: '0.5rem', color: '#fff', textShadow: '0 2px 12px rgba(0,0,0,0.7)' }}>{firmName}</h1>
+          <div className="accent-bar" style={{ margin: '0 auto 1.5rem auto', background: 'var(--gradient-gold)' }}></div>
+          <h2 className="content-subtitle" style={{ marginBottom: '1.5rem', color: '#f3f4f6', fontWeight: 600, fontSize: '1.7rem', textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Premier Injury Lawyers</h2>
+          <p className="content-text" style={{ marginBottom: '2.5rem', maxWidth: 600, marginLeft: 'auto', marginRight: 'auto', color: '#e5e7eb', fontSize: '1.25rem', textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
+            For over 40 years, {firmName} has been fighting for clients in Philadelphia who have been victims of negligence, auto accidents, personal injury, medical malpractice and premise liability.
+          </p>
+          <div className="firm-highlights" style={{ justifyContent: 'center', gap: '3rem', marginBottom: '2.5rem', display: 'flex', flexWrap: 'wrap' }}>
+            <div className="highlight-item" style={{ minWidth: 120 }}>
+              <span className="highlight-number" style={{ color: '#fbbf24', fontSize: '2.2rem', fontWeight: 700, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>40+</span>
+              <span className="highlight-text" style={{ color: '#f3f4f6', display: 'block', fontWeight: 500, marginTop: 4, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Years of Experience</span>
             </div>
-            <div className="stat-item">
-              <span className="stat-number">15+</span>
-              <span className="stat-label">Attorneys</span>
+            <div className="highlight-item" style={{ minWidth: 120 }}>
+              <span className="highlight-number" style={{ color: '#fbbf24', fontSize: '2.2rem', fontWeight: 700, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>15+</span>
+              <span className="highlight-text" style={{ color: '#f3f4f6', display: 'block', fontWeight: 500, marginTop: 4, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Skilled Attorneys</span>
             </div>
-            <div className="stat-item">
-              <span className="stat-number">$50M+</span>
-              <span className="stat-label">Recovered for Clients</span>
+            <div className="highlight-item" style={{ minWidth: 120 }}>
+              <span className="highlight-number" style={{ color: '#fbbf24', fontSize: '2.2rem', fontWeight: 700, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>1000+</span>
+              <span className="highlight-text" style={{ color: '#f3f4f6', display: 'block', fontWeight: 500, marginTop: 4, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Cases Won</span>
             </div>
           </div>
+          <a href="/contact" style={{
+            display: 'inline-block',
+            background: 'var(--gradient-gold, linear-gradient(135deg, #d97706 0%, #f59e0b 100%))',
+            color: '#fff',
+            fontWeight: 700,
+            fontSize: '1.15rem',
+            padding: '0.9rem 2.5rem',
+            borderRadius: 8,
+            boxShadow: '0 4px 24px rgba(0,0,0,0.18)',
+            textDecoration: 'none',
+            letterSpacing: '0.01em',
+            marginTop: 8,
+            transition: 'background 0.2s, box-shadow 0.2s',
+          }}
+          onMouseOver={e => e.currentTarget.style.background = 'var(--gold-accent, #d97706)'}
+          onMouseOut={e => e.currentTarget.style.background = 'var(--gradient-gold, linear-gradient(135deg, #d97706 0%, #f59e0b 100%))'}
+          >
+            Get a Free Consultation
+          </a>
         </div>
       </section>
-      {/* Settlement Carousel - 3 at a time without images */}
+      {/* Settlement Carousel */}
       <section className="section">
         <div className="section-title">
           <h3>Recent Results</h3>
           <p>We get results for our clients</p>
         </div>
-        
         <div className="carousel-container">
           <button className="carousel-btn prev-btn" onClick={prevGroup}>
             &#8249;
           </button>
-          
           <div className="settlements-carousel">
             <div className="grid grid-3">
               {settlementGroups[currentSettlementGroup]?.map((settlement: Settlement) => (
@@ -125,12 +141,10 @@ export default function HomePage() {
               ))}
             </div>
           </div>
-          
           <button className="carousel-btn next-btn" onClick={nextGroup}>
             &#8250;
           </button>
         </div>
-        
         <div className="carousel-indicators">
           {settlementGroups.map((_, index) => (
             <button
@@ -141,7 +155,7 @@ export default function HomePage() {
           ))}
         </div>
       </section>
-      {/* Practice Areas with Correctly Named Professional Images */}
+      {/* Practice Areas */}
       <section className="section">
         <div className="section-title">
           <h3>Our Practice Areas</h3>
@@ -168,7 +182,6 @@ export default function HomePage() {
               <Link href="/practice" className="learn-more-btn">LEARN MORE</Link>
             </div>
           </div>
-
           {/* Personal Injury */}
           <div className="card practice-card-enhanced">
             <div className="practice-image-container">
@@ -189,7 +202,6 @@ export default function HomePage() {
               <Link href="/practice" className="learn-more-btn">LEARN MORE</Link>
             </div>
           </div>
-
           {/* Medical Malpractice */}
           <div className="card practice-card-enhanced">
             <div className="practice-image-container">
@@ -210,7 +222,6 @@ export default function HomePage() {
               <Link href="/practice" className="learn-more-btn">LEARN MORE</Link>
             </div>
           </div>
-
           {/* Premises Liability */}
           <div className="card practice-card-enhanced">
             <div className="practice-image-container">
@@ -233,45 +244,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Professional About Section with Correct Banner (1024x128) */}
-      <section className="section about-preview">
-        <div className="about-content">
-          <div className="about-text">
-            <h2 className="content-title">Law Offices of Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt</h2>
-            <div className="accent-bar"></div>
-            <h3 className="content-subtitle">Premier Injury Lawyers</h3>
-            <p className="content-text">
-              For over 40 years, the Law Offices of Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt have been fighting for clients in Philadelphia who have been victims of negligence, auto accidents, personal injury, medical malpractice and premise liability.
-            </p>
-            <div className="firm-highlights">
-              <div className="highlight-item">
-                <span className="highlight-number">40+</span>
-                <span className="highlight-text">Years of Experience</span>
-              </div>
-              <div className="highlight-item">
-                <span className="highlight-number">15+</span>
-                <span className="highlight-text">Skilled Attorneys</span>
-              </div>
-              <div className="highlight-item">
-                <span className="highlight-number">1000+</span>
-                <span className="highlight-text">Cases Won</span>
-              </div>
-            </div>
-          </div>
-          <div className="about-image">
-            <Image 
-              src="/photos/banner-about2-1024x128.png" 
-              alt="About Our Law Firm" 
-              width={512} 
-              height={64}
-              className="about-firm-image"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Quick Links Section with Properly Sized QuickLink Images */}
+      {/* Quick Links Section */}
       <section className="section quick-links">
         <div className="section-title">
           <h3>Quick Access</h3>
@@ -324,7 +297,6 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
-
       {/* SEPTA Feature Section */}
       <section className="section septa-feature">
         <div className="septa-content">
@@ -344,7 +316,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       <Footer firmName={firmName} />
     </div>
   );

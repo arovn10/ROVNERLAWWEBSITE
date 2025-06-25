@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from "next-auth/next";
 import { prisma } from "@/lib/prisma";
 
@@ -21,7 +21,7 @@ export async function GET() {
 }
 
 // POST /api/news
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const session = await getServerSession();
   if (!session) {
     return NextResponse.json(
@@ -31,16 +31,26 @@ export async function POST(request: Request) {
   }
 
   try {
-    const data = await request.json();
+    const body = await request.json();
+    const { title, content, date, source, url } = body;
+
+    if (!title || !content || !date || !source) {
+      return NextResponse.json(
+        { error: 'Missing required fields' },
+        { status: 400 }
+      );
+    }
+
     const news = await prisma.news.create({
       data: {
-        title: data.title,
-        content: data.content,
-        date: new Date(data.date),
-        source: data.source,
-        url: data.url
+        title,
+        content,
+        date: new Date(date),
+        source,
+        url: url || null
       }
     });
+
     return NextResponse.json(news);
   } catch (error) {
     console.error('Error creating news:', error);

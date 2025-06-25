@@ -1,218 +1,190 @@
+"use client";
+
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { Calendar, ExternalLink, FileText, ArrowLeft } from 'lucide-react';
+
+interface News {
+  id: string;
+  title: string;
+  content: string;
+  date: string;
+  source: string;
+  url?: string;
+}
 
 export default function InTheNewsPage() {
+  const [firmName, setFirmName] = useState('Law Firm');
+  const [news, setNews] = useState<News[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Fetch firm name
+    fetch('/api/settings/firm-name')
+      .then(res => res.json())
+      .then(data => {
+        if (data.firmName) setFirmName(data.firmName);
+      });
+
+    // Fetch news articles
+    fetch('/api/news')
+      .then(res => res.json())
+      .then(data => {
+        setNews(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching news:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  const truncateContent = (content: string, maxLength: number = 200) => {
+    if (content.length <= maxLength) return content;
+    return content.substring(0, maxLength) + '...';
+  };
+
   return (
-    <div>
-      <Header currentPage="in-the-news" />
-      {/* Hero Image with Page Title */}
-      <section className="relative py-24 bg-cover bg-center" style={{backgroundImage: "url('/photos/attorneys-hero.jpg')"}}>
-        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-        <div className="relative max-w-7xl mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold text-white mb-4">IN THE NEWS</h1>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex flex-col items-center justify-center font-sans">
+      <Header firmName={firmName} />
+      
+      {/* Hero Section */}
+      <section className="hero-professional" style={{ position: 'relative', minHeight: '40vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="hero-image-overlay" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'var(--gradient-navy)',
+            zIndex: 1
+          }} />
+        </div>
+        <div className="hero-content" style={{
+          position: 'relative',
+          zIndex: 2,
+          width: '100%',
+          maxWidth: 900,
+          margin: '0 auto',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#fff',
+          textAlign: 'center',
+          padding: '2rem 1rem',
+        }}>
+          <h1 className="content-title" style={{ fontSize: 'clamp(2.5rem, 6vw, 3.5rem)', fontWeight: 800, marginBottom: '0.5rem', color: '#fff', textShadow: '0 2px 12px rgba(0,0,0,0.7)' }}>In the News</h1>
+          <div className="accent-bar" style={{ margin: '0 auto 1.5rem auto', background: 'var(--gradient-gold)' }}></div>
+          <p className="content-text" style={{ marginBottom: '2.5rem', maxWidth: 600, marginLeft: 'auto', marginRight: 'auto', color: '#e5e7eb', fontSize: '1.25rem', textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
+            Stay updated with the latest news, press mentions, and media coverage featuring {firmName}
+          </p>
         </div>
       </section>
-      {/* Page Content */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Main Content */}
-            <div className="lg:col-span-2">
-              <div className="mb-8">
-                <h2 className="text-3xl font-bold text-gray-800 mb-2">Recent News Coverage</h2>
-                <div className="w-24 h-1 bg-blue-500 mb-6"></div>
-              </div>
 
-              <div className="space-y-8">
-                {/* News Article 1 */}
-                <article className="border-b border-gray-200 pb-8">
-                  <h3 className="text-xl font-bold text-orange-500 mb-4">Settlement Reached in Major Auto Accident Case</h3>
-                  <div className="text-sm text-gray-500 mb-4">Published: December 15, 2023</div>
-                  <div className="prose max-w-none text-gray-700">
-                    <p>The Law Offices of Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt announced today that they have reached a significant settlement on behalf of their client who was severely injured in a multi-vehicle accident on I-95. The settlement amount, while confidential, provides substantial compensation for medical expenses, lost wages, and pain and suffering.</p>
-                    <p>"This settlement demonstrates our commitment to fighting for the rights of injured victims," said Steven L. Rovner, managing partner of the firm. "Our client can now focus on their recovery knowing that their financial future is secure."</p>
-                    <p>The accident occurred when the defendant driver failed to maintain control of their vehicle during adverse weather conditions, resulting in a chain-reaction collision involving multiple vehicles.</p>
-                  </div>
-                </article>
+      {/* News Content */}
+      <section className="section">
+        <div className="section-title">
+          <h3>Latest News & Media Coverage</h3>
+          <p>Press mentions, articles, and media appearances</p>
+        </div>
 
-                {/* News Article 2 */}
-                <article className="border-b border-gray-200 pb-8">
-                  <h3 className="text-xl font-bold text-orange-500 mb-4">Firm Recognized for Outstanding Community Service</h3>
-                  <div className="text-sm text-gray-500 mb-4">Published: November 8, 2023</div>
-                  <div className="prose max-w-none text-gray-700">
-                    <p>The Philadelphia Bar Association has recognized the Law Offices of Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt for their outstanding pro bono work and community service. The firm has provided free legal services to over 150 families in need throughout the past year.</p>
-                    <p>"Giving back to our community is not just a responsibility, it's a privilege," said Howard P. Rovner. "We are honored to be able to help those who might not otherwise have access to quality legal representation."</p>
-                    <p>The firm's community service initiatives include free legal clinics, educational seminars on legal rights, and partnerships with local charities.</p>
-                  </div>
-                </article>
-
-                {/* News Article 3 */}
-                <article className="border-b border-gray-200 pb-8">
-                  <h3 className="text-xl font-bold text-orange-500 mb-4">Record Verdict in Medical Malpractice Case</h3>
-                  <div className="text-sm text-gray-500 mb-4">Published: October 22, 2023</div>
-                  <div className="prose max-w-none text-gray-700">
-                    <p>A Philadelphia jury awarded $2.4 million to a client represented by Jeffrey I. Zimmerman in a medical malpractice case involving a misdiagnosis that led to delayed treatment and permanent injury. The verdict represents one of the largest medical malpractice awards in the region this year.</p>
-                    <p>"This case highlights the importance of accurate diagnosis and timely treatment," said Zimmerman. "Medical professionals must be held accountable when their negligence causes harm to patients."</p>
-                    <p>The case involved a 45-year-old construction worker whose condition was misdiagnosed for over six months, resulting in permanent disability and loss of income.</p>
-                  </div>
-                </article>
-
-                {/* News Article 4 */}
-                <article className="border-b border-gray-200 pb-8">
-                  <h3 className="text-xl font-bold text-orange-500 mb-4">Firm Celebrates 40th Anniversary</h3>
-                  <div className="text-sm text-gray-500 mb-4">Published: September 5, 2023</div>
-                  <div className="prose max-w-none text-gray-700">
-                    <p>The Law Offices of Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt marked their 40th anniversary with a celebration attended by clients, colleagues, and community leaders. Founded in 1983 by the late Robert A. Rovner, the firm has grown from a small practice to one of the region's premier personal injury law firms.</p>
-                    <p>"My father would be proud to see how the firm has grown while maintaining its commitment to excellence and client service," said Steven L. Rovner. "We look forward to serving our community for many years to come."</p>
-                    <p>Over four decades, the firm has recovered over $100 million in settlements and verdicts for their clients.</p>
-                  </div>
-                </article>
-
-                {/* News Article 5 */}
-                <article className="pb-8">
-                  <h3 className="text-xl font-bold text-orange-500 mb-4">Scholarship Program Launched for Local Students</h3>
-                  <div className="text-sm text-gray-500 mb-4">Published: August 18, 2023</div>
-                  <div className="prose max-w-none text-gray-700">
-                    <p>The firm announced the launch of the Robert A. Rovner Memorial Scholarship Program, which will provide financial assistance to local students pursuing legal education. The scholarship honors the memory of the firm's founder and his commitment to education and public service.</p>
-                    <p>"Education was one of my father's greatest passions," said Steven L. Rovner. "This scholarship program will help ensure that financial barriers don't prevent deserving students from pursuing their dreams of becoming lawyers."</p>
-                    <p>The scholarship will award $5,000 annually to qualifying students attending law school in Pennsylvania or New Jersey.</p>
-                  </div>
-                </article>
-              </div>
-
-              {/* Admin Link */}
-              <div className="mt-12 p-6 bg-gray-100 rounded">
-                <h3 className="text-lg font-bold mb-4">Admin Access</h3>
-                <p className="text-sm text-gray-600 mb-4">Authorized personnel can edit news articles and manage content.</p>
-                <Link 
-                  href="/admin/news" 
-                  className="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 font-bold"
-                >
-                  MANAGE NEWS CONTENT
-                </Link>
-              </div>
-            </div>
-
-            {/* Sidebar */}
-            <div>
-              {/* Practice Areas Box */}
-              <div className="bg-blue-600 text-white p-6 rounded mb-8">
-                <h3 className="text-xl font-bold mb-6 text-center">PRACTICE AREAS:</h3>
-                <ul className="space-y-3 text-sm">
-                  <li className="bg-blue-500 p-2 rounded text-center">Personal Injury</li>
-                  <li className="bg-blue-500 p-2 rounded text-center">Auto Accidents</li>
-                  <li className="bg-blue-500 p-2 rounded text-center">Motorcycle Accidents</li>
-                  <li className="bg-blue-500 p-2 rounded text-center">Truck Accidents</li>
-                  <li className="bg-blue-500 p-2 rounded text-center">Premises Liability</li>
-                  <li className="bg-blue-500 p-2 rounded text-center">Medical Malpractice</li>
-                  <li className="bg-blue-500 p-2 rounded text-center">Defective Products</li>
-                  <li className="bg-blue-500 p-2 rounded text-center">Workers' Compensation</li>
-                  <li className="bg-blue-500 p-2 rounded text-center">Divorce/ Family Law/ Custody</li>
-                  <li className="bg-blue-500 p-2 rounded text-center">Criminal Defense</li>
-                  <li className="bg-gray-600 p-2 rounded text-center">Social Security Disability</li>
-                  <li className="bg-blue-500 p-2 rounded text-center">General Legal Matters</li>
-                </ul>
-              </div>
-
-              {/* Recent News Box */}
-              <div className="bg-gray-100 p-6 rounded mb-8">
-                <h3 className="text-xl font-bold mb-6 text-center">RECENT UPDATES</h3>
-                <ul className="space-y-3 text-sm">
-                  <li className="border-b border-gray-300 pb-2">
-                    <Link href="#" className="text-blue-600 hover:text-blue-800 font-semibold">Major Settlement Announced</Link>
-                    <div className="text-xs text-gray-500">Dec 15, 2023</div>
-                  </li>
-                  <li className="border-b border-gray-300 pb-2">
-                    <Link href="#" className="text-blue-600 hover:text-blue-800 font-semibold">Community Service Recognition</Link>
-                    <div className="text-xs text-gray-500">Nov 8, 2023</div>
-                  </li>
-                  <li className="border-b border-gray-300 pb-2">
-                    <Link href="#" className="text-blue-600 hover:text-blue-800 font-semibold">Record Medical Malpractice Verdict</Link>
-                    <div className="text-xs text-gray-500">Oct 22, 2023</div>
-                  </li>
-                  <li className="border-b border-gray-300 pb-2">
-                    <Link href="#" className="text-blue-600 hover:text-blue-800 font-semibold">40th Anniversary Celebration</Link>
-                    <div className="text-xs text-gray-500">Sep 5, 2023</div>
-                  </li>
-                  <li className="pb-2">
-                    <Link href="#" className="text-blue-600 hover:text-blue-800 font-semibold">Scholarship Program Launch</Link>
-                    <div className="text-xs text-gray-500">Aug 18, 2023</div>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Contact Form */}
-              <div className="bg-gray-100 p-6 rounded">
-                <h3 className="text-xl font-bold mb-6 text-center text-blue-600">Contact Us!</h3>
-                <form className="space-y-4">
-                  <input
-                    type="text"
-                    placeholder="Name *"
-                    className="w-full p-3 border border-gray-300 rounded text-sm"
-                    required
-                  />
-                  <input
-                    type="email"
-                    placeholder="Email *"
-                    className="w-full p-3 border border-gray-300 rounded text-sm"
-                    required
-                  />
-                  <input
-                    type="tel"
-                    placeholder="Phone *"
-                    className="w-full p-3 border border-gray-300 rounded text-sm"
-                    required
-                  />
-                  <textarea
-                    placeholder="Home Address"
-                    rows={3}
-                    className="w-full p-3 border border-gray-300 rounded text-sm"
-                  ></textarea>
-                  <textarea
-                    placeholder="Date of Incident *"
-                    rows={2}
-                    className="w-full p-3 border border-gray-300 rounded text-sm"
-                    required
-                  ></textarea>
-                  <div className="text-sm">
-                    <label className="font-bold mb-2 block">Are you represented by another lawyer for this matter?</label>
-                    <div className="space-y-1">
-                      <label className="flex items-center">
-                        <input type="radio" name="representation" value="no" defaultChecked className="mr-2" />
-                        <span>No</span>
-                      </label>
-                      <label className="flex items-center">
-                        <input type="radio" name="representation" value="yes" className="mr-2" />
-                        <span>Yes</span>
-                      </label>
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="text-lg font-semibold text-gray-700">Loading news articles...</div>
+          </div>
+        ) : news.length === 0 ? (
+          <div className="text-center py-12">
+            <FileText className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">No news articles yet</h3>
+            <p className="text-gray-600">Check back soon for the latest updates and media coverage.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {news.map((article) => (
+              <article key={article.id} className="card news-card">
+                <div className="news-header">
+                  <div className="news-meta">
+                    <div className="news-date">
+                      <Calendar className="h-4 w-4" />
+                      {formatDate(article.date)}
                     </div>
+                    <div className="news-source">{article.source}</div>
                   </div>
-                  <textarea
-                    placeholder="Facts of what happened *"
-                    rows={4}
-                    className="w-full p-3 border border-gray-300 rounded text-sm"
-                    required
-                  ></textarea>
-                  <div className="text-xs text-gray-600 p-3 bg-gray-50 rounded">
-                    The submission of the information contained above in this form is not intended to create an attorney-client relationship.
+                  {article.url && (
+                    <a
+                      href={article.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="news-link"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                      Read Full Article
+                    </a>
+                  )}
+                </div>
+                
+                <h3 className="news-title">{article.title}</h3>
+                
+                <div className="news-content">
+                  <p>{truncateContent(article.content)}</p>
+                </div>
+                
+                {article.url && (
+                  <div className="news-actions">
+                    <a
+                      href={article.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="news-cta-btn"
+                    >
+                      Read Full Article
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
                   </div>
-                  <label className="flex items-start space-x-2 text-xs">
-                    <input type="checkbox" required className="mt-1" />
-                    <span>*I understand and agree to the above terms</span>
-                  </label>
-                  <button
-                    type="submit"
-                    className="w-full bg-orange-500 text-white py-3 rounded hover:bg-orange-600 font-bold"
-                  >
-                    SUBMIT
-                  </button>
-                </form>
-              </div>
-            </div>
+                )}
+              </article>
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* Contact CTA */}
+      <section className="section">
+        <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-8 text-white text-center shadow-xl">
+          <h3 className="text-2xl font-bold mb-4">Need Legal Representation?</h3>
+          <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
+            Our experienced attorneys are ready to help you with your legal needs. 
+            Contact us today for a free consultation.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="/contact"
+              className="inline-block bg-white text-blue-600 font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02]"
+            >
+              Get Free Consultation
+            </a>
+            <a
+              href="tel:215-259-5958"
+              className="inline-block bg-blue-500 text-white font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02]"
+            >
+              Call 215-259-5958
+            </a>
           </div>
         </div>
       </section>
+
       <Footer />
     </div>
   );

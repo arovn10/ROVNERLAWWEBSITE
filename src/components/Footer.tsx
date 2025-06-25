@@ -69,7 +69,7 @@ export default function Footer({ firmName = 'Law Firm' }: { firmName?: string })
               The hiring of a lawyer is an important decision that should not be based solely upon advertisements. 
               <Link href="#"> Click here to see our disclaimer policies.</Link>
             </p>
-            <p className="footer-copyright">©1997-2024 by Robert A. Rovner, P.C. All rights reserved. Programmed by Alec Rovner</p>
+            <p className="footer-copyright">©1997-2025 by Robert A. Rovner, P.C. All rights reserved. Programmed by Alec Rovner</p>
             <p className="footer-legal">
               The submission of the information contained above in this form is not intended to create an attorney-client relationship. There will be no representation of the party submitting this above information for any potential legal claim until that party is contacted by a member of {firmName} ("the Firm") and a formal, written contract is signed by that party and an authorized member of the Firm. The Firm will not be liable for any time limitations or representation in any legal matter raised by the use of this internet website.
             </p>
