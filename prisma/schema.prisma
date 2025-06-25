@@ -78,3 +78,16 @@ model Settings {
   firmName  String
   updatedAt DateTime @updatedAt
 }
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  address   String?
+  dateOfIncident DateTime?
+  caseType  String?
+  represented String?
+  facts     String
+  createdAt DateTime @default(now())
+}

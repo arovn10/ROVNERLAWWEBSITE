@@ -1,6 +1,11 @@
-import Link from 'next/link';
+'use client';
 
-export default function Footer({ firmName = 'Law Firm' }: { firmName?: string }) {
+import Link from 'next/link';
+import { useFirmName } from '@/lib/FirmNameContext';
+
+export default function Footer() {
+  const { firmName } = useFirmName();
+
   return (
     <>
       {/* Fixed Contact Button */}
@@ -22,7 +27,6 @@ export default function Footer({ firmName = 'Law Firm' }: { firmName?: string })
                 <li><Link href="/locations" className="footer-link">Locations</Link></li>
                 <li><Link href="/photo-gallery" className="footer-link">Photo Gallery</Link></li>
                 <li><Link href="/in-the-news" className="footer-link">In the News</Link></li>
-                <li><Link href="/radio-show" className="footer-link">Radio Show</Link></li>
                 <li><Link href="/contact" className="footer-link">Contact Us</Link></li>
               </ul>
             </div>

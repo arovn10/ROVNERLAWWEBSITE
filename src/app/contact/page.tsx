@@ -1,10 +1,100 @@
+"use client";
+
+import { useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { useFirmName } from '@/lib/FirmNameContext';
 
 export default function ContactPage() {
+  const { firmName } = useFirmName();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    address: '',
+    dateOfIncident: '',
+    caseType: '',
+    represented: '',
+    facts: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({ type: null, message: '' });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: '' });
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus({
+          type: 'success',
+          message: result.message || 'Thank you for your message. We will contact you soon!'
+        });
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          address: '',
+          dateOfIncident: '',
+          caseType: '',
+          represented: '',
+          facts: ''
+        });
+        // Scroll to top to show success message
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        setSubmitStatus({
+          type: 'error',
+          message: result.error || 'Failed to send message. Please try again.'
+        });
+      }
+    } catch (error) {
+      setSubmitStatus({
+        type: 'error',
+        message: 'Failed to send message. Please try again.'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div>
       <Header currentPage="contact" />
+
+      {/* Success/Error Message */}
+      {submitStatus.type && (
+        <div className={`fixed top-20 left-1/2 transform -translate-x-1/2 z-50 p-4 rounded-lg shadow-lg ${
+          submitStatus.type === 'success' 
+            ? 'bg-green-500 text-white' 
+            : 'bg-red-500 text-white'
+        }`}>
+          {submitStatus.message}
+        </div>
+      )}
 
       {/* Hero Section */}
       <section className="hero-professional">
@@ -25,7 +115,7 @@ export default function ContactPage() {
 
             <div className="content-text-blocks">
               <p className="content-text">
-                At the Law Offices of Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt, we understand that dealing with legal issues can be overwhelming. That's why we offer free consultations to discuss your case and explore your legal options.
+                At the Law Offices of {firmName}, we understand that dealing with legal issues can be overwhelming. That's why we offer free consultations to discuss your case and explore your legal options.
               </p>
 
               <p className="content-text">
@@ -68,30 +158,62 @@ export default function ContactPage() {
             {/* Contact Form */}
             <div className="sidebar-box contact-form-box">
               <h3 className="sidebar-title">Contact Form</h3>
-              <form className="contact-form">
+              <form className="contact-form" onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label>Full Name *</label>
-                  <input type="text" required />
+                  <input 
+                    type="text" 
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required 
+                  />
                 </div>
                 <div className="form-group">
                   <label>Email Address *</label>
-                  <input type="email" required />
+                  <input 
+                    type="email" 
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required 
+                  />
                 </div>
                 <div className="form-group">
                   <label>Phone Number *</label>
-                  <input type="tel" required />
+                  <input 
+                    type="tel" 
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    required 
+                  />
                 </div>
                 <div className="form-group">
                   <label>Home Address</label>
-                  <input type="text" />
+                  <input 
+                    type="text" 
+                    name="address"
+                    value={formData.address}
+                    onChange={handleInputChange}
+                  />
                 </div>
                 <div className="form-group">
                   <label>Date of Incident</label>
-                  <input type="date" />
+                  <input 
+                    type="date" 
+                    name="dateOfIncident"
+                    value={formData.dateOfIncident}
+                    onChange={handleInputChange}
+                  />
                 </div>
                 <div className="form-group">
                   <label>Type of Case</label>
-                  <select>
+                  <select 
+                    name="caseType"
+                    value={formData.caseType}
+                    onChange={handleInputChange}
+                  >
                     <option value="">Select Case Type</option>
                     <option value="auto-accident">Auto Accident</option>
                     <option value="personal-injury">Personal Injury</option>
@@ -105,18 +227,37 @@ export default function ContactPage() {
                   <label>Are you currently represented by another lawyer for this matter?</label>
                   <div className="radio-group">
                     <label className="radio-label">
-                      <input type="radio" name="represented" value="no" />
+                      <input 
+                        type="radio" 
+                        name="represented" 
+                        value="no"
+                        checked={formData.represented === 'no'}
+                        onChange={handleInputChange}
+                      />
                       No
                     </label>
                     <label className="radio-label">
-                      <input type="radio" name="represented" value="yes" />
+                      <input 
+                        type="radio" 
+                        name="represented" 
+                        value="yes"
+                        checked={formData.represented === 'yes'}
+                        onChange={handleInputChange}
+                      />
                       Yes
                     </label>
                   </div>
                 </div>
                 <div className="form-group">
                   <label>Please describe what happened *</label>
-                  <textarea rows={5} placeholder="Please provide details about your case..." required></textarea>
+                  <textarea 
+                    rows={5} 
+                    name="facts"
+                    value={formData.facts}
+                    onChange={handleInputChange}
+                    placeholder="Please provide details about your case..." 
+                    required
+                  ></textarea>
                 </div>
                 <div className="form-disclaimer">
                   <label className="checkbox-label">
@@ -124,8 +265,12 @@ export default function ContactPage() {
                     *I understand and agree that the submission of this form does not create an attorney-client relationship. There will be no representation until a formal, written contract is signed by both parties.
                   </label>
                 </div>
-                <button type="submit" className="submit-btn">
-                  SEND MESSAGE
+                <button 
+                  type="submit" 
+                  className="submit-btn"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}
                 </button>
               </form>
             </div>

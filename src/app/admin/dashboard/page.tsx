@@ -4,14 +4,21 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useFirmName } from "@/lib/FirmNameContext";
 import { Users, FileText, Settings, Award, Archive, Plus, ExternalLink, Save, CheckCircle } from "lucide-react";
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [firmName, setFirmName] = useState("");
+  const { firmName, setFirmName } = useFirmName();
+  const [localFirmName, setLocalFirmName] = useState(firmName);
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  // Update local state when context firm name changes
+  useEffect(() => {
+    setLocalFirmName(firmName);
+  }, [firmName]);
 
   // TEMPORARILY DISABLED - Session check and redirect
   // useEffect(() => {
@@ -19,21 +26,16 @@ export default function AdminDashboard() {
   //   if (!session) router.push("/admin/login");
   // }, [session, status, router]);
 
-  useEffect(() => {
-    fetch("/api/settings/firm-name")
-      .then((res) => res.json())
-      .then((data) => setFirmName(data.firmName || ""));
-  }, []);
-
   const handleSave = async () => {
     setSaving(true);
     setSuccess(false);
     const res = await fetch("/api/settings/firm-name", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ firmName }),
+      body: JSON.stringify({ firmName: localFirmName }),
     });
     if (res.ok) {
+      setFirmName(localFirmName);
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
     }
@@ -157,8 +159,8 @@ export default function AdminDashboard() {
             <input
               id="firmName"
               type="text"
-              value={firmName}
-              onChange={e => setFirmName(e.target.value)}
+              value={localFirmName}
+              onChange={e => setLocalFirmName(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-xl text-lg font-medium focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white shadow-sm"
               placeholder="Enter firm name..."
               disabled={saving}

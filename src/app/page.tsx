@@ -5,22 +5,53 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { groupSettlementsForCarousel, type Settlement } from '@/data/settlements';
+import { useFirmName } from '@/lib/FirmNameContext';
+
+// Settlement type for fetched data
+type Settlement = {
+  id: string;
+  title: string;
+  description: string;
+  amount: number;
+  date: string;
+  caseType: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+// Group settlements into chunks for the carousel
+function groupSettlementsForCarousel(settlements: Settlement[], groupSize: number) {
+  const groups = [];
+  for (let i = 0; i < settlements.length; i += groupSize) {
+    groups.push(settlements.slice(i, i + groupSize));
+  }
+  return groups;
+}
 
 export default function HomePage() {
-  const [firmName, setFirmName] = useState('Law Firm');
+  const { firmName } = useFirmName();
+  const [settlements, setSettlements] = useState<Settlement[]>([]);
+  const [settlementGroups, setSettlementGroups] = useState<Settlement[][]>([]);
   const [currentSettlementGroup, setCurrentSettlementGroup] = useState(0);
-  const settlementGroups = groupSettlementsForCarousel(3);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('/api/settings/firm-name')
+    fetch('/api/settlements')
       .then(res => res.json())
-      .then(data => {
-        if (data.firmName) setFirmName(data.firmName);
+      .then((data: Settlement[]) => {
+        setSettlements(data);
+        setSettlementGroups(groupSettlementsForCarousel(data, 3));
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError('Failed to load settlements');
+        setLoading(false);
       });
   }, []);
 
   useEffect(() => {
+    if (settlementGroups.length === 0) return;
     const interval = setInterval(() => {
       setCurrentSettlementGroup((prev) => (prev + 1) % settlementGroups.length);
     }, 5000);
@@ -37,9 +68,9 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex flex-col items-center justify-center font-sans">
-      <Header firmName={firmName} />
+      <Header currentPage="home" />
       {/* Hero Banner with Professional Home Image and overlayed content */}
-      <section className="hero-professional" style={{ position: 'relative', minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <section className="hero-professional" style={{ position: 'relative', minHeight: '40vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div className="hero-image-overlay" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
           <Image 
             src="/photos/banner-home-new-1-1024x343.png" 
@@ -121,6 +152,14 @@ export default function HomePage() {
           <h3>Recent Results</h3>
           <p>We get results for our clients</p>
         </div>
+        {loading ? (
+          <div className="text-center py-8 text-gray-500">Loading settlements...</div>
+        ) : error ? (
+          <div className="text-center py-8 text-red-500">{error}</div>
+        ) : settlementGroups.length === 0 ? (
+          <div className="text-center py-8 text-gray-500">No settlements found.</div>
+        ) : (
+        <>
         <div className="carousel-container">
           <button className="carousel-btn prev-btn" onClick={prevGroup}>
             &#8249;
@@ -132,11 +171,10 @@ export default function HomePage() {
                   <div className="settlement-icon">
                     <div className="settlement-symbol">$</div>
                   </div>
-                  <div className="settlement-amount">{settlement.amount}</div>
+                  <div className="settlement-amount">
+                    ${settlement.amount.toLocaleString()}
+                  </div>
                   <div className="settlement-type">{settlement.caseType}</div>
-                  {settlement.practice_area && (
-                    <div className="settlement-practice-area">{settlement.practice_area}</div>
-                  )}
                 </div>
               ))}
             </div>
@@ -154,6 +192,8 @@ export default function HomePage() {
             />
           ))}
         </div>
+        </>
+        )}
       </section>
       {/* Practice Areas */}
       <section className="section">
@@ -297,26 +337,7 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
-      {/* SEPTA Feature Section */}
-      <section className="section septa-feature">
-        <div className="septa-content">
-          <div className="septa-text">
-            <h3>SEPTA Accident Specialists</h3>
-            <p>If you've been injured in a SEPTA bus, train, or trolley accident, our experienced attorneys can help you navigate the complex claims process and secure the compensation you deserve.</p>
-            <Link href="/contact" className="septa-cta-btn">Get Help Now</Link>
-          </div>
-          <div className="septa-image">
-            <Image 
-              src="/photos/septa-accident-1024x576.jpg" 
-              alt="SEPTA Accident Legal Help" 
-              width={512} 
-              height={288}
-              className="septa-accident-image"
-            />
-          </div>
-        </div>
-      </section>
-      <Footer firmName={firmName} />
+      <Footer />
     </div>
   );
 }

@@ -700,31 +700,31 @@ body {
   object-fit: contain;
 }
 
-/* Quick Links Section with Proper Icon Sizing */
+/* Quick Links Section */
 .quick-links {
-  background: var(--gray-100);
+  background: var(--gray-50);
 }
 
 .quick-link-card {
   background: white;
+  padding: 2rem;
   border-radius: 12px;
-  padding: 2.5rem;
-  text-align: center;
   text-decoration: none;
-  color: var(--gray-700);
+  color: var(--gray-900);
+  text-align: center;
   transition: all 0.3s ease;
-  border: 1px solid var(--gray-200);
   box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
 }
 
 .quick-link-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
-  color: var(--navy-primary);
+  border-color: var(--blue-light);
 }
 
 .quick-link-icon {
-  border-radius: 8px;
+  margin-bottom: 1rem;
   transition: transform 0.3s ease;
 }
 
@@ -734,73 +734,15 @@ body {
 
 .quick-link-card h4 {
   font-size: 1.125rem;
-  font-weight: 700;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
   color: var(--navy-primary);
-  margin: 1.5rem 0 1rem;
 }
 
 .quick-link-card p {
-  font-size: 0.95rem;
+  font-size: 0.875rem;
   color: var(--gray-600);
   line-height: 1.5;
-}
-
-/* SEPTA Feature Section */
-.septa-feature {
-  background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
-  color: white;
-  margin: 0;
-}
-
-.septa-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-}
-
-.septa-text h3 {
-  font-size: 2.25rem;
-  font-weight: 800;
-  margin-bottom: 1.5rem;
-  line-height: 1.2;
-}
-
-.septa-text p {
-  font-size: 1.125rem;
-  line-height: 1.6;
-  margin-bottom: 2rem;
-  opacity: 0.95;
-}
-
-.septa-cta-btn {
-  background: var(--gradient-gold);
-  color: white;
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  transition: all 0.3s ease;
-  display: inline-block;
-  box-shadow: var(--shadow-md);
-}
-
-.septa-cta-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-
-.septa-accident-image {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: var(--shadow-lg);
-  object-fit: cover;
 }
 
 /* Fixed Contact Button */
@@ -942,12 +884,6 @@ body {
     padding-right: 0;
   }
   
-  .septa-content {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    text-align: center;
-  }
-  
   .header-content {
     padding: 2rem;
   }
@@ -1039,10 +975,6 @@ body {
   .firm-highlights {
     flex-direction: column;
     gap: 1.5rem;
-  }
-  
-  .septa-text h3 {
-    font-size: 1.875rem;
   }
   
   .fixed-contact {

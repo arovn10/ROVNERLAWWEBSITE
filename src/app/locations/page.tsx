@@ -1,8 +1,13 @@
+"use client";
+
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { useFirmName } from '@/lib/FirmNameContext';
 
 export default function LocationsPage() {
+  const { firmName } = useFirmName();
+
   return (
     <div>
       <Header currentPage="locations" />
@@ -26,7 +31,7 @@ export default function LocationsPage() {
 
             <div className="content-text-blocks">
               <p className="content-text">
-                The Law Offices of Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt are strategically located to serve clients throughout Pennsylvania and New Jersey. Our main office is conveniently located in Feasterville-Trevose, PA, providing easy access to clients throughout the Philadelphia metropolitan area.
+                The Law Offices of {firmName} are strategically located to serve clients throughout Pennsylvania and New Jersey. Our main office is conveniently located in Feasterville-Trevose, PA, providing easy access to clients throughout the Philadelphia metropolitan area.
               </p>
 
               <div className="highlight-box blue-highlight">
@@ -67,7 +72,7 @@ export default function LocationsPage() {
               <h3 className="sidebar-title">Main Office</h3>
               <div className="location-details">
                 <div className="location-info">
-                  <h4>Law Offices of Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt</h4>
+                  <h4>Law Offices of {firmName}</h4>
                   <div className="address">
                     <p>175 Bustleton Pike</p>
                     <p>Feasterville-Trevose, PA 19053</p>

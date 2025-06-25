@@ -1,9 +1,14 @@
+"use client";
+
 import Link from 'next/link';
 import Image from 'next/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { useFirmName } from '@/lib/FirmNameContext';
 
 export default function AboutPage() {
+  const { firmName } = useFirmName();
+
   return (
     <div>
       <Header currentPage="about" />
@@ -23,7 +28,7 @@ export default function AboutPage() {
         </div>
         <div className="hero-content">
           <h2>About Our Firm</h2>
-          <p>Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt</p>
+          <p>{firmName}</p>
         </div>
       </section>
 
@@ -32,13 +37,13 @@ export default function AboutPage() {
         <div className="about-content">
           <div className="about-text">
             <div className="content-title-section">
-              <h2 className="content-title">Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt</h2>
+              <h2 className="content-title">{firmName}</h2>
               <div className="accent-bar"></div>
             </div>
 
             <div className="content-text-blocks">
               <p className="content-text">
-                When you are seriously injured there is only one law firm to call. The Law Offices of Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt. For over 40 years the Rovner Law Firm has been accomplishing its motto of getting results for many thousands of grateful and satisfied clients in Pennsylvania, New Jersey, and Florida.
+                When you are seriously injured there is only one law firm to call. The Law Offices of {firmName}. For over 40 years the Rovner Law Firm has been accomplishing its motto of getting results for many thousands of grateful and satisfied clients in Pennsylvania, New Jersey, and Florida.
               </p>
 
               <p className="content-text">
@@ -65,7 +70,7 @@ export default function AboutPage() {
               </p>
 
               <p className="content-text">
-                The Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt; Nash law firm approaches every case as though it were going to trial. Meanwhile in many cases our lawyers are able to resolve the matters by negotiating acceptable, even generous, settlement agreements, always looking out for the best interests of our client.
+                The {firmName} law firm approaches every case as though it were going to trial. Meanwhile in many cases our lawyers are able to resolve the matters by negotiating acceptable, even generous, settlement agreements, always looking out for the best interests of our client.
               </p>
 
               <p className="content-text">
@@ -73,7 +78,7 @@ export default function AboutPage() {
               </p>
 
               <div className="highlight-box gold-highlight">
-                <h3 className="highlight-title">At the law offices of Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt, "We Get Results!"</h3>
+                <h3 className="highlight-title">At the law offices of {firmName}, "We Get Results!"</h3>
                 <p>
                   If you or a loved one has been injured, or is in need of legal representation, contact us today for a free consultation to confidentially speak with one of our attorneys. All you need is to call and leave the rest to us.
                 </p>

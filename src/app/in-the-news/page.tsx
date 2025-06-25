@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { useFirmName } from '@/lib/FirmNameContext';
 import { Calendar, ExternalLink, FileText, ArrowLeft } from 'lucide-react';
 
 interface News {
@@ -16,27 +17,28 @@ interface News {
 }
 
 export default function InTheNewsPage() {
-  const [firmName, setFirmName] = useState('Law Firm');
+  const { firmName } = useFirmName();
   const [news, setNews] = useState<News[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Fetch firm name
-    fetch('/api/settings/firm-name')
-      .then(res => res.json())
-      .then(data => {
-        if (data.firmName) setFirmName(data.firmName);
-      });
-
     // Fetch news articles
     fetch('/api/news')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then(data => {
+        console.log('News data received:', data);
         setNews(data);
         setLoading(false);
       })
       .catch(error => {
         console.error('Error fetching news:', error);
+        setError('Failed to load news articles');
         setLoading(false);
       });
   }, []);
@@ -56,7 +58,7 @@ export default function InTheNewsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex flex-col items-center justify-center font-sans">
-      <Header firmName={firmName} />
+      <Header currentPage="in-the-news" />
       
       {/* Hero Section */}
       <section className="hero-professional" style={{ position: 'relative', minHeight: '40vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -103,6 +105,11 @@ export default function InTheNewsPage() {
         {loading ? (
           <div className="text-center py-12">
             <div className="text-lg font-semibold text-gray-700">Loading news articles...</div>
+          </div>
+        ) : error ? (
+          <div className="text-center py-12">
+            <div className="text-lg font-semibold text-red-600 mb-2">Error loading news</div>
+            <div className="text-gray-600">{error}</div>
           </div>
         ) : news.length === 0 ? (
           <div className="text-center py-12">

@@ -1,13 +1,15 @@
 'use client';
 
 import Link from 'next/link';
+import { useFirmName } from '@/lib/FirmNameContext';
 
 interface HeaderProps {
   currentPage?: string;
-  firmName?: string;
 }
 
-export default function Header({ currentPage = '', firmName = 'Law Firm' }: HeaderProps & { firmName?: string }) {
+export default function Header({ currentPage = '' }: HeaderProps) {
+  const { firmName } = useFirmName();
+
   return (
     <>
       {/* Professional Header */}
@@ -38,7 +40,6 @@ export default function Header({ currentPage = '', firmName = 'Law Firm' }: Head
           <li><Link href="/locations" className={`nav-link ${currentPage === 'locations' ? 'active' : ''}`}>LOCATIONS</Link></li>
           <li><Link href="/photo-gallery" className={`nav-link ${currentPage === 'photo-gallery' ? 'active' : ''}`}>PHOTO GALLERY</Link></li>
           <li><Link href="/in-the-news" className={`nav-link ${currentPage === 'in-the-news' ? 'active' : ''}`}>IN THE NEWS</Link></li>
-          <li><Link href="/radio-show" className={`nav-link ${currentPage === 'radio-show' ? 'active' : ''}`}>RADIO SHOW</Link></li>
           <li><Link href="/contact" className={`nav-link ${currentPage === 'contact' ? 'active' : ''}`}>CONTACT US</Link></li>
         </ul>
       </nav>
