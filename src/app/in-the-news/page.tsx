@@ -120,48 +120,32 @@ export default function InTheNewsPage() {
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {news.map((article) => (
-              <article key={article.id} className="card news-card">
-                <div className="news-header">
-                  <div className="news-meta">
-                    <div className="news-date">
-                      <Calendar className="h-4 w-4" />
-                      {formatDate(article.date)}
+              <Link key={article.id} href={`/in-the-news/${article.id}`} className="block">
+                <article className="card news-card hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer">
+                  <div className="news-header">
+                    <div className="news-meta">
+                      <div className="news-date">
+                        <Calendar className="h-4 w-4" />
+                        {formatDate(article.date)}
+                      </div>
+                      <div className="news-source">{article.source}</div>
                     </div>
-                    <div className="news-source">{article.source}</div>
                   </div>
-                  {article.url && (
-                    <a
-                      href={article.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="news-link"
-                    >
-                      <ExternalLink className="h-4 w-4" />
-                      Read Full Article
-                    </a>
-                  )}
-                </div>
-                
-                <h3 className="news-title">{article.title}</h3>
-                
-                <div className="news-content">
-                  <p>{truncateContent(article.content)}</p>
-                </div>
-                
-                {article.url && (
+                  
+                  <h3 className="news-title">{article.title}</h3>
+                  
+                  <div className="news-content">
+                    <p>{truncateContent(article.content)}</p>
+                  </div>
+                  
                   <div className="news-actions">
-                    <a
-                      href={article.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="news-cta-btn"
-                    >
+                    <span className="news-cta-btn">
                       Read Full Article
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
+                      <ArrowLeft className="h-4 w-4 rotate-180" />
+                    </span>
                   </div>
-                )}
-              </article>
+                </article>
+              </Link>
             ))}
           </div>
         )}
