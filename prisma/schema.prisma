@@ -43,7 +43,7 @@ model Lawyer {
 model Settlement {
   id          String   @id @default(cuid())
   title       String
-  description String   @db.Text
+  description String
   amount      Float
   date        DateTime
   caseType    String
@@ -54,7 +54,7 @@ model Settlement {
 model News {
   id        String   @id @default(cuid())
   title     String
-  content   String   @db.Text
+  content   String
   date      DateTime
   source    String
   url       String?
@@ -65,7 +65,7 @@ model News {
 model Archive {
   id        String   @id @default(cuid())
   title     String
-  content   String   @db.Text
+  content   String
   date      DateTime
   category  String
   imageUrl  String?
