@@ -288,4 +288,6 @@ export default function PracticeAreasPage() {
       <Footer />
     </div>
   );
-} 
+}
+
+export { practiceAreas }; 

@@ -22,22 +22,20 @@ export default function PersonalInjuryPage() {
       </section>
 
       {/* Main Content */}
-      <section className="section">
-        <div className="practice-detailed-content">
-          <div className="practice-main-image-container">
+      <section className="section" style={{padding:'2.5rem 0'}}>
+        <div style={{display:'flex',flexDirection:'row',gap:'2.5rem',alignItems:'flex-start',justifyContent:'center',maxWidth:'1100px',margin:'0 auto',flexWrap:'wrap'}}>
+          <div style={{flex:'0 0 320px',maxWidth:'320px',width:'100%',display:'flex',alignItems:'flex-start',justifyContent:'center'}}>
             <Image 
               src="/photos/personal-inury.jpg" 
               alt="Personal Injury Lawyers" 
-              width={600} 
-              height={400}
-              className="practice-main-image"
+              width={320} 
+              height={200}
+              style={{borderRadius:'12px',objectFit:'cover',width:'100%',height:'200px',boxShadow:'0 2px 10px rgba(20,28,38,0.07)'}}
             />
           </div>
-          
-          <div className="practice-text-content">
-            <h1 className="practice-title">Personal Injury Lawyer & Attorney</h1>
-            
-            <div className="practice-description">
+          <div style={{flex:'1 1 400px',minWidth:'260px',maxWidth:'600px',display:'flex',flexDirection:'column',gap:'1.2rem'}}>
+            <h1 className="practice-title" style={{fontSize:'1.45rem',fontWeight:700,margin:'0 0 0.5rem',color:'#1a237e'}}>Personal Injury Lawyer & Attorney</h1>
+            <div className="practice-description" style={{fontSize:'1.01rem',color:'#444',lineHeight:1.6,marginBottom:'0.2rem'}}>
               <p>
                 {firmName}'s team of lawyers has proven success in representing injured parties. With dedicated professionalism and personal attention, our lawyers are at the forefront of protecting our clients and getting the results they deserve. Our team of over 15 lawyers, plus our paralegals and investigators, have hundreds of years of combined experience.
               </p>
@@ -55,79 +53,24 @@ export default function PersonalInjuryPage() {
               </p>
             </div>
 
-            <div className="practice-features">
-              <h2 className="features-title">Types of Cases We Handle</h2>
-              <div className="features-list">
-                <div className="feature-item">
-                  <h3>Motor Vehicle Accident</h3>
-                  <p>Car accidents, truck accidents, motorcycle accidents, and all types of motor vehicle collisions</p>
-                </div>
-                
-                <div className="feature-item">
-                  <h3>Tractor Trailer and Trucking Accidents</h3>
-                  <p>Commercial truck accidents and large vehicle collisions</p>
-                </div>
-                
-                <div className="feature-item">
-                  <h3>Commercial/Work Vehicle Accidents</h3>
-                  <p>Accidents involving work vehicles and commercial transportation</p>
-                </div>
-                
-                <div className="feature-item">
-                  <h3>Motorcycle Accidents</h3>
-                  <p>Motorcycle collision cases and rider injury claims</p>
-                </div>
-                
-                <div className="feature-item">
-                  <h3>Bicycle Accidents</h3>
-                  <p>Bicycle collision cases and cyclist injury claims</p>
-                </div>
-                
-                <div className="feature-item">
-                  <h3>Pedestrian Accidents</h3>
-                  <p>Pedestrian injury cases and crosswalk accidents</p>
-                </div>
-                
-                <div className="feature-item">
-                  <h3>SEPTA, Train, Bus, Subway and Public Transportation Accidents</h3>
-                  <p>Public transportation accident cases</p>
-                </div>
-                
-                <div className="feature-item">
-                  <h3>Airline and Aviation Injuries</h3>
-                  <p>Aviation accident cases and airline injury claims</p>
-                </div>
-                
-                <div className="feature-item">
-                  <h3>Premises Liability</h3>
-                  <p>Slip and falls, snow and ice falls, construction site accidents, accidents at school, broken sidewalks, tripping hazards, elevator and escalator injuries</p>
-                </div>
-                
-                <div className="feature-item">
-                  <h3>Medical Malpractice</h3>
-                  <p>Complex investigations in many cases reveal medical faults and deficiencies which include failure to timely diagnose a serious medical condition and injuries due to the negligence of a medical provider or facility. The exhaustive investigation and courtroom experience of our medical lawyers, doctors, and experts insure you the results and compensation you deserve.</p>
-                </div>
-                
-                <div className="feature-item">
-                  <h3>Wrongful Death</h3>
-                  <p>When someone dies as a result of an accident occurring in any of our practice areas, we are experienced in investigating and proving the negligence of the responsible parties to obtain deserving compensation that the family and heirs of the deceased are entitled, to reimburse funeral expenses, recover lost financial earnings and support, compensate for pain and suffering, and to compensate for the lost emotional support, guidance, and other losses caused by the death of a loved one.</p>
-                </div>
-                
-                <div className="feature-item">
-                  <h3>Products Liability</h3>
-                  <p>Defective manufacturing and design of products are proved to injure thousands of people every year. Our product liability lawyers handle these often complex litigation matters and are able to successfully convey this information to judges and juries to win and recover the highest award you deserve.</p>
-                </div>
-                
-                <div className="feature-item">
-                  <h3>Worker's Compensation</h3>
-                  <p>Our Workers Compensation Team has represented thousands of clients injured at work to recover lost wages and medical benefits so they can move forward with their lives. After being injured at work, regardless of fault, you deserve help in receiving financial relief and support for yourself and/or your loved ones.</p>
-                </div>
-                
-                <div className="feature-item">
-                  <h3>Social Security Disability</h3>
-                  <p>If you have been turned down in an application for Social Security Benefits and/or Disability Benefits or simply need help with an application for benefits, call our Social Security attorneys.</p>
-                </div>
-              </div>
+            <div className="practice-features" style={{background:'#f7fafc',borderRadius:'10px',padding:'1.1rem 1.2rem',margin:'0',boxShadow:'0 1px 4px rgba(20,28,38,0.06)',fontSize:'1.01rem'}}>
+              <h2 className="features-title" style={{fontSize:'1.13rem',fontWeight:700,marginBottom:'0.7rem',color:'#1a237e'}}>Types of Cases We Handle</h2>
+              <ul style={{padding:'0',margin:'0',listStyle:'none',display:'flex',flexDirection:'column',gap:'0.4rem'}}>
+                <li style={{background:'#fff',borderRadius:'7px',padding:'0.5rem 1rem',boxShadow:'0 1px 2px rgba(20,28,38,0.04)',fontSize:'0.98rem',color:'#222'}}>Motor Vehicle Accident</li>
+                <li style={{background:'#fff',borderRadius:'7px',padding:'0.5rem 1rem',boxShadow:'0 1px 2px rgba(20,28,38,0.04)',fontSize:'0.98rem',color:'#222'}}>Tractor Trailer and Trucking Accidents</li>
+                <li style={{background:'#fff',borderRadius:'7px',padding:'0.5rem 1rem',boxShadow:'0 1px 2px rgba(20,28,38,0.04)',fontSize:'0.98rem',color:'#222'}}>Commercial/Work Vehicle Accidents</li>
+                <li style={{background:'#fff',borderRadius:'7px',padding:'0.5rem 1rem',boxShadow:'0 1px 2px rgba(20,28,38,0.04)',fontSize:'0.98rem',color:'#222'}}>Motorcycle Accidents</li>
+                <li style={{background:'#fff',borderRadius:'7px',padding:'0.5rem 1rem',boxShadow:'0 1px 2px rgba(20,28,38,0.04)',fontSize:'0.98rem',color:'#222'}}>Bicycle Accidents</li>
+                <li style={{background:'#fff',borderRadius:'7px',padding:'0.5rem 1rem',boxShadow:'0 1px 2px rgba(20,28,38,0.04)',fontSize:'0.98rem',color:'#222'}}>Pedestrian Accidents</li>
+                <li style={{background:'#fff',borderRadius:'7px',padding:'0.5rem 1rem',boxShadow:'0 1px 2px rgba(20,28,38,0.04)',fontSize:'0.98rem',color:'#222'}}>SEPTA, Train, Bus, Subway and Public Transportation Accidents</li>
+                <li style={{background:'#fff',borderRadius:'7px',padding:'0.5rem 1rem',boxShadow:'0 1px 2px rgba(20,28,38,0.04)',fontSize:'0.98rem',color:'#222'}}>Airline and Aviation Injuries</li>
+                <li style={{background:'#fff',borderRadius:'7px',padding:'0.5rem 1rem',boxShadow:'0 1px 2px rgba(20,28,38,0.04)',fontSize:'0.98rem',color:'#222'}}>Premises Liability</li>
+                <li style={{background:'#fff',borderRadius:'7px',padding:'0.5rem 1rem',boxShadow:'0 1px 2px rgba(20,28,38,0.04)',fontSize:'0.98rem',color:'#222'}}>Medical Malpractice</li>
+                <li style={{background:'#fff',borderRadius:'7px',padding:'0.5rem 1rem',boxShadow:'0 1px 2px rgba(20,28,38,0.04)',fontSize:'0.98rem',color:'#222'}}>Wrongful Death</li>
+                <li style={{background:'#fff',borderRadius:'7px',padding:'0.5rem 1rem',boxShadow:'0 1px 2px rgba(20,28,38,0.04)',fontSize:'0.98rem',color:'#222'}}>Products Liability</li>
+                <li style={{background:'#fff',borderRadius:'7px',padding:'0.5rem 1rem',boxShadow:'0 1px 2px rgba(20,28,38,0.04)',fontSize:'0.98rem',color:'#222'}}>Worker's Compensation</li>
+                <li style={{background:'#fff',borderRadius:'7px',padding:'0.5rem 1rem',boxShadow:'0 1px 2px rgba(20,28,38,0.04)',fontSize:'0.98rem',color:'#222'}}>Social Security Disability</li>
+              </ul>
             </div>
 
             <div className="practice-description">
@@ -144,10 +87,8 @@ export default function PersonalInjuryPage() {
               </p>
             </div>
 
-            <div className="practice-action">
-              <Link href="/contact" className="practice-cta-btn">
-                Get Free Consultation
-              </Link>
+            <div className="practice-action" style={{marginTop:'0.7rem',textAlign:'center'}}>
+              <Link href="/contact" className="practice-cta-btn" style={{display:'inline-block',background:'#1a237e',color:'#fff',fontWeight:700,fontSize:'1.01rem',padding:'0.7rem 2.2rem',borderRadius:8,boxShadow:'0 2px 8px rgba(20,28,38,0.10)',textDecoration:'none',letterSpacing:'0.01em',transition:'background 0.2s, box-shadow 0.2s'}}>Get Free Consultation</Link>
             </div>
           </div>
         </div>

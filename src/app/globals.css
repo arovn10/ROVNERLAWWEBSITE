@@ -2531,3 +2531,11 @@ html {
     border-radius: 0;
   }
 }
+
+.attorney-card-hover:hover {
+  box-shadow: 0 8px 32px rgba(20,28,38,0.13) !important;
+  transform: translateY(-2px) !important;
+}
+.attorney-btn-hover:hover {
+  background: linear-gradient(135deg,#0d1333 0%,#1a237e 100%) !important;
+}

@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useFirmName } from '@/lib/FirmNameContext';
+import { practiceAreas } from './practice/page';
 
 // Settlement type for fetched data
 type Settlement = {
@@ -32,9 +33,12 @@ export default function HomePage() {
   const { firmName } = useFirmName();
   const [settlements, setSettlements] = useState<Settlement[]>([]);
   const [settlementGroups, setSettlementGroups] = useState<Settlement[][]>([]);
-  const [currentSettlementGroup, setCurrentSettlementGroup] = useState(0);
+  const [currentSettlementIndex, setCurrentSettlementIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const visibleSettlementCount = 3;
+  const maxSettlementIndex = settlements.length - visibleSettlementCount;
 
   useEffect(() => {
     fetch('/api/settlements')
@@ -51,20 +55,15 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    if (settlementGroups.length === 0) return;
+    if (settlements.length <= visibleSettlementCount) return;
     const interval = setInterval(() => {
-      setCurrentSettlementGroup((prev) => (prev + 1) % settlementGroups.length);
+      setCurrentSettlementIndex((prev) => (prev + 1 > maxSettlementIndex ? 0 : prev + 1));
     }, 5000);
     return () => clearInterval(interval);
-  }, [settlementGroups.length]);
+  }, [maxSettlementIndex, settlements.length]);
 
-  const nextGroup = () => {
-    setCurrentSettlementGroup((prev) => (prev + 1) % settlementGroups.length);
-  };
-
-  const prevGroup = () => {
-    setCurrentSettlementGroup((prev) => (prev - 1 + settlementGroups.length) % settlementGroups.length);
-  };
+  const nextSettlement = () => setCurrentSettlementIndex((prev) => (prev + 1 > maxSettlementIndex ? 0 : prev + 1));
+  const prevSettlement = () => setCurrentSettlementIndex((prev) => (prev - 1 < 0 ? maxSettlementIndex : prev - 1));
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex flex-col items-center justify-center font-sans">
@@ -75,11 +74,18 @@ export default function HomePage() {
           <Image 
             src="/photos/banner-home-new-1-1024x343.png" 
             alt="Professional Law Firm" 
-            width={1920}
-            height={600}
+            width={1024}
+            height={343}
             className="hero-background"
             priority
-            style={{ objectPosition: 'center', objectFit: 'cover', width: '100%', height: '100%' }}
+            style={{ 
+              objectPosition: 'center top', 
+              objectFit: 'cover', 
+              width: '100%', 
+              height: '100%',
+              maxWidth: '100%',
+              maxHeight: '100%'
+            }}
           />
           <div style={{
             position: 'absolute',
@@ -147,8 +153,8 @@ export default function HomePage() {
         </div>
       </section>
       {/* Settlement Carousel */}
-      <section className="section">
-        <div className="section-title">
+      <section className="section" style={{paddingBottom: '2rem', marginBottom: '0'}}>
+        <div className="section-title" style={{marginBottom: '1.5rem'}}>
           <h3>Recent Results</h3>
           <p>We get results for our clients</p>
         </div>
@@ -156,17 +162,14 @@ export default function HomePage() {
           <div className="text-center py-8 text-gray-500">Loading settlements...</div>
         ) : error ? (
           <div className="text-center py-8 text-red-500">{error}</div>
-        ) : settlementGroups.length === 0 ? (
+        ) : settlements.length === 0 ? (
           <div className="text-center py-8 text-gray-500">No settlements found.</div>
         ) : (
-        <>
-        <div className="carousel-container">
-          <button className="carousel-btn prev-btn" onClick={prevGroup}>
-            &#8249;
-          </button>
+        <div className="carousel-container" style={{maxWidth: '1400px', margin: '0 auto'}}>
+          <button className="carousel-btn prev-btn" onClick={prevSettlement}>&#8249;</button>
           <div className="settlements-carousel">
-            <div className="grid grid-3">
-              {settlementGroups[currentSettlementGroup]?.map((settlement: Settlement) => (
+            <div className="grid grid-3" style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '3rem'}}>
+              {settlements.slice(currentSettlementIndex, currentSettlementIndex + visibleSettlementCount).map((settlement: Settlement) => (
                 <div key={settlement.id} className="card settlement-card">
                   <div className="settlement-icon">
                     <div className="settlement-symbol">$</div>
@@ -178,111 +181,25 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
+            <div className="carousel-indicators" style={{display:'flex',justifyContent:'center',marginTop:'1.5rem'}}>
+              {Array.from({length: maxSettlementIndex + 1}).map((_, idx) => (
+                <button key={idx} className={`indicator ${idx === currentSettlementIndex ? 'active' : ''}`} onClick={() => setCurrentSettlementIndex(idx)} />
+              ))}
+            </div>
           </div>
-          <button className="carousel-btn next-btn" onClick={nextGroup}>
-            &#8250;
-          </button>
+          <button className="carousel-btn next-btn" onClick={nextSettlement}>&#8250;</button>
         </div>
-        <div className="carousel-indicators">
-          {settlementGroups.map((_, index) => (
-            <button
-              key={index}
-              className={`indicator ${index === currentSettlementGroup ? 'active' : ''}`}
-              onClick={() => setCurrentSettlementGroup(index)}
-            />
-          ))}
-        </div>
-        </>
         )}
       </section>
-      {/* Practice Areas */}
-      <section className="section">
-        <div className="section-title">
+      {/* Subtle Divider */}
+      <div style={{height: '0.5rem', background: 'transparent', margin: '0 auto', width: '100%'}} />
+      {/* Practice Areas Carousel */}
+      <section className="section" style={{paddingTop: '0', marginTop: '0'}}>
+        <div className="section-title" style={{marginBottom: '1.5rem'}}>
           <h3>Our Practice Areas</h3>
           <p>Comprehensive legal services with proven results</p>
         </div>
-        <div className="grid grid-4">
-          {/* Auto Accidents */}
-          <div className="card practice-card-enhanced">
-            <div className="practice-image-container">
-              <Image 
-                src="/photos/auto-accidents.jpg" 
-                alt="Auto Accidents" 
-                width={400} 
-                height={200}
-                className="practice-image"
-              />
-            </div>
-            <div className="practice-content">
-              <div className="practice-icon icon-blue">⚖</div>
-              <h3 className="practice-title">AUTO ACCIDENTS</h3>
-              <p className="practice-description">
-                No Fee if No Recovery! If you have been injured in a motor vehicle accident, we can help you understand your legal options and develop a strategy for maximizing compensation.
-              </p>
-              <Link href="/practice" className="learn-more-btn">LEARN MORE</Link>
-            </div>
-          </div>
-          {/* Personal Injury */}
-          <div className="card practice-card-enhanced">
-            <div className="practice-image-container">
-              <Image 
-                src="/photos/personal-inury.jpg" 
-                alt="Personal Injury" 
-                width={400} 
-                height={200}
-                className="practice-image"
-              />
-            </div>
-            <div className="practice-content">
-              <div className="practice-icon icon-red">✓</div>
-              <h3 className="practice-title">PERSONAL INJURY</h3>
-              <p className="practice-description">
-                Our team of over 15 lawyers plus our paralegals, investigators, experts, all with hundreds of years of combined experience, put us at the top of the legal profession.
-              </p>
-              <Link href="/practice" className="learn-more-btn">LEARN MORE</Link>
-            </div>
-          </div>
-          {/* Medical Malpractice */}
-          <div className="card practice-card-enhanced">
-            <div className="practice-image-container">
-              <Image 
-                src="/photos/medical.jpg" 
-                alt="Medical Malpractice" 
-                width={400} 
-                height={200}
-                className="practice-image"
-              />
-            </div>
-            <div className="practice-content">
-              <div className="practice-icon icon-green">✤</div>
-              <h3 className="practice-title">MEDICAL MALPRACTICE</h3>
-              <p className="practice-description">
-                Even well-meaning doctors make mistakes that can have a devastating effect on a patient's health. If you or someone you love has been a victim of medical malpractice contact us today.
-              </p>
-              <Link href="/practice" className="learn-more-btn">LEARN MORE</Link>
-            </div>
-          </div>
-          {/* Premises Liability */}
-          <div className="card practice-card-enhanced">
-            <div className="practice-image-container">
-              <Image 
-                src="/photos/premises.jpg" 
-                alt="Premises Liability" 
-                width={400} 
-                height={200}
-                className="practice-image"
-              />
-            </div>
-            <div className="practice-content">
-              <div className="practice-icon icon-purple">◊</div>
-              <h3 className="practice-title">PREMISES LIABILITY</h3>
-              <p className="practice-description">
-                Property owners, landlords and property managers have an obligation to keep their premises safe. If they fail to do so, they may be liable for the damages, losses and injuries they've caused.
-              </p>
-              <Link href="/practice" className="learn-more-btn">LEARN MORE</Link>
-            </div>
-          </div>
-        </div>
+        <PracticeAreasCarousel />
       </section>
       {/* Quick Links Section */}
       <section className="section quick-links">
@@ -338,6 +255,69 @@ export default function HomePage() {
         </div>
       </section>
       <Footer />
+    </div>
+  );
+}
+
+function groupPracticeAreasForCarousel(areas: typeof practiceAreas, groupSize: number) {
+  const groups = [];
+  for (let i = 0; i < areas.length; i += groupSize) {
+    groups.push(areas.slice(i, i + groupSize));
+  }
+  return groups;
+}
+
+function PracticeAreasCarousel() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const visibleCount = 3;
+  const maxIndex = practiceAreas.length - visibleCount;
+
+  useEffect(() => {
+    if (practiceAreas.length <= visibleCount) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1 > maxIndex ? 0 : prev + 1));
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [maxIndex]);
+
+  const next = () => setCurrentIndex((prev) => (prev + 1 > maxIndex ? 0 : prev + 1));
+  const prev = () => setCurrentIndex((prev) => (prev - 1 < 0 ? maxIndex : prev - 1));
+
+  return (
+    <div className="carousel-container" style={{maxWidth: '1400px', margin: '0 auto'}}>
+      <button className="carousel-btn prev-btn" onClick={prev}>&#8249;</button>
+      <div className="settlements-carousel">
+        <div className="grid grid-3" style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '3rem'}}>
+          {practiceAreas.slice(currentIndex, currentIndex + visibleCount).map((area: typeof practiceAreas[0]) => (
+            <div key={area.id} className="card settlement-card" style={{
+              background:'#fff',
+              borderRadius:'14px',
+              boxShadow:'0 2px 10px rgba(20,28,38,0.07)',
+              padding:'1.1rem 1.2rem 1.2rem 1.2rem',
+              display:'flex',
+              flexDirection:'column',
+              alignItems:'center',
+              minHeight:'320px',
+              maxWidth:'370px',
+              margin:'0 auto',
+              gap:'0.7rem',
+            }}>
+              <div className="settlement-icon" style={{marginBottom:'0.5rem'}}>
+                <Image src={area.image} alt={area.title} width={400} height={200} style={{maxWidth:'100%',height:'120px',objectFit:'cover',borderRadius:'10px'}} />
+              </div>
+              <div style={{fontWeight:700,fontSize:'1.08rem',margin:'0.3rem 0 0.2rem',color:'#1a202c',textAlign:'center',lineHeight:1.2}}>{area.title}</div>
+              <div style={{fontSize:'0.93rem',color:'#444',marginBottom:'0.7rem',lineHeight:1.5,fontWeight:400,textAlign:'center',minHeight:0}}>{area.description}</div>
+              <Link href="/practice" className="learn-more-btn" style={{display:'inline-block',margin:'0 auto',padding:'0.5rem 1.2rem',fontSize:'0.97rem',fontWeight:600,borderRadius:'7px',background:'#1a237e',color:'#fff',textDecoration:'none',boxShadow:'0 1px 4px rgba(20,28,38,0.08)',transition:'background 0.2s'}}>Learn More</Link>
+            </div>
+          ))}
+        </div>
+        <div className="carousel-indicators" style={{display:'flex',justifyContent:'center',marginTop:'1.5rem'}}>
+          {Array.from({length: maxIndex + 1}).map((_, idx) => (
+            <button key={idx} className={`indicator ${idx === currentIndex ? 'active' : ''}`} onClick={() => setCurrentIndex(idx)} />
+          ))}
+        </div>
+      </div>
+      <button className="carousel-btn next-btn" onClick={next}>&#8250;</button>
     </div>
   );
 }
