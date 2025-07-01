@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -60,6 +54,7 @@ model News {
   url       String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  imageUrl  String?
 }
 
 model Archive {
@@ -80,14 +75,42 @@ model Settings {
 }
 
 model ContactSubmission {
-  id        String   @id @default(cuid())
-  name      String
-  email     String
-  phone     String?
-  address   String?
+  id             String    @id @default(cuid())
+  name           String
+  email          String
+  phone          String?
+  address        String?
   dateOfIncident DateTime?
-  caseType  String?
-  represented String?
-  facts     String
-  createdAt DateTime @default(now())
+  caseType       String?
+  represented    String?
+  facts          String
+  createdAt      DateTime  @default(now())
+}
+
+model Photo {
+  id          String   @id
+  title       String
+  description String?
+  section     String
+  imageUrl    String
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+}
+
+model PracticeArea {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  content     String
+  slug        String   @unique
+  features    String?
+  image       String?
+  banner      String?
+  color       String?
+  imageUrl    String?
+  order       Int      @default(0)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

@@ -17,6 +17,208 @@ const settlements = [
   { amount: 89750, caseType: 'Slip and Fall Case', title: 'Slip and Fall Case', description: '', practice_area: 'Premises Liability', date: new Date('2023-01-12') },
 ];
 
+// --- Practice Areas: Append All Current Areas ---
+const allPracticeAreas = [
+  {
+    title: "Personal Injury",
+    slug: "personal-injury",
+    description: "Our personal injury attorneys are dedicated to helping victims of negligence recover the compensation they deserve. We handle all types of personal injury cases with skill and compassion.",
+    content: "Our personal injury attorneys are dedicated to helping victims of negligence recover the compensation they deserve. We handle all types of personal injury cases with skill and compassion. When you've been injured due to someone else's negligence, you need experienced legal representation to fight for your rights and ensure you receive fair compensation for your injuries, medical expenses, lost wages, and pain and suffering.",
+    features: JSON.stringify([
+      "Slip and fall accidents",
+      "Wrongful death claims",
+      "Catastrophic injuries",
+      "Brain and spinal cord injuries",
+      "Burn injuries"
+    ]),
+    image: "/photos/personal-inury.jpg",
+    banner: "/photos/banner-personal-injury-1024x128.png",
+    color: "blue"
+  },
+  {
+    title: "Auto Accidents",
+    slug: "auto-accidents",
+    description: "If you have been injured in a motor vehicle accident, our experienced attorneys can help you understand your legal options and develop a strategy for maximizing compensation.",
+    content: "If you have been injured in a motor vehicle accident, our experienced attorneys can help you understand your legal options and develop a strategy for maximizing compensation. Auto accidents can result in serious injuries, property damage, and significant financial losses. Our team will investigate your case thoroughly, gather evidence, and negotiate with insurance companies to ensure you receive the compensation you deserve for medical bills, lost wages, vehicle repairs, and pain and suffering.",
+    features: JSON.stringify([
+      "Car accidents",
+      "Motorcycle accidents",
+      "Truck accidents",
+      "Bicycle accidents",
+      "Pedestrian accidents"
+    ]),
+    image: "/photos/auto-accidents.jpg",
+    banner: "/photos/banner-auto-1024x128.png",
+    color: "red"
+  },
+  {
+    title: "Medical Malpractice",
+    slug: "medical-malpractice",
+    description: "Even well-meaning doctors make mistakes that can have a devastating effect on a patient's health. If you or someone you love has been a victim of medical malpractice, contact us today.",
+    content: "Even well-meaning doctors make mistakes that can have a devastating effect on a patient's health. If you or someone you love has been a victim of medical malpractice, contact us today. Medical malpractice cases are complex and require specialized knowledge of both medical and legal issues. Our experienced attorneys work with medical experts to build strong cases and hold healthcare providers accountable for their negligence, helping victims recover compensation for medical expenses, lost income, and the pain and suffering caused by medical errors.",
+    features: JSON.stringify([
+      "Surgical errors",
+      "Misdiagnosis/delayed diagnosis",
+      "Medication errors",
+      "Birth injuries",
+      "Hospital negligence"
+    ]),
+    image: "/photos/medical.jpg",
+    banner: "/photos/banner-medical-1024x128.png",
+    color: "green"
+  },
+  {
+    title: "Premises Liability",
+    slug: "premises-liability",
+    description: "Property owners have an obligation to keep their premises safe. If they fail to do so, they may be liable for the damages, losses and injuries they've caused.",
+    content: "Property owners have an obligation to keep their premises safe. If they fail to do so, they may be liable for the damages, losses and injuries they've caused. Premises liability cases involve injuries that occur on someone else's property due to dangerous conditions that the property owner knew about or should have known about. Our attorneys help victims of slip and fall accidents, inadequate security, and other premises-related injuries recover compensation for their damages.",
+    imageUrl: "/photos/premises.jpg"
+  },
+  {
+    title: "Workers' Compensation",
+    slug: "workers-compensation",
+    description: "If you've been injured on the job, you may be entitled to workers' compensation benefits. Our experienced attorneys can help you navigate the complex claims process.",
+    content: "If you've been injured on the job, you may be entitled to workers' compensation benefits. Our experienced attorneys can help you navigate the complex claims process. Workers' compensation laws are designed to provide injured workers with medical care and wage replacement benefits. However, the claims process can be complicated and insurance companies often try to minimize or deny valid claims. Our attorneys fight to ensure injured workers receive the full benefits they're entitled to under the law.",
+    features: JSON.stringify([
+      "Workplace injuries",
+      "Occupational diseases",
+      "Repetitive stress injuries",
+      "Construction accidents",
+      "Benefits appeals"
+    ]),
+    image: "/photos/workers-comp.jpg",
+    banner: "/photos/banner-workers-1024x128.png",
+    color: "blue"
+  },
+  {
+    title: "Product Liability",
+    slug: "product-liability",
+    description: "When defective products cause injuries, manufacturers and distributors can be held responsible. We help victims of dangerous and defective products seek justice.",
+    content: "When defective products cause injuries, manufacturers and distributors can be held responsible. We help victims of dangerous and defective products seek justice. Product liability cases involve injuries caused by defective or dangerous products. Manufacturers, distributors, and retailers can be held liable for injuries caused by design defects, manufacturing defects, or failure to provide adequate warnings. Our attorneys have the experience and resources to take on large corporations and hold them accountable for the harm caused by their products.",
+    features: JSON.stringify([
+      "Defective automobiles",
+      "Dangerous pharmaceuticals",
+      "Defective medical devices",
+      "Faulty consumer products",
+      "Industrial equipment failures"
+    ]),
+    image: "/photos/products.jpg",
+    banner: "/photos/banner-products-1024x128.png",
+    color: "red"
+  },
+  {
+    title: "Motorcycle Accidents",
+    slug: "motorcycle-accidents",
+    description: "Motorcycle accidents often result in serious injuries due to the lack of protection. Our attorneys understand the unique challenges motorcyclists face and fight for fair compensation.",
+    content: "Motorcycle accidents often result in serious injuries due to the lack of protection. Our attorneys understand the unique challenges motorcyclists face and fight for fair compensation. Motorcyclists are particularly vulnerable on the road and often face bias from insurance companies and juries. Our attorneys are experienced in handling motorcycle accident cases and understand the unique legal and medical issues involved. We work to overcome stereotypes and ensure motorcyclists receive the same fair treatment as other accident victims.",
+    features: JSON.stringify([
+      "Lane splitting accidents",
+      "Intersection collisions",
+      "Road hazard accidents",
+      "Defective motorcycle parts",
+      "Insurance claim disputes"
+    ]),
+    image: "/photos/motorcycle.jpg",
+    banner: "/photos/banner-motorcycle-1024x128.png",
+    color: "green"
+  },
+  {
+    title: "Truck Accidents",
+    slug: "truck-accidents",
+    description: "Commercial truck accidents can cause devastating injuries and complex legal issues. Our experienced attorneys know how to handle these challenging cases.",
+    content: "Commercial truck accidents can cause devastating injuries and complex legal issues. Our experienced attorneys know how to handle these challenging cases. Truck accidents often involve multiple parties, including the truck driver, trucking company, truck manufacturer, and cargo loaders. These cases require extensive investigation and knowledge of federal trucking regulations. Our attorneys have the resources and experience to thoroughly investigate truck accidents and hold all responsible parties accountable for the injuries and damages they cause.",
+    features: JSON.stringify([
+      "18-wheeler accidents",
+      "Delivery truck accidents",
+      "Driver fatigue cases",
+      "Improper loading accidents",
+      "Commercial vehicle violations"
+    ]),
+    image: "/photos/truck-accident.jpg",
+    banner: "/photos/banner-truck-1024x128.png",
+    color: "purple"
+  },
+  {
+    title: "Family Law",
+    slug: "family-law",
+    description: "Our family law attorneys provide compassionate representation during difficult times, helping families navigate complex legal matters with care and understanding.",
+    content: "Our family law attorneys provide compassionate representation during difficult times, helping families navigate complex legal matters with care and understanding. Family law matters are often emotionally charged and can have long-lasting effects on families. Our attorneys understand the sensitive nature of these cases and work to resolve disputes in a way that protects the best interests of all family members, especially children. We provide both litigation and mediation services to help families find the best possible solutions to their legal issues.",
+    features: JSON.stringify([
+      "Divorce proceedings",
+      "Child custody disputes",
+      "Child support matters",
+      "Alimony/spousal support",
+      "Adoption services"
+    ]),
+    image: "/photos/general.jpg",
+    banner: "/photos/banner-family-1024x128.png",
+    color: "blue"
+  },
+  {
+    title: "Criminal Defense",
+    slug: "criminal-defense",
+    description: "If you're facing criminal charges, you need experienced legal representation. Our criminal defense attorneys protect your rights and fight for the best possible outcome.",
+    content: "If you're facing criminal charges, you need experienced legal representation. Our criminal defense attorneys protect your rights and fight for the best possible outcome. Criminal charges can have serious consequences, including jail time, fines, and a permanent criminal record. Our attorneys understand the criminal justice system and work tirelessly to protect your constitutional rights. We investigate every aspect of your case, challenge evidence when appropriate, and negotiate with prosecutors to achieve the best possible outcome for your situation.",
+    features: JSON.stringify([
+      "DUI/DWI defense",
+      "Drug crime defense",
+      "Assault charges",
+      "Theft and fraud charges",
+      "Traffic violations"
+    ]),
+    image: "/photos/criminal.jpg",
+    banner: "/photos/banner-court-1024x128.png",
+    color: "red"
+  },
+  {
+    title: "Social Security Disability",
+    slug: "social-security-disability",
+    description: "When disability prevents you from working, Social Security benefits can provide crucial financial support. We help clients navigate the complex application and appeals process.",
+    content: "When disability prevents you from working, Social Security benefits can provide crucial financial support. We help clients navigate the complex application and appeals process. Social Security Disability claims are often denied initially, even for legitimate disabilities. The appeals process can be complex and overwhelming. Our attorneys understand the medical and legal requirements for Social Security Disability benefits and can help you build a strong case, gather necessary medical evidence, and represent you at hearings to maximize your chances of approval.",
+    features: JSON.stringify([
+      "Initial applications",
+      "Appeals and hearings",
+      "Disability determinations",
+      "Benefits calculations",
+      "Ongoing representation"
+    ]),
+    image: "/photos/social-security.jpg",
+    banner: "/photos/banner-social-1024x128.png",
+    color: "green"
+  },
+  {
+    title: "General Legal Matters",
+    slug: "general-legal-matters",
+    description: "Our experienced team handles a wide range of legal matters, including real estate, landlord-tenant disputes, wills, estates, and probate, providing trusted guidance for your general legal needs.",
+    content: "Our experienced team handles a wide range of legal matters, including real estate, landlord-tenant disputes, wills, estates, and probate, providing trusted guidance for your general legal needs. Whether you're buying or selling property, dealing with landlord-tenant issues, planning your estate, or handling probate matters, our attorneys provide comprehensive legal services to protect your interests and ensure your legal matters are handled properly. We take the time to understand your specific situation and provide personalized legal solutions.",
+    features: JSON.stringify([
+      "Real Estate",
+      "Landlord-Tenant Disputes and Litigation",
+      "Wills",
+      "Estates and Probate"
+    ]),
+    image: "/photos/general.jpg",
+    banner: "/photos/banner-court-1024x128.png",
+    color: "blue"
+  },
+  {
+    title: "Limited Tort Lawyer",
+    slug: "limited-tort-lawyer",
+    description: "We help limited tort clients fight for fair compensation and prove their injuries meet the serious injury threshold.",
+    content: "We help limited tort clients fight for fair compensation and prove their injuries meet the serious injury threshold. Limited tort insurance policies restrict your ability to sue for pain and suffering unless your injuries meet the 'serious injury' threshold. Our attorneys are experienced in proving that injuries meet this threshold and in finding exceptions to limited tort restrictions. We help clients understand their insurance coverage and fight for the full compensation they deserve.",
+    features: JSON.stringify([
+      "Limited tort insurance exceptions",
+      "Full tort qualification",
+      "Insurance coverage review",
+      "Serious injury litigation"
+    ]),
+    image: "/photos/auto-accidents.jpg",
+    banner: "/photos/banner-auto-1024x128.png",
+    color: "red"
+  },
+  // ... keep Uber, Taxi, Septa Bus from previous upsert as well ...
+];
+
 async function main() {
   // Clear all tables
   await prisma.user.deleteMany()
@@ -185,11 +387,23 @@ async function main() {
   console.log('Seeded settlements!');
 }
 
+async function upsertAllPracticeAreas() {
+  for (const area of allPracticeAreas) {
+    await prisma.practiceArea.upsert({
+      where: { slug: area.slug },
+      update: {},
+      create: area,
+    });
+  }
+  console.log('Seeded all practice areas!');
+}
+
 main()
   .catch((e) => {
     console.error(e)
     process.exit(1)
   })
   .finally(async () => {
+    await upsertAllPracticeAreas();
     await prisma.$disconnect()
   }) 

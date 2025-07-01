@@ -7,6 +7,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useFirmName } from '@/lib/FirmNameContext';
 import { practiceAreas } from './practice/page';
+import { Phone, Users, Briefcase, Mail } from 'lucide-react';
 
 // Settlement type for fetched data
 type Settlement = {
@@ -212,46 +213,38 @@ export default function HomePage() {
           </div>
           <div className="quick-links-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2.5rem', width: '100%' }}>
             <Link href="/contact" className="quick-link-card">
-              <Image 
-                src="/photos/quicklink-1-1.png" 
-                alt="Free Consultation" 
-                width={64} 
-                height={64}
-                className="quick-link-icon"
-              />
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '1.25rem' }}>
+                <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: 64, height: 64, borderRadius: '50%', background: 'var(--gradient-blue)', boxShadow: '0 2px 8px rgba(29,78,216,0.10)' }}>
+                  <Phone size={32} color="#fff" />
+                </span>
+              </div>
               <h4>Free Consultation</h4>
               <p>Get expert legal advice at no cost</p>
             </Link>
             <Link href="/attorneys" className="quick-link-card">
-              <Image 
-                src="/photos/quicklink-2-1.png" 
-                alt="Our Attorneys" 
-                width={64} 
-                height={64}
-                className="quick-link-icon"
-              />
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '1.25rem' }}>
+                <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: 64, height: 64, borderRadius: '50%', background: 'var(--gradient-blue)', boxShadow: '0 2px 8px rgba(29,78,216,0.10)' }}>
+                  <Users size={32} color="#fff" />
+                </span>
+              </div>
               <h4>Our Attorneys</h4>
               <p>Meet our experienced legal team</p>
             </Link>
             <Link href="/practice" className="quick-link-card">
-              <Image 
-                src="/photos/quicklink-3-1.png" 
-                alt="Practice Areas" 
-                width={64} 
-                height={64}
-                className="quick-link-icon"
-              />
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '1.25rem' }}>
+                <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: 64, height: 64, borderRadius: '50%', background: 'var(--gradient-blue)', boxShadow: '0 2px 8px rgba(29,78,216,0.10)' }}>
+                  <Briefcase size={32} color="#fff" />
+                </span>
+              </div>
               <h4>Practice Areas</h4>
               <p>Comprehensive legal services</p>
             </Link>
             <Link href="/contact" className="quick-link-card">
-              <Image 
-                src="/photos/quicklink-4-1.png" 
-                alt="Contact Us" 
-                width={64} 
-                height={64}
-                className="quick-link-icon"
-              />
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '1.25rem' }}>
+                <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: 64, height: 64, borderRadius: '50%', background: 'var(--gradient-blue)', boxShadow: '0 2px 8px rgba(29,78,216,0.10)' }}>
+                  <Mail size={32} color="#fff" />
+                </span>
+              </div>
               <h4>Contact Us</h4>
               <p>Reach out for immediate help</p>
             </Link>
