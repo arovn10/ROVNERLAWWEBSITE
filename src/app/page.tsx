@@ -69,89 +69,91 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex flex-col items-center justify-center font-sans">
       <Header currentPage="home" />
       {/* Hero Banner with Professional Home Image and overlayed content */}
-      <section className="hero-professional" style={{ position: 'relative', minHeight: '40vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div className="hero-image-overlay" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
-          <Image 
-            src="/photos/banner-home-new-1-1024x343.png" 
-            alt="Professional Law Firm" 
-            width={1024}
-            height={343}
-            className="hero-background"
-            priority
-            style={{ 
-              objectPosition: 'center top', 
-              objectFit: 'cover', 
-              width: '100%', 
+      <div className="hero-bg" style={{ width: '100%', position: 'relative', minHeight: '140px', background: 'linear-gradient(120deg, #1e293b 60%, #334155 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+        <section className="hero-professional" style={{ width: '100%', position: 'relative', minHeight: '140px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', padding: 0 }}>
+          <div className="hero-image-overlay" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
+            <Image 
+              src="/photos/banner-home-new-1-1024x343.png" 
+              alt="Professional Law Firm" 
+              width={1024}
+              height={343}
+              className="hero-background"
+              priority
+              style={{ 
+                objectPosition: 'center top', 
+                objectFit: 'cover', 
+                width: '100%', 
+                height: '100%',
+                maxWidth: '100%',
+                maxHeight: '100%'
+              }}
+            />
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
               height: '100%',
-              maxWidth: '100%',
-              maxHeight: '100%'
-            }}
-          />
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            background: 'rgba(20, 28, 38, 0.45)',
-            zIndex: 1
-          }} />
-        </div>
-        <div className="hero-content" style={{
-          maxWidth: 1200,
-          margin: '0 auto',
-          width: '100%',
-          position: 'relative',
-          zIndex: 2,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: '#fff',
-          textAlign: 'center',
-          padding: '2rem 0',
-        }}>
-          <h1 className="content-title" style={{ fontSize: 'clamp(2.5rem, 6vw, 3.5rem)', fontWeight: 800, marginBottom: '0.5rem', color: '#fff', textShadow: '0 2px 12px rgba(0,0,0,0.7)' }}>{firmName}</h1>
-          <div className="accent-bar" style={{ margin: '0 auto 1.5rem auto', background: 'var(--gradient-gold)' }}></div>
-          <h2 className="content-subtitle" style={{ marginBottom: '1.5rem', color: '#f3f4f6', fontWeight: 600, fontSize: '1.7rem', textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Premier Injury Lawyers</h2>
-          <p className="content-text" style={{ marginBottom: '2.5rem', maxWidth: 600, marginLeft: 'auto', marginRight: 'auto', color: '#e5e7eb', fontSize: '1.25rem', textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
-            For over 40 years, {firmName} has been fighting for clients in Philadelphia who have been victims of negligence, auto accidents, personal injury, medical malpractice and premise liability.
-          </p>
-          <div className="firm-highlights" style={{ justifyContent: 'center', gap: '3rem', marginBottom: '2.5rem', display: 'flex', flexWrap: 'wrap' }}>
-            <div className="highlight-item" style={{ minWidth: 120 }}>
-              <span className="highlight-number" style={{ color: '#fbbf24', fontSize: '2.2rem', fontWeight: 700, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>40+</span>
-              <span className="highlight-text" style={{ color: '#f3f4f6', display: 'block', fontWeight: 500, marginTop: 4, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Years of Experience</span>
-            </div>
-            <div className="highlight-item" style={{ minWidth: 120 }}>
-              <span className="highlight-number" style={{ color: '#fbbf24', fontSize: '2.2rem', fontWeight: 700, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>15+</span>
-              <span className="highlight-text" style={{ color: '#f3f4f6', display: 'block', fontWeight: 500, marginTop: 4, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Skilled Attorneys</span>
-            </div>
-            <div className="highlight-item" style={{ minWidth: 120 }}>
-              <span className="highlight-number" style={{ color: '#fbbf24', fontSize: '2.2rem', fontWeight: 700, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>1000+</span>
-              <span className="highlight-text" style={{ color: '#f3f4f6', display: 'block', fontWeight: 500, marginTop: 4, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Cases Won</span>
-            </div>
+              background: 'rgba(20, 28, 38, 0.45)',
+              zIndex: 1
+            }} />
           </div>
-          <a href="/contact" style={{
-            display: 'inline-block',
-            background: 'var(--gradient-gold, linear-gradient(135deg, #d97706 0%, #f59e0b 100%))',
+          <div className="hero-content" style={{
+            maxWidth: 1200,
+            margin: '0 auto',
+            width: '100%',
+            position: 'relative',
+            zIndex: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
             color: '#fff',
-            fontWeight: 700,
-            fontSize: '1.15rem',
-            padding: '0.9rem 2.5rem',
-            borderRadius: 8,
-            boxShadow: '0 4px 24px rgba(0,0,0,0.18)',
-            textDecoration: 'none',
-            letterSpacing: '0.01em',
-            marginTop: 8,
-            transition: 'background 0.2s, box-shadow 0.2s',
-          }}
-          onMouseOver={e => e.currentTarget.style.background = 'var(--gold-accent, #d97706)'}
-          onMouseOut={e => e.currentTarget.style.background = 'var(--gradient-gold, linear-gradient(135deg, #d97706 0%, #f59e0b 100%))'}
-          >
-            Get a Free Consultation
-          </a>
-        </div>
-      </section>
+            textAlign: 'center',
+            padding: '2rem 0',
+          }}>
+            <h1 className="content-title" style={{ fontSize: 'clamp(2.5rem, 6vw, 3.5rem)', fontWeight: 800, marginBottom: '0.5rem', color: '#fff', textShadow: '0 2px 12px rgba(0,0,0,0.7)' }}>{firmName}</h1>
+            <div className="accent-bar" style={{ margin: '0 auto 1.5rem auto', background: 'var(--gradient-gold)' }}></div>
+            <h2 className="content-subtitle" style={{ marginBottom: '1.5rem', color: '#f3f4f6', fontWeight: 600, fontSize: '1.7rem', textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Premier Injury Lawyers</h2>
+            <p className="content-text" style={{ marginBottom: '2.5rem', maxWidth: 600, marginLeft: 'auto', marginRight: 'auto', color: '#e5e7eb', fontSize: '1.25rem', textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
+              For over 40 years, {firmName} has been fighting for clients in Philadelphia who have been victims of negligence, auto accidents, personal injury, medical malpractice and premise liability.
+            </p>
+            <div className="firm-highlights" style={{ justifyContent: 'center', gap: '3rem', marginBottom: '2.5rem', display: 'flex', flexWrap: 'wrap' }}>
+              <div className="highlight-item" style={{ minWidth: 120 }}>
+                <span className="highlight-number" style={{ color: '#fbbf24', fontSize: '2.2rem', fontWeight: 700, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>40+</span>
+                <span className="highlight-text" style={{ color: '#f3f4f6', display: 'block', fontWeight: 500, marginTop: 4, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Years of Experience</span>
+              </div>
+              <div className="highlight-item" style={{ minWidth: 120 }}>
+                <span className="highlight-number" style={{ color: '#fbbf24', fontSize: '2.2rem', fontWeight: 700, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>15+</span>
+                <span className="highlight-text" style={{ color: '#f3f4f6', display: 'block', fontWeight: 500, marginTop: 4, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Skilled Attorneys</span>
+              </div>
+              <div className="highlight-item" style={{ minWidth: 120 }}>
+                <span className="highlight-number" style={{ color: '#fbbf24', fontSize: '2.2rem', fontWeight: 700, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>1000+</span>
+                <span className="highlight-text" style={{ color: '#f3f4f6', display: 'block', fontWeight: 500, marginTop: 4, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Cases Won</span>
+              </div>
+            </div>
+            <a href="/contact" style={{
+              display: 'inline-block',
+              background: 'var(--gradient-gold, linear-gradient(135deg, #d97706 0%, #f59e0b 100%))',
+              color: '#fff',
+              fontWeight: 700,
+              fontSize: '1.15rem',
+              padding: '0.9rem 2.5rem',
+              borderRadius: 8,
+              boxShadow: '0 4px 24px rgba(0,0,0,0.18)',
+              textDecoration: 'none',
+              letterSpacing: '0.01em',
+              marginTop: 8,
+              transition: 'background 0.2s, box-shadow 0.2s',
+            }}
+            onMouseOver={e => e.currentTarget.style.background = 'var(--gold-accent, #d97706)'}
+            onMouseOut={e => e.currentTarget.style.background = 'var(--gradient-gold, linear-gradient(135deg, #d97706 0%, #f59e0b 100%))'}
+            >
+              Get a Free Consultation
+            </a>
+          </div>
+        </section>
+      </div>
       {/* Settlement Carousel */}
       <section className="section" style={{paddingBottom: '2rem', marginBottom: '0'}}>
         <div className="section-title" style={{marginBottom: '1.5rem'}}>
@@ -202,58 +204,60 @@ export default function HomePage() {
         <PracticeAreasCarousel />
       </section>
       {/* Quick Links Section */}
-      <section className="section quick-links">
-        <div className="section-title">
-          <h3>Quick Access</h3>
-          <p>Get the help you need quickly</p>
-        </div>
-        <div className="grid grid-4">
-          <Link href="/contact" className="quick-link-card">
-            <Image 
-              src="/photos/quicklink-1-1.png" 
-              alt="Free Consultation" 
-              width={64} 
-              height={64}
-              className="quick-link-icon"
-            />
-            <h4>Free Consultation</h4>
-            <p>Get expert legal advice at no cost</p>
-          </Link>
-          <Link href="/attorneys" className="quick-link-card">
-            <Image 
-              src="/photos/quicklink-2-1.png" 
-              alt="Our Attorneys" 
-              width={64} 
-              height={64}
-              className="quick-link-icon"
-            />
-            <h4>Our Attorneys</h4>
-            <p>Meet our experienced legal team</p>
-          </Link>
-          <Link href="/practice" className="quick-link-card">
-            <Image 
-              src="/photos/quicklink-3-1.png" 
-              alt="Practice Areas" 
-              width={64} 
-              height={64}
-              className="quick-link-icon"
-            />
-            <h4>Practice Areas</h4>
-            <p>Comprehensive legal services</p>
-          </Link>
-          <Link href="/contact" className="quick-link-card">
-            <Image 
-              src="/photos/quicklink-4-1.png" 
-              alt="Contact Us" 
-              width={64} 
-              height={64}
-              className="quick-link-icon"
-            />
-            <h4>Contact Us</h4>
-            <p>Reach out for immediate help</p>
-          </Link>
-        </div>
-      </section>
+      <div className="quick-links-bg" style={{ width: '100%', background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)', padding: '0 0 3rem 0', margin: 0 }}>
+        <section className="section quick-links" style={{ maxWidth: 1400, margin: '0 auto', background: 'transparent', padding: 0 }}>
+          <div className="section-title">
+            <h3>Quick Access</h3>
+            <p>Get the help you need quickly</p>
+          </div>
+          <div className="quick-links-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2.5rem', width: '100%' }}>
+            <Link href="/contact" className="quick-link-card">
+              <Image 
+                src="/photos/quicklink-1-1.png" 
+                alt="Free Consultation" 
+                width={64} 
+                height={64}
+                className="quick-link-icon"
+              />
+              <h4>Free Consultation</h4>
+              <p>Get expert legal advice at no cost</p>
+            </Link>
+            <Link href="/attorneys" className="quick-link-card">
+              <Image 
+                src="/photos/quicklink-2-1.png" 
+                alt="Our Attorneys" 
+                width={64} 
+                height={64}
+                className="quick-link-icon"
+              />
+              <h4>Our Attorneys</h4>
+              <p>Meet our experienced legal team</p>
+            </Link>
+            <Link href="/practice" className="quick-link-card">
+              <Image 
+                src="/photos/quicklink-3-1.png" 
+                alt="Practice Areas" 
+                width={64} 
+                height={64}
+                className="quick-link-icon"
+              />
+              <h4>Practice Areas</h4>
+              <p>Comprehensive legal services</p>
+            </Link>
+            <Link href="/contact" className="quick-link-card">
+              <Image 
+                src="/photos/quicklink-4-1.png" 
+                alt="Contact Us" 
+                width={64} 
+                height={64}
+                className="quick-link-icon"
+              />
+              <h4>Contact Us</h4>
+              <p>Reach out for immediate help</p>
+            </Link>
+          </div>
+        </section>
+      </div>
       <Footer />
     </div>
   );

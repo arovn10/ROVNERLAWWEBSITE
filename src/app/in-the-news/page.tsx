@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useFirmName } from '@/lib/FirmNameContext';
 import { Calendar, ExternalLink, FileText, ArrowLeft } from 'lucide-react';
+import Image from 'next/image';
 
 interface News {
   id: string;
@@ -60,36 +61,23 @@ export default function InTheNewsPage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex flex-col items-center justify-center font-sans">
       <Header currentPage="in-the-news" />
       
-      {/* Hero Section */}
-      <section className="hero-professional" style={{ position: 'relative', minHeight: '40vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div className="hero-image-overlay" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            background: 'var(--gradient-navy)',
-            zIndex: 1
-          }} />
-        </div>
-        <div className="hero-content" style={{
-          maxWidth: 2000,
-          margin: '0 auto',
+      {/* Hero Section with Full-Width Color (no image, fixed) */}
+      <section
+        className="hero-professional"
+        style={{
           width: '100%',
-          position: 'relative',
-          zIndex: 2,
+          minHeight: '140px',
+          background: 'linear-gradient(120deg, #1e293b 60%, #334155 100%)',
           display: 'flex',
-          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          color: '#fff',
-          textAlign: 'center',
-          padding: '2rem 0',
-        }}>
-          <h1 className="content-title" style={{ fontSize: 'clamp(2.5rem, 6vw, 3.5rem)', fontWeight: 800, marginBottom: '0.5rem', color: '#fff', textShadow: '0 2px 12px rgba(0,0,0,0.7)' }}>In the News</h1>
+          overflow: 'hidden',
+        }}
+      >
+        <div className="hero-content" style={{ color: '#fff', textAlign: 'center', width: '100%' }}>
+          <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 3.5rem)', fontWeight: 800, marginBottom: '0.5rem', textShadow: '0 2px 12px rgba(0,0,0,0.7)' }}>In the News</h2>
           <div className="accent-bar" style={{ margin: '0 auto 1.5rem auto', background: 'var(--gradient-gold)' }}></div>
-          <p className="content-text" style={{ marginBottom: '2.5rem', maxWidth: 600, marginLeft: 'auto', marginRight: 'auto', color: '#e5e7eb', fontSize: '1.25rem', textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
+          <p style={{ marginBottom: '2.5rem', maxWidth: 600, marginLeft: 'auto', marginRight: 'auto', color: '#e5e7eb', fontSize: '1.25rem', textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
             Stay updated with the latest news, press mentions, and media coverage featuring {firmName}
           </p>
         </div>
