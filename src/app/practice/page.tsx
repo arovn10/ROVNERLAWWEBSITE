@@ -172,7 +172,7 @@ const practiceAreas = [
   {
     id: 12,
     title: "General Legal Matters",
-    description: "Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt has a specialized and experienced team of lawyers with proven success in representing injured parties. With dedicated professionalism, and personal attention, our lawyers are at the forefront of protecting our clients and getting the results they deserve. Our team of over 15 lawyers plus our paralegals, investigators, experts, all with hundreds of years of combined experience, put us at the top of the legal profession. Widely recognized as one of the largest and most experienced personal injury law firms, because of our size and the multiple types of cases our individual attorneys handle, our law firm can call its practice a general practice of law in Philadelphia, Bucks County, Montgomery County, South Jersey Pennsylvania, New Jersey, and Florida.",
+    description: "Our experienced team handles a wide range of legal matters, including real estate, landlord-tenant disputes, wills, estates, and probate, providing trusted guidance for your general legal needs.",
     features: [
       "Real Estate",
       "Landlord-Tenant Disputes and Litigation",
@@ -186,7 +186,7 @@ const practiceAreas = [
   {
     id: 13,
     title: "Limited Tort Lawyer",
-    description: "If you have limited tort coverage and were involved in a serious automobile accident, seeking the help of a lawyer at our firm will help you to prove your case and convince the court that your injuries are life-altering, severe, and serious. Our lawyers will thoroughly review your claim, explain all of your insurance options, fight to win your fair compensation, and demonstrate to the jury or judge how your injury is serious and has impacted your life.",
+    description: "We help limited tort clients fight for fair compensation and prove their injuries meet the serious injury threshold.",
     features: [
       "Limited tort insurance exceptions",
       "Full tort qualification",
@@ -200,7 +200,7 @@ const practiceAreas = [
   {
     id: 14,
     title: "Uber Lawyer",
-    description: "If you are injured in an accident involving a vehicle driven by a ride-sharing employee, gather as much evidence as you can at the scene, including witness accounts, license plate numbers, photographs, driver information, and insurance information. Our experienced lawyers will aggressively pursue justice and help you win back the settlement you deserve.",
+    description: "Injured in an Uber or Lyft? We handle rideshare accident claims and insurance issues for drivers and passengers.",
     features: [
       "Uber/Lyft accident claims",
       "Insurance coverage gaps",
@@ -214,7 +214,7 @@ const practiceAreas = [
   {
     id: 15,
     title: "Taxi Lawyer",
-    description: "If you or someone you care about has recently been injured by a taxi or while riding in one in Philadelphia, Bucks County, or any other surrounding area, it's important to get in touch with a taxi lawyer immediately. Our lawyers will guide you through the process, help you deal with the legal system and insurance companies, and work to get your case settled as quickly as possible.",
+    description: "We represent clients injured in taxi accidents, guiding you through claims, insurance, and legal proceedings.",
     features: [
       "Taxi accident claims",
       "Insurance and legal system navigation",
@@ -228,7 +228,7 @@ const practiceAreas = [
   {
     id: 16,
     title: "Septa Bus Accident Lawyer",
-    description: "A SEPTA bus crash can cause serious damage to pedestrians, passengers and drivers due to the vehicle's size, lack of seatbelts and sudden stops. Our attorneys provide expert legal services for SEPTA bus, trolley, train, subway, and paratransit accidents, helping you navigate insurance and legal claims for maximum compensation.",
+    description: "We help victims of SEPTA bus, trolley, and train accidents recover compensation for injuries and losses.",
     features: [
       "SEPTA bus, trolley, and train accidents",
       "Pedestrian and passenger injury claims",
