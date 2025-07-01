@@ -170,7 +170,6 @@ export default function MedicalMalpracticePage() {
               <div className="quick-contact-content">
                 <p>Need immediate assistance? Call us now!</p>
                 <a href="tel:215-259-5958" className="phone-cta-btn">215-259-5958</a>
-                <p className="quick-contact-note">Available 24/7 for emergencies</p>
               </div>
             </div>
           </div>

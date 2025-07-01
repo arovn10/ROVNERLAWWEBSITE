@@ -424,60 +424,53 @@ body {
 }
 
 /* Professional Card Styles */
-.card {
+.practice-card {
   background: white;
-  border-radius: 12px;
-  padding: 2.5rem;
-  box-shadow: var(--shadow-md);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid var(--gray-200);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s, transform 0.3s;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+}
+.practice-card:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px);
+}
+.practice-card-image-container {
   position: relative;
+  height: 200px;
   overflow: hidden;
 }
-
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--gradient-blue);
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
+.practice-card-image {
+  object-fit: cover;
+  transition: transform 0.3s;
 }
-
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-xl);
-  border-color: var(--gray-300);
+.practice-card:hover .practice-card-image {
+  transform: scale(1.05);
 }
-
-.card:hover::before {
-  transform: scaleX(1);
+.practice-card-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+  color: white;
+  padding: 0.875rem 2rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  transition: box-shadow 0.3s, transform 0.3s;
+  box-shadow: 0 4px 15px rgba(26, 35, 126, 0.3);
+}
+.practice-card-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(26, 35, 126, 0.4);
 }
 
 /* Enhanced Practice Area Cards with Images */
 .practice-card-enhanced {
   padding: 0;
   overflow: hidden;
-}
-
-.practice-image-container {
-  position: relative;
-  height: 200px;
-  overflow: hidden;
-}
-
-.practice-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.practice-card-enhanced:hover .practice-image {
-  transform: scale(1.05);
 }
 
 .practice-content {

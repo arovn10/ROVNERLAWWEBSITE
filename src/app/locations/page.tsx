@@ -86,7 +86,6 @@ export default function LocationsPage() {
                     <p>Monday - Friday: 9:00 AM - 5:00 PM</p>
                     <p>Saturday: By Appointment</p>
                     <p>Sunday: Closed</p>
-                    <p className="emergency-note"><em>24/7 Emergency Service Available</em></p>
                   </div>
                 </div>
               </div>

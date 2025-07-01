@@ -168,75 +168,248 @@ const practiceAreas = [
     image: "/photos/social-security.jpg",
     banner: "/photos/banner-social-1024x128.png",
     color: "green"
+  },
+  {
+    id: 12,
+    title: "General Legal Matters",
+    description: "Rovner, Allen, Rovner, Zimmerman, Sigman & Schmidt has a specialized and experienced team of lawyers with proven success in representing injured parties. With dedicated professionalism, and personal attention, our lawyers are at the forefront of protecting our clients and getting the results they deserve. Our team of over 15 lawyers plus our paralegals, investigators, experts, all with hundreds of years of combined experience, put us at the top of the legal profession. Widely recognized as one of the largest and most experienced personal injury law firms, because of our size and the multiple types of cases our individual attorneys handle, our law firm can call its practice a general practice of law in Philadelphia, Bucks County, Montgomery County, South Jersey Pennsylvania, New Jersey, and Florida.",
+    features: [
+      "Real Estate",
+      "Landlord-Tenant Disputes and Litigation",
+      "Wills",
+      "Estates and Probate"
+    ],
+    image: "/photos/general.jpg",
+    banner: "/photos/banner-court-1024x128.png",
+    color: "blue"
+  },
+  {
+    id: 13,
+    title: "Limited Tort Lawyer",
+    description: "If you have limited tort coverage and were involved in a serious automobile accident, seeking the help of a lawyer at our firm will help you to prove your case and convince the court that your injuries are life-altering, severe, and serious. Our lawyers will thoroughly review your claim, explain all of your insurance options, fight to win your fair compensation, and demonstrate to the jury or judge how your injury is serious and has impacted your life.",
+    features: [
+      "Limited tort insurance exceptions",
+      "Full tort qualification",
+      "Insurance coverage review",
+      "Serious injury litigation"
+    ],
+    image: "/photos/auto-accidents.jpg",
+    banner: "/photos/banner-auto-1024x128.png",
+    color: "red"
+  },
+  {
+    id: 14,
+    title: "Uber Lawyer",
+    description: "If you are injured in an accident involving a vehicle driven by a ride-sharing employee, gather as much evidence as you can at the scene, including witness accounts, license plate numbers, photographs, driver information, and insurance information. Our experienced lawyers will aggressively pursue justice and help you win back the settlement you deserve.",
+    features: [
+      "Uber/Lyft accident claims",
+      "Insurance coverage gaps",
+      "Passenger and driver representation",
+      "Settlement negotiation"
+    ],
+    image: "/photos/auto-accidents.jpg",
+    banner: "/photos/banner-auto-1024x128.png",
+    color: "green"
+  },
+  {
+    id: 15,
+    title: "Taxi Lawyer",
+    description: "If you or someone you care about has recently been injured by a taxi or while riding in one in Philadelphia, Bucks County, or any other surrounding area, it's important to get in touch with a taxi lawyer immediately. Our lawyers will guide you through the process, help you deal with the legal system and insurance companies, and work to get your case settled as quickly as possible.",
+    features: [
+      "Taxi accident claims",
+      "Insurance and legal system navigation",
+      "Medical bill assistance",
+      "Settlement and trial representation"
+    ],
+    image: "/photos/auto-accidents.jpg",
+    banner: "/photos/banner-auto-1024x128.png",
+    color: "purple"
+  },
+  {
+    id: 16,
+    title: "Septa Bus Accident Lawyer",
+    description: "A SEPTA bus crash can cause serious damage to pedestrians, passengers and drivers due to the vehicle's size, lack of seatbelts and sudden stops. Our attorneys provide expert legal services for SEPTA bus, trolley, train, subway, and paratransit accidents, helping you navigate insurance and legal claims for maximum compensation.",
+    features: [
+      "SEPTA bus, trolley, and train accidents",
+      "Pedestrian and passenger injury claims",
+      "Insurance and legal claims",
+      "Expert investigation and evidence gathering"
+    ],
+    image: "/photos/auto-accidents.jpg",
+    banner: "/photos/banner-auto-1024x128.png",
+    color: "blue"
   }
 ];
 
 export default function PracticeAreasPage() {
   return (
-    <div>
+    <div style={{backgroundColor: '#fafafa'}}>
       <Header currentPage="practice" />
 
       {/* Hero Section */}
-      <section className="hero-professional">
-        <div className="hero-content">
-          <h2>Our Practice Areas</h2>
-          <p>Comprehensive Legal Services with Proven Results</p>
+      <section style={{
+        background: 'linear-gradient(135deg, #1a237e 0%, #3949ab 100%)',
+        padding: '4rem 0',
+        textAlign: 'center',
+        color: 'white'
+      }}>
+        <div style={{maxWidth: '800px', margin: '0 auto', padding: '0 2rem'}}>
+          <h1 style={{
+            fontSize: '3.5rem',
+            fontWeight: '700',
+            margin: '0 0 1rem',
+            letterSpacing: '-0.02em',
+            lineHeight: '1.1'
+          }}>
+            Practice Areas
+          </h1>
+          <p style={{
+            fontSize: '1.25rem',
+            fontWeight: '400',
+            margin: '0',
+            opacity: '0.9',
+            lineHeight: '1.5'
+          }}>
+            Comprehensive legal expertise across all major practice areas
+          </p>
         </div>
       </section>
 
       {/* Practice Areas Grid */}
-      <section className="section">
-        <div className="section-title">
-          <h3>Legal Services We Provide</h3>
-          <p>Over 40 years of experience serving clients throughout Pennsylvania</p>
+      <section style={{
+        padding: '5rem 0',
+        maxWidth: '1400px',
+        margin: '0 auto'
+      }}>
+        <div style={{
+          textAlign: 'center',
+          marginBottom: '4rem',
+          padding: '0 2rem'
+        }}>
+          <h2 style={{
+            fontSize: '2.5rem',
+            fontWeight: '700',
+            color: '#1a1a1a',
+            margin: '0 0 1rem',
+            letterSpacing: '-0.01em'
+          }}>
+            Legal Services
+          </h2>
+          <p style={{
+            fontSize: '1.125rem',
+            color: '#666',
+            margin: '0',
+            maxWidth: '600px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            lineHeight: '1.6'
+          }}>
+            Over 40 years of experience serving clients throughout Pennsylvania with proven results and dedicated representation.
+          </p>
         </div>
         
-        <div className="practice-areas-detailed-grid">
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
+          gap: '2rem',
+          padding: '0 2rem'
+        }}>
           {practiceAreas.map((area) => (
-            <div key={area.id} className="practice-area-detailed-card">
-              {/* Banner Image */}
-              <div className="practice-banner-container">
+            <div key={area.id} className="practice-card">
+              {/* Image */}
+              <div className="practice-card-image-container">
                 <Image 
-                  src={area.banner} 
+                  src={area.image} 
                   alt={area.title}
-                  width={1024}
-                  height={128}
-                  className="practice-banner-image"
+                  fill
+                  className="practice-card-image"
                 />
-                <div className="practice-banner-overlay">
-                  <h3 className="practice-banner-title">{area.title}</h3>
+                <div style={{
+                  position: 'absolute',
+                  top: '0',
+                  left: '0',
+                  right: '0',
+                  bottom: '0',
+                  background: 'linear-gradient(135deg, rgba(26, 35, 126, 0.8) 0%, rgba(57, 73, 171, 0.6) 100%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <h3 style={{
+                    color: 'white',
+                    fontSize: '1.75rem',
+                    fontWeight: '700',
+                    margin: '0',
+                    textAlign: 'center',
+                    textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)'
+                  }}>
+                    {area.title}
+                  </h3>
                 </div>
               </div>
               
               {/* Content */}
-              <div className="practice-detailed-content">
-                <div className="practice-main-image-container">
-                  <Image 
-                    src={area.image} 
-                    alt={area.title}
-                    width={400}
-                    height={200}
-                    className="practice-main-image"
-                  />
+              <div style={{
+                padding: '2rem'
+              }}>
+                <p style={{
+                  fontSize: '1rem',
+                  color: '#555',
+                  lineHeight: '1.6',
+                  margin: '0 0 1.5rem',
+                  fontWeight: '400'
+                }}>
+                  {area.description}
+                </p>
+                
+                <div style={{
+                  marginBottom: '2rem'
+                }}>
+                  <h4 style={{
+                    fontSize: '1.125rem',
+                    fontWeight: '600',
+                    color: '#1a237e',
+                    margin: '0 0 1rem'
+                  }}>
+                    Areas We Handle:
+                  </h4>
+                  <ul style={{
+                    listStyle: 'none',
+                    padding: '0',
+                    margin: '0',
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                    gap: '0.5rem'
+                  }}>
+                    {area.features.map((feature, index) => (
+                      <li key={index} style={{
+                        fontSize: '0.9rem',
+                        color: '#666',
+                        padding: '0.5rem 0',
+                        borderBottom: '1px solid #f0f0f0',
+                        display: 'flex',
+                        alignItems: 'center'
+                      }}>
+                        <span style={{
+                          width: '6px',
+                          height: '6px',
+                          borderRadius: '50%',
+                          background: '#1a237e',
+                          marginRight: '0.75rem',
+                          flexShrink: '0'
+                        }}></span>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
                 
-                <div className="practice-text-content">
-                  <p className="practice-description">{area.description}</p>
-                  
-                  <div className="practice-features">
-                    <h4 className="features-title">Areas We Handle:</h4>
-                    <ul className="features-list">
-                      {area.features.map((feature, index) => (
-                        <li key={index} className="feature-item">{feature}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  
-                  <div className="practice-action">
-                    <Link href={`/practice/${area.title.toLowerCase().replace(/\s+/g, '-')}`} className="learn-more-btn">
-                      LEARN MORE
-                    </Link>
-                  </div>
+                <div style={{
+                  textAlign: 'center'
+                }}>
+                  <Link href={`/practice/${area.title.toLowerCase().replace(/\s+/g, '-')}`} className="practice-card-btn">
+                    Learn More
+                  </Link>
                 </div>
               </div>
             </div>
@@ -245,42 +418,133 @@ export default function PracticeAreasPage() {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="section practice-why-choose">
-        <div className="about-content">
-          <div className="about-text">
-            <div className="content-title-section">
-              <h2 className="content-title">Why Choose Rovner Law for Your Legal Needs?</h2>
-              <div className="accent-bar"></div>
-            </div>
+      <section style={{
+        background: 'white',
+        padding: '5rem 0',
+        borderTop: '1px solid #f0f0f0'
+      }}>
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '0 2rem',
+          display: 'grid',
+          gridTemplateColumns: '2fr 1fr',
+          gap: '4rem',
+          alignItems: 'start'
+        }}>
+          <div>
+            <h2 style={{
+              fontSize: '2.5rem',
+              fontWeight: '700',
+              color: '#1a1a1a',
+              margin: '0 0 1.5rem',
+              letterSpacing: '-0.01em'
+            }}>
+              Why Choose Rovner Law?
+            </h2>
+            <p style={{
+              fontSize: '1.125rem',
+              color: '#555',
+              lineHeight: '1.6',
+              margin: '0 0 2rem'
+            }}>
+              With over 40 years of experience and a team of skilled attorneys, we have successfully handled thousands of cases across multiple practice areas. Our comprehensive approach ensures that you receive expert representation no matter what legal challenges you face.
+            </p>
 
-            <div className="content-text-blocks">
-              <p className="content-text">
-                With over 40 years of experience and a team of skilled attorneys, we have successfully handled thousands of cases across multiple practice areas. Our comprehensive approach ensures that you receive expert representation no matter what legal challenges you face.
-              </p>
-
-              <div className="highlight-box gold-highlight">
-                <h3 className="highlight-title">Our Promise to You</h3>
-                <ul className="highlight-list">
-                  <li>No fee unless we win your case</li>
-                  <li>Free initial consultations</li>
-                  <li>Personalized attention to every case</li>
-                  <li>Aggressive representation in court</li>
-                  <li>Proven track record of success</li>
-                  <li>Available 24/7 for emergencies</li>
-                </ul>
-              </div>
+            <div style={{
+              background: 'linear-gradient(135deg, #fff8e1 0%, #fff3e0 100%)',
+              borderRadius: '16px',
+              padding: '2rem',
+              border: '1px solid #ffe0b2'
+            }}>
+              <h3 style={{
+                fontSize: '1.5rem',
+                fontWeight: '600',
+                color: '#e65100',
+                margin: '0 0 1.5rem'
+              }}>
+                Our Promise to You
+              </h3>
+              <ul style={{
+                listStyle: 'none',
+                padding: '0',
+                margin: '0',
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                gap: '1rem'
+              }}>
+                {[
+                  "No fee unless we win your case",
+                  "Free initial consultations",
+                  "Personalized attention to every case",
+                  "Aggressive representation in court",
+                  "Proven track record of success"
+                ].map((item, index) => (
+                  <li key={index} style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontSize: '1rem',
+                    color: '#555'
+                  }}>
+                    <span style={{
+                      width: '8px',
+                      height: '8px',
+                      borderRadius: '50%',
+                      background: '#e65100',
+                      marginRight: '1rem',
+                      flexShrink: '0'
+                    }}></span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 
-          <div className="about-sidebar">
-            <div className="sidebar-box contact-form-box">
-              <h3 className="sidebar-title">Get Started Today</h3>
-              <div className="consultation-content">
-                <p>Ready to discuss your legal matter with our experienced team?</p>
-                <Link href="/contact" className="phone-cta-btn">Schedule Free Consultation</Link>
-                <p className="quick-contact-note">Call 215-259-5958 anytime</p>
-              </div>
-            </div>
+          <div style={{
+            background: 'linear-gradient(135deg, #1a237e 0%, #3949ab 100%)',
+            borderRadius: '20px',
+            padding: '2.5rem',
+            color: 'white',
+            textAlign: 'center',
+            boxShadow: '0 8px 30px rgba(26, 35, 126, 0.2)'
+          }}>
+            <h3 style={{
+              fontSize: '1.5rem',
+              fontWeight: '600',
+              margin: '0 0 1rem'
+            }}>
+              Get Started Today
+            </h3>
+            <p style={{
+              fontSize: '1rem',
+              margin: '0 0 2rem',
+              opacity: '0.9',
+              lineHeight: '1.5'
+            }}>
+              Ready to discuss your legal matter with our experienced team?
+            </p>
+            <Link href="/contact" style={{
+              display: 'inline-block',
+              background: 'white',
+              color: '#1a237e',
+              padding: '1rem 2rem',
+              borderRadius: '12px',
+              textDecoration: 'none',
+              fontWeight: '600',
+              fontSize: '1rem',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)'
+            }}>
+              Schedule Free Consultation
+            </Link>
+            <p style={{
+              fontSize: '0.9rem',
+              margin: '1.5rem 0 0',
+              opacity: '0.8'
+            }}>
+              Call 215-259-5958 anytime
+            </p>
           </div>
         </div>
       </section>
