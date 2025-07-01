@@ -11,7 +11,6 @@ export default function ContactPage() {
     name: '',
     email: '',
     phone: '',
-    address: '',
     dateOfIncident: '',
     caseType: '',
     represented: '',
@@ -42,7 +41,7 @@ export default function ContactPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData }),
       });
 
       const result = await response.json();
@@ -57,7 +56,6 @@ export default function ContactPage() {
           name: '',
           email: '',
           phone: '',
-          address: '',
           dateOfIncident: '',
           caseType: '',
           represented: '',
@@ -158,6 +156,25 @@ export default function ContactPage() {
             {/* Contact Form */}
             <div className="sidebar-box contact-form-box">
               <h3 className="sidebar-title">Contact Form</h3>
+              {submitStatus.type === 'success' && (
+                <div style={{
+                  background: '#e6f9ed',
+                  color: '#217a3c',
+                  border: '2px solid #34d399',
+                  borderRadius: '12px',
+                  padding: '1.5rem',
+                  marginBottom: '2rem',
+                  fontSize: '1.25rem',
+                  fontWeight: 700,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '1rem',
+                  boxShadow: '0 2px 12px rgba(52,211,153,0.08)'
+                }}>
+                  <span style={{fontSize:'2rem',lineHeight:1}}>✅</span>
+                  {submitStatus.message || 'Your message has been sent! We will contact you soon.'}
+                </div>
+              )}
               <form className="contact-form" onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label>Full Name *</label>
@@ -187,15 +204,6 @@ export default function ContactPage() {
                     value={formData.phone}
                     onChange={handleInputChange}
                     required 
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Home Address</label>
-                  <input 
-                    type="text" 
-                    name="address"
-                    value={formData.address}
-                    onChange={handleInputChange}
                   />
                 </div>
                 <div className="form-group">

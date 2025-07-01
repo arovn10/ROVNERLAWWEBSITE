@@ -57,25 +57,6 @@ export default function AdminDashboard() {
 
   return (
     <div className="space-y-8">
-      {/* Welcome Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-8 text-white shadow-xl">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold mb-2">Admin Dashboard</h1>
-            <p className="text-blue-100 text-lg">Manage your law firm's digital presence</p>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="text-right">
-              <div className="text-sm text-blue-200">Welcome back</div>
-              <div className="font-semibold">{session?.user?.name || session?.user?.email || "Admin"}</div>
-            </div>
-            <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-lg backdrop-blur-sm">
-              {session?.user?.name?.[0]?.toUpperCase() || "A"}
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Main Actions Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <Link href="/admin/lawyers" className="group">

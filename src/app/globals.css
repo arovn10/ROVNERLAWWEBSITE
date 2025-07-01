@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Professional Rovner Law Website - Corporate Premium Styling */
 * {
   margin: 0;
@@ -262,8 +266,8 @@ body {
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 1200px;
-  margin: 0 auto;
+  /* max-width: 1200px; */
+  /* margin: 0 auto; */
 }
 
 .hero-content h2 {

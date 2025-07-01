@@ -98,18 +98,18 @@ export default function HomePage() {
           }} />
         </div>
         <div className="hero-content" style={{
+          maxWidth: 1200,
+          margin: '0 auto',
+          width: '100%',
           position: 'relative',
           zIndex: 2,
-          width: '100%',
-          maxWidth: 900,
-          margin: '0 auto',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
           color: '#fff',
           textAlign: 'center',
-          padding: '2rem 1rem',
+          padding: '2rem 0',
         }}>
           <h1 className="content-title" style={{ fontSize: 'clamp(2.5rem, 6vw, 3.5rem)', fontWeight: 800, marginBottom: '0.5rem', color: '#fff', textShadow: '0 2px 12px rgba(0,0,0,0.7)' }}>{firmName}</h1>
           <div className="accent-bar" style={{ margin: '0 auto 1.5rem auto', background: 'var(--gradient-gold)' }}></div>

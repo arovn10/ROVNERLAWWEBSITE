@@ -31,7 +31,7 @@ export default async function NewsArticlePage({ params }: { params: Promise<{ id
 
       {/* Hero Section */}
       <section className="hero-professional">
-        <div className="hero-content">
+        <div className="hero-content" style={{ maxWidth: 1200, margin: '0 auto', width: '100%' }}>
           <h2>In the News</h2>
           <p>Latest updates and media coverage</p>
         </div>
