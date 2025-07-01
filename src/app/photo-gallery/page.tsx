@@ -12,24 +12,27 @@ const rovnerPhotos = [
   { file: 'CLINTON1-230x300.jpg', category: 'Presidents', description: 'Bob Rovner with President Bill Clinton' },
   { file: 'CLINTON2.jpg', category: 'Presidents', description: 'Bob Rovner with President Bill Clinton' },
   { file: 'REAGAN.jpg', category: 'Presidents', description: 'Bob Rovner with President Ronald Reagan' },
-  { file: 'KENNEDY.jpg', category: 'Presidents', description: 'Bob Rovner with President John F. Kennedy' },
-  { file: 'johnson.jpg', category: 'Presidents', description: 'Bob Rovner with President Lyndon B. Johnson' },
-  { file: 'OBAMA.jpg', category: 'Presidents', description: 'Bob Rovner with President Barack Obama' },
-  { file: 'TRUMP.jpg', category: 'Presidents', description: 'Bob Rovner with President Donald J. Trump' },
+  // Obama (corrected)
+  { file: 'doc03613020170208103844_001-1024x791.jpg', category: 'Presidents', description: 'FORMER STATE SENATOR BOB ROVNER TOLD BARACK OBAMA HE ENJOYED BEING A DELEGATE IN 2008 AT THE DENVER DEMOCRATIC CONVENTION AND AGAIN IN CHARLOTTE IN 2012' },
+  // Trump (corrected)
+  { file: 'bobrovner1.jpg', category: 'Presidents', description: 'Bob Rovner with President Donald J. Trump' },
+  // Remove JFK and Johnson (if not accurate)
   // Senate & Politicians
   { file: 'SPECTER.jpg', category: 'Senate & Politicians', description: 'With Senator Arlen Specter' },
   { file: 'GORE.jpg', category: 'Senate & Politicians', description: 'With Vice President Al Gore' },
   { file: 'mccain.jpg', category: 'Senate & Politicians', description: 'With Senator John McCain' },
   { file: 'POWELL.jpg', category: 'Senate & Politicians', description: 'With General Colin Powell' },
   { file: 'BENNET.jpg', category: 'Senate & Politicians', description: 'With Senator Bill Bennett' },
-  { file: 'ABRAHAM.jpg', category: 'Senate & Politicians', description: 'With Senator Spencer Abraham' },
+  { file: 'ABRAHAM.jpg', category: 'Senate & Politicians', description: '' },
   { file: 'BOXER.jpg', category: 'Senate & Politicians', description: 'With Senator Barbara Boxer' },
-  { file: 'STONE.jpg', category: 'Senate & Politicians', description: 'With Senator Richard Stone' },
+  { file: 'STONE.jpg', category: 'Senate & Politicians', description: '' },
   { file: 'STREET.jpg', category: 'Senate & Politicians', description: 'With Mayor John Street' },
   { file: 'ridge.jpg', category: 'Senate & Politicians', description: 'With Governor Tom Ridge' },
   { file: 'arnold.jpg', category: 'Senate & Politicians', description: 'With Arnold Schwarzenegger' },
   { file: 'rendell2.jpg', category: 'Senate & Politicians', description: 'With Governor Ed Rendell' },
   { file: 'rendell3.jpg', category: 'Senate & Politicians', description: 'With Governor Ed Rendell' },
+  // Hillary Clinton (corrected)
+  { file: 'doc03613420170208104216_001-1024x791.jpg', category: 'Senate & Politicians', description: 'Bob Rovner with Hillary Clinton' },
   // Celebrities
   { file: 'bonjovi.jpg', category: 'Celebrities', description: 'With Jon Bon Jovi' },
   { file: 'hanks.jpg', category: 'Celebrities', description: 'With Tom Hanks' },
@@ -40,13 +43,13 @@ const rovnerPhotos = [
   { file: 'whoopi.jpg', category: 'Celebrities', description: 'With Whoopi Goldberg' },
   { file: 'cosby2.jpg', category: 'Celebrities', description: 'With Bill Cosby' },
   { file: 'COSBY.jpg', category: 'Celebrities', description: 'With Bill Cosby' },
-  // Misc/Archives
-  { file: 'bobrovner1.jpg', category: 'Archives', description: '' },
-  { file: 'doc03613020170208103844_001-1024x791.jpg', category: 'Archives', description: '' },
+  // Archives & World Leaders
+  { file: 'doc03613220170208104114_001-1024x663.jpg', category: 'Archives', description: 'BOB ROVNER MEETS WITH THE FOUNDING FATHER OF THE STATE OF ISRAEL AND PRIME MINISTER DAVID BEN GURION IN 1971 WHEN HE WAS THE SENATOR AND TOLD THE PRIME MINISTER THAT HE WAS THE "GEORGE WASHINGTON" OF ISRAEL AND THANKED HIM FOR ALL HE DID FOR THE JEWISH PEOPLE' },
   { file: 'doc03613120170208103956_001-1024x791.jpg', category: 'Archives', description: '' },
-  { file: 'doc03613220170208104114_001-1024x663.jpg', category: 'Archives', description: '' },
   { file: 'doc03613320170208104158_001-791x1024.jpg', category: 'Archives', description: '' },
-  { file: 'doc03613420170208104216_001-1024x791.jpg', category: 'Archives', description: '' },
+  // Any other photos without a name
+  { file: 'KENNEDY.jpg', category: 'Archives', description: '' },
+  { file: 'johnson.jpg', category: 'Archives', description: '' },
 ];
 
 const categories = [
@@ -95,54 +98,79 @@ export default function PhotoGalleryPage() {
   return (
     <div>
       <Header currentPage="photo-gallery" />
-      {/* Hero Image with Page Title */}
-      <section className="relative py-24 bg-cover bg-center" style={{backgroundImage: "url('/photos/attorneys-hero.jpg')"}}>
-        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-        <div className="relative max-w-7xl mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold text-white mb-4">PHOTO GALLERY</h1>
+      {/* Hero/Intro Section */}
+      <section style={{position:'relative',width:'100%',height:'340px',marginBottom:'2.5rem',overflow:'hidden',display:'flex',alignItems:'center',justifyContent:'flex-start',background:'linear-gradient(90deg, #e8f0fe 0%, #fffbe6 100%)'}}>
+        <div style={{position:'relative',height:'100%',width:'340px',flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',zIndex:2}}>
+          <Image 
+            src="/photos/Attorneys/rrovner.png"
+            alt="Senator Bob Rovner"
+            width={220}
+            height={300}
+            style={{objectFit:'cover',borderRadius:'18px',boxShadow:'0 4px 24px rgba(20,28,38,0.13)'}}
+          />
+        </div>
+        <div style={{padding:'0 2.5rem',zIndex:3}}>
+          <h1 style={{fontSize:'2.7rem',fontWeight:900,marginBottom:'0.7rem',color:'#1a237e',letterSpacing:'-0.01em'}}>The Bob Rovner Archives</h1>
+          <div style={{height:'5px',width:'80px',borderRadius:'2px',background:'var(--gold-accent)',marginBottom:'1.2rem'}}></div>
+          <p style={{fontSize:'1.25rem',color:'#444',maxWidth:'700px',lineHeight:1.6}}>
+            Explore the remarkable journey of Senator Bob Rovner, attorney, legislator, broadcaster, and community leader. These archives chronicle a lifetime of service, achievement, and unforgettable moments with presidents, politicians, and icons of our time.
+          </p>
         </div>
       </section>
       {/* Page Content */}
       <section className="py-16 bg-[var(--gray-50)]">
-        <div className="max-w-7xl mx-auto px-4">
+        <div style={{maxWidth:'1200px',margin:'0 auto',paddingLeft:'2.5rem',paddingRight:'2.5rem'}}>
           {categories.map((cat) => (
-            <div key={cat} className="mb-20">
-              <div className="mb-4 flex items-center gap-4">
-                <h2 className="text-2xl font-extrabold text-[var(--navy-primary)] tracking-tight">{cat}</h2>
-                <div className="h-1 w-16 rounded bg-[var(--gold-accent)]"></div>
+            <div key={cat} style={{marginBottom:'3.5rem'}}>
+              {/* Section Header as Chapter */}
+              <div style={{display:'flex',alignItems:'center',gap:'1.2rem',marginBottom:'0.7rem',marginLeft:0}}>
+                <h2 style={{fontSize:'2rem',fontWeight:800,color:'#1a237e',letterSpacing:'-0.01em',margin:0,textAlign:'left'}}>{cat}</h2>
+                <div style={{height:'5px',width:'60px',borderRadius:'2px',background:'var(--gold-accent)'}}></div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* Section Intro */}
+              <div style={{marginBottom:'1.5rem',marginLeft:0}}>
+                {(() => {
+                  let intro = '';
+                  if (cat === 'Presidents') intro = 'Moments with U.S. Presidents—snapshots of history and leadership.';
+                  else if (cat === 'Senate & Politicians') intro = 'Encounters with influential lawmakers and public servants.';
+                  else if (cat === 'Celebrities') intro = 'A lifetime among icons of music, film, and culture.';
+                  else if (cat === 'Archives') intro = 'Personal memories, rare documents, and the legacy of a public life.';
+                  return (
+                    <p style={{ fontSize: '1.08rem', color: '#555', maxWidth: 700, lineHeight: 1.5 }}>{intro}</p>
+                  );
+                })()}
+              </div>
+              {/* Timeline Card Layout */}
+              <div style={{display:'flex',flexDirection:'column',gap:'2.2rem',alignItems:'flex-start',position:'relative',paddingLeft:'32px'}}>
+                {/* Timeline vertical bar */}
+                <div style={{position:'absolute',left:'8px',top:0,bottom:0,width:'4px',background:'linear-gradient(180deg,#1a237e 0%,#f59e0b 100%)',borderRadius:'2px',zIndex:1,opacity:0.18}}></div>
                 {rovnerPhotos.filter(p => p.category === cat).map((photo, idx) => (
                   <div
                     key={photo.file + idx}
-                    className="attorney-card cursor-pointer group flex flex-row items-stretch border border-[var(--gray-200)] hover:border-[var(--blue-accent)] bg-white rounded-xl shadow-md transition overflow-hidden relative"
-                    style={{height:'130px', maxWidth:'700px', minHeight:'130px'}} 
+                    className="group relative flex flex-row items-stretch bg-white rounded-2xl shadow-lg border-none overflow-hidden transition-all hover:shadow-2xl hover:-translate-y-1"
+                    style={{ maxWidth: '900px', minHeight: '170px', marginLeft:0, position: 'relative', width:'100%', boxShadow:'0 4px 24px rgba(20,28,38,0.10)', background:'linear-gradient(90deg, #f7fafc 0%, #fffbe6 100%)', padding:'1.5rem 2.2rem 1.5rem 0', alignItems:'center' }}
                     onClick={() => setLightbox({src: `/photos/BobRovnerArchives/${photo.file}`, desc: photo.description})}
                   >
-                    {/* Accent Bar */}
-                    <div className="w-3 bg-gradient-to-b from-[var(--gold-accent)] to-[var(--blue-accent)]" />
-                    {/* Photo */}
-                    <div className="flex-shrink-0 flex items-center justify-center bg-[var(--gray-200)]" style={{width:'130px', height:'130px'}}>
+                    {/* Timeline dot */}
+                    <div style={{position:'absolute',left:'-26px',top:'50%',transform:'translateY(-50%)',width:'18px',height:'18px',background:'linear-gradient(180deg,#1a237e 0%,#f59e0b 100%)',borderRadius:'50%',boxShadow:'0 2px 8px rgba(20,28,38,0.10)',zIndex:3,border:'3px solid #fff'}}></div>
+                    {/* Photo Section */}
+                    <div style={{width:'150px',height:'150px',background:'#f3f4f6',borderRadius:'12px',overflow:'hidden',display:'flex',alignItems:'center',justifyContent:'center',zIndex:3,boxShadow:'0 1px 6px rgba(20,28,38,0.08)',marginRight:'2.2rem'}}>
                       <Image
                         src={`/photos/BobRovnerArchives/${photo.file}`}
                         alt={photo.description || photo.file}
-                        width={130}
-                        height={130}
+                        width={150}
+                        height={150}
                         className="rounded-lg group-hover:scale-105 transition-transform duration-200 shadow"
-                        style={{objectFit:'cover', width:'120px', height:'120px'}}
+                        style={{objectFit:'cover',width:'140px',height:'140px'}}
                       />
                     </div>
-                    {/* Description */}
-                    <div className="flex flex-col justify-center px-6 py-2 flex-1 bg-white h-full">
+                    {/* Details Section */}
+                    <div style={{flex:1,display:'flex',flexDirection:'column',justifyContent:'center',zIndex:3,alignItems:'flex-start'}}>
                       {photo.description && (
-                        <div className="text-base font-semibold text-[var(--navy-primary)] mb-1">
-                          {photo.description}
-                        </div>
+                        <div style={{fontWeight:700,fontSize:'1.18rem',color:'#1a237e',marginBottom:'0.2rem',textAlign:'left',whiteSpace:'normal',overflow:'hidden',textOverflow:'ellipsis',letterSpacing:'-0.01em'}}>{photo.description}</div>
                       )}
-                      <div className="text-xs text-[var(--blue-accent)] font-bold uppercase tracking-wide">
-                        {cat}
-                      </div>
-                    </div>
+                      <div style={{fontWeight:500,fontSize:'0.97rem',color:'#f59e0b',textAlign:'left',letterSpacing:'0.01em',marginTop:photo.description?'.2rem':'0'}}>{cat}</div>
+                  </div>
                     {/* Hover overlay */}
                     <div className="absolute inset-0 bg-[var(--blue-accent)] bg-opacity-0 group-hover:bg-opacity-10 transition" />
                   </div>

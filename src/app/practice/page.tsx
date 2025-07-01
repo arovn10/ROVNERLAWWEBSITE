@@ -361,7 +361,7 @@ export default function PracticeAreasPage() {
                 }}>
                   {area.description}
                 </p>
-                
+                  
                 <div style={{
                   marginBottom: '2rem'
                 }}>
@@ -381,7 +381,7 @@ export default function PracticeAreasPage() {
                     gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
                     gap: '0.5rem'
                   }}>
-                    {area.features.map((feature, index) => (
+                      {area.features.map((feature, index) => (
                       <li key={index} style={{
                         fontSize: '0.9rem',
                         color: '#666',
@@ -400,16 +400,16 @@ export default function PracticeAreasPage() {
                         }}></span>
                         {feature}
                       </li>
-                    ))}
-                  </ul>
-                </div>
-                
+                      ))}
+                    </ul>
+                  </div>
+                  
                 <div style={{
                   textAlign: 'center'
                 }}>
                   <Link href={`/practice/${area.title.toLowerCase().replace(/\s+/g, '-')}`} className="practice-card-btn">
                     Learn More
-                  </Link>
+                    </Link>
                 </div>
               </div>
             </div>
@@ -448,8 +448,8 @@ export default function PracticeAreasPage() {
               lineHeight: '1.6',
               margin: '0 0 2rem'
             }}>
-              With over 40 years of experience and a team of skilled attorneys, we have successfully handled thousands of cases across multiple practice areas. Our comprehensive approach ensures that you receive expert representation no matter what legal challenges you face.
-            </p>
+                With over 40 years of experience and a team of skilled attorneys, we have successfully handled thousands of cases across multiple practice areas. Our comprehensive approach ensures that you receive expert representation no matter what legal challenges you face.
+              </p>
 
             <div style={{
               background: 'linear-gradient(135deg, #fff8e1 0%, #fff3e0 100%)',
@@ -497,7 +497,7 @@ export default function PracticeAreasPage() {
                     {item}
                   </li>
                 ))}
-              </ul>
+                </ul>
             </div>
           </div>
 
@@ -552,6 +552,6 @@ export default function PracticeAreasPage() {
       <Footer />
     </div>
   );
-}
+} 
 
 export { practiceAreas }; 

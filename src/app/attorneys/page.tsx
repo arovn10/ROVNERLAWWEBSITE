@@ -64,13 +64,13 @@ export default async function AttorneysPage() {
             <div style={{position:'absolute',left:0,top:0,bottom:0,width:'12px',background:'linear-gradient(180deg, #1a237e 0%, #f59e0b 100%)',borderRadius:'18px 0 0 18px',zIndex:2,gridRow:'1 / span 2'}} />
             {/* Photo Section */}
             <div style={{gridColumn:1,gridRow:1,display:'flex',alignItems:'center',justifyContent:'center',height:'220px',background:'#f3f4f6',borderRadius:'12px 0 0 12px',overflow:'hidden',boxShadow:'0 1px 6px rgba(20,28,38,0.08)',zIndex:3}}>
-              <Image
-                src={attorney.image || '/photos/default-headshot.jpg'}
-                alt={attorney.name}
+            <Image
+              src={attorney.image || '/photos/default-headshot.jpg'}
+              alt={attorney.name}
                 width={160}
                 height={220}
                 style={{objectFit:'cover',width:'160px',height:'220px'}}
-              />
+            />
             </div>
             {/* About Section */}
             <div style={{gridColumn:2,gridRow:1,padding:'0 2rem 0 2.5rem',display:'flex',flexDirection:'column',justifyContent:'center',height:'100%',zIndex:3}}>
@@ -139,12 +139,12 @@ export default async function AttorneysPage() {
               <p className="content-text" style={{fontSize:'1.1rem',color:'#444',marginBottom:'2rem'}}>Our team of over 15 lawyers plus our paralegals, investigators, experts, all with hundreds of years of combined experience, put us at the top of the Philadelphia Area legal profession.</p>
             </div>
             <div className="highlight-box gold-highlight" style={{margin:'2rem auto',maxWidth:'700px',textAlign:'left'}}>
-              <h3 className="highlight-title">Unmatched Experience & Results</h3>
-              <ul className="highlight-list">
-                <li>Former Assistant District Attorneys</li>
-                <li>Hundreds of years of combined legal experience</li>
+                <h3 className="highlight-title">Unmatched Experience & Results</h3>
+                <ul className="highlight-list">
+                  <li>Former Assistant District Attorneys</li>
+                  <li>Hundreds of years of combined legal experience</li>
                 <li>Proven track record of success</li>
-              </ul>
+                </ul>
             </div>
           </div>
           <div className="about-sidebar" style={{margin:'2rem 0 0 0',maxWidth:'400px',textAlign:'center',flex:'1'}}>
