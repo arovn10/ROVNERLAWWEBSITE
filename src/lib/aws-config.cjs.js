@@ -5,7 +5,6 @@ const awsConfig = {
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
 };
 
-// Validate AWS configuration
 if (!awsConfig.bucketName || !awsConfig.region || !awsConfig.accessKeyId || !awsConfig.secretAccessKey) {
     console.warn('AWS configuration is incomplete. Please check your environment variables.');
 }

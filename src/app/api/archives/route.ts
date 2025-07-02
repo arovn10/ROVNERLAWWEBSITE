@@ -5,16 +5,23 @@ import { prisma } from "@/lib/prisma";
 // GET /api/archives
 export async function GET() {
   try {
+    console.log('Fetching archives from database...');
     const archives = await prisma.archive.findMany({
       orderBy: {
         date: 'desc'
       }
     });
+    console.log(`Found ${archives.length} archives`);
     return NextResponse.json(archives);
   } catch (error) {
     console.error('Error fetching archives:', error);
+    console.error('Error details:', {
+      message: (error as Error).message,
+      stack: (error as Error).stack,
+      name: (error as Error).name
+    });
     return NextResponse.json(
-      { error: 'Failed to fetch archives' },
+      { error: 'Failed to fetch archives', details: (error as Error).message },
       { status: 500 }
     );
   }

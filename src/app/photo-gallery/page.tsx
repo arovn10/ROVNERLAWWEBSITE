@@ -5,59 +5,14 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-// Inferred photo data for Bob Rovner Archives
-const rovnerPhotos = [
-  // Presidents
-  { file: 'BUSH2.jpg', category: 'Presidents', description: 'Bob Rovner with President George H.W. Bush' },
-  { file: 'CLINTON1-230x300.jpg', category: 'Presidents', description: 'Bob Rovner with President Bill Clinton' },
-  { file: 'CLINTON2.jpg', category: 'Presidents', description: 'Bob Rovner with President Bill Clinton' },
-  { file: 'REAGAN.jpg', category: 'Presidents', description: 'Bob Rovner with President Ronald Reagan' },
-  // Obama (corrected)
-  { file: 'doc03613020170208103844_001-1024x791.jpg', category: 'Presidents', description: 'FORMER STATE SENATOR BOB ROVNER TOLD BARACK OBAMA HE ENJOYED BEING A DELEGATE IN 2008 AT THE DENVER DEMOCRATIC CONVENTION AND AGAIN IN CHARLOTTE IN 2012' },
-  // Trump (corrected)
-  { file: 'bobrovner1.jpg', category: 'Presidents', description: 'Bob Rovner with President Donald J. Trump' },
-  // Remove JFK and Johnson (if not accurate)
-  // Senate & Politicians
-  { file: 'SPECTER.jpg', category: 'Senate & Politicians', description: 'With Senator Arlen Specter' },
-  { file: 'GORE.jpg', category: 'Senate & Politicians', description: 'With Vice President Al Gore' },
-  { file: 'mccain.jpg', category: 'Senate & Politicians', description: 'With Senator John McCain' },
-  { file: 'POWELL.jpg', category: 'Senate & Politicians', description: 'With General Colin Powell' },
-  { file: 'BENNET.jpg', category: 'Senate & Politicians', description: 'With Senator Bill Bennett' },
-  { file: 'ABRAHAM.jpg', category: 'Senate & Politicians', description: '' },
-  { file: 'BOXER.jpg', category: 'Senate & Politicians', description: 'With Senator Barbara Boxer' },
-  { file: 'STONE.jpg', category: 'Senate & Politicians', description: '' },
-  { file: 'STREET.jpg', category: 'Senate & Politicians', description: 'With Mayor John Street' },
-  { file: 'ridge.jpg', category: 'Senate & Politicians', description: 'With Governor Tom Ridge' },
-  { file: 'arnold.jpg', category: 'Senate & Politicians', description: 'With Arnold Schwarzenegger' },
-  { file: 'rendell2.jpg', category: 'Senate & Politicians', description: 'With Governor Ed Rendell' },
-  { file: 'rendell3.jpg', category: 'Senate & Politicians', description: 'With Governor Ed Rendell' },
-  // Hillary Clinton (corrected)
-  { file: 'doc03613420170208104216_001-1024x791.jpg', category: 'Senate & Politicians', description: 'Bob Rovner with Hillary Clinton' },
-  // Celebrities
-  { file: 'bonjovi.jpg', category: 'Celebrities', description: 'With Jon Bon Jovi' },
-  { file: 'hanks.jpg', category: 'Celebrities', description: 'With Tom Hanks' },
-  { file: 'king.jpg', category: 'Celebrities', description: 'With Larry King' },
-  { file: 'jagger.jpg', category: 'Celebrities', description: 'With Mick Jagger' },
-  { file: 'streisnd.jpg', category: 'Celebrities', description: 'With Barbra Streisand' },
-  { file: 'minelli-271x300.jpg', category: 'Celebrities', description: 'With Liza Minnelli' },
-  { file: 'whoopi.jpg', category: 'Celebrities', description: 'With Whoopi Goldberg' },
-  { file: 'cosby2.jpg', category: 'Celebrities', description: 'With Bill Cosby' },
-  { file: 'COSBY.jpg', category: 'Celebrities', description: 'With Bill Cosby' },
-  // Archives & World Leaders
-  { file: 'doc03613220170208104114_001-1024x663.jpg', category: 'Archives', description: 'BOB ROVNER MEETS WITH THE FOUNDING FATHER OF THE STATE OF ISRAEL AND PRIME MINISTER DAVID BEN GURION IN 1971 WHEN HE WAS THE SENATOR AND TOLD THE PRIME MINISTER THAT HE WAS THE "GEORGE WASHINGTON" OF ISRAEL AND THANKED HIM FOR ALL HE DID FOR THE JEWISH PEOPLE' },
-  { file: 'doc03613120170208103956_001-1024x791.jpg', category: 'Archives', description: '' },
-  { file: 'doc03613320170208104158_001-791x1024.jpg', category: 'Archives', description: '' },
-  // Any other photos without a name
-  { file: 'KENNEDY.jpg', category: 'Archives', description: '' },
-  { file: 'johnson.jpg', category: 'Archives', description: '' },
-];
-
-const categories = [
-  'Presidents',
-  'Senate & Politicians',
-  'Celebrities',
-  'Archives',
-];
+// Archive type definition
+interface Archive {
+  id: string;
+  title: string;
+  imageUrl: string;
+  category: string;
+  date: string;
+}
 
 // Lightbox Component
 function Lightbox({ src, desc, onClose }: { src: string; desc?: string; onClose: () => void }) {
@@ -95,6 +50,46 @@ function Lightbox({ src, desc, onClose }: { src: string; desc?: string; onClose:
 
 export default function PhotoGalleryPage() {
   const [lightbox, setLightbox] = useState<{src: string, desc?: string} | null>(null);
+  const [archives, setArchives] = useState<Archive[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/archives')
+      .then(res => res.json())
+      .then(data => {
+        // Ensure data is an array
+        if (Array.isArray(data)) {
+          setArchives(data);
+        } else {
+          console.error('API returned non-array data:', data);
+          setArchives([]);
+        }
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching archives:', error);
+        setArchives([]);
+        setLoading(false);
+      });
+  }, []);
+
+  // Get unique categories from the database
+  const categories = [...new Set(archives.map(archive => archive.category))];
+
+  if (loading) {
+    return (
+      <div>
+        <Header currentPage="photo-gallery" />
+        <div className="py-16 bg-[var(--gray-50)]">
+          <div style={{maxWidth:'1200px',margin:'0 auto',paddingLeft:'2.5rem',paddingRight:'2.5rem'}}>
+            <div className="text-center text-lg font-semibold text-gray-700">Loading archives...</div>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div>
       <Header currentPage="photo-gallery" />
@@ -144,20 +139,20 @@ export default function PhotoGalleryPage() {
               <div style={{display:'flex',flexDirection:'column',gap:'2.2rem',alignItems:'flex-start',position:'relative',paddingLeft:'32px'}}>
                 {/* Timeline vertical bar */}
                 <div style={{position:'absolute',left:'8px',top:0,bottom:0,width:'4px',background:'linear-gradient(180deg,#1a237e 0%,#f59e0b 100%)',borderRadius:'2px',zIndex:1,opacity:0.18}}></div>
-                {rovnerPhotos.filter(p => p.category === cat).map((photo, idx) => (
+                {archives.filter(archive => archive.category === cat).map((archive, idx) => (
                   <div
-                    key={photo.file + idx}
+                    key={archive.id + idx}
                     className="group relative flex flex-row items-stretch bg-white rounded-2xl shadow-lg border-none overflow-hidden transition-all hover:shadow-2xl hover:-translate-y-1"
                     style={{ maxWidth: '900px', minHeight: '170px', marginLeft:0, position: 'relative', width:'100%', boxShadow:'0 4px 24px rgba(20,28,38,0.10)', background:'linear-gradient(90deg, #f7fafc 0%, #fffbe6 100%)', padding:'1.5rem 2.2rem 1.5rem 0', alignItems:'center' }}
-                    onClick={() => setLightbox({src: `/photos/BobRovnerArchives/${photo.file}`, desc: photo.description})}
+                    onClick={() => setLightbox({src: archive.imageUrl, desc: archive.title})}
                   >
                     {/* Timeline dot */}
                     <div style={{position:'absolute',left:'-26px',top:'50%',transform:'translateY(-50%)',width:'18px',height:'18px',background:'linear-gradient(180deg,#1a237e 0%,#f59e0b 100%)',borderRadius:'50%',boxShadow:'0 2px 8px rgba(20,28,38,0.10)',zIndex:3,border:'3px solid #fff'}}></div>
                     {/* Photo Section */}
                     <div style={{width:'150px',height:'150px',background:'#f3f4f6',borderRadius:'12px',overflow:'hidden',display:'flex',alignItems:'center',justifyContent:'center',zIndex:3,boxShadow:'0 1px 6px rgba(20,28,38,0.08)',marginRight:'2.2rem'}}>
                       <Image
-                        src={`/photos/BobRovnerArchives/${photo.file}`}
-                        alt={photo.description || photo.file}
+                        src={archive.imageUrl}
+                        alt={archive.title || 'Archive photo'}
                         width={150}
                         height={150}
                         className="rounded-lg group-hover:scale-105 transition-transform duration-200 shadow"
@@ -166,11 +161,11 @@ export default function PhotoGalleryPage() {
                     </div>
                     {/* Details Section */}
                     <div style={{flex:1,display:'flex',flexDirection:'column',justifyContent:'center',zIndex:3,alignItems:'flex-start'}}>
-                      {photo.description && (
-                        <div style={{fontWeight:700,fontSize:'1.18rem',color:'#1a237e',marginBottom:'0.2rem',textAlign:'left',whiteSpace:'normal',overflow:'hidden',textOverflow:'ellipsis',letterSpacing:'-0.01em'}}>{photo.description}</div>
+                      {archive.title && (
+                        <div style={{fontWeight:700,fontSize:'1.18rem',color:'#1a237e',marginBottom:'0.2rem',textAlign:'left',whiteSpace:'normal',overflow:'hidden',textOverflow:'ellipsis',letterSpacing:'-0.01em'}}>{archive.title}</div>
                       )}
-                      <div style={{fontWeight:500,fontSize:'0.97rem',color:'#f59e0b',textAlign:'left',letterSpacing:'0.01em',marginTop:photo.description?'.2rem':'0'}}>{cat}</div>
-                  </div>
+                      <div style={{fontWeight:500,fontSize:'0.97rem',color:'#f59e0b',textAlign:'left',letterSpacing:'0.01em',marginTop:archive.title?'.2rem':'0'}}>{cat}</div>
+                    </div>
                     {/* Hover overlay */}
                     <div className="absolute inset-0 bg-[var(--blue-accent)] bg-opacity-0 group-hover:bg-opacity-10 transition" />
                   </div>
