@@ -195,8 +195,29 @@ export default function InTheNewsPage() {
             {/* Sidebar: Commercial */}
             <div className="sidebar-box commercial-box">
               <h3 className="sidebar-title">Our TV Commercial</h3>
-              <div className="commercial-video" style={{ width: '100%', aspectRatio: '16/9', background: '#222', borderRadius: 12, overflow: 'hidden' }}>
-                <iframe width="100%" height="315" src="https://www.youtube.com/embed/KIk_uZ_Jyg0?si=7DtH3rNXINH0S59X" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+              <div className="commercial-video" style={{ 
+                width: '100%', 
+                aspectRatio: '16/9', 
+                background: '#222', 
+                borderRadius: 12, 
+                overflow: 'hidden',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <iframe 
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    border: 'none',
+                    borderRadius: 12
+                  }}
+                  src="https://www.youtube.com/embed/KIk_uZ_Jyg0?si=7DtH3rNXINH0S59X" 
+                  title="YouTube video player" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  referrerPolicy="strict-origin-when-cross-origin" 
+                  allowFullScreen
+                ></iframe>
               </div>
             </div>
           </div>

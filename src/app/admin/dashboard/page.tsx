@@ -14,11 +14,57 @@ export default function AdminDashboard() {
   const [localFirmName, setLocalFirmName] = useState(firmName);
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
+  
+  // Database counts
+  const [counts, setCounts] = useState({
+    lawyers: 0,
+    practiceAreas: 0,
+    settlements: 0,
+    news: 0,
+    archives: 0
+  });
+  const [loading, setLoading] = useState(true);
 
   // Update local state when context firm name changes
   useEffect(() => {
     setLocalFirmName(firmName);
   }, [firmName]);
+
+  // Fetch counts from database
+  useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        setLoading(true);
+        const [lawyersRes, practiceAreasRes, settlementsRes, newsRes, archivesRes] = await Promise.all([
+          fetch('/api/lawyers'),
+          fetch('/api/practice-areas'),
+          fetch('/api/settlements'),
+          fetch('/api/news'),
+          fetch('/api/archives')
+        ]);
+
+        const lawyers = await lawyersRes.json();
+        const practiceAreas = await practiceAreasRes.json();
+        const settlements = await settlementsRes.json();
+        const news = await newsRes.json();
+        const archives = await archivesRes.json();
+
+        setCounts({
+          lawyers: Array.isArray(lawyers) ? lawyers.length : 0,
+          practiceAreas: Array.isArray(practiceAreas) ? practiceAreas.length : 0,
+          settlements: Array.isArray(settlements) ? settlements.length : 0,
+          news: Array.isArray(news) ? news.length : 0,
+          archives: Array.isArray(archives) ? archives.length : 0
+        });
+      } catch (error) {
+        console.error('Error fetching counts:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCounts();
+  }, []);
 
   // TEMPORARILY DISABLED - Session check and redirect
   // useEffect(() => {
@@ -58,7 +104,7 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-8">
       {/* Main Actions Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
         <Link href="/admin/lawyers" className="group">
           <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 hover:border-blue-200 hover:scale-[1.02]">
             <div className="flex items-center gap-4 mb-4">
@@ -71,6 +117,9 @@ export default function AdminDashboard() {
               </div>
             </div>
             <p className="text-gray-600 text-sm">Add, edit, and organize attorney profiles with photos and specialties</p>
+            <div className="mt-3 text-sm font-semibold text-blue-600">
+              {loading ? 'Loading...' : `${counts.lawyers} total`}
+            </div>
           </div>
         </Link>
 
@@ -86,6 +135,9 @@ export default function AdminDashboard() {
               </div>
             </div>
             <p className="text-gray-600 text-sm">Add, edit, and organize practice areas and specialties</p>
+            <div className="mt-3 text-sm font-semibold text-indigo-600">
+              {loading ? 'Loading...' : `${counts.practiceAreas} total`}
+            </div>
           </div>
         </Link>
 
@@ -101,6 +153,9 @@ export default function AdminDashboard() {
               </div>
             </div>
             <p className="text-gray-600 text-sm">Add and showcase recent settlements & verdicts to build credibility</p>
+            <div className="mt-3 text-sm font-semibold text-green-600">
+              {loading ? 'Loading...' : `${counts.settlements} total`}
+            </div>
           </div>
         </Link>
 
@@ -116,6 +171,9 @@ export default function AdminDashboard() {
               </div>
             </div>
             <p className="text-gray-600 text-sm">Manage news articles, press releases, and media appearances</p>
+            <div className="mt-3 text-sm font-semibold text-yellow-600">
+              {loading ? 'Loading...' : `${counts.news} total`}
+            </div>
           </div>
         </Link>
 
@@ -131,6 +189,9 @@ export default function AdminDashboard() {
               </div>
             </div>
             <p className="text-gray-600 text-sm">Access and manage the historic Bob Rovner archives collection</p>
+            <div className="mt-3 text-sm font-semibold text-purple-600">
+              {loading ? 'Loading...' : `${counts.archives} total`}
+            </div>
           </div>
         </Link>
       </div>
@@ -225,7 +286,9 @@ export default function AdminDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-500">Total Lawyers</p>
-              <p className="text-2xl font-bold text-gray-900">15+</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {loading ? '...' : counts.lawyers}
+              </p>
             </div>
             <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center">
               <Users className="h-6 w-6 text-blue-600" />
@@ -236,8 +299,10 @@ export default function AdminDashboard() {
         <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-500">Years Experience</p>
-              <p className="text-2xl font-bold text-gray-900">40+</p>
+              <p className="text-sm font-medium text-gray-500">Total Settlements</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {loading ? '...' : counts.settlements}
+              </p>
             </div>
             <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center">
               <Award className="h-6 w-6 text-green-600" />
@@ -248,8 +313,10 @@ export default function AdminDashboard() {
         <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-500">Cases Won</p>
-              <p className="text-2xl font-bold text-gray-900">1000+</p>
+              <p className="text-sm font-medium text-gray-500">News Articles</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {loading ? '...' : counts.news}
+              </p>
             </div>
             <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center">
               <FileText className="h-6 w-6 text-purple-600" />

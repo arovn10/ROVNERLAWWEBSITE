@@ -7,7 +7,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useFirmName } from '@/lib/FirmNameContext';
 import { practiceAreas } from './practice/page';
-import { Phone, Users, Briefcase, Mail } from 'lucide-react';
+import { Phone, Users, Briefcase, Mail, DollarSign } from 'lucide-react';
 
 // Settlement type for fetched data
 type Settlement = {
@@ -37,6 +37,7 @@ export default function HomePage() {
   const [currentSettlementIndex, setCurrentSettlementIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [practiceAreas, setPracticeAreas] = useState<any[]>([]);
 
   const visibleSettlementCount = 3;
   const maxSettlementIndex = settlements.length - visibleSettlementCount;
@@ -53,6 +54,9 @@ export default function HomePage() {
         setError('Failed to load settlements');
         setLoading(false);
       });
+    fetch('/api/practice-areas')
+      .then(res => res.json())
+      .then((data) => setPracticeAreas(data));
   }, []);
 
   useEffect(() => {
@@ -171,16 +175,31 @@ export default function HomePage() {
         <div className="carousel-container" style={{maxWidth: '1400px', margin: '0 auto'}}>
           <button className="carousel-btn prev-btn" onClick={prevSettlement}>&#8249;</button>
           <div className="settlements-carousel">
-            <div className="grid grid-3" style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '3rem'}}>
+            <div className="grid grid-3" style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2.2rem'}}>
               {settlements.slice(currentSettlementIndex, currentSettlementIndex + visibleSettlementCount).map((settlement: Settlement) => (
-                <div key={settlement.id} className="card settlement-card">
-                  <div className="settlement-icon">
-                    <div className="settlement-symbol">$</div>
+                <div key={settlement.id} className="card settlement-card" style={{
+                  background: '#fff',
+                  borderRadius: '18px',
+                  boxShadow: '0 2px 16px rgba(20,28,38,0.09)',
+                  border: '1px solid #e5e7eb',
+                  padding: '2.2rem 1.5rem 1.7rem 1.5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  minHeight: '220px',
+                  maxWidth: '370px',
+                  margin: '0 auto',
+                  gap: '0.7rem',
+                }}>
+                  <div style={{marginBottom:'1.1rem'}}>
+                    <span style={{display:'flex',alignItems:'center',justifyContent:'center',width:54,height:54,borderRadius:'50%',background:'linear-gradient(135deg,#22c55e 0%,#16a34a 100%)',boxShadow:'0 2px 8px rgba(34,197,94,0.10)'}}>
+                      <DollarSign size={28} color="#fff" />
+                    </span>
                   </div>
-                  <div className="settlement-amount">
+                  <div className="settlement-amount" style={{fontSize:'2.3rem',fontWeight:800,color:'#16a34a',marginBottom:'0.5rem',letterSpacing:'-0.02em',lineHeight:1}}>
                     ${settlement.amount.toLocaleString()}
                   </div>
-                  <div className="settlement-type">{settlement.caseType}</div>
+                  <div className="settlement-type" style={{fontSize:'0.93rem',color:'#64748b',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.05em',lineHeight:1.4,marginBottom:'0.2rem'}}>{settlement.caseType}</div>
                 </div>
               ))}
             </div>
@@ -202,10 +221,10 @@ export default function HomePage() {
           <h3>Our Practice Areas</h3>
           <p>Comprehensive legal services with proven results</p>
         </div>
-        <PracticeAreasCarousel />
+        <PracticeAreasCarousel practiceAreas={practiceAreas} />
       </section>
       {/* Quick Links Section */}
-      <div className="quick-links-bg" style={{ width: '100%', background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)', padding: '0 0 3rem 0', margin: 0 }}>
+      <div className="quick-links-bg" style={{ width: '100%', padding: '0 0 3rem 0', margin: 0 }}>
         <section className="section quick-links" style={{ maxWidth: 1400, margin: '0 auto', background: 'transparent', padding: 0 }}>
           <div className="section-title">
             <h3>Quick Access</h3>
@@ -264,7 +283,7 @@ function groupPracticeAreasForCarousel(areas: typeof practiceAreas, groupSize: n
   return groups;
 }
 
-function PracticeAreasCarousel() {
+function PracticeAreasCarousel({ practiceAreas }: { practiceAreas: any[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const visibleCount = 3;
   const maxIndex = practiceAreas.length - visibleCount;
@@ -275,7 +294,7 @@ function PracticeAreasCarousel() {
       setCurrentIndex((prev) => (prev + 1 > maxIndex ? 0 : prev + 1));
     }, 5000);
     return () => clearInterval(interval);
-  }, [maxIndex]);
+  }, [maxIndex, practiceAreas.length]);
 
   const next = () => setCurrentIndex((prev) => (prev + 1 > maxIndex ? 0 : prev + 1));
   const prev = () => setCurrentIndex((prev) => (prev - 1 < 0 ? maxIndex : prev - 1));
@@ -285,7 +304,7 @@ function PracticeAreasCarousel() {
       <button className="carousel-btn prev-btn" onClick={prev}>&#8249;</button>
       <div className="settlements-carousel">
         <div className="grid grid-3" style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '3rem'}}>
-          {practiceAreas.slice(currentIndex, currentIndex + visibleCount).map((area: typeof practiceAreas[0]) => (
+          {practiceAreas.slice(currentIndex, currentIndex + visibleCount).map((area: any) => (
             <div key={area.id} className="card settlement-card" style={{
               background:'#fff',
               borderRadius:'14px',
@@ -300,11 +319,10 @@ function PracticeAreasCarousel() {
               gap:'0.7rem',
             }}>
               <div className="settlement-icon" style={{marginBottom:'0.5rem'}}>
-                <Image src={area.image} alt={area.title} width={400} height={200} style={{maxWidth:'100%',height:'120px',objectFit:'cover',borderRadius:'10px'}} />
+                {area.image && <img src={area.image} alt={area.title} style={{maxWidth:'100%',height:'120px',objectFit:'cover',borderRadius:'10px'}} />}
               </div>
               <div style={{fontWeight:700,fontSize:'1.08rem',margin:'0.3rem 0 0.2rem',color:'#1a202c',textAlign:'center',lineHeight:1.2}}>{area.title}</div>
               <div style={{fontSize:'0.93rem',color:'#444',marginBottom:'0.7rem',lineHeight:1.5,fontWeight:400,textAlign:'center',minHeight:0}}>{area.description}</div>
-              <Link href="/practice" className="learn-more-btn" style={{display:'inline-block',margin:'0 auto',padding:'0.5rem 1.2rem',fontSize:'0.97rem',fontWeight:600,borderRadius:'7px',background:'#1a237e',color:'#fff',textDecoration:'none',boxShadow:'0 1px 4px rgba(20,28,38,0.08)',transition:'background 0.2s'}}>Learn More</Link>
             </div>
           ))}
         </div>

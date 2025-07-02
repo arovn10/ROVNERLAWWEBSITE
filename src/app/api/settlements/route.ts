@@ -19,7 +19,7 @@ export async function GET() {
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   const session = await getServerSession();
   if (!session) {
     return NextResponse.json(
@@ -28,18 +28,18 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  const data = await req.json();
   try {
-    const data = await request.json();
-    const settlement = await prisma.settlement.create({
+    const newSettlement = await prisma.settlement.create({
       data: {
         title: data.title,
-        description: data.description,
         amount: data.amount,
-        date: new Date(data.date),
-        caseType: data.caseType
-      }
+        caseType: data.caseType,
+        date: data.date,
+        description: data.description,
+      },
     });
-    return NextResponse.json(settlement);
+    return NextResponse.json(newSettlement, { status: 201 });
   } catch (error) {
     console.error('Error creating settlement:', error);
     return NextResponse.json(
