@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Save, FileText } from 'lucide-react';
+import { ArrowLeft, Save } from 'lucide-react';
 
 export default function NewNewsPage() {
   const router = useRouter();

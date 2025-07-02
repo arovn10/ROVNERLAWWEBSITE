@@ -34,7 +34,7 @@ export default function EditPracticeAreaPage({ params }: { params: { id: string 
             try {
               const featuresArray = JSON.parse(data.features);
               featuresString = featuresArray.join(', ');
-            } catch (e) {
+            } catch (_) {
               featuresString = data.features;
             }
           }
@@ -97,7 +97,7 @@ export default function EditPracticeAreaPage({ params }: { params: { id: string 
       }
     } catch (error) {
       console.error('Error updating practice area:', error);
-      alert('Error updating practice area');
+      alert('Failed to update practice area');
     } finally {
       setSaving(false);
     }

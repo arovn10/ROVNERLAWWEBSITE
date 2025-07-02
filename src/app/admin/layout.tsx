@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { Users, Newspaper, Award, Archive, LogOut, Home } from "lucide-react";
+import { Settings, FileText, Briefcase, Users, Plus, Edit, Trash2, Eye, ExternalLink, Home, LogOut } from "lucide-react";
 import clsx from "clsx";
 
 export default async function AdminLayout({

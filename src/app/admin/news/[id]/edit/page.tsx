@@ -1,9 +1,12 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { getServerSession } from "next-auth/next";
+import { redirect } from "next/navigation";
+import { prisma } from "@/lib/prisma";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from 'next/link';
-import { ArrowLeft, Save, FileText } from 'lucide-react';
+import { ArrowLeft, Save } from 'lucide-react';
 
 interface News {
   id: string;

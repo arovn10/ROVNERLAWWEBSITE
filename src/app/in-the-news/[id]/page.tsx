@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { useFirmName } from '@/lib/FirmNameContext';
 import { prisma } from '@/lib/prisma';
 
 async function getNewsArticle(id: string) {

@@ -69,7 +69,7 @@ export default function ContactPage() {
           message: result.error || 'Failed to send message. Please try again.'
         });
       }
-    } catch (error) {
+    } catch (_) {
       setSubmitStatus({
         type: 'error',
         message: 'Failed to send message. Please try again.'

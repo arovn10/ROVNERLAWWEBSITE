@@ -5,8 +5,6 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useFirmName } from '@/lib/FirmNameContext';
-import { Calendar, ExternalLink, FileText, ArrowLeft } from 'lucide-react';
-import Image from 'next/image';
 
 interface News {
   id: string;

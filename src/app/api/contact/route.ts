@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     // }
 
     // 2. Save to database
-    const contactSubmission = await prisma.contactSubmission.create({
+    await prisma.contactSubmission.create({
       data: {
         name: data.name,
         email: data.email,

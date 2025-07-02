@@ -9,7 +9,6 @@ import { Users, FileText, Settings, Award, Archive, Plus, ExternalLink, Save, Ch
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
-  const router = useRouter();
   const { firmName, setFirmName } = useFirmName();
   const [localFirmName, setLocalFirmName] = useState(firmName);
   const [saving, setSaving] = useState(false);
