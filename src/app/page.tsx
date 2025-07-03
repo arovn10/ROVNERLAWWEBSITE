@@ -306,9 +306,9 @@ export default function HomePage() {
       </div>
 
       {/* Mobile Content */}
-      <div className="block lg:hidden w-full">
+      <div className="block lg:hidden w-full bg-gradient-to-b from-white to-blue-50 min-h-screen">
         {/* Mobile Hero Banner */}
-        <section className="relative w-full h-40 overflow-hidden flex items-center justify-center">
+        <section className="relative w-full h-44 overflow-hidden flex items-center justify-center rounded-b-3xl shadow-md mb-4">
           <Image
             src="/photos/banner-home-new-1-1024x343.png"
             alt="Rovner Law - Personal Injury & Criminal Defense"
@@ -317,15 +317,15 @@ export default function HomePage() {
             style={{ objectPosition: 'center 30%' }}
             priority
           />
-          <div className="absolute inset-0 bg-black bg-opacity-60" />
+          <div className="absolute inset-0 bg-black bg-opacity-50" />
           <div className="relative z-10 text-center text-white px-4 w-full">
-            <h1 className="text-2xl font-bold mb-2" style={{textShadow:'0 2px 8px #000'}}>Rovner, Allen, Rovner And Sigman</h1>
-            <p className="text-sm mb-4" style={{textShadow:'0 2px 8px #000'}}>Premier Injury Lawyers</p>
+            <h1 className="text-2xl font-bold mb-2" style={{textShadow:'0 2px 8px #000', letterSpacing: '-0.01em'}}>Rovner, Allen, Rovner And Sigman</h1>
+            <p className="text-base mb-4 font-medium" style={{textShadow:'0 2px 8px #000'}}>Premier Injury Lawyers</p>
           </div>
         </section>
         {/* Mobile Settlements Carousel */}
         <section className="px-4 py-4">
-          <h3 className="text-lg font-bold mb-2 text-blue-900">Recent Results</h3>
+          <h3 className="text-lg font-bold mb-3 text-blue-900">Recent Results</h3>
           {loading ? (
             <div className="text-center py-8 text-gray-500">Loading settlements...</div>
           ) : error ? (
@@ -336,22 +336,22 @@ export default function HomePage() {
             <div className="relative">
               <button 
                 onClick={prevSettlement}
-                className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg border border-gray-200 hover:bg-gray-50"
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-md border border-gray-200 hover:bg-gray-100"
                 style={{ width: 40, height: 40 }}
                 aria-label="Previous Settlement"
               >
                 <span className="text-gray-600 text-lg">‹</span>
               </button>
               <div className="flex justify-center">
-                <div className="bg-white rounded-xl p-4 shadow-lg border border-gray-200 flex flex-col items-center text-center overflow-hidden mx-4 w-full max-w-xs min-w-[220px]">
-                  <div className="text-green-600 font-bold text-xl mb-1">${settlements[currentSettlementIndex]?.amount.toLocaleString()}</div>
-                  <div className="text-xs text-gray-500 mb-2">{settlements[currentSettlementIndex]?.title}</div>
-                  <div className="text-xs text-gray-700">{settlements[currentSettlementIndex]?.description}</div>
+                <div className="bg-white rounded-2xl p-5 shadow-md border border-gray-100 flex flex-col items-center text-center overflow-hidden mx-4 w-full max-w-xs min-w-[220px]">
+                  <div className="text-green-600 font-bold text-2xl mb-1">${settlements[currentSettlementIndex]?.amount.toLocaleString()}</div>
+                  <div className="text-base text-gray-700 mb-2 font-semibold">{settlements[currentSettlementIndex]?.title}</div>
+                  <div className="text-xs text-gray-500">{settlements[currentSettlementIndex]?.description}</div>
                 </div>
               </div>
               <button 
                 onClick={nextSettlement}
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg border border-gray-200 hover:bg-gray-50"
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-md border border-gray-200 hover:bg-gray-100"
                 style={{ width: 40, height: 40 }}
                 aria-label="Next Settlement"
               >
@@ -363,7 +363,7 @@ export default function HomePage() {
                   <button
                     key={idx}
                     onClick={() => setCurrentSettlementIndex(idx)}
-                    className={`w-2 h-2 rounded-full transition-colors ${
+                    className={`w-2.5 h-2.5 rounded-full transition-colors ${
                       idx === currentSettlementIndex ? 'bg-blue-600' : 'bg-gray-300'
                     }`}
                     aria-label={`Go to settlement ${idx + 1}`}
@@ -375,21 +375,21 @@ export default function HomePage() {
         </section>
         {/* Mobile Practice Areas */}
         <section className="px-4 py-4 pb-0">
-          <h3 className="text-lg font-bold mb-2 text-blue-900">Practice Areas</h3>
+          <h3 className="text-lg font-bold mb-3 text-blue-900">Practice Areas</h3>
           {practiceAreas.length === 0 ? (
             <div className="text-center py-8 text-gray-500">Loading practice areas...</div>
           ) : (
             <div className="relative">
               <button 
                 onClick={prevPracticeArea}
-                className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg border border-gray-200 hover:bg-gray-50"
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-md border border-gray-200 hover:bg-gray-100"
                 style={{ width: 40, height: 40 }}
                 aria-label="Previous Practice Area"
               >
                 <span className="text-gray-600 text-lg">‹</span>
               </button>
               <div className="flex justify-center">
-                <div className="bg-white rounded-xl p-0 shadow-lg border border-gray-200 flex flex-col items-center text-center overflow-hidden group focus:outline-none focus:ring-2 focus:ring-blue-500 mx-4 w-full max-w-xs">
+                <div className="bg-white rounded-2xl p-0 shadow-md border border-gray-100 flex flex-col items-center text-center overflow-hidden mx-4 w-full max-w-xs">
                   {practiceAreas[currentPracticeAreaIndex]?.image && (
                     <div className="w-full flex justify-center items-center bg-gray-100" style={{height: 160}}>
                       <Image
@@ -397,13 +397,13 @@ export default function HomePage() {
                         alt={practiceAreas[currentPracticeAreaIndex].name}
                         width={140}
                         height={140}
-                        className="rounded-lg object-cover group-hover:scale-105 transition-transform duration-200"
-                        style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }}
+                        className="rounded-xl object-cover group-hover:scale-105 transition-transform duration-200"
+                        style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.10)' }}
                       />
                     </div>
                   )}
                   <div className="p-4 w-full bg-white">
-                    <span className="font-bold text-blue-900 text-xl leading-tight block px-2" style={{lineHeight:'1.2', textShadow: 'none'}}>
+                    <span className="font-bold text-blue-900 text-xl leading-tight block px-2 text-center" style={{lineHeight:'1.2', textShadow: 'none'}}>
                       {practiceAreas[currentPracticeAreaIndex]?.name}
                     </span>
                   </div>
@@ -411,7 +411,7 @@ export default function HomePage() {
               </div>
               <button 
                 onClick={nextPracticeArea}
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg border border-gray-200 hover:bg-gray-50"
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-md border border-gray-200 hover:bg-gray-100"
                 style={{ width: 40, height: 40 }}
                 aria-label="Next Practice Area"
               >
@@ -423,7 +423,7 @@ export default function HomePage() {
                   <button
                     key={idx}
                     onClick={() => setCurrentPracticeAreaIndex(idx)}
-                    className={`w-2 h-2 rounded-full transition-colors ${
+                    className={`w-2.5 h-2.5 rounded-full transition-colors ${
                       idx === currentPracticeAreaIndex ? 'bg-blue-600' : 'bg-gray-300'
                     }`}
                     aria-label={`Go to practice area ${idx + 1}`}
@@ -433,9 +433,9 @@ export default function HomePage() {
             </div>
           )}
         </section>
-        {/* Mobile Quick Access at Bottom */}
-        <section className="px-4 pt-4 pb-6 bg-gray-50">
-          <div className="flex flex-col gap-3">
+        {/* Mobile Quick Access under Practice Areas */}
+        <section className="px-4 pt-4 pb-6">
+          <div className="bg-white rounded-2xl shadow-md border border-gray-100 flex flex-col gap-3 p-4 items-center">
             <a href="/contact" className="w-full bg-green-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-green-700 transition flex items-center justify-center gap-2">
               <Mail size={20} />
               Free Consultation
