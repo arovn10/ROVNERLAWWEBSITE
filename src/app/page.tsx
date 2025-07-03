@@ -41,6 +41,7 @@ export default function HomePage() {
   const [error, setError] = useState<string | null>(null);
   const [practiceAreas, setPracticeAreas] = useState<any[]>([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [currentPracticeAreaIndex, setCurrentPracticeAreaIndex] = useState(0);
 
   const visibleSettlementCount = 3;
   const maxSettlementIndex = settlements.length - visibleSettlementCount;
@@ -70,8 +71,19 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, [maxSettlementIndex, settlements.length]);
 
+  useEffect(() => {
+    if (practiceAreas.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentPracticeAreaIndex((prev) => (prev + 1 >= practiceAreas.length ? 0 : prev + 1));
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [practiceAreas.length]);
+
   const nextSettlement = () => setCurrentSettlementIndex((prev) => (prev + 1 > maxSettlementIndex ? 0 : prev + 1));
   const prevSettlement = () => setCurrentSettlementIndex((prev) => (prev - 1 < 0 ? maxSettlementIndex : prev - 1));
+  
+  const nextPracticeArea = () => setCurrentPracticeAreaIndex((prev) => (prev + 1 >= practiceAreas.length ? 0 : prev + 1));
+  const prevPracticeArea = () => setCurrentPracticeAreaIndex((prev) => (prev - 1 < 0 ? practiceAreas.length - 1 : prev - 1));
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex flex-col items-center justify-center font-sans">
@@ -342,30 +354,63 @@ export default function HomePage() {
         {/* Mobile Practice Areas */}
         <section className="px-4 py-4">
           <h3 className="text-lg font-bold mb-2 text-blue-900">Practice Areas</h3>
-          <div className="grid grid-cols-2 gap-3">
-            {practiceAreas.map((area) => (
-              <Link
-                key={area.id}
-                href={`/practice/${area.slug}`}
-                className="bg-white rounded-xl p-0 shadow border border-gray-200 flex flex-col items-center text-center overflow-hidden group focus:outline-none focus:ring-2 focus:ring-blue-500"
-                style={{ minHeight: 140 }}
+          {practiceAreas.length === 0 ? (
+            <div className="text-center py-8 text-gray-500">Loading practice areas...</div>
+          ) : (
+            <div className="relative">
+              <button 
+                onClick={prevPracticeArea}
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg border border-gray-200 hover:bg-gray-50"
+                style={{ width: 40, height: 40 }}
               >
-                {area.image && (
-                  <div className="w-full flex justify-center items-center bg-gray-100" style={{height:100}}>
-                    <Image
-                      src={area.image}
-                      alt={area.name}
-                      width={90}
-                      height={90}
-                      className="rounded-full object-cover group-hover:scale-105 transition-transform duration-200"
-                      style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
-                    />
+                <span className="text-gray-600 text-lg">‹</span>
+              </button>
+              <div className="flex justify-center">
+                <Link
+                  href={`/practice/${practiceAreas[currentPracticeAreaIndex]?.slug}`}
+                  className="bg-white rounded-xl p-0 shadow-lg border border-gray-200 flex flex-col items-center text-center overflow-hidden group focus:outline-none focus:ring-2 focus:ring-blue-500 mx-4"
+                  style={{ minHeight: 200, width: 'calc(100% - 80px)', maxWidth: 300 }}
+                >
+                  {practiceAreas[currentPracticeAreaIndex]?.image && (
+                    <div className="w-full flex justify-center items-center bg-gray-100" style={{height: 140}}>
+                      <Image
+                        src={practiceAreas[currentPracticeAreaIndex].image}
+                        alt={practiceAreas[currentPracticeAreaIndex].name}
+                        width={120}
+                        height={120}
+                        className="rounded-full object-cover group-hover:scale-105 transition-transform duration-200"
+                        style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }}
+                      />
+                    </div>
+                  )}
+                  <div className="p-4 w-full">
+                    <span className="font-bold text-blue-900 text-lg leading-tight block" style={{lineHeight:'1.2'}}>
+                      {practiceAreas[currentPracticeAreaIndex]?.name}
+                    </span>
                   </div>
-                )}
-                <span className="font-semibold text-blue-900 text-base mb-2 mt-3 px-2 truncate w-full" style={{lineHeight:'1.2'}}>{area.name}</span>
-              </Link>
-            ))}
-          </div>
+                </Link>
+              </div>
+              <button 
+                onClick={nextPracticeArea}
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg border border-gray-200 hover:bg-gray-50"
+                style={{ width: 40, height: 40 }}
+              >
+                <span className="text-gray-600 text-lg">›</span>
+              </button>
+              {/* Practice Areas Indicators */}
+              <div className="flex justify-center mt-4 gap-2">
+                {practiceAreas.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentPracticeAreaIndex(idx)}
+                    className={`w-2 h-2 rounded-full transition-colors ${
+                      idx === currentPracticeAreaIndex ? 'bg-blue-600' : 'bg-gray-300'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
         </section>
         {/* Mobile Footer */}
         <Footer />

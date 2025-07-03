@@ -993,6 +993,13 @@ body {
   text-transform: uppercase;
 }
 
+/* Hide fixed contact button on mobile */
+@media (max-width: 1024px) {
+  .fixed-contact {
+    display: none;
+  }
+}
+
 .fixed-contact:hover {
   transform: translateY(-50%) rotate(-90deg) scale(1.05);
   box-shadow: var(--shadow-xl);
