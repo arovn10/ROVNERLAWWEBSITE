@@ -314,13 +314,17 @@ export default function HomePage() {
             alt="Rovner Law - Personal Injury & Criminal Defense"
             fill
             className="object-cover object-center"
-            style={{ objectPosition: 'center 30%' }}
+            style={{ objectPosition: 'center 20%' }}
             priority
           />
-          <div className="absolute inset-0 bg-black bg-opacity-50" />
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/70 to-purple-900/70" />
           <div className="relative z-10 text-center text-white px-4 w-full">
             <h1 className="text-2xl font-bold mb-2" style={{textShadow:'0 2px 8px #000', letterSpacing: '-0.01em'}}>Rovner, Allen, Rovner And Sigman</h1>
-            <p className="text-base mb-4 font-medium" style={{textShadow:'0 2px 8px #000'}}>Premier Injury Lawyers</p>
+            <p className="text-sm mb-4 font-medium" style={{textShadow:'0 2px 8px #000'}}>Personal Injury & Criminal Defense</p>
+            <div className="flex justify-center gap-2">
+              <span className="bg-yellow-500 text-black px-3 py-1 rounded-full text-xs font-bold">40+ Years Experience</span>
+              <span className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">Free Consultation</span>
+            </div>
           </div>
         </section>
         {/* Mobile Settlements Carousel */}
@@ -374,34 +378,33 @@ export default function HomePage() {
           )}
         </section>
         {/* Mobile Practice Areas */}
-        <section className="px-4 py-4 pb-0">
-          <h3 className="text-lg font-bold mb-3 text-blue-900">Practice Areas</h3>
+        <section className="px-4 py-4">
+          <h3 className="text-lg font-bold mb-2 text-blue-900">Practice Areas</h3>
           {practiceAreas.length === 0 ? (
             <div className="text-center py-8 text-gray-500">Loading practice areas...</div>
           ) : (
             <div className="relative">
               <button 
                 onClick={prevPracticeArea}
-                className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-md border border-gray-200 hover:bg-gray-100"
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg border border-gray-200 hover:bg-gray-50"
                 style={{ width: 40, height: 40 }}
                 aria-label="Previous Practice Area"
               >
                 <span className="text-gray-600 text-lg">‹</span>
               </button>
-              <div className="flex justify-center">
-                <div className="bg-white rounded-2xl p-0 shadow-md border border-gray-100 flex flex-col items-center text-center overflow-hidden mx-4 w-full max-w-xs">
-                  {practiceAreas[currentPracticeAreaIndex]?.image && (
-                    <div className="w-full flex justify-center items-center bg-gray-100" style={{height: 160}}>
-                      <Image
-                        src={practiceAreas[currentPracticeAreaIndex].image}
-                        alt={practiceAreas[currentPracticeAreaIndex].name}
-                        width={140}
-                        height={140}
-                        className="rounded-xl object-cover group-hover:scale-105 transition-transform duration-200"
-                        style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.10)' }}
-                      />
-                    </div>
-                  )}
+              
+              <div className="mx-12">
+                <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden" style={{ minHeight: 280 }}>
+                  <div className="relative h-48">
+                    <Image
+                      src={practiceAreas[currentPracticeAreaIndex]?.image || '/photos/personal-inury.jpg'}
+                      alt={practiceAreas[currentPracticeAreaIndex]?.title || 'Practice Area'}
+                      fill
+                      className="object-cover"
+                      style={{ objectPosition: 'center 30%' }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  </div>
                   <div className="p-4 w-full bg-white">
                     <span className="font-bold text-blue-900 text-xl leading-tight block px-2 text-center" style={{lineHeight:'1.2', textShadow: 'none'}}>
                       {practiceAreas[currentPracticeAreaIndex]?.title}
@@ -409,31 +412,57 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
+              
               <button 
                 onClick={nextPracticeArea}
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-md border border-gray-200 hover:bg-gray-100"
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg border border-gray-200 hover:bg-gray-50"
                 style={{ width: 40, height: 40 }}
                 aria-label="Next Practice Area"
               >
                 <span className="text-gray-600 text-lg">›</span>
               </button>
-              {/* Practice Areas Indicators */}
+              
+              {/* Carousel Indicators */}
               <div className="flex justify-center mt-4 gap-2">
-                {practiceAreas.map((_, idx) => (
+                {practiceAreas.map((_, index) => (
                   <button
-                    key={idx}
-                    onClick={() => setCurrentPracticeAreaIndex(idx)}
-                    className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                      idx === currentPracticeAreaIndex ? 'bg-blue-600' : 'bg-gray-300'
+                    key={index}
+                    onClick={() => setCurrentPracticeAreaIndex(index)}
+                    className={`w-2 h-2 rounded-full transition-colors ${
+                      index === currentPracticeAreaIndex ? 'bg-blue-600' : 'bg-gray-300'
                     }`}
-                    aria-label={`Go to practice area ${idx + 1}`}
+                    aria-label={`Go to practice area ${index + 1}`}
                   />
                 ))}
               </div>
             </div>
           )}
         </section>
-        {/* Mobile Quick Access under Practice Areas */}
+
+        {/* Mobile Quick Access */}
+        <section className="px-4 pt-4 pb-2">
+          <h3 className="text-lg font-bold mb-3 text-blue-900">Quick Access</h3>
+          <div className="grid grid-cols-2 gap-3 mb-4">
+            <a href="/attorneys" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+              <div className="text-blue-600 text-2xl mb-2">👥</div>
+              <div className="font-semibold text-gray-800 text-sm">Our Attorneys</div>
+            </a>
+            <a href="/practice" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+              <div className="text-blue-600 text-2xl mb-2">⚖️</div>
+              <div className="font-semibold text-gray-800 text-sm">Practice Areas</div>
+            </a>
+            <a href="/locations" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+              <div className="text-blue-600 text-2xl mb-2">📍</div>
+              <div className="font-semibold text-gray-800 text-sm">Locations</div>
+            </a>
+            <a href="/contact" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+              <div className="text-blue-600 text-2xl mb-2">📞</div>
+              <div className="font-semibold text-gray-800 text-sm">Contact Us</div>
+            </a>
+          </div>
+        </section>
+
+        {/* Mobile Free Consultation */}
         <section className="px-4 pt-4 pb-6">
           <div className="bg-white rounded-2xl shadow-md border border-gray-100 flex flex-col gap-3 p-4 items-center">
             <a href="/contact" className="w-full bg-green-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-green-700 transition flex items-center justify-center gap-2">
@@ -442,6 +471,7 @@ export default function HomePage() {
             </a>
           </div>
         </section>
+
         {/* Mobile Footer */}
         <Footer />
       </div>
