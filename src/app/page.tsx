@@ -404,7 +404,7 @@ export default function HomePage() {
                   )}
                   <div className="p-4 w-full bg-white">
                     <span className="font-bold text-blue-900 text-xl leading-tight block px-2 text-center" style={{lineHeight:'1.2', textShadow: 'none'}}>
-                      {practiceAreas[currentPracticeAreaIndex]?.name}
+                      {practiceAreas[currentPracticeAreaIndex]?.title}
                     </span>
                   </div>
                 </div>
