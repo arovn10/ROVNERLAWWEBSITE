@@ -307,6 +307,237 @@ export default function ContactPage() {
       </section>
 
       <Footer />
+
+      {/* Mobile Content */}
+      <div className="block lg:hidden w-full bg-gradient-to-b from-white to-blue-50 min-h-screen">
+        {/* Mobile Hero Banner */}
+        <section className="relative w-full h-44 overflow-hidden flex items-center justify-center rounded-b-3xl shadow-md mb-4">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900 to-blue-700" />
+          <div className="relative z-10 text-center text-white px-4 w-full">
+            <h1 className="text-2xl font-bold mb-2" style={{textShadow:'0 2px 8px #000', letterSpacing: '-0.01em'}}>Contact Us</h1>
+            <p className="text-base mb-4 font-medium" style={{textShadow:'0 2px 8px #000'}}>Get in touch for a free consultation</p>
+          </div>
+        </section>
+
+        {/* Mobile Success/Error Message */}
+        {submitStatus.type && (
+          <div className={`mx-4 mb-4 p-4 rounded-lg shadow-lg ${
+            submitStatus.type === 'success' 
+              ? 'bg-green-500 text-white' 
+              : 'bg-red-500 text-white'
+          }`}>
+            {submitStatus.message}
+          </div>
+        )}
+
+        {/* Mobile Main Content */}
+        <section className="px-4 py-4">
+          <div className="flex flex-col gap-6">
+            <h2 className="text-xl font-bold text-blue-900 mb-2">Get Your Free Consultation Today</h2>
+            <div className="flex flex-col gap-4 text-base text-gray-800 leading-relaxed">
+              <p>At the Law Offices of {firmName}, we understand that dealing with legal issues can be overwhelming. That's why we offer free consultations to discuss your case and explore your legal options.</p>
+              <p>Our experienced attorneys are here to help you navigate through your legal challenges. Whether you've been injured in an accident, need help with a personal injury claim, or require legal representation for other matters, we're here to fight for your rights.</p>
+            </div>
+
+            {/* Mobile Why Choose Us */}
+            <div className="bg-blue-50 rounded-xl p-4 shadow-sm">
+              <h3 className="font-bold text-blue-900 mb-3 text-lg">Why Choose Rovner Law?</h3>
+              <div className="grid grid-cols-1 gap-2">
+                {[
+                  "Over 40 years of experience",
+                  "No fee unless we win your case",
+                  "Dedicated team of 15+ attorneys",
+                  "Proven track record of success",
+                  "Personalized attention to every case"
+                ].map((item, index) => (
+                  <div key={index} className="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+                    <span className="text-gray-800 text-sm font-medium">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Mobile Contact Info */}
+            <div className="bg-gray-50 rounded-xl p-4 shadow-sm">
+              <h3 className="font-bold text-gray-900 mb-3 text-lg">Contact Information</h3>
+              <div className="grid grid-cols-1 gap-3">
+                <div className="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+                  <h4 className="font-semibold text-gray-900 text-sm mb-1">Office Address</h4>
+                  <p className="text-gray-700 text-sm">175 Bustleton Pike<br />Feasterville-Trevose, PA 19053</p>
+                </div>
+                <div className="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+                  <h4 className="font-semibold text-gray-900 text-sm mb-1">Phone Number</h4>
+                  <a href="tel:215-259-5958" className="text-blue-600 font-bold text-lg">215-259-5958</a>
+                </div>
+                <div className="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+                  <h4 className="font-semibold text-gray-900 text-sm mb-1">Email</h4>
+                  <a href="mailto:rovners@dial-law.com" className="text-blue-600 text-sm">rovners@dial-law.com</a>
+                </div>
+                <div className="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+                  <h4 className="font-semibold text-gray-900 text-sm mb-1">Office Hours</h4>
+                  <p className="text-gray-700 text-sm">Monday - Friday: 9:00 AM - 5:00 PM<br />Saturday: By Appointment<br />Sunday: Closed</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile Contact Form */}
+            <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-4">
+              <h3 className="font-bold text-gray-900 mb-4 text-lg">Contact Form</h3>
+              <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                  <input 
+                    type="text" 
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required 
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                  <input 
+                    type="email" 
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required 
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
+                  <input 
+                    type="tel" 
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    required 
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Date of Incident</label>
+                  <input 
+                    type="date" 
+                    name="dateOfIncident"
+                    value={formData.dateOfIncident}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Type of Case</label>
+                  <select 
+                    name="caseType"
+                    value={formData.caseType}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="">Select Case Type</option>
+                    <option value="auto-accident">Auto Accident</option>
+                    <option value="personal-injury">Personal Injury</option>
+                    <option value="medical-malpractice">Medical Malpractice</option>
+                    <option value="premises-liability">Premises Liability</option>
+                    <option value="workers-comp">Workers' Compensation</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Are you currently represented by another lawyer for this matter?</label>
+                  <div className="flex gap-4">
+                    <label className="flex items-center">
+                      <input 
+                        type="radio" 
+                        name="represented" 
+                        value="no"
+                        checked={formData.represented === 'no'}
+                        onChange={handleInputChange}
+                        className="mr-2"
+                      />
+                      <span className="text-sm">No</span>
+                    </label>
+                    <label className="flex items-center">
+                      <input 
+                        type="radio" 
+                        name="represented" 
+                        value="yes"
+                        checked={formData.represented === 'yes'}
+                        onChange={handleInputChange}
+                        className="mr-2"
+                      />
+                      <span className="text-sm">Yes</span>
+                    </label>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Please describe what happened *</label>
+                  <textarea 
+                    rows={4} 
+                    name="facts"
+                    value={formData.facts}
+                    onChange={handleInputChange}
+                    placeholder="Please provide details about your case..." 
+                    required
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  ></textarea>
+                </div>
+                <div>
+                  <label className="flex items-start">
+                    <input type="checkbox" required className="mr-2 mt-1" />
+                    <span className="text-xs text-gray-600">
+                      *I understand and agree that the submission of this form does not create an attorney-client relationship. There will be no representation until a formal, written contract is signed by both parties.
+                    </span>
+                  </label>
+                </div>
+                <button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+                >
+                  {isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        {/* Mobile Quick Access */}
+        <section className="px-4 pt-4 pb-2">
+          <h3 className="text-lg font-bold mb-3 text-blue-900">Quick Access</h3>
+          <div className="grid grid-cols-2 gap-3 mb-4">
+            <a href="/attorneys" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+              <div className="text-blue-600 text-2xl mb-2">👥</div>
+              <div className="font-semibold text-gray-800 text-sm">Our Attorneys</div>
+            </a>
+            <a href="/locations" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+              <div className="text-blue-600 text-2xl mb-2">📍</div>
+              <div className="font-semibold text-gray-800 text-sm">Locations</div>
+            </a>
+            <a href="/practice" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+              <div className="text-blue-600 text-2xl mb-2">⚖️</div>
+              <div className="font-semibold text-gray-800 text-sm">Practice Areas</div>
+            </a>
+            <a href="/about" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+              <div className="text-blue-600 text-2xl mb-2">ℹ️</div>
+              <div className="font-semibold text-gray-800 text-sm">About Us</div>
+            </a>
+          </div>
+        </section>
+
+        {/* Mobile Quick Contact */}
+        <section className="px-4 pt-4 pb-6">
+          <div className="bg-white rounded-2xl shadow-md border border-gray-100 flex flex-col gap-3 p-4 items-center">
+            <h3 className="font-bold text-gray-900 text-lg">Need Immediate Assistance?</h3>
+            <p className="text-gray-600 text-center text-sm">Call us now for immediate help!</p>
+            <a href="tel:215-259-5958" className="w-full bg-blue-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-blue-700 transition">
+              Call 215-259-5958
+            </a>
+          </div>
+        </section>
+        <Footer />
+      </div>
     </div>
   );
 } 
