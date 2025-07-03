@@ -307,16 +307,6 @@ export default function HomePage() {
 
       {/* Mobile Content */}
       <div className="block lg:hidden w-full">
-        {/* Mobile Quick Access (move to top for visibility) */}
-        <section className="px-4 pt-4 pb-2 bg-gray-50">
-          <h3 className="text-lg font-bold mb-3 text-blue-900">Quick Access</h3>
-          <div className="flex flex-col gap-3">
-            <a href="/contact" className="w-full bg-green-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-green-700 transition flex items-center justify-center gap-2">
-              <Mail size={20} />
-              Free Consultation
-            </a>
-          </div>
-        </section>
         {/* Mobile Hero Banner */}
         <section className="relative w-full h-40 overflow-hidden flex items-center justify-center">
           <Image
@@ -343,14 +333,43 @@ export default function HomePage() {
           ) : settlements.length === 0 ? (
             <div className="text-center py-8 text-gray-500">No settlements found.</div>
           ) : (
-            <div className="flex gap-3 overflow-x-auto pb-2">
-              {settlements.slice(0, 8).map((settlement) => (
-                <div key={settlement.id} className="min-w-[220px] bg-white rounded-lg p-4 shadow border border-gray-200 flex-shrink-0">
-                  <div className="text-green-600 font-bold text-xl mb-1">${settlement.amount.toLocaleString()}</div>
-                  <div className="text-xs text-gray-500 mb-2">{settlement.title}</div>
-                  <div className="text-xs text-gray-700">{settlement.description}</div>
+            <div className="relative">
+              <button 
+                onClick={prevSettlement}
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg border border-gray-200 hover:bg-gray-50"
+                style={{ width: 40, height: 40 }}
+                aria-label="Previous Settlement"
+              >
+                <span className="text-gray-600 text-lg">‹</span>
+              </button>
+              <div className="flex justify-center">
+                <div className="bg-white rounded-xl p-4 shadow-lg border border-gray-200 flex flex-col items-center text-center overflow-hidden mx-4 w-full max-w-xs min-w-[220px]">
+                  <div className="text-green-600 font-bold text-xl mb-1">${settlements[currentSettlementIndex]?.amount.toLocaleString()}</div>
+                  <div className="text-xs text-gray-500 mb-2">{settlements[currentSettlementIndex]?.title}</div>
+                  <div className="text-xs text-gray-700">{settlements[currentSettlementIndex]?.description}</div>
                 </div>
-              ))}
+              </div>
+              <button 
+                onClick={nextSettlement}
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg border border-gray-200 hover:bg-gray-50"
+                style={{ width: 40, height: 40 }}
+                aria-label="Next Settlement"
+              >
+                <span className="text-gray-600 text-lg">›</span>
+              </button>
+              {/* Settlements Indicators */}
+              <div className="flex justify-center mt-4 gap-2">
+                {settlements.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentSettlementIndex(idx)}
+                    className={`w-2 h-2 rounded-full transition-colors ${
+                      idx === currentSettlementIndex ? 'bg-blue-600' : 'bg-gray-300'
+                    }`}
+                    aria-label={`Go to settlement ${idx + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           )}
         </section>
@@ -413,6 +432,15 @@ export default function HomePage() {
               </div>
             </div>
           )}
+        </section>
+        {/* Mobile Quick Access at Bottom */}
+        <section className="px-4 pt-4 pb-6 bg-gray-50">
+          <div className="flex flex-col gap-3">
+            <a href="/contact" className="w-full bg-green-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-green-700 transition flex items-center justify-center gap-2">
+              <Mail size={20} />
+              Free Consultation
+            </a>
+          </div>
         </section>
         {/* Mobile Footer */}
         <Footer />
