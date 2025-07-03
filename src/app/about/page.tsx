@@ -246,6 +246,28 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
+        {/* Mobile Quick Access */}
+        <section className="px-4 pt-4 pb-2">
+          <h3 className="text-lg font-bold mb-3 text-blue-900">Quick Access</h3>
+          <div className="grid grid-cols-2 gap-3 mb-4">
+            <a href="/attorneys" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+              <div className="text-blue-600 text-2xl mb-2">👥</div>
+              <div className="font-semibold text-gray-800 text-sm">Our Attorneys</div>
+            </a>
+            <a href="/practice" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+              <div className="text-blue-600 text-2xl mb-2">⚖️</div>
+              <div className="font-semibold text-gray-800 text-sm">Practice Areas</div>
+            </a>
+            <a href="/locations" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+              <div className="text-blue-600 text-2xl mb-2">📍</div>
+              <div className="font-semibold text-gray-800 text-sm">Locations</div>
+            </a>
+            <a href="/contact" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+              <div className="text-blue-600 text-2xl mb-2">📞</div>
+              <div className="font-semibold text-gray-800 text-sm">Contact Us</div>
+            </a>
+          </div>
+        </section>
         {/* Free Consultation Button at Bottom */}
         <section className="px-4 pt-4 pb-6">
           <div className="bg-white rounded-2xl shadow-md border border-gray-100 flex flex-col gap-3 p-4 items-center">
