@@ -308,10 +308,35 @@ export default function HomePage() {
       {/* Mobile Content */}
       <div className="block lg:hidden w-full">
         {/* Mobile Quick Access (move to top for visibility) */}
-        <section className="px-4 pt-4 pb-2">
+        <section className="px-4 pt-4 pb-2 bg-gray-50">
+          <h3 className="text-lg font-bold mb-3 text-blue-900">Quick Access</h3>
           <div className="flex flex-col gap-3">
-            <a href="tel:215-259-5958" className="w-full bg-blue-700 text-white font-bold rounded-lg py-3 text-center text-lg shadow hover:bg-blue-800 transition">Call 215-259-5958</a>
-            <a href="/contact" className="w-full bg-green-600 text-white font-bold rounded-lg py-3 text-center text-lg shadow hover:bg-green-700 transition">Free Consultation</a>
+            <a href="/contact" className="w-full bg-green-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-green-700 transition flex items-center justify-center gap-2">
+              <Mail size={20} />
+              Free Consultation
+            </a>
+          </div>
+        </section>
+        
+        {/* Mobile Quick Links Grid */}
+        <section className="px-4 py-4 bg-white">
+          <div className="grid grid-cols-2 gap-3">
+            <Link href="/attorneys" className="bg-blue-50 rounded-lg p-4 text-center hover:bg-blue-100 transition flex flex-col items-center gap-2">
+              <Users size={24} className="text-blue-600" />
+              <span className="font-semibold text-blue-900 text-sm">Our Attorneys</span>
+            </Link>
+            <Link href="/practice" className="bg-blue-50 rounded-lg p-4 text-center hover:bg-blue-100 transition flex flex-col items-center gap-2">
+              <Briefcase size={24} className="text-blue-600" />
+              <span className="font-semibold text-blue-900 text-sm">Practice Areas</span>
+            </Link>
+            <Link href="/locations" className="bg-blue-50 rounded-lg p-4 text-center hover:bg-blue-100 transition flex flex-col items-center gap-2">
+              <span className="text-blue-600 text-xl">📍</span>
+              <span className="font-semibold text-blue-900 text-sm">Locations</span>
+            </Link>
+            <Link href="/contact" className="bg-blue-50 rounded-lg p-4 text-center hover:bg-blue-100 transition flex flex-col items-center gap-2">
+              <Mail size={24} className="text-blue-600" />
+              <span className="font-semibold text-blue-900 text-sm">Contact Us</span>
+            </Link>
           </div>
         </section>
         {/* Mobile Hero Banner */}
@@ -321,6 +346,7 @@ export default function HomePage() {
             alt="Rovner Law - Personal Injury & Criminal Defense"
             fill
             className="object-cover object-center"
+            style={{ objectPosition: 'center 30%' }}
             priority
           />
           <div className="absolute inset-0 bg-black bg-opacity-60" />
@@ -369,22 +395,22 @@ export default function HomePage() {
                 <Link
                   href={`/practice/${practiceAreas[currentPracticeAreaIndex]?.slug}`}
                   className="bg-white rounded-xl p-0 shadow-lg border border-gray-200 flex flex-col items-center text-center overflow-hidden group focus:outline-none focus:ring-2 focus:ring-blue-500 mx-4"
-                  style={{ minHeight: 200, width: 'calc(100% - 80px)', maxWidth: 300 }}
+                  style={{ minHeight: 220, width: 'calc(100% - 80px)', maxWidth: 320 }}
                 >
                   {practiceAreas[currentPracticeAreaIndex]?.image && (
-                    <div className="w-full flex justify-center items-center bg-gray-100" style={{height: 140}}>
+                    <div className="w-full flex justify-center items-center bg-gray-100" style={{height: 160}}>
                       <Image
                         src={practiceAreas[currentPracticeAreaIndex].image}
                         alt={practiceAreas[currentPracticeAreaIndex].name}
-                        width={120}
-                        height={120}
-                        className="rounded-full object-cover group-hover:scale-105 transition-transform duration-200"
+                        width={140}
+                        height={140}
+                        className="rounded-lg object-cover group-hover:scale-105 transition-transform duration-200"
                         style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }}
                       />
                     </div>
                   )}
-                  <div className="p-4 w-full">
-                    <span className="font-bold text-blue-900 text-lg leading-tight block" style={{lineHeight:'1.2'}}>
+                  <div className="p-4 w-full bg-white">
+                    <span className="font-bold text-blue-900 text-xl leading-tight block px-2" style={{lineHeight:'1.2', textShadow: 'none'}}>
                       {practiceAreas[currentPracticeAreaIndex]?.name}
                     </span>
                   </div>
