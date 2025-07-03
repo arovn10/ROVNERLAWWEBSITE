@@ -84,6 +84,14 @@ export default function HomePage() {
         <MobileHeader isMenuOpen={mobileMenuOpen} onMenuClick={() => setMobileMenuOpen((v) => !v)} />
         <MobileNav isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
       </div>
+
+      {/* Mobile Quick Access Section */}
+      <div className="block lg:hidden w-full px-4 pt-4 pb-2 flex flex-col gap-3">
+        <Link href="/contact" className="w-full bg-blue-700 text-white font-bold rounded-lg py-3 text-center text-lg shadow hover:bg-blue-800 transition">Contact Us</Link>
+        <a href="tel:215-259-5958" className="w-full bg-yellow-400 text-blue-900 font-bold rounded-lg py-3 text-center text-lg shadow hover:bg-yellow-500 transition">Call 215-259-5958</a>
+        <Link href="/contact" className="w-full bg-green-600 text-white font-bold rounded-lg py-3 text-center text-lg shadow hover:bg-green-700 transition">Free Consultation</Link>
+      </div>
+
       {/* Hero Banner with Professional Home Image and overlayed content */}
       <div className="hero-bg" style={{ width: '100%', position: 'relative', minHeight: '140px', background: 'linear-gradient(120deg, #1e293b 60%, #334155 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
         <section className="hero-professional" style={{ width: '100%', position: 'relative', minHeight: '140px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', padding: 0 }}>
@@ -170,8 +178,8 @@ export default function HomePage() {
           </div>
         </section>
       </div>
-      {/* Settlement Carousel */}
-      <section className="section" style={{paddingBottom: '2rem', marginBottom: '0'}}>
+      {/* Desktop Settlements Carousel */}
+      <section className="section hidden lg:block" style={{paddingBottom: '2rem', marginBottom: '0'}}>
         <div className="section-title" style={{marginBottom: '1.5rem'}}>
           <h3>Recent Results</h3>
           <p>We get results for our clients</p>
@@ -224,16 +232,43 @@ export default function HomePage() {
         </div>
         )}
       </section>
-      {/* Subtle Divider */}
-      <div style={{height: '0.5rem', background: 'transparent', margin: '0 auto', width: '100%'}} />
-      {/* Practice Areas Carousel */}
-      <section className="section" style={{paddingTop: '0', marginTop: '0'}}>
+
+      {/* Mobile Settlements List */}
+      <section className="block lg:hidden w-full px-4 pt-2 pb-4">
+        <h3 className="text-xl font-bold mb-2 text-blue-900">Recent Results</h3>
+        <div className="flex gap-4 overflow-x-auto pb-2">
+          {settlements.slice(0, 8).map((settlement) => (
+            <div key={settlement.id} className="min-w-[260px] bg-white rounded-xl shadow p-4 flex flex-col items-center flex-shrink-0">
+              <span className="mb-2 flex items-center justify-center w-10 h-10 rounded-full bg-green-100"><DollarSign className="text-green-600" size={24} /></span>
+              <div className="text-lg font-bold text-green-700 mb-1">${settlement.amount.toLocaleString()}</div>
+              <div className="text-sm text-gray-700 mb-1 font-semibold">{settlement.title}</div>
+              <div className="text-xs text-gray-500">{settlement.caseType}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Desktop Practice Areas Carousel/Section */}
+      <section className="section hidden lg:block">
         <div className="section-title" style={{marginBottom: '1.5rem'}}>
           <h3>Our Practice Areas</h3>
           <p>Comprehensive legal services with proven results</p>
         </div>
         <PracticeAreasCarousel practiceAreas={practiceAreas} />
       </section>
+
+      {/* Mobile Practice Areas List */}
+      <section className="block lg:hidden w-full px-4 pb-6">
+        <h3 className="text-xl font-bold mb-2 text-blue-900">Practice Areas</h3>
+        <div className="flex flex-col gap-3">
+          {practiceAreas.map((area: any) => (
+            <Link key={area.id || area.slug || area.name} href={area.slug ? `/practice/${area.slug}` : '#'} className="w-full bg-blue-50 border border-blue-200 text-blue-900 font-semibold rounded-lg py-3 px-4 text-center text-base shadow hover:bg-blue-100 transition">
+              {area.name}
+            </Link>
+          ))}
+        </div>
+      </section>
+
       {/* Quick Links Section */}
       <div className="quick-links-bg" style={{ width: '100%', padding: '0 0 3rem 0', margin: 0 }}>
         <section className="section quick-links" style={{ maxWidth: 1400, margin: '0 auto', background: 'transparent', padding: 0 }}>
