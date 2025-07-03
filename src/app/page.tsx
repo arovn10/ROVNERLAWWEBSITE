@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import MobileHeader from '@/components/MobileHeader';
+import MobileNav from '@/components/MobileNav';
 import { useFirmName } from '@/lib/FirmNameContext';
 import { practiceAreas } from './practice/page';
 import { Phone, Users, Briefcase, Mail, DollarSign } from 'lucide-react';
@@ -38,6 +40,7 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [practiceAreas, setPracticeAreas] = useState<any[]>([]);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const visibleSettlementCount = 3;
   const maxSettlementIndex = settlements.length - visibleSettlementCount;
@@ -72,7 +75,15 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex flex-col items-center justify-center font-sans">
-      <Header currentPage="home" />
+      {/* Desktop Header/Nav */}
+      <div className="hidden lg:block w-full">
+        <Header currentPage="home" />
+      </div>
+      {/* Mobile Header/Nav */}
+      <div className="block lg:hidden w-full">
+        <MobileHeader isMenuOpen={mobileMenuOpen} onMenuClick={() => setMobileMenuOpen((v) => !v)} />
+        <MobileNav isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+      </div>
       {/* Hero Banner with Professional Home Image and overlayed content */}
       <div className="hero-bg" style={{ width: '100%', position: 'relative', minHeight: '140px', background: 'linear-gradient(120deg, #1e293b 60%, #334155 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
         <section className="hero-professional" style={{ width: '100%', position: 'relative', minHeight: '140px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', padding: 0 }}>

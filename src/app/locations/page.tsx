@@ -3,14 +3,26 @@
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import MobileHeader from '@/components/MobileHeader';
+import MobileNav from '@/components/MobileNav';
 import { useFirmName } from '@/lib/FirmNameContext';
+import { useState } from 'react';
 
 export default function LocationsPage() {
   const { firmName } = useFirmName();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div>
-      <Header currentPage="locations" />
+      {/* Desktop Header/Nav */}
+      <div className="hidden lg:block w-full">
+        <Header currentPage="locations" />
+      </div>
+      {/* Mobile Header/Nav */}
+      <div className="block lg:hidden w-full">
+        <MobileHeader isMenuOpen={mobileMenuOpen} onMenuClick={() => setMobileMenuOpen((v) => !v)} />
+        <MobileNav isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+      </div>
 
       {/* Hero Section */}
       <section className="hero-professional">

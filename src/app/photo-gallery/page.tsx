@@ -1,9 +1,12 @@
 "use client";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import MobileHeader from '@/components/MobileHeader';
+import MobileNav from '@/components/MobileNav';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { useFirmName } from '@/lib/FirmNameContext';
 
 // Archive type definition
 interface Archive {
@@ -49,6 +52,8 @@ function Lightbox({ src, desc, onClose }: { src: string; desc?: string; onClose:
 }
 
 export default function PhotoGalleryPage() {
+  const { firmName } = useFirmName();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [lightbox, setLightbox] = useState<{src: string, desc?: string} | null>(null);
   const [archives, setArchives] = useState<Archive[]>([]);
   const [loading, setLoading] = useState(true);
@@ -79,7 +84,15 @@ export default function PhotoGalleryPage() {
   if (loading) {
     return (
       <div>
-        <Header currentPage="photo-gallery" />
+        {/* Desktop Header/Nav */}
+        <div className="hidden lg:block w-full">
+          <Header currentPage="photo-gallery" />
+        </div>
+        {/* Mobile Header/Nav */}
+        <div className="block lg:hidden w-full">
+          <MobileHeader isMenuOpen={mobileMenuOpen} onMenuClick={() => setMobileMenuOpen((v) => !v)} />
+          <MobileNav isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+        </div>
         <div className="py-16 bg-[var(--gray-50)]">
           <div style={{maxWidth:'1200px',margin:'0 auto',paddingLeft:'2.5rem',paddingRight:'2.5rem'}}>
             <div className="text-center text-lg font-semibold text-gray-700">Loading archives...</div>
@@ -92,7 +105,15 @@ export default function PhotoGalleryPage() {
 
   return (
     <div>
-      <Header currentPage="photo-gallery" />
+      {/* Desktop Header/Nav */}
+      <div className="hidden lg:block w-full">
+        <Header currentPage="photo-gallery" />
+      </div>
+      {/* Mobile Header/Nav */}
+      <div className="block lg:hidden w-full">
+        <MobileHeader isMenuOpen={mobileMenuOpen} onMenuClick={() => setMobileMenuOpen((v) => !v)} />
+        <MobileNav isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+      </div>
       {/* Hero/Intro Section */}
       <section style={{position:'relative',width:'100%',height:'340px',marginBottom:'2.5rem',overflow:'hidden',display:'flex',alignItems:'center',justifyContent:'flex-start',background:'linear-gradient(90deg, #e8f0fe 0%, #fffbe6 100%)'}}>
         <div style={{position:'relative',height:'100%',width:'340px',flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',zIndex:2}}>

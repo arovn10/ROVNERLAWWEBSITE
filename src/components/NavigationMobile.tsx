@@ -25,25 +25,25 @@ const Navigation = () => {
   ];
 
   return (
-    <nav className="bg-gradient-to-r from-blue-900 to-blue-700 shadow-lg sticky top-0 z-50">
+    <nav className="bg-white shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0">
-              <span className="text-2xl font-bold text-white tracking-wide">Rovner Law</span>
+              <span className="text-xl sm:text-2xl font-bold text-blue-600">Rovner Law</span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8">
-            <Link href="/" className="text-white font-semibold hover:text-yellow-300 transition-colors px-2 py-1 rounded">
+            <Link href="/" className="text-gray-700 hover:text-blue-600 transition-colors">
               Home
             </Link>
-            <Link href="/about" className="text-white font-semibold hover:text-yellow-300 transition-colors px-2 py-1 rounded">
+            <Link href="/about" className="text-gray-700 hover:text-blue-600 transition-colors">
               About Us
             </Link>
-            <Link href="/attorneys" className="text-white font-semibold hover:text-yellow-300 transition-colors px-2 py-1 rounded">
+            <Link href="/attorneys" className="text-gray-700 hover:text-blue-600 transition-colors">
               Attorneys
             </Link>
             
@@ -51,7 +51,7 @@ const Navigation = () => {
             <div className="relative">
               <button
                 onClick={() => setPracticeOpen(!practiceOpen)}
-                className="flex items-center text-white font-semibold hover:text-yellow-300 transition-colors px-2 py-1 rounded focus:outline-none"
+                className="flex items-center text-gray-700 hover:text-blue-600 transition-colors"
               >
                 Practice Areas
                 <ChevronDown className="ml-1 h-4 w-4" />
@@ -72,27 +72,27 @@ const Navigation = () => {
               )}
             </div>
 
-            <Link href="/locations" className="text-white font-semibold hover:text-yellow-300 transition-colors px-2 py-1 rounded">
+            <Link href="/locations" className="text-gray-700 hover:text-blue-600 transition-colors">
               Locations
             </Link>
-            <Link href="/photo-gallery" className="text-white font-semibold hover:text-yellow-300 transition-colors px-2 py-1 rounded">
+            <Link href="/photo-gallery" className="text-gray-700 hover:text-blue-600 transition-colors">
               Photo Gallery
             </Link>
-            <Link href="/in-the-news" className="text-white font-semibold hover:text-yellow-300 transition-colors px-2 py-1 rounded">
+            <Link href="/in-the-news" className="text-gray-700 hover:text-blue-600 transition-colors">
               In The News
             </Link>
-            <Link href="/contact" className="text-white font-semibold hover:text-yellow-300 transition-colors px-2 py-1 rounded">
+            <Link href="/contact" className="text-gray-700 hover:text-blue-600 transition-colors">
               Contact
             </Link>
           </div>
 
           {/* Phone and CTA - Desktop */}
           <div className="hidden lg:flex items-center space-x-4">
-            <a href="tel:215-259-5958" className="flex items-center text-yellow-300 font-bold text-lg">
+            <a href="tel:215-259-5958" className="flex items-center text-blue-600 font-semibold">
               <Phone className="h-4 w-4 mr-2" />
               215-259-5958
             </a>
-            <Button asChild className="bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold px-4 py-2 rounded shadow">
+            <Button asChild>
               <Link href="/contact">Free Consultation</Link>
             </Button>
           </div>
@@ -212,4 +212,4 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default Navigation; 

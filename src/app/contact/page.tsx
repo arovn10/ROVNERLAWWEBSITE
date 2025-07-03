@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import MobileHeader from '@/components/MobileHeader';
+import MobileNav from '@/components/MobileNav';
 import { useFirmName } from '@/lib/FirmNameContext';
 
 export default function ContactPage() {
@@ -21,6 +23,7 @@ export default function ContactPage() {
     type: 'success' | 'error' | null;
     message: string;
   }>({ type: null, message: '' });
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -81,7 +84,15 @@ export default function ContactPage() {
 
   return (
     <div>
-      <Header currentPage="contact" />
+      {/* Desktop Header/Nav */}
+      <div className="hidden lg:block w-full">
+        <Header currentPage="contact" />
+      </div>
+      {/* Mobile Header/Nav */}
+      <div className="block lg:hidden w-full">
+        <MobileHeader isMenuOpen={mobileMenuOpen} onMenuClick={() => setMobileMenuOpen((v) => !v)} />
+        <MobileNav isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+      </div>
 
       {/* Success/Error Message */}
       {submitStatus.type && (

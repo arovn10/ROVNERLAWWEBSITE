@@ -1,7 +1,13 @@
+"use client";
+
 import Link from 'next/link';
 import Image from 'next/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import MobileHeader from '@/components/MobileHeader';
+import MobileNav from '@/components/MobileNav';
+import { useFirmName } from '@/lib/FirmNameContext';
+import { useState } from 'react';
 
 const practiceAreas = [
   {
@@ -242,9 +248,20 @@ const practiceAreas = [
 ];
 
 export default function PracticeAreasPage() {
+  const { firmName } = useFirmName();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <div style={{backgroundColor: '#fafafa'}}>
-      <Header currentPage="practice" />
+      {/* Desktop Header/Nav */}
+      <div className="hidden lg:block w-full">
+        <Header currentPage="practice" />
+      </div>
+      {/* Mobile Header/Nav */}
+      <div className="block lg:hidden w-full">
+        <MobileHeader isMenuOpen={mobileMenuOpen} onMenuClick={() => setMobileMenuOpen((v) => !v)} />
+        <MobileNav isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+      </div>
 
       {/* Hero Section */}
       <section style={{

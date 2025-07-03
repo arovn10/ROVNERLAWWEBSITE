@@ -4,14 +4,26 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import MobileHeader from '@/components/MobileHeader';
+import MobileNav from '@/components/MobileNav';
 import { useFirmName } from '@/lib/FirmNameContext';
+import { useState } from 'react';
 
 export default function AboutPage() {
   const { firmName } = useFirmName();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div>
-      <Header currentPage="about" />
+      {/* Desktop Header/Nav */}
+      <div className="hidden lg:block w-full">
+        <Header currentPage="about" />
+      </div>
+      {/* Mobile Header/Nav */}
+      <div className="block lg:hidden w-full">
+        <MobileHeader isMenuOpen={mobileMenuOpen} onMenuClick={() => setMobileMenuOpen((v) => !v)} />
+        <MobileNav isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+      </div>
 
       {/* Hero Section with Banner Image */}
       <section className="hero-professional">
