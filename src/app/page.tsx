@@ -317,28 +317,6 @@ export default function HomePage() {
             </a>
           </div>
         </section>
-        
-        {/* Mobile Quick Links Grid */}
-        <section className="px-4 py-4 bg-white">
-          <div className="grid grid-cols-2 gap-3">
-            <Link href="/attorneys" className="bg-blue-50 rounded-lg p-4 text-center hover:bg-blue-100 transition flex flex-col items-center gap-2">
-              <Users size={24} className="text-blue-600" />
-              <span className="font-semibold text-blue-900 text-sm">Our Attorneys</span>
-            </Link>
-            <Link href="/practice" className="bg-blue-50 rounded-lg p-4 text-center hover:bg-blue-100 transition flex flex-col items-center gap-2">
-              <Briefcase size={24} className="text-blue-600" />
-              <span className="font-semibold text-blue-900 text-sm">Practice Areas</span>
-            </Link>
-            <Link href="/locations" className="bg-blue-50 rounded-lg p-4 text-center hover:bg-blue-100 transition flex flex-col items-center gap-2">
-              <span className="text-blue-600 text-xl">📍</span>
-              <span className="font-semibold text-blue-900 text-sm">Locations</span>
-            </Link>
-            <Link href="/contact" className="bg-blue-50 rounded-lg p-4 text-center hover:bg-blue-100 transition flex flex-col items-center gap-2">
-              <Mail size={24} className="text-blue-600" />
-              <span className="font-semibold text-blue-900 text-sm">Contact Us</span>
-            </Link>
-          </div>
-        </section>
         {/* Mobile Hero Banner */}
         <section className="relative w-full h-40 overflow-hidden flex items-center justify-center">
           <Image
@@ -353,7 +331,6 @@ export default function HomePage() {
           <div className="relative z-10 text-center text-white px-4 w-full">
             <h1 className="text-2xl font-bold mb-2" style={{textShadow:'0 2px 8px #000'}}>Rovner, Allen, Rovner And Sigman</h1>
             <p className="text-sm mb-4" style={{textShadow:'0 2px 8px #000'}}>Premier Injury Lawyers</p>
-            <a href="/contact" className="inline-block bg-yellow-500 text-white font-bold px-6 py-2 rounded-lg shadow hover:bg-yellow-600 transition">Free Consultation</a>
           </div>
         </section>
         {/* Mobile Settlements Carousel */}
@@ -378,7 +355,7 @@ export default function HomePage() {
           )}
         </section>
         {/* Mobile Practice Areas */}
-        <section className="px-4 py-4">
+        <section className="px-4 py-4 pb-0">
           <h3 className="text-lg font-bold mb-2 text-blue-900">Practice Areas</h3>
           {practiceAreas.length === 0 ? (
             <div className="text-center py-8 text-gray-500">Loading practice areas...</div>
@@ -388,15 +365,12 @@ export default function HomePage() {
                 onClick={prevPracticeArea}
                 className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg border border-gray-200 hover:bg-gray-50"
                 style={{ width: 40, height: 40 }}
+                aria-label="Previous Practice Area"
               >
                 <span className="text-gray-600 text-lg">‹</span>
               </button>
               <div className="flex justify-center">
-                <Link
-                  href={`/practice/${practiceAreas[currentPracticeAreaIndex]?.slug}`}
-                  className="bg-white rounded-xl p-0 shadow-lg border border-gray-200 flex flex-col items-center text-center overflow-hidden group focus:outline-none focus:ring-2 focus:ring-blue-500 mx-4"
-                  style={{ minHeight: 220, width: 'calc(100% - 80px)', maxWidth: 320 }}
-                >
+                <div className="bg-white rounded-xl p-0 shadow-lg border border-gray-200 flex flex-col items-center text-center overflow-hidden group focus:outline-none focus:ring-2 focus:ring-blue-500 mx-4 w-full max-w-xs">
                   {practiceAreas[currentPracticeAreaIndex]?.image && (
                     <div className="w-full flex justify-center items-center bg-gray-100" style={{height: 160}}>
                       <Image
@@ -414,12 +388,13 @@ export default function HomePage() {
                       {practiceAreas[currentPracticeAreaIndex]?.name}
                     </span>
                   </div>
-                </Link>
+                </div>
               </div>
               <button 
                 onClick={nextPracticeArea}
                 className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg border border-gray-200 hover:bg-gray-50"
                 style={{ width: 40, height: 40 }}
+                aria-label="Next Practice Area"
               >
                 <span className="text-gray-600 text-lg">›</span>
               </button>
@@ -432,6 +407,7 @@ export default function HomePage() {
                     className={`w-2 h-2 rounded-full transition-colors ${
                       idx === currentPracticeAreaIndex ? 'bg-blue-600' : 'bg-gray-300'
                     }`}
+                    aria-label={`Go to practice area ${idx + 1}`}
                   />
                 ))}
               </div>
