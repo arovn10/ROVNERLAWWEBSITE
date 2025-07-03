@@ -295,6 +295,13 @@ export default function HomePage() {
 
       {/* Mobile Content */}
       <div className="block lg:hidden w-full">
+        {/* Mobile Quick Access (move to top for visibility) */}
+        <section className="px-4 pt-4 pb-2">
+          <div className="flex flex-col gap-3">
+            <a href="tel:215-259-5958" className="w-full bg-blue-700 text-white font-bold rounded-lg py-3 text-center text-lg shadow hover:bg-blue-800 transition">Call 215-259-5958</a>
+            <a href="/contact" className="w-full bg-green-600 text-white font-bold rounded-lg py-3 text-center text-lg shadow hover:bg-green-700 transition">Free Consultation</a>
+          </div>
+        </section>
         {/* Mobile Hero Banner */}
         <section className="relative w-full h-40 overflow-hidden flex items-center justify-center">
           <Image
@@ -309,13 +316,6 @@ export default function HomePage() {
             <h1 className="text-2xl font-bold mb-2" style={{textShadow:'0 2px 8px #000'}}>Rovner, Allen, Rovner And Sigman</h1>
             <p className="text-sm mb-4" style={{textShadow:'0 2px 8px #000'}}>Premier Injury Lawyers</p>
             <a href="/contact" className="inline-block bg-yellow-500 text-white font-bold px-6 py-2 rounded-lg shadow hover:bg-yellow-600 transition">Free Consultation</a>
-          </div>
-        </section>
-        {/* Mobile Quick Access */}
-        <section className="px-4 py-4">
-          <div className="flex flex-col gap-3">
-            <a href="tel:215-259-5958" className="w-full bg-blue-700 text-white font-bold rounded-lg py-3 text-center text-lg shadow hover:bg-blue-800 transition">Call 215-259-5958</a>
-            <a href="/contact" className="w-full bg-green-600 text-white font-bold rounded-lg py-3 text-center text-lg shadow hover:bg-green-700 transition">Free Consultation</a>
           </div>
         </section>
         {/* Mobile Settlements Carousel */}
@@ -348,7 +348,7 @@ export default function HomePage() {
                 {area.image && (
                   <Image src={area.image} alt={area.name} width={60} height={60} className="mb-2 rounded-full object-cover" />
                 )}
-                <span className="font-semibold text-blue-900 text-sm mb-1">{area.name}</span>
+                <span className="font-semibold text-blue-900 text-base mb-1">{area.name}</span>
                 <span className="text-xs text-gray-600">{area.description?.slice(0, 40)}...</span>
               </Link>
             ))}
