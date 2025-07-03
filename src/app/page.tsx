@@ -344,12 +344,25 @@ export default function HomePage() {
           <h3 className="text-lg font-bold mb-2 text-blue-900">Practice Areas</h3>
           <div className="grid grid-cols-2 gap-3">
             {practiceAreas.map((area) => (
-              <Link key={area.id} href={`/practice/${area.slug}`} className="bg-white rounded-lg p-3 shadow border border-gray-200 flex flex-col items-center text-center">
+              <Link
+                key={area.id}
+                href={`/practice/${area.slug}`}
+                className="bg-white rounded-xl p-0 shadow border border-gray-200 flex flex-col items-center text-center overflow-hidden group focus:outline-none focus:ring-2 focus:ring-blue-500"
+                style={{ minHeight: 140 }}
+              >
                 {area.image && (
-                  <Image src={area.image} alt={area.name} width={60} height={60} className="mb-2 rounded-full object-cover" />
+                  <div className="w-full flex justify-center items-center bg-gray-100" style={{height:100}}>
+                    <Image
+                      src={area.image}
+                      alt={area.name}
+                      width={90}
+                      height={90}
+                      className="rounded-full object-cover group-hover:scale-105 transition-transform duration-200"
+                      style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
+                    />
+                  </div>
                 )}
-                <span className="font-semibold text-blue-900 text-base mb-1">{area.name}</span>
-                <span className="text-xs text-gray-600">{area.description?.slice(0, 40)}...</span>
+                <span className="font-semibold text-blue-900 text-base mb-2 mt-3 px-2 truncate w-full" style={{lineHeight:'1.2'}}>{area.name}</span>
               </Link>
             ))}
           </div>
