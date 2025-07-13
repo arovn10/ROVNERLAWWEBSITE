@@ -158,15 +158,14 @@ export default function HomePage() {
               </p>
               <div className="firm-highlights" style={{ justifyContent: 'center', gap: '3rem', marginBottom: '2.5rem', display: 'flex', flexWrap: 'wrap' }}>
                 <div className="highlight-item" style={{ minWidth: 120 }}>
-                  <span className="highlight-number" style={{ color: '#fbbf24', fontSize: '2.2rem', fontWeight: 700, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>40+</span>
-                  <span className="highlight-text" style={{ color: '#f3f4f6', display: 'block', fontWeight: 500, marginTop: 4, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Years of Experience</span>
+                  <span className="highlight-number" style={{ color: '#fbbf24', fontSize: '2.2rem', fontWeight: 700, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>150+</span>
+                  <span className="highlight-text" style={{ color: '#f3f4f6', display: 'block', fontWeight: 500, marginTop: 4, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Years of Combined Experience</span>
                 </div>
                 <div className="highlight-item" style={{ minWidth: 120 }}>
-                  <span className="highlight-number" style={{ color: '#fbbf24', fontSize: '2.2rem', fontWeight: 700, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>15+</span>
                   <span className="highlight-text" style={{ color: '#f3f4f6', display: 'block', fontWeight: 500, marginTop: 4, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Skilled Attorneys</span>
                 </div>
                 <div className="highlight-item" style={{ minWidth: 120 }}>
-                  <span className="highlight-number" style={{ color: '#fbbf24', fontSize: '2.2rem', fontWeight: 700, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>1000+</span>
+                  <span className="highlight-number" style={{ color: '#fbbf24', fontSize: '2.2rem', fontWeight: 700, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>25,000+</span>
                   <span className="highlight-text" style={{ color: '#f3f4f6', display: 'block', fontWeight: 500, marginTop: 4, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Cases Won</span>
                 </div>
               </div>
@@ -322,7 +321,7 @@ export default function HomePage() {
             <h1 className="text-2xl font-bold mb-2" style={{textShadow:'0 2px 8px #000', letterSpacing: '-0.01em'}}>Rovner, Allen, Rovner And Sigman</h1>
             <p className="text-sm mb-4 font-medium" style={{textShadow:'0 2px 8px #000'}}>Personal Injury & Criminal Defense</p>
             <div className="flex justify-center gap-2">
-              <span className="bg-yellow-500 text-black px-3 py-1 rounded-full text-xs font-bold">40+ Years Experience</span>
+              <span className="bg-yellow-500 text-black px-3 py-1 rounded-full text-xs font-bold">150+ Years Combined Experience</span>
               <span className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">Free Consultation</span>
             </div>
           </div>

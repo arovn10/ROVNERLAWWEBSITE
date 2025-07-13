@@ -5,7 +5,7 @@ import { FirmNameProvider } from "@/lib/FirmNameContext";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <SessionProvider>
+    <SessionProvider session={null}>
       <FirmNameProvider>
         {children}
       </FirmNameProvider>
