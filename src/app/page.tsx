@@ -86,7 +86,7 @@ export default function HomePage() {
   const prevPracticeArea = () => setCurrentPracticeAreaIndex((prev) => (prev - 1 < 0 ? practiceAreas.length - 1 : prev - 1));
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex flex-col items-center justify-center font-sans">
+    <div className="min-h-screen bg-white flex flex-col items-center font-sans">
       {/* Desktop Header/Nav */}
       <div className="hidden lg:block w-full">
         <Header currentPage="home" />
@@ -99,157 +99,84 @@ export default function HomePage() {
 
       {/* Desktop Content */}
       <div className="hidden lg:block w-full">
-        {/* Mobile Quick Access Section */}
-        <div className="block lg:hidden w-full px-4 pt-4 pb-2 flex flex-col gap-3">
-          <Link href="/contact" className="w-full bg-blue-700 text-white font-bold rounded-lg py-3 text-center text-lg shadow hover:bg-blue-800 transition">Contact Us</Link>
-          <a href="tel:215-259-5958" className="w-full bg-yellow-400 text-blue-900 font-bold rounded-lg py-3 text-center text-lg shadow hover:bg-yellow-500 transition">Call 215-259-5958</a>
-          <Link href="/contact" className="w-full bg-green-600 text-white font-bold rounded-lg py-3 text-center text-lg shadow hover:bg-green-700 transition">Free Consultation</Link>
-        </div>
-
-        {/* Hero Banner with Professional Home Image and overlayed content */}
-        <div className="hero-bg" style={{ width: '100%', position: 'relative', minHeight: '140px', background: 'linear-gradient(120deg, #1e293b 60%, #334155 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-          <section className="hero-professional" style={{ width: '100%', position: 'relative', minHeight: '140px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', padding: 0 }}>
-            <div className="hero-image-overlay" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
-              <Image 
-                src="/photos/banner-home-new-1-1024x343.png" 
-                alt="Professional Law Firm" 
-                width={1024}
-                height={343}
-                className="hero-background"
-                priority
-                style={{ 
-                  objectPosition: 'center top', 
-                  objectFit: 'cover', 
-                  width: '100%', 
-                  height: '100%',
-                  maxWidth: '100%',
-                  maxHeight: '100%'
-                }}
-              />
-              <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                background: 'rgba(20, 28, 38, 0.45)',
-                zIndex: 1
-              }} />
-            </div>
-            <div className="hero-content" style={{
-              maxWidth: 1200,
-              margin: '0 auto',
-              width: '100%',
-              position: 'relative',
-              zIndex: 2,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#fff',
-              textAlign: 'center',
-              padding: '2rem 0',
-            }}>
-              <h1 className="content-title" style={{ fontSize: 'clamp(2.5rem, 6vw, 3.5rem)', fontWeight: 800, marginBottom: '0.5rem', color: '#fff', textShadow: '0 2px 12px rgba(0,0,0,0.7)' }}>{firmName}</h1>
-              <div className="accent-bar" style={{ margin: '0 auto 1.5rem auto', background: 'var(--gradient-gold)' }}></div>
-              <h2 className="content-subtitle" style={{ marginBottom: '1.5rem', color: '#f3f4f6', fontWeight: 600, fontSize: '1.7rem', textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Premier Injury Lawyers</h2>
-              <p className="content-text" style={{ marginBottom: '2.5rem', maxWidth: 600, marginLeft: 'auto', marginRight: 'auto', color: '#e5e7eb', fontSize: '1.25rem', textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
-                For over 40 years, {firmName} has been fighting for clients in Philadelphia who have been victims of negligence, auto accidents, personal injury, medical malpractice and premise liability.
-              </p>
-              <div className="firm-highlights" style={{ justifyContent: 'center', gap: '3rem', marginBottom: '2.5rem', display: 'flex', flexWrap: 'wrap' }}>
-                <div className="highlight-item" style={{ minWidth: 120 }}>
-                  <span className="highlight-number" style={{ color: '#fbbf24', fontSize: '2.2rem', fontWeight: 700, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>150+</span>
-                  <span className="highlight-text" style={{ color: '#f3f4f6', display: 'block', fontWeight: 500, marginTop: 4, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Years of Combined Experience</span>
-                </div>
-                <div className="highlight-item" style={{ minWidth: 120 }}>
-                  <span className="highlight-number" style={{ color: '#fbbf24', fontSize: '2.2rem', fontWeight: 700, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>25,000+</span>
-                  <span className="highlight-text" style={{ color: '#f3f4f6', display: 'block', fontWeight: 500, marginTop: 4, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Cases Won</span>
-                </div>
+        {/* Hero Section */}
+        <section className="w-full flex items-center justify-center bg-white border-b border-slate-100" style={{minHeight: '420px'}}>
+          <div className="max-w-5xl mx-auto w-full flex flex-col items-center text-center py-20 px-6">
+            <h1 className="font-extrabold text-5xl md:text-6xl text-slate-900 mb-4 tracking-tight" style={{letterSpacing: '-0.03em'}}> {firmName} </h1>
+            <h2 className="text-2xl md:text-3xl font-semibold text-slate-600 mb-6">Premier Injury Lawyers</h2>
+            <p className="text-lg md:text-xl text-slate-500 mb-10 max-w-2xl mx-auto">For over 40 years, {firmName} has been fighting for clients in Philadelphia who have been victims of negligence, auto accidents, personal injury, medical malpractice and premise liability.</p>
+            <a href="/contact" className="inline-block bg-slate-900 text-white font-bold text-lg px-10 py-4 rounded-full shadow-lg hover:bg-slate-800 transition-all duration-150">Get a Free Consultation</a>
+            <div className="flex gap-12 mt-14">
+              <div className="flex flex-col items-center">
+                <span className="text-3xl font-extrabold text-yellow-500 mb-1">150+</span>
+                <span className="text-slate-500 font-medium text-base">Years of Combined Experience</span>
               </div>
-              <a href="/contact" style={{
-                display: 'inline-block',
-                background: 'var(--gradient-gold, linear-gradient(135deg, #d97706 0%, #f59e0b 100%))',
-                color: '#fff',
-                fontWeight: 700,
-                fontSize: '1.15rem',
-                padding: '0.9rem 2.5rem',
-                borderRadius: 8,
-                boxShadow: '0 4px 24px rgba(0,0,0,0.18)',
-                textDecoration: 'none',
-                letterSpacing: '0.01em',
-                marginTop: 8,
-                transition: 'background 0.2s, box-shadow 0.2s',
-              }}
-              onMouseOver={e => e.currentTarget.style.background = 'var(--gold-accent, #d97706)'}
-              onMouseOut={e => e.currentTarget.style.background = 'var(--gradient-gold, linear-gradient(135deg, #d97706 0%, #f59e0b 100%))'}
-              >
-                Get a Free Consultation
-              </a>
+              <div className="flex flex-col items-center">
+                <span className="text-3xl font-extrabold text-yellow-500 mb-1">25,000+</span>
+                <span className="text-slate-500 font-medium text-base">Cases Won</span>
+              </div>
             </div>
-          </section>
-        </div>
-        {/* Desktop Settlements Carousel */}
-        <section className="section hidden lg:block" style={{paddingBottom: '2rem', marginBottom: '0'}}>
-          <div className="section-title" style={{marginBottom: '1.5rem'}}>
-            <h3>Recent Results</h3>
-            <p>We get results for our clients</p>
           </div>
-          {loading ? (
-            <div className="text-center py-8 text-gray-500">Loading settlements...</div>
-          ) : error ? (
-            <div className="text-center py-8 text-red-500">{error}</div>
-          ) : settlements.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">No settlements found.</div>
-          ) : (
-          <div className="carousel-container" style={{maxWidth: '1400px', margin: '0 auto'}}>
-            <button className="carousel-btn prev-btn" onClick={prevSettlement}>&#8249;</button>
-            <div className="settlements-carousel">
-              <div className="grid grid-3" style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2.2rem'}}>
+        </section>
+
+        {/* Settlements Section */}
+        <section className="w-full py-20 border-b border-slate-100 bg-white">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="mb-10 text-center">
+              <h3 className="text-2xl font-bold text-slate-900 mb-1">Recent Results</h3>
+              <p className="text-slate-500">We get results for our clients</p>
+            </div>
+            {loading ? (
+              <div className="text-center py-8 text-gray-500">Loading settlements...</div>
+            ) : error ? (
+              <div className="text-center py-8 text-red-500">{error}</div>
+            ) : settlements.length === 0 ? (
+              <div className="text-center py-8 text-gray-500">No settlements found.</div>
+            ) : (
+              <div className="flex justify-center gap-8">
                 {settlements.slice(currentSettlementIndex, currentSettlementIndex + visibleSettlementCount).map((settlement: Settlement) => (
-                  <div key={settlement.id} className="card settlement-card" style={{
-                    background: '#fff',
-                    borderRadius: '18px',
-                    boxShadow: '0 2px 16px rgba(20,28,38,0.09)',
-                    border: '1px solid #e5e7eb',
-                    padding: '2.2rem 1.5rem 1.7rem 1.5rem',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    minHeight: '220px',
-                    maxWidth: '370px',
-                    margin: '0 auto',
-                    gap: '0.7rem',
-                  }}>
-                    <div style={{marginBottom:'1.1rem'}}>
-                      <span style={{display:'flex',alignItems:'center',justifyContent:'center',width:54,height:54,borderRadius:'50%',background:'linear-gradient(135deg,#22c55e 0%,#16a34a 100%)',boxShadow:'0 2px 8px rgba(34,197,94,0.10)'}}>
-                        <DollarSign size={28} color="#fff" />
-                      </span>
+                  <div key={settlement.id} className="bg-white rounded-2xl shadow-xl border border-slate-100 px-8 py-10 flex flex-col items-center min-w-[260px] max-w-[340px] transition-all duration-200 hover:shadow-2xl">
+                    <div className="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-green-400 to-green-600 shadow">
+                      <DollarSign size={32} color="#fff" />
                     </div>
-                    <div className="settlement-amount" style={{fontSize:'2.3rem',fontWeight:800,color:'#16a34a',marginBottom:'0.5rem',letterSpacing:'-0.02em',lineHeight:1}}>
-                      ${settlement.amount.toLocaleString()}
-                    </div>
-                    <div className="settlement-type" style={{fontSize:'0.93rem',color:'#64748b',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.05em',lineHeight:1.4,marginBottom:'0.2rem'}}>{settlement.caseType}</div>
+                    <div className="text-3xl font-extrabold text-green-600 mb-2">${settlement.amount.toLocaleString()}</div>
+                    <div className="uppercase text-xs font-semibold text-slate-400 mb-1 tracking-widest">{settlement.caseType}</div>
+                    <div className="text-slate-500 text-sm text-center">{settlement.title}</div>
                   </div>
                 ))}
               </div>
-              <div className="carousel-indicators" style={{display:'flex',justifyContent:'center',marginTop:'1.5rem'}}>
-                {Array.from({length: maxSettlementIndex + 1}).map((_, idx) => (
-                  <button key={idx} className={`indicator ${idx === currentSettlementIndex ? 'active' : ''}`} onClick={() => setCurrentSettlementIndex(idx)} />
-                ))}
-              </div>
-            </div>
-            <button className="carousel-btn next-btn" onClick={nextSettlement}>&#8250;</button>
+            )}
           </div>
-          )}
         </section>
 
-        {/* Desktop Practice Areas Carousel/Section */}
-        <section className="section hidden lg:block">
-          <div className="section-title" style={{marginBottom: '1.5rem'}}>
-            <h3>Our Practice Areas</h3>
-            <p>Comprehensive legal services with proven results</p>
+        {/* Practice Areas Section */}
+        <section className="w-full py-20 bg-white">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="mb-10 text-center">
+              <h3 className="text-2xl font-bold text-slate-900 mb-1">Our Practice Areas</h3>
+              <p className="text-slate-500">Comprehensive legal services with proven results</p>
+            </div>
+            <div className="grid grid-cols-3 gap-10">
+              {practiceAreas.slice(0, 6).map((area: any) => (
+                <Link key={area.id} href={`/practice/${area.slug}`} className="group block bg-white rounded-2xl shadow-xl border border-slate-100 px-8 py-10 text-center hover:shadow-2xl transition-all duration-200">
+                  <div className="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 shadow">
+                    <Briefcase size={32} color="#fff" />
+                  </div>
+                  <div className="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-700 transition-colors">{area.title}</div>
+                  <div className="text-slate-500 text-sm">{area.description?.slice(0, 80)}{area.description?.length > 80 ? '...' : ''}</div>
+                </Link>
+              ))}
+            </div>
           </div>
-          <PracticeAreasCarousel practiceAreas={practiceAreas} />
+        </section>
+
+        {/* CTA Section */}
+        <section className="w-full py-20 bg-gradient-to-r from-slate-900 to-slate-800">
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <h3 className="text-3xl font-bold text-white mb-4">Ready to Get Started?</h3>
+            <p className="text-slate-200 mb-8 text-lg">Our experienced attorneys are ready to help you with your legal needs. Contact us today for a free consultation.</p>
+            <a href="/contact" className="inline-block bg-yellow-400 text-slate-900 font-bold text-lg px-10 py-4 rounded-full shadow-lg hover:bg-yellow-300 transition-all duration-150">Get Free Consultation</a>
+          </div>
         </section>
 
         {/* Quick Links Section */}
