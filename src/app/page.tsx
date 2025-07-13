@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import MobileHeader from '@/components/MobileHeader';
@@ -42,6 +42,8 @@ export default function HomePage() {
   const [practiceAreas, setPracticeAreas] = useState<any[]>([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentPracticeAreaIndex, setCurrentPracticeAreaIndex] = useState(0);
+  const settlementsTrackRef = useRef<HTMLDivElement>(null);
+  const practiceTrackRef = useRef<HTMLDivElement>(null);
 
   const visibleSettlementCount = 3;
   const maxSettlementIndex = settlements.length - visibleSettlementCount;
@@ -143,17 +145,44 @@ export default function HomePage() {
             ) : settlements.length === 0 ? (
               <div className="text-center py-8 text-gray-500">No settlements found.</div>
             ) : (
-              <div className="flex justify-center gap-8">
-                {settlements.slice(currentSettlementIndex, currentSettlementIndex + visibleSettlementCount).map((settlement: Settlement) => (
-                  <div key={settlement.id} className="bg-white rounded-2xl shadow-xl border border-slate-100 px-8 py-10 flex flex-col items-center min-w-[260px] max-w-[340px] transition-all duration-200 hover:shadow-2xl">
-                    <div className="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-green-400 to-green-600 shadow">
-                      <DollarSign size={32} color="#fff" />
-                    </div>
-                    <div className="text-3xl font-extrabold text-green-600 mb-2">${settlement.amount.toLocaleString()}</div>
-                    <div className="uppercase text-xs font-semibold text-slate-400 mb-1 tracking-widest">{settlement.caseType}</div>
-                    <div className="text-slate-500 text-sm text-center">{settlement.title}</div>
+              <div className="relative max-w-4xl mx-auto">
+                <button
+                  onClick={prevSettlement}
+                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow border border-slate-200 hover:bg-slate-100 transition"
+                  style={{ width: 44, height: 44 }}
+                  aria-label="Previous Settlements"
+                >
+                  <span className="text-slate-600 text-2xl">‹</span>
+                </button>
+                <div className="overflow-hidden">
+                  <div
+                    ref={settlementsTrackRef}
+                    className="flex transition-transform duration-500 ease-in-out"
+                    style={{
+                      width: `${settlements.length * 340}px`,
+                      transform: `translateX(-${currentSettlementIndex * 340}px)`
+                    }}
+                  >
+                    {settlements.map((settlement: Settlement) => (
+                      <div key={settlement.id} className="bg-white rounded-2xl shadow-xl border border-slate-100 px-8 py-10 flex flex-col items-center min-w-[320px] max-w-[340px] mx-2 transition-all duration-200 hover:shadow-2xl">
+                        <div className="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-green-400 to-green-600 shadow">
+                          <DollarSign size={32} color="#fff" />
+                        </div>
+                        <div className="text-3xl font-extrabold text-green-600 mb-2">${settlement.amount.toLocaleString()}</div>
+                        <div className="uppercase text-xs font-semibold text-slate-400 mb-1 tracking-widest">{settlement.caseType}</div>
+                        <div className="text-slate-500 text-sm text-center">{settlement.title}</div>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
+                <button
+                  onClick={nextSettlement}
+                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow border border-slate-200 hover:bg-slate-100 transition"
+                  style={{ width: 44, height: 44 }}
+                  aria-label="Next Settlements"
+                >
+                  <span className="text-slate-600 text-2xl">›</span>
+                </button>
               </div>
             )}
           </div>
@@ -166,16 +195,43 @@ export default function HomePage() {
               <h3 className="text-2xl font-bold text-slate-900 mb-1">Our Practice Areas</h3>
               <p className="text-slate-500">Comprehensive legal services with proven results</p>
             </div>
-            <div className="grid grid-cols-3 gap-10">
-              {practiceAreas.slice(0, 6).map((area: any) => (
-                <Link key={area.id} href={`/practice/${area.slug}`} className="group block bg-white rounded-2xl shadow-xl border border-slate-100 px-8 py-10 text-center hover:shadow-2xl transition-all duration-200">
-                  <div className="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 shadow">
-                    <Briefcase size={32} color="#fff" />
-                  </div>
-                  <div className="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-700 transition-colors">{area.title}</div>
-                  <div className="text-slate-500 text-sm">{area.description?.slice(0, 80)}{area.description?.length > 80 ? '...' : ''}</div>
-                </Link>
-              ))}
+            <div className="relative">
+              <button
+                onClick={prevPracticeArea}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow border border-slate-200 hover:bg-slate-100 transition"
+                style={{ width: 44, height: 44 }}
+                aria-label="Previous Practice Areas"
+              >
+                <span className="text-slate-600 text-2xl">‹</span>
+              </button>
+              <div className="overflow-hidden">
+                <div
+                  ref={practiceTrackRef}
+                  className="flex transition-transform duration-500 ease-in-out"
+                  style={{
+                    width: `${practiceAreas.length * 260}px`,
+                    transform: `translateX(-${currentPracticeAreaIndex * 260}px)`
+                  }}
+                >
+                  {practiceAreas.map((area: any) => (
+                    <Link key={area.id} href={`/practice/${area.slug}`} className="group block bg-white rounded-2xl shadow-xl border border-slate-100 px-8 py-10 text-center hover:shadow-2xl transition-all duration-200 min-w-[240px] max-w-[260px] mx-2">
+                      <div className="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 shadow">
+                        <Briefcase size={32} color="#fff" />
+                      </div>
+                      <div className="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-700 transition-colors">{area.title}</div>
+                      <div className="text-slate-500 text-sm">{area.description?.slice(0, 80)}{area.description?.length > 80 ? '...' : ''}</div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              <button
+                onClick={nextPracticeArea}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow border border-slate-200 hover:bg-slate-100 transition"
+                style={{ width: 44, height: 44 }}
+                aria-label="Next Practice Areas"
+              >
+                <span className="text-slate-600 text-2xl">›</span>
+              </button>
             </div>
           </div>
         </section>
