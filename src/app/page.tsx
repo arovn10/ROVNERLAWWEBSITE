@@ -162,9 +162,6 @@ export default function HomePage() {
                   <span className="highlight-text" style={{ color: '#f3f4f6', display: 'block', fontWeight: 500, marginTop: 4, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Years of Combined Experience</span>
                 </div>
                 <div className="highlight-item" style={{ minWidth: 120 }}>
-                  <span className="highlight-text" style={{ color: '#f3f4f6', display: 'block', fontWeight: 500, marginTop: 4, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Skilled Attorneys</span>
-                </div>
-                <div className="highlight-item" style={{ minWidth: 120 }}>
                   <span className="highlight-number" style={{ color: '#fbbf24', fontSize: '2.2rem', fontWeight: 700, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>25,000+</span>
                   <span className="highlight-text" style={{ color: '#f3f4f6', display: 'block', fontWeight: 500, marginTop: 4, textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>Cases Won</span>
                 </div>
