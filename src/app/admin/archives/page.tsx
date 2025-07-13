@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { Plus, Edit, Trash2 } from 'lucide-react';
 
 export default function ArchivesAdminPage() {
