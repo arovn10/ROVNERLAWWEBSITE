@@ -3,10 +3,19 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Plus, Edit, Trash2 } from 'lucide-react';
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function PracticeAreasAdminPage() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
   const [practiceAreas, setPracticeAreas] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (status === "loading") return;
+    if (!session) router.push("/admin/login");
+  }, [session, status, router]);
 
   useEffect(() => {
     fetch('/api/practice-areas')
@@ -20,6 +29,18 @@ export default function PracticeAreasAdminPage() {
         setLoading(false);
       });
   }, []);
+
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-gray-100">
+        <div className="text-lg font-semibold text-gray-700">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!session) {
+    return null;
+  }
 
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this practice area?')) return;

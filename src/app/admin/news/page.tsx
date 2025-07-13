@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Plus, Edit, Trash2, Calendar, ExternalLink, FileText } from 'lucide-react';
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface News {
   id: string;
@@ -16,9 +18,16 @@ interface News {
 }
 
 export default function NewsManagement() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
   const [news, setNews] = useState<News[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (status === "loading") return;
+    if (!session) router.push("/admin/login");
+  }, [session, status, router]);
 
   useEffect(() => {
     fetchNews();
@@ -72,6 +81,18 @@ export default function NewsManagement() {
     if (content.length <= maxLength) return content;
     return content.substring(0, maxLength) + '...';
   };
+
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-gray-100">
+        <div className="text-lg font-semibold text-gray-700">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!session) {
+    return null;
+  }
 
   if (loading) {
     return (
