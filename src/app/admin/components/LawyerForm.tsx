@@ -53,6 +53,7 @@ export default function LawyerForm({ lawyer }: LawyerFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError(null);
 
     try {
       const response = await fetch(
@@ -66,15 +67,17 @@ export default function LawyerForm({ lawyer }: LawyerFormProps) {
         }
       );
 
+      const result = await response.json();
+
       if (response.ok) {
         router.push('/admin');
         router.refresh();
       } else {
-        alert('Failed to save lawyer');
+        setError(result.error || 'Failed to save lawyer');
       }
     } catch (error) {
       console.error('Error saving lawyer:', error);
-      alert('Failed to save lawyer');
+      setError('Failed to save lawyer');
     } finally {
       setIsSubmitting(false);
     }
