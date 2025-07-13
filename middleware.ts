@@ -22,7 +22,8 @@ export function middleware(request: NextRequest) {
       request.cookies.get('next-auth.session-token') ||
       request.cookies.get('__Secure-next-auth.session-token');
     if (!token) {
-      const loginUrl = new URL('/admin/login', request.url);
+      const baseUrl = request.nextUrl.origin;
+      const loginUrl = new URL('/admin/login', baseUrl);
       return NextResponse.redirect(loginUrl);
     }
   }
