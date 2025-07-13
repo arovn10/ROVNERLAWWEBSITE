@@ -72,6 +72,11 @@ const handler = NextAuth({
     signIn: "/admin/login",
   },
   debug: process.env.NODE_ENV === "development",
+  // Add fallback URL for build time
+  ...(process.env.NEXTAUTH_URL ? {} : { 
+    secret: process.env.NEXTAUTH_SECRET,
+    trustHost: true 
+  })
 })
 
 export { handler as GET, handler as POST } 
