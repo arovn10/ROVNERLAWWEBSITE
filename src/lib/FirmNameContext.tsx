@@ -15,11 +15,21 @@ export function FirmNameProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if firm name is already cached in localStorage
-    const cachedFirmName = localStorage.getItem('firmName');
-    if (cachedFirmName) {
-      setFirmNameState(cachedFirmName);
+    // Only run on client side
+    if (typeof window === 'undefined') {
       setLoading(false);
+      return;
+    }
+
+    // Check if firm name is already cached in localStorage
+    try {
+      const cachedFirmName = localStorage.getItem('firmName');
+      if (cachedFirmName) {
+        setFirmNameState(cachedFirmName);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Error accessing localStorage:', error);
     }
 
     // Fetch firm name from API
@@ -40,7 +50,13 @@ export function FirmNameProvider({ children }: { children: ReactNode }) {
 
   const setFirmName = (name: string) => {
     setFirmNameState(name);
-    localStorage.setItem('firmName', name);
+    try {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('firmName', name);
+      }
+    } catch (error) {
+      console.error('Error setting localStorage:', error);
+    }
   };
 
   return (
