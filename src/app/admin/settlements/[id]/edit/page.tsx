@@ -56,10 +56,13 @@ export default function EditSettlementPage() {
           amount: parseFloat(form.amount),
         }),
       });
+      
+      const result = await res.json();
+      
       if (res.ok) {
         router.push('/admin/settlements');
       } else {
-        setError('Failed to update settlement');
+        setError(result.error || 'Failed to update settlement');
       }
     } catch (err) {
       setError('Error updating settlement');
