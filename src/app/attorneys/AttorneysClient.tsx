@@ -21,13 +21,10 @@ export default function AttorneysClient({ attorneys }: { attorneys: any[] }) {
   const BIO_LENGTH_LIMIT = 350;
 
   useEffect(() => {
-    // Check which bios overflow their container and are over the length limit
+    // TEMP: Show 'View More' for any bio over the length limit
     const newOverflowing: { [id: string]: boolean } = {};
     attorneys.forEach((attorney) => {
-      const ref = bioRefs.current[attorney.id];
-      if (ref) {
-        newOverflowing[attorney.id] = (ref.scrollHeight > 96 && (attorney.bio?.length > BIO_LENGTH_LIMIT));
-      }
+      newOverflowing[attorney.id] = (attorney.bio?.length > BIO_LENGTH_LIMIT);
     });
     setOverflowing(newOverflowing);
   }, [attorneys, expanded]);
@@ -37,10 +34,7 @@ export default function AttorneysClient({ attorneys }: { attorneys: any[] }) {
     const handleResize = () => {
       const newOverflowing: { [id: string]: boolean } = {};
       attorneys.forEach((attorney) => {
-        const ref = bioRefs.current[attorney.id];
-        if (ref) {
-          newOverflowing[attorney.id] = (ref.scrollHeight > 96 && (attorney.bio?.length > BIO_LENGTH_LIMIT));
-        }
+        newOverflowing[attorney.id] = (attorney.bio?.length > BIO_LENGTH_LIMIT);
       });
       setOverflowing(newOverflowing);
     };
