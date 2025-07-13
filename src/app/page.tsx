@@ -99,18 +99,19 @@ export default function HomePage() {
 
       {/* Desktop Content */}
       <div className="hidden lg:block w-full">
-        {/* Hero Banner with Image */}
-        <section className="relative w-full flex items-center justify-center min-h-[420px] bg-black/70 overflow-hidden border-b border-slate-100">
-          <Image
-            src="/photos/banner-home-new-1-1024x343.png"
-            alt="Professional Law Firm"
-            fill
-            className="object-cover object-center w-full h-full select-none pointer-events-none"
-            priority
-            style={{zIndex: 1, opacity: 0.82}}
-          />
+        {/* Parallax Hero Banner */}
+        <section
+          className="relative w-full flex items-center justify-center min-h-[480px] overflow-hidden border-b border-slate-100"
+          style={{
+            backgroundImage: 'url(/photos/banner-home-new-1-1024x343.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed',
+            backgroundRepeat: 'no-repeat',
+          }}
+        >
           <div className="absolute inset-0 bg-black/40 z-10" />
-          <div className="relative z-20 w-full flex flex-col items-center text-center py-24 px-6">
+          <div className="relative z-20 w-full flex flex-col items-center text-center py-28 px-6">
             <h1 className="font-extrabold text-5xl md:text-6xl text-white mb-4 tracking-tight drop-shadow-xl" style={{letterSpacing: '-0.03em'}}> {firmName} </h1>
             <h2 className="text-2xl md:text-3xl font-semibold text-slate-100 mb-6 drop-shadow">Premier Injury Lawyers</h2>
             <p className="text-lg md:text-xl text-slate-200 mb-10 max-w-2xl mx-auto drop-shadow">For over 40 years, {firmName} has been fighting for clients in Philadelphia who have been victims of negligence, auto accidents, personal injury, medical malpractice and premise liability.</p>
