@@ -99,21 +99,30 @@ export default function HomePage() {
 
       {/* Desktop Content */}
       <div className="hidden lg:block w-full">
-        {/* Hero Section */}
-        <section className="w-full flex items-center justify-center bg-white border-b border-slate-100" style={{minHeight: '420px'}}>
-          <div className="max-w-5xl mx-auto w-full flex flex-col items-center text-center py-20 px-6">
-            <h1 className="font-extrabold text-5xl md:text-6xl text-slate-900 mb-4 tracking-tight" style={{letterSpacing: '-0.03em'}}> {firmName} </h1>
-            <h2 className="text-2xl md:text-3xl font-semibold text-slate-600 mb-6">Premier Injury Lawyers</h2>
-            <p className="text-lg md:text-xl text-slate-500 mb-10 max-w-2xl mx-auto">For over 40 years, {firmName} has been fighting for clients in Philadelphia who have been victims of negligence, auto accidents, personal injury, medical malpractice and premise liability.</p>
-            <a href="/contact" className="inline-block bg-slate-900 text-white font-bold text-lg px-10 py-4 rounded-full shadow-lg hover:bg-slate-800 transition-all duration-150">Get a Free Consultation</a>
+        {/* Hero Banner with Image */}
+        <section className="relative w-full flex items-center justify-center min-h-[420px] bg-black/70 overflow-hidden border-b border-slate-100">
+          <Image
+            src="/photos/banner-home-new-1-1024x343.png"
+            alt="Professional Law Firm"
+            fill
+            className="object-cover object-center w-full h-full select-none pointer-events-none"
+            priority
+            style={{zIndex: 1, opacity: 0.82}}
+          />
+          <div className="absolute inset-0 bg-black/40 z-10" />
+          <div className="relative z-20 w-full flex flex-col items-center text-center py-24 px-6">
+            <h1 className="font-extrabold text-5xl md:text-6xl text-white mb-4 tracking-tight drop-shadow-xl" style={{letterSpacing: '-0.03em'}}> {firmName} </h1>
+            <h2 className="text-2xl md:text-3xl font-semibold text-slate-100 mb-6 drop-shadow">Premier Injury Lawyers</h2>
+            <p className="text-lg md:text-xl text-slate-200 mb-10 max-w-2xl mx-auto drop-shadow">For over 40 years, {firmName} has been fighting for clients in Philadelphia who have been victims of negligence, auto accidents, personal injury, medical malpractice and premise liability.</p>
+            <a href="/contact" className="inline-block bg-white text-slate-900 font-bold text-lg px-10 py-4 rounded-full shadow-lg hover:bg-slate-100 transition-all duration-150">Get a Free Consultation</a>
             <div className="flex gap-12 mt-14">
               <div className="flex flex-col items-center">
-                <span className="text-3xl font-extrabold text-yellow-500 mb-1">150+</span>
-                <span className="text-slate-500 font-medium text-base">Years of Combined Experience</span>
+                <span className="text-3xl font-extrabold text-yellow-400 mb-1 drop-shadow">150+</span>
+                <span className="text-slate-100 font-medium text-base drop-shadow">Years of Combined Experience</span>
               </div>
               <div className="flex flex-col items-center">
-                <span className="text-3xl font-extrabold text-yellow-500 mb-1">25,000+</span>
-                <span className="text-slate-500 font-medium text-base">Cases Won</span>
+                <span className="text-3xl font-extrabold text-yellow-400 mb-1 drop-shadow">25,000+</span>
+                <span className="text-slate-100 font-medium text-base drop-shadow">Cases Won</span>
               </div>
             </div>
           </div>
