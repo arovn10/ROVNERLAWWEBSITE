@@ -9,6 +9,7 @@ import { Users, FileText, Settings, Award, Archive, Plus, ExternalLink, Save, Ch
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
+  const router = useRouter();
   const { firmName, setFirmName } = useFirmName();
   const [localFirmName, setLocalFirmName] = useState(firmName);
   const [saving, setSaving] = useState(false);
@@ -66,10 +67,10 @@ export default function AdminDashboard() {
   }, []);
 
   // TEMPORARILY DISABLED - Session check and redirect
-  // useEffect(() => {
-  //   if (status === "loading") return;
-  //   if (!session) router.push("/admin/login");
-  // }, [session, status, router]);
+  useEffect(() => {
+    if (status === "loading") return;
+    if (!session) router.push("/admin/login");
+  }, [session, status, router]);
 
   const handleSave = async () => {
     setSaving(true);
@@ -95,10 +96,9 @@ export default function AdminDashboard() {
     );
   }
 
-  // TEMPORARILY DISABLED - Session check
-  // if (!session) {
-  //   return null;
-  // }
+  if (!session) {
+    return null;
+  }
 
   return (
     <div className="space-y-8">
