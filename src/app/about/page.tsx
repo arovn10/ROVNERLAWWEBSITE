@@ -60,7 +60,7 @@ export default function AboutPage() {
                 </p>
 
                 <p className="content-text">
-                  The firm is headed and founded by former Pennsylvania State Senator and Assistant District Attorney, Robert Rovner. Our team of over 15 lawyers plus our paralegals, investigators, experts, all with hundreds of years of combined experience, put us at the top of the Philadelphia Area legal profession.
+                  The firm was founded by former Pennsylvania State Senator and Assistant District Attorney, Robert Rovner. Our team of lawyers and paralegals, investigators, experts, all with hundreds of years of combined experience, put us at the top of the Philadelphia Area legal profession.
                 </p>
 
                 <p className="content-text">
@@ -229,7 +229,7 @@ export default function AboutPage() {
             <h2 className="text-xl font-bold text-blue-900 mb-2">{firmName}</h2>
             <div className="flex flex-col gap-4 text-base text-gray-800 leading-relaxed">
               <p>When you are seriously injured there is only one law firm to call. The Law Offices of {firmName}. For over 40 years the Rovner Law Firm has been accomplishing its motto of getting results for many thousands of grateful and satisfied clients in Pennsylvania, New Jersey, and Florida.</p>
-              <p>The firm is headed and founded by former Pennsylvania State Senator and Assistant District Attorney, Robert Rovner. Our team of over 15 lawyers plus our paralegals, investigators, experts, all with hundreds of years of combined experience, put us at the top of the Philadelphia Area legal profession.</p>
+              <p>The firm was founded by former Pennsylvania State Senator and Assistant District Attorney, Robert Rovner. Our team of lawyers and paralegals, investigators, experts, all with hundreds of years of combined experience, put us at the top of the Philadelphia Area legal profession.</p>
               <p>Widely recognized as one of the largest and most experienced personal injury law firms handling Wrongful Death Cases, Motor Vehicle Accidents, Premises Accidents, Products Liability, and Medical Malpractice; some of our lawyers also focus their experience in other areas from our Workers Compensation team to Divorce, Child Support, Custody, and Domestic Relations, to Criminal Defense, Social Security/Disability and general legal matters such as Real Estate, Landlord-Tenant, Wills, and Estates.</p>
               <p>Our team is always there to meet all of your legal needs from our offices in Pennsylvania and New Jersey serving the entire Philadelphia Metropolitan Area and Southern New Jersey including Pennsylvania State Senator, Bucks and Montgomery Counties.</p>
               <div className="rounded-xl bg-blue-50 p-4 shadow-sm">

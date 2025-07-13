@@ -136,7 +136,7 @@ export default function ContactPage() {
                 <ul className="highlight-list">
                   <li>Over 40 years of experience</li>
                   <li>No fee unless we win your case</li>
-                  <li>Dedicated team of 15+ attorneys</li>
+                  <li>Dedicated team of attorneys</li>
                   <li>Proven track record of success</li>
                   <li>Personalized attention to every case</li>
                 </ul>
@@ -346,7 +346,7 @@ export default function ContactPage() {
                 {[
                   "Over 40 years of experience",
                   "No fee unless we win your case",
-                  "Dedicated team of 15+ attorneys",
+                  "Dedicated team of attorneys",
                   "Proven track record of success",
                   "Personalized attention to every case"
                 ].map((item, index) => (

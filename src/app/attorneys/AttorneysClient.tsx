@@ -46,7 +46,7 @@ export default function AttorneysClient({ attorneys }: { attorneys: any[] }) {
         <section className="section">
           <div className="section-title">
             <h3>Meet Our Attorneys</h3>
-            <p>Over 15 skilled attorneys with hundreds of years of combined experience</p>
+            <p>Our team of lawyers and paralegals</p>
           </div>
           <div style={{display:'grid',gridTemplateColumns:'1fr',gap:'2.5rem',justifyContent:'center',alignItems:'center',margin:'2rem 0'}}>
           {attorneys.map((attorney) => (
@@ -144,12 +144,11 @@ export default function AttorneysClient({ attorneys }: { attorneys: any[] }) {
                 <div className="accent-bar" style={{margin:'0.5rem auto 1.5rem auto',background:'#f59e0b',height:'4px',width:'60px',borderRadius:'2px'}}></div>
               </div>
               <div className="content-text-blocks" style={{textAlign:'center',margin:'0 auto',maxWidth:'700px'}}>
-                <p className="content-text" style={{fontSize:'1.1rem',color:'#444',marginBottom:'2rem'}}>Our team of over 15 lawyers plus our paralegals, investigators, experts, all with hundreds of years of combined experience, put us at the top of the Philadelphia Area legal profession.</p>
+                <p className="content-text" style={{fontSize:'1.1rem',color:'#444',marginBottom:'2rem'}}>Our team of lawyers and paralegals, investigators, experts, all with hundreds of years of combined experience, put us at the top of the Philadelphia Area legal profession.</p>
               </div>
               <div className="highlight-box gold-highlight" style={{margin:'2rem auto',maxWidth:'700px',textAlign:'left'}}>
                   <h3 className="highlight-title">Unmatched Experience & Results</h3>
                   <ul className="highlight-list">
-                    <li>Former Assistant District Attorneys</li>
                     <li>Hundreds of years of combined legal experience</li>
                   <li>Proven track record of success</li>
                   </ul>
