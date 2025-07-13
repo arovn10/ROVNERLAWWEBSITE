@@ -114,3 +114,23 @@ model PracticeArea {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model AboutUs {
+  id                    String   @id @default(cuid())
+  heroTitle             String   @default("About Our Firm")
+  heroSubtitle          String   @default("Rovner Law")
+  mainTitle             String   @default("Rovner Law")
+  paragraph1            String
+  paragraph2            String
+  paragraph3            String
+  paragraph4            String
+  blueHighlightTitle    String   @default("When you meet with an unexpected injury")
+  blueHighlightContent  String
+  paragraph5            String
+  paragraph6            String
+  paragraph7            String
+  goldHighlightTitle    String   @default("At the law offices of Rovner Law, \"We Get Results!\"")
+  goldHighlightContent  String
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}

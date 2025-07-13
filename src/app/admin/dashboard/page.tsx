@@ -193,6 +193,24 @@ export default function AdminDashboard() {
             </div>
           </div>
         </Link>
+
+        <Link href="/admin/about-us" className="group">
+          <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 hover:border-orange-200 hover:scale-[1.02]">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
+                <FileText className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-gray-900">About Us</h3>
+                <p className="text-sm text-gray-500">Edit content</p>
+              </div>
+            </div>
+            <p className="text-gray-600 text-sm">Edit the About Us page content including paragraphs and highlights</p>
+            <div className="mt-3 text-sm font-semibold text-orange-600">
+              Edit content
+            </div>
+          </div>
+        </Link>
       </div>
 
       {/* Firm Settings Section */}

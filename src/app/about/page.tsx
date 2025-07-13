@@ -7,12 +7,68 @@ import Footer from '@/components/Footer';
 import MobileHeader from '@/components/MobileHeader';
 import MobileNav from '@/components/MobileNav';
 import { useFirmName } from '@/lib/FirmNameContext';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Mail } from 'lucide-react';
+
+interface AboutUsData {
+  id: string;
+  heroTitle: string;
+  heroSubtitle: string;
+  mainTitle: string;
+  paragraph1: string;
+  paragraph2: string;
+  paragraph3: string;
+  paragraph4: string;
+  blueHighlightTitle: string;
+  blueHighlightContent: string;
+  paragraph5: string;
+  paragraph6: string;
+  paragraph7: string;
+  goldHighlightTitle: string;
+  goldHighlightContent: string;
+}
 
 export default function AboutPage() {
   const { firmName } = useFirmName();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [aboutUsData, setAboutUsData] = useState<AboutUsData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAboutUsData = async () => {
+      try {
+        const response = await fetch('/api/about-us');
+        if (response.ok) {
+          const data = await response.json();
+          setAboutUsData(data);
+        }
+      } catch (error) {
+        console.error('Error fetching about us data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchAboutUsData();
+  }, []);
+
+  // Use default content if data is not loaded yet
+  const content = aboutUsData || {
+    heroTitle: "About Our Firm",
+    heroSubtitle: firmName,
+    mainTitle: firmName,
+    paragraph1: "When you are seriously injured there is only one law firm to call. The Law Offices of " + firmName + ". For over 40 years the Rovner Law Firm has been accomplishing its motto of getting results for many thousands of grateful and satisfied clients in Pennsylvania, New Jersey, and Florida.",
+    paragraph2: "The firm was founded by former Pennsylvania State Senator and Assistant District Attorney, Robert Rovner. Our team of lawyers and paralegals, investigators, experts, all with hundreds of years of combined experience, put us at the top of the Philadelphia Area legal profession.",
+    paragraph3: "Widely recognized as one of the largest and most experienced personal injury law firms handling Wrongful Death Cases, Motor Vehicle Accidents, Premises Accidents, Products Liability, and Medical Malpractice; some of our lawyers also focus their experience in other areas from our Workers Compensation team to Divorce, Child Support, Custody, and Domestic Relations, to Criminal Defense, Social Security/Disability and general legal matters such as Real Estate, Landlord-Tenant, Wills, and Estates.",
+    paragraph4: "Our team is always there to meet all of your legal needs from our offices in Pennsylvania and New Jersey serving the entire Philadelphia Metropolitan Area and Southern New Jersey including Pennsylvania State Senator, Bucks and Montgomery Counties.",
+    blueHighlightTitle: "When you meet with an unexpected injury",
+    blueHighlightContent: "Our injury attorneys are there with experienced support to assist you from the very start. We obtain substantial compensation in accident cases and for injured parties. We Get Results",
+    paragraph5: "In addition to providing skilled and experienced legal representation, we offer exceptionally strong client service. We will be readily accessible throughout your case, to answer any questions or address any concerns. We understand that this can be a stressful and overwhelming time and we work to reduce the difficulties of pursuing legal action.",
+    paragraph6: "The " + firmName + " law firm approaches every case as though it were going to trial. Meanwhile in many cases our lawyers are able to resolve the matters by negotiating acceptable, even generous, settlement agreements, always looking out for the best interests of our client.",
+    paragraph7: "If you or a love one has suffered an injury or wrongful death due to a defective product, our personal injury attorneys are prepared to evaluate your claim and help you get fair compensation for your loss. In other types of legal representation, we are there for you, working in your corner, to obtain the best possible result under the circumstances",
+    goldHighlightTitle: "At the law offices of " + firmName + ", \"We Get Results!\"",
+    goldHighlightContent: "If you or a loved one has been injured, or is in need of legal representation, contact us today for a free consultation to confidentially speak with one of our attorneys. All you need is to call and leave the rest to us."
+  };
 
   return (
     <div>
@@ -42,8 +98,8 @@ export default function AboutPage() {
             />
           </div>
           <div className="hero-content">
-            <h2>About Our Firm</h2>
-            <p>{firmName}</p>
+            <h2>{content.heroTitle}</h2>
+            <p>{content.heroSubtitle}</p>
           </div>
         </section>
         {/* Main Content */}
@@ -51,49 +107,49 @@ export default function AboutPage() {
           <div className="about-content">
             <div className="about-text">
               <div className="content-title-section">
-                <h2 className="content-title">{firmName}</h2>
+                <h2 className="content-title">{content.mainTitle}</h2>
                 <div className="accent-bar"></div>
               </div>
               <div className="content-text-blocks">
                 <p className="content-text">
-                  When you are seriously injured there is only one law firm to call. The Law Offices of {firmName}. For over 40 years the Rovner Law Firm has been accomplishing its motto of getting results for many thousands of grateful and satisfied clients in Pennsylvania, New Jersey, and Florida.
+                  {content.paragraph1}
                 </p>
 
                 <p className="content-text">
-                  The firm was founded by former Pennsylvania State Senator and Assistant District Attorney, Robert Rovner. Our team of lawyers and paralegals, investigators, experts, all with hundreds of years of combined experience, put us at the top of the Philadelphia Area legal profession.
+                  {content.paragraph2}
                 </p>
 
                 <p className="content-text">
-                  Widely recognized as one of the largest and most experienced personal injury law firms handling Wrongful Death Cases, Motor Vehicle Accidents, Premises Accidents, Products Liability, and Medical Malpractice; some of our lawyers also focus their experience in other areas from our Workers Compensation team to Divorce, Child Support, Custody, and Domestic Relations, to Criminal Defense, Social Security/Disability and general legal matters such as Real Estate, Landlord-Tenant, Wills, and Estates.
+                  {content.paragraph3}
                 </p>
 
                 <p className="content-text">
-                  Our team is always there to meet all of your legal needs from our offices in Pennsylvania and New Jersey serving the entire Philadelphia Metropolitan Area and Southern New Jersey including Pennsylvania State Senator, Bucks and Montgomery Counties.
+                  {content.paragraph4}
                 </p>
 
                 <div className="highlight-box blue-highlight">
-                  <h3 className="highlight-title">When you meet with an unexpected injury</h3>
+                  <h3 className="highlight-title">{content.blueHighlightTitle}</h3>
                   <p>
-                    Our injury attorneys are there with experienced support to assist you from the very start. We obtain substantial compensation in accident cases and for injured parties. <strong>We Get Results</strong>
+                    {content.blueHighlightContent}
                   </p>
                 </div>
 
                 <p className="content-text">
-                  In addition to providing skilled and experienced legal representation, we offer exceptionally strong client service. We will be readily accessible throughout your case, to answer any questions or address any concerns. We understand that this can be a stressful and overwhelming time and we work to reduce the difficulties of pursuing legal action.
+                  {content.paragraph5}
                 </p>
 
                 <p className="content-text">
-                  The {firmName} law firm approaches every case as though it were going to trial. Meanwhile in many cases our lawyers are able to resolve the matters by negotiating acceptable, even generous, settlement agreements, always looking out for the best interests of our client.
+                  {content.paragraph6}
                 </p>
 
                 <p className="content-text">
-                  If you or a love one has suffered an injury or wrongful death due to a defective product, our personal injury attorneys are prepared to evaluate your claim and help you get fair compensation for your loss. In other types of legal representation, we are there for you, working in your corner, to obtain the best possible result under the circumstances
+                  {content.paragraph7}
                 </p>
 
                 <div className="highlight-box gold-highlight">
-                  <h3 className="highlight-title">At the law offices of {firmName}, "We Get Results!"</h3>
+                  <h3 className="highlight-title">{content.goldHighlightTitle}</h3>
                   <p>
-                    If you or a loved one has been injured, or is in need of legal representation, contact us today for a free consultation to confidentially speak with one of our attorneys. All you need is to call and leave the rest to us.
+                    {content.goldHighlightContent}
                   </p>
                 </div>
               </div>
@@ -226,22 +282,22 @@ export default function AboutPage() {
         {/* Main Content */}
         <section className="px-4 py-4">
           <div className="flex flex-col gap-6">
-            <h2 className="text-xl font-bold text-blue-900 mb-2">{firmName}</h2>
+            <h2 className="text-xl font-bold text-blue-900 mb-2">{content.mainTitle}</h2>
             <div className="flex flex-col gap-4 text-base text-gray-800 leading-relaxed">
-              <p>When you are seriously injured there is only one law firm to call. The Law Offices of {firmName}. For over 40 years the Rovner Law Firm has been accomplishing its motto of getting results for many thousands of grateful and satisfied clients in Pennsylvania, New Jersey, and Florida.</p>
-              <p>The firm was founded by former Pennsylvania State Senator and Assistant District Attorney, Robert Rovner. Our team of lawyers and paralegals, investigators, experts, all with hundreds of years of combined experience, put us at the top of the Philadelphia Area legal profession.</p>
-              <p>Widely recognized as one of the largest and most experienced personal injury law firms handling Wrongful Death Cases, Motor Vehicle Accidents, Premises Accidents, Products Liability, and Medical Malpractice; some of our lawyers also focus their experience in other areas from our Workers Compensation team to Divorce, Child Support, Custody, and Domestic Relations, to Criminal Defense, Social Security/Disability and general legal matters such as Real Estate, Landlord-Tenant, Wills, and Estates.</p>
-              <p>Our team is always there to meet all of your legal needs from our offices in Pennsylvania and New Jersey serving the entire Philadelphia Metropolitan Area and Southern New Jersey including Pennsylvania State Senator, Bucks and Montgomery Counties.</p>
+              <p>{content.paragraph1}</p>
+              <p>{content.paragraph2}</p>
+              <p>{content.paragraph3}</p>
+              <p>{content.paragraph4}</p>
               <div className="rounded-xl bg-blue-50 p-4 shadow-sm">
-                <h3 className="font-bold text-blue-900 mb-1">When you meet with an unexpected injury</h3>
-                <p>Our injury attorneys are there with experienced support to assist you from the very start. We obtain substantial compensation in accident cases and for injured parties. <strong>We Get Results</strong></p>
+                <h3 className="font-bold text-blue-900 mb-1">{content.blueHighlightTitle}</h3>
+                <p>{content.blueHighlightContent}</p>
               </div>
-              <p>In addition to providing skilled and experienced legal representation, we offer exceptionally strong client service. We will be readily accessible throughout your case, to answer any questions or address any concerns. We understand that this can be a stressful and overwhelming time and we work to reduce the difficulties of pursuing legal action.</p>
-              <p>The {firmName} law firm approaches every case as though it were going to trial. Meanwhile in many cases our lawyers are able to resolve the matters by negotiating acceptable, even generous, settlement agreements, always looking out for the best interests of our client.</p>
-              <p>If you or a love one has suffered an injury or wrongful death due to a defective product, our personal injury attorneys are prepared to evaluate your claim and help you get fair compensation for your loss. In other types of legal representation, we are there for you, working in your corner, to obtain the best possible result under the circumstances</p>
+              <p>{content.paragraph5}</p>
+              <p>{content.paragraph6}</p>
+              <p>{content.paragraph7}</p>
               <div className="rounded-xl bg-yellow-50 p-4 shadow-sm">
-                <h3 className="font-bold text-yellow-700 mb-1">At the law offices of {firmName}, "We Get Results!"</h3>
-                <p>If you or a loved one has been injured, or is in need of legal representation, contact us today for a free consultation to confidentially speak with one of our attorneys. All you need is to call and leave the rest to us.</p>
+                <h3 className="font-bold text-yellow-700 mb-1">{content.goldHighlightTitle}</h3>
+                <p>{content.goldHighlightContent}</p>
               </div>
             </div>
           </div>
