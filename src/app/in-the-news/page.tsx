@@ -60,7 +60,7 @@ export default function InTheNewsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 flex flex-col items-center justify-center font-sans">
+    <div className="min-h-screen bg-white flex flex-col items-center font-sans">
       {/* Desktop Header/Nav */}
       <div className="hidden lg:block w-full">
         <Header currentPage="in-the-news" />
@@ -73,41 +73,25 @@ export default function InTheNewsPage() {
 
       {/* Desktop Content */}
       <div className="hidden lg:block w-full">
-        {/* Hero Section with Full-Width Color (no image, fixed) */}
+        {/* Hero Section */}
         <section
-          className="hero-professional"
-          style={{
-            width: '100%',
-            minHeight: '140px',
-            background: 'linear-gradient(120deg, #1e293b 60%, #334155 100%)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            overflow: 'hidden',
-          }}
+          className="w-full min-h-[140px] flex items-center justify-center bg-gradient-to-r from-slate-800 to-slate-700"
         >
-          <div className="hero-content" style={{ color: '#fff', textAlign: 'center', width: '100%' }}>
-            <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 3.5rem)', fontWeight: 800, marginBottom: '0.5rem', textShadow: '0 2px 12px rgba(0,0,0,0.7)' }}>In the News</h2>
-            <div className="accent-bar" style={{ margin: '0 auto 1.5rem auto', background: 'var(--gradient-gold)' }}></div>
-            <p style={{ marginBottom: '2.5rem', maxWidth: 600, marginLeft: 'auto', marginRight: 'auto', color: '#e5e7eb', fontSize: '1.25rem', textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
+          <div className="text-center w-full">
+            <h2 className="font-extrabold text-4xl md:text-5xl mb-2 text-white drop-shadow-lg">In the News</h2>
+            <div className="h-1 w-24 mx-auto mb-6 rounded bg-gradient-to-r from-yellow-400 to-yellow-600"></div>
+            <p className="mb-8 max-w-xl mx-auto text-blue-100 text-lg md:text-xl drop-shadow">
               Stay updated with the latest news, press mentions, and media coverage featuring {firmName}
             </p>
           </div>
         </section>
         {/* News Content */}
         <section className="section">
-          <div className="news-content" style={{
-            maxWidth: '1200px',
-            margin: '0 auto',
-            display: 'grid',
-            gridTemplateColumns: '2fr 1fr',
-            gap: '4rem',
-            alignItems: 'start',
-          }}>
-            <div>
-              <div className="section-title">
-                <h3>Latest News & Media Coverage</h3>
-                <p>Press mentions, articles, and media appearances</p>
+          <div className="max-w-7xl mx-auto grid grid-cols-3 gap-12 items-start">
+            <div className="col-span-2">
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold text-slate-900 mb-1">Latest News & Media Coverage</h3>
+                <p className="text-slate-500">Press mentions, articles, and media appearances</p>
               </div>
               {loading ? (
                 <div className="text-center py-12">
@@ -125,28 +109,23 @@ export default function InTheNewsPage() {
                   <p className="text-gray-600">Check back soon for the latest updates and media coverage.</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 gap-8">
+                <div className="flex flex-col divide-y divide-slate-200">
                   {news.map((article) => (
-                    <Link key={article.id} href={`/in-the-news/${article.id}`} className="block">
-                      <article className="card news-card hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer">
-                        <div className="news-header">
-                          <div className="news-meta">
-                            <div className="news-date">
-                              <Calendar className="h-4 w-4" />
-                              {formatDate(article.date)}
-                            </div>
-                            <div className="news-source">{article.source}</div>
-                          </div>
-                        </div>
-                        <h3 className="news-title">{article.title}</h3>
-                        <div className="news-content">
-                          <p>{truncateContent(article.content)}</p>
-                        </div>
-                        <div className="news-actions">
-                          <span className="news-cta-btn">
-                            Read Full Article
-                            <ArrowLeft className="h-4 w-4 rotate-180" />
+                    <Link key={article.id} href={`/in-the-news/${article.id}`} className="group">
+                      <article className="py-8 transition-all duration-200 hover:bg-slate-50">
+                        <div className="flex items-center gap-4 mb-2 text-slate-500 text-sm">
+                          <span className="flex items-center gap-1">
+                            <Calendar className="h-4 w-4" />
+                            {formatDate(article.date)}
                           </span>
+                          <span className="hidden md:inline-block h-1 w-1 rounded-full bg-slate-300 mx-2"></span>
+                          <span className="uppercase tracking-wide font-semibold text-xs text-blue-700 group-hover:underline">{article.source}</span>
+                        </div>
+                        <h3 className="text-xl font-bold text-slate-900 group-hover:text-blue-700 mb-2 transition-colors">{article.title}</h3>
+                        <p className="text-slate-700 mb-3 leading-relaxed">{truncateContent(article.content)}</p>
+                        <div className="flex items-center gap-2 text-blue-700 font-semibold text-sm group-hover:underline">
+                          Read Full Article
+                          <ArrowLeft className="h-4 w-4 rotate-180" />
                         </div>
                       </article>
                     </Link>
@@ -249,16 +228,9 @@ export default function InTheNewsPage() {
               >
                 Get Free Consultation
               </a>
-              <a
-                href="tel:215-259-5958"
-                className="inline-block bg-blue-500 text-white font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02]"
-              >
-                Call 215-259-5958
-              </a>
             </div>
           </div>
         </section>
-        <Footer />
       </div>
 
       {/* Mobile Content */}
