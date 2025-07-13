@@ -20,22 +20,31 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const session = await getServerSession();
-  if (!session) {
-    return NextResponse.json(
-      { error: 'Unauthorized' },
-      { status: 401 }
-    );
-  }
-
-  const data = await req.json();
   try {
+    const session = await getServerSession();
+    if (!session) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
+    const data = await req.json();
+    
+    // Validate required fields
+    if (!data.title || !data.amount || !data.caseType || !data.date || !data.description) {
+      return NextResponse.json(
+        { error: 'Missing required fields' },
+        { status: 400 }
+      );
+    }
+
     const newSettlement = await prisma.settlement.create({
       data: {
         title: data.title,
-        amount: data.amount,
+        amount: parseFloat(data.amount),
         caseType: data.caseType,
-        date: data.date,
+        date: new Date(data.date),
         description: data.description,
       },
     });
@@ -43,7 +52,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error('Error creating settlement:', error);
     return NextResponse.json(
-      { error: 'Failed to create settlement' },
+      { error: 'Failed to create settlement', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }

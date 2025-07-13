@@ -34,10 +34,13 @@ export default function NewSettlementPage() {
           amount: parseFloat(form.amount),
         }),
       });
+      
+      const result = await res.json();
+      
       if (res.ok) {
         router.push('/admin/settlements');
       } else {
-        setError('Failed to create settlement');
+        setError(result.error || 'Failed to create settlement');
       }
     } catch (err) {
       setError('Error creating settlement');
@@ -105,6 +108,7 @@ export default function NewSettlementPage() {
             name="description"
             value={form.description}
             onChange={handleChange}
+            required
             rows={4}
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500"
           />
