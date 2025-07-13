@@ -103,14 +103,14 @@ export default function NewSettlementPage() {
           />
         </div>
         <div>
-          <label className="block text-gray-700 font-semibold mb-2">Description</label>
+          <label className="block text-gray-700 font-semibold mb-2">Description (Optional)</label>
           <textarea
             name="description"
             value={form.description}
             onChange={handleChange}
-            required
             rows={4}
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500"
+            placeholder="Enter a description of the case (optional)"
           />
         </div>
         {error && <div className="text-red-600 font-semibold">{error}</div>}

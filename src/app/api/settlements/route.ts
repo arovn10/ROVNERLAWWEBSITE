@@ -39,8 +39,8 @@ export async function POST(req: NextRequest) {
     console.log('Request data:', data);
     
     // Validate required fields
-    if (!data.title || !data.amount || !data.caseType || !data.date || !data.description) {
-      console.log('Missing required fields:', { title: !!data.title, amount: !!data.amount, caseType: !!data.caseType, date: !!data.date, description: !!data.description });
+    if (!data.title || !data.amount || !data.caseType || !data.date) {
+      console.log('Missing required fields:', { title: !!data.title, amount: !!data.amount, caseType: !!data.caseType, date: !!data.date });
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
