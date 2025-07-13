@@ -30,7 +30,34 @@ export default function AttorneysClient({ attorneys }: { attorneys: any[] }) {
       }
     });
     setOverflowing(newOverflowing);
-  }, [attorneys]);
+  }, [attorneys, expanded]);
+
+  // Recalculate on window resize and after images load
+  useEffect(() => {
+    const handleResize = () => {
+      const newOverflowing: { [id: string]: boolean } = {};
+      attorneys.forEach((attorney) => {
+        const ref = bioRefs.current[attorney.id];
+        if (ref) {
+          newOverflowing[attorney.id] = (ref.scrollHeight > 96 && (attorney.bio?.length > BIO_LENGTH_LIMIT));
+        }
+      });
+      setOverflowing(newOverflowing);
+    };
+    window.addEventListener('resize', handleResize);
+    // Also recalc after all images load
+    const imgs = Array.from(document.images);
+    let loaded = 0;
+    imgs.forEach(img => {
+      if (img.complete) loaded++;
+      else img.addEventListener('load', handleResize);
+    });
+    if (loaded === imgs.length) handleResize();
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      imgs.forEach(img => img.removeEventListener('load', handleResize));
+    };
+  }, [attorneys, expanded]);
 
   return (
     <div style={{
