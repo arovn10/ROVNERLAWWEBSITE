@@ -6,10 +6,32 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import MobileHeader from '@/components/MobileHeader';
 import MobileNav from '@/components/MobileNav';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 export default function AttorneysClient({ attorneys }: { attorneys: any[] }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  // Track expanded bios by attorney id
+  const [expanded, setExpanded] = useState<{ [id: string]: boolean }>({});
+  // Track which bios overflow (for conditional 'View More')
+  const [overflowing, setOverflowing] = useState<{ [id: string]: boolean }>({});
+  // Refs for each bio
+  const bioRefs = useRef<{ [id: string]: HTMLDivElement | null }>({});
+
+  // Only show 'View More' if bio is over a certain length
+  const BIO_LENGTH_LIMIT = 350;
+
+  useEffect(() => {
+    // Check which bios overflow their container and are over the length limit
+    const newOverflowing: { [id: string]: boolean } = {};
+    attorneys.forEach((attorney) => {
+      const ref = bioRefs.current[attorney.id];
+      if (ref) {
+        newOverflowing[attorney.id] = (ref.scrollHeight > 96 && (attorney.bio?.length > BIO_LENGTH_LIMIT));
+      }
+    });
+    setOverflowing(newOverflowing);
+  }, [attorneys]);
+
   return (
     <div style={{
       minHeight: '100vh',
@@ -86,7 +108,30 @@ export default function AttorneysClient({ attorneys }: { attorneys: any[] }) {
                 <div style={{fontWeight:700,fontSize:'1.18rem',color:'#1a237e',marginBottom:'0.2rem',textAlign:'left',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis',letterSpacing:'-0.01em'}}>{attorney.name}</div>
                 <div style={{fontWeight:500,fontSize:'1.01rem',color:'#f59e0b',marginBottom:'0.7rem',textAlign:'left',letterSpacing:'0.01em'}}>{attorney.title}</div>
                 {attorney.bio && (
-                  <div style={{fontSize:'0.95rem',color:'#444',marginBottom:'0.7rem',textAlign:'left',lineHeight:1.6,letterSpacing:'0.01em'}}>{attorney.bio}</div>
+                  <div style={{position:'relative'}}>
+                    <div
+                      ref={el => { bioRefs.current[attorney.id] = el; }}
+                      style={{
+                        fontSize:'0.95rem',color:'#444',marginBottom:'0.7rem',textAlign:'left',lineHeight:1.6,letterSpacing:'0.01em',
+                        maxHeight: expanded[attorney.id] ? 'none' : '96px',
+                        overflow: expanded[attorney.id] ? 'visible' : 'hidden',
+                        transition: 'max-height 0.3s',
+                        whiteSpace: 'pre-line',
+                      }}
+                    >
+                      {attorney.bio}
+                    </div>
+                    {overflowing[attorney.id] && (
+                      <button
+                        style={{
+                          position:'absolute',right:0,bottom:0,background:'rgba(255,255,255,0.95)',color:'#1976d2',border:'none',fontWeight:600,fontSize:'0.95rem',cursor:'pointer',padding:'0.2rem 0.7rem',borderRadius:'8px',boxShadow:'0 1px 4px rgba(20,28,38,0.07)',zIndex:5
+                        }}
+                        onClick={() => setExpanded(e => ({...e, [attorney.id]: !e[attorney.id]}))}
+                      >
+                        {expanded[attorney.id] ? 'View Less' : 'View More'}
+                      </button>
+                    )}
+                  </div>
                 )}
               </div>
               {/* Divider */}
@@ -184,7 +229,30 @@ export default function AttorneysClient({ attorneys }: { attorneys: any[] }) {
               <div className="text-lg font-bold text-blue-900 mb-1 text-center">{attorney.name}</div>
               <div className="text-sm text-blue-600 mb-2 text-center">{attorney.title}</div>
               {attorney.bio && (
-                <div className="text-xs text-gray-700 mb-2 text-center">{attorney.bio}</div>
+                <div style={{position:'relative',width:'100%'}}>
+                  <div
+                    ref={el => { bioRefs.current[attorney.id] = el; }}
+                    style={{
+                      fontSize:'0.95rem',color:'#444',marginBottom:'0.7rem',textAlign:'center',lineHeight:1.6,letterSpacing:'0.01em',
+                      maxHeight: expanded[attorney.id] ? 'none' : '72px',
+                      overflow: expanded[attorney.id] ? 'visible' : 'hidden',
+                      transition: 'max-height 0.3s',
+                      whiteSpace: 'pre-line',
+                    }}
+                  >
+                    {attorney.bio}
+                  </div>
+                  {overflowing[attorney.id] && (
+                    <button
+                      style={{
+                        position:'absolute',right:0,bottom:0,background:'rgba(255,255,255,0.95)',color:'#1976d2',border:'none',fontWeight:600,fontSize:'0.95rem',cursor:'pointer',padding:'0.2rem 0.7rem',borderRadius:'8px',boxShadow:'0 1px 4px rgba(20,28,38,0.07)',zIndex:5
+                      }}
+                      onClick={() => setExpanded(e => ({...e, [attorney.id]: !e[attorney.id]}))}
+                    >
+                      {expanded[attorney.id] ? 'View Less' : 'View More'}
+                    </button>
+                  )}
+                </div>
               )}
               {attorney.specialties && (
                 <div className="text-xs text-blue-700 mb-1 text-center"><strong>Specialties:</strong> {Array.isArray(attorney.specialties) ? attorney.specialties.join(', ') : attorney.specialties}</div>
