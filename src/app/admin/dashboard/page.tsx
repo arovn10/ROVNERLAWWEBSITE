@@ -211,6 +211,42 @@ export default function AdminDashboard() {
             </div>
           </div>
         </Link>
+
+        <Link href="/admin/locations" className="group">
+          <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 hover:border-teal-200 hover:scale-[1.02]">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
+                <Settings className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-gray-900">Locations</h3>
+                <p className="text-sm text-gray-500">Edit content</p>
+              </div>
+            </div>
+            <p className="text-gray-600 text-sm">Edit the Locations page content including office info and service areas</p>
+            <div className="mt-3 text-sm font-semibold text-teal-600">
+              Edit content
+            </div>
+          </div>
+        </Link>
+
+        <Link href="/admin/contact-us" className="group">
+          <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 hover:border-pink-200 hover:scale-[1.02]">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-pink-500 to-pink-600 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
+                <Users className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-gray-900">Contact Us</h3>
+                <p className="text-sm text-gray-500">Edit content</p>
+              </div>
+            </div>
+            <p className="text-gray-600 text-sm">Edit the Contact Us page content including contact info and why choose us</p>
+            <div className="mt-3 text-sm font-semibold text-pink-600">
+              Edit content
+            </div>
+          </div>
+        </Link>
       </div>
 
       {/* Firm Settings Section */}

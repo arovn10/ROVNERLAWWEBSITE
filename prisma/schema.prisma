@@ -134,3 +134,59 @@ model AboutUs {
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
 }
+
+model Locations {
+  id                    String   @id @default(cuid())
+  heroTitle             String   @default("Our Locations")
+  heroSubtitle          String   @default("Serving Pennsylvania and New Jersey")
+  mainTitle             String   @default("Conveniently Located to Serve You")
+  paragraph1            String
+  paragraph2            String
+  areasWeServeTitle     String   @default("Areas We Serve")
+  paCountiesTitle       String   @default("Pennsylvania Counties:")
+  paCounties            String
+  njCountiesTitle       String   @default("New Jersey Counties:")
+  njCounties            String
+  paragraph3            String
+  mainOfficeTitle       String   @default("Main Office")
+  officeName            String
+  officeAddress         String
+  officePhone           String
+  officeEmail           String
+  officeHours           String
+  directionsTitle       String   @default("Directions & Parking")
+  directionsFromPhilly  String
+  directionsFromNJ      String
+  parkingInfo           String
+  communitiesTitle      String   @default("Communities We Serve")
+  communitiesSubtitle   String   @default("Trusted legal representation throughout the region")
+  philadelphiaArea      String
+  bucksCounty           String
+  montgomeryCounty      String
+  delawareCounty        String
+  southernNJ            String
+  centralNJ             String
+  ctaTitle              String   @default("Ready to Get Started?")
+  ctaDescription        String
+  ctaButtonText         String   @default("Schedule Free Consultation")
+  ctaPhoneText          String   @default("Call 215-259-5958")
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model ContactUs {
+  id                    String   @id @default(cuid())
+  heroTitle             String   @default("Contact Us")
+  heroSubtitle          String   @default("Get in touch for a free consultation")
+  mainTitle             String   @default("Get Your Free Consultation Today")
+  paragraph1            String
+  paragraph2            String
+  whyChooseTitle        String   @default("Why Choose Rovner Law?")
+  whyChooseList         String
+  officeAddress         String
+  officePhone           String
+  officeEmail           String
+  officeHours           String
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}

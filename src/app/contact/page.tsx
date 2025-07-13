@@ -1,11 +1,26 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import MobileHeader from '@/components/MobileHeader';
 import MobileNav from '@/components/MobileNav';
 import { useFirmName } from '@/lib/FirmNameContext';
+
+interface ContactUsData {
+  id: string;
+  heroTitle: string;
+  heroSubtitle: string;
+  mainTitle: string;
+  paragraph1: string;
+  paragraph2: string;
+  whyChooseTitle: string;
+  whyChooseList: string;
+  officeAddress: string;
+  officePhone: string;
+  officeEmail: string;
+  officeHours: string;
+}
 
 export default function ContactPage() {
   const { firmName } = useFirmName();
@@ -24,6 +39,41 @@ export default function ContactPage() {
     message: string;
   }>({ type: null, message: '' });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [contactUsData, setContactUsData] = useState<ContactUsData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchContactUsData = async () => {
+      try {
+        const response = await fetch('/api/contact-us');
+        if (response.ok) {
+          const data = await response.json();
+          setContactUsData(data);
+        }
+      } catch (error) {
+        console.error('Error fetching contact us data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchContactUsData();
+  }, []);
+
+  // Use default content if data is not loaded yet
+  const content = contactUsData || {
+    heroTitle: "Contact Us",
+    heroSubtitle: "Get in touch for a free consultation",
+    mainTitle: "Get Your Free Consultation Today",
+    paragraph1: "At the Law Offices of " + firmName + ", we understand that dealing with legal issues can be overwhelming. That's why we offer free consultations to discuss your case and explore your legal options.",
+    paragraph2: "Our experienced attorneys are here to help you navigate through your legal challenges. Whether you've been injured in an accident, need help with a personal injury claim, or require legal representation for other matters, we're here to fight for your rights.",
+    whyChooseTitle: "Why Choose Rovner Law?",
+    whyChooseList: "Over 40 years of experience\nNo fee unless we win your case\nDedicated team of attorneys\nProven track record of success\nPersonalized attention to every case",
+    officeAddress: "175 Bustleton Pike\nFeasterville-Trevose, PA 19053",
+    officePhone: "215-259-5958",
+    officeEmail: "rovners@dial-law.com",
+    officeHours: "Monday - Friday: 9:00 AM - 5:00 PM\nSaturday: By Appointment\nSunday: Closed"
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -108,8 +158,8 @@ export default function ContactPage() {
       {/* Hero Section */}
       <section className="hero-professional">
         <div className="hero-content">
-          <h2>Contact Us</h2>
-          <p>Get in touch for a free consultation</p>
+          <h2>{content.heroTitle}</h2>
+          <p>{content.heroSubtitle}</p>
         </div>
       </section>
 
@@ -118,46 +168,52 @@ export default function ContactPage() {
         <div className="about-content">
           <div className="about-text">
             <div className="content-title-section">
-              <h2 className="content-title">Get Your Free Consultation Today</h2>
+              <h2 className="content-title">{content.mainTitle}</h2>
               <div className="accent-bar"></div>
             </div>
 
             <div className="content-text-blocks">
               <p className="content-text">
-                At the Law Offices of {firmName}, we understand that dealing with legal issues can be overwhelming. That's why we offer free consultations to discuss your case and explore your legal options.
+                {content.paragraph1}
               </p>
 
               <p className="content-text">
-                Our experienced attorneys are here to help you navigate through your legal challenges. Whether you've been injured in an accident, need help with a personal injury claim, or require legal representation for other matters, we're here to fight for your rights.
+                {content.paragraph2}
               </p>
 
               <div className="highlight-box blue-highlight">
-                <h3 className="highlight-title">Why Choose Rovner Law?</h3>
+                <h3 className="highlight-title">{content.whyChooseTitle}</h3>
                 <ul className="highlight-list">
-                  <li>Over 40 years of experience</li>
-                  <li>No fee unless we win your case</li>
-                  <li>Dedicated team of attorneys</li>
-                  <li>Proven track record of success</li>
-                  <li>Personalized attention to every case</li>
+                  {content.whyChooseList.split('\n').map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
                 </ul>
               </div>
 
               <div className="contact-info-grid">
                 <div className="contact-info-item">
                   <h4>Office Address</h4>
-                  <p>175 Bustleton Pike<br />Feasterville-Trevose, PA 19053</p>
+                  <p>
+                    {content.officeAddress.split('\n').map((line, index) => (
+                      <span key={index}>{line}{index < content.officeAddress.split('\n').length - 1 && <br />}</span>
+                    ))}
+                  </p>
                 </div>
                 <div className="contact-info-item">
                   <h4>Phone Number</h4>
-                  <p className="phone-large">215-259-5958</p>
+                  <p className="phone-large">{content.officePhone}</p>
                 </div>
                 <div className="contact-info-item">
                   <h4>Email</h4>
-                  <p>rovners@dial-law.com</p>
+                  <p>{content.officeEmail}</p>
                 </div>
                 <div className="contact-info-item">
                   <h4>Office Hours</h4>
-                  <p>Monday - Friday: 9:00 AM - 5:00 PM<br />Saturday: By Appointment<br />Sunday: Closed</p>
+                  <p>
+                    {content.officeHours.split('\n').map((line, index) => (
+                      <span key={index}>{line}{index < content.officeHours.split('\n').length - 1 && <br />}</span>
+                    ))}
+                  </p>
                 </div>
               </div>
             </div>
@@ -341,15 +397,9 @@ export default function ContactPage() {
 
             {/* Mobile Why Choose Us */}
             <div className="bg-blue-50 rounded-xl p-4 shadow-sm">
-              <h3 className="font-bold text-blue-900 mb-3 text-lg">Why Choose Rovner Law?</h3>
+              <h3 className="font-bold text-blue-900 mb-3 text-lg">{content.whyChooseTitle}</h3>
               <div className="grid grid-cols-1 gap-2">
-                {[
-                  "Over 40 years of experience",
-                  "No fee unless we win your case",
-                  "Dedicated team of attorneys",
-                  "Proven track record of success",
-                  "Personalized attention to every case"
-                ].map((item, index) => (
+                {content.whyChooseList.split('\n').map((item, index) => (
                   <div key={index} className="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
                     <span className="text-gray-800 text-sm font-medium">{item}</span>
                   </div>
@@ -363,19 +413,27 @@ export default function ContactPage() {
               <div className="grid grid-cols-1 gap-3">
                 <div className="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
                   <h4 className="font-semibold text-gray-900 text-sm mb-1">Office Address</h4>
-                  <p className="text-gray-700 text-sm">175 Bustleton Pike<br />Feasterville-Trevose, PA 19053</p>
+                  <p className="text-gray-700 text-sm">
+                    {content.officeAddress.split('\n').map((line, index) => (
+                      <span key={index}>{line}{index < content.officeAddress.split('\n').length - 1 && <br />}</span>
+                    ))}
+                  </p>
                 </div>
                 <div className="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
                   <h4 className="font-semibold text-gray-900 text-sm mb-1">Phone Number</h4>
-                  <a href="tel:215-259-5958" className="text-blue-600 font-bold text-lg">215-259-5958</a>
+                  <a href={`tel:${content.officePhone}`} className="text-blue-600 font-bold text-lg">{content.officePhone}</a>
                 </div>
                 <div className="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
                   <h4 className="font-semibold text-gray-900 text-sm mb-1">Email</h4>
-                  <a href="mailto:rovners@dial-law.com" className="text-blue-600 text-sm">rovners@dial-law.com</a>
+                  <a href={`mailto:${content.officeEmail}`} className="text-blue-600 text-sm">{content.officeEmail}</a>
                 </div>
                 <div className="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
                   <h4 className="font-semibold text-gray-900 text-sm mb-1">Office Hours</h4>
-                  <p className="text-gray-700 text-sm">Monday - Friday: 9:00 AM - 5:00 PM<br />Saturday: By Appointment<br />Sunday: Closed</p>
+                  <p className="text-gray-700 text-sm">
+                    {content.officeHours.split('\n').map((line, index) => (
+                      <span key={index}>{line}{index < content.officeHours.split('\n').length - 1 && <br />}</span>
+                    ))}
+                  </p>
                 </div>
               </div>
             </div>
@@ -531,8 +589,8 @@ export default function ContactPage() {
           <div className="bg-white rounded-2xl shadow-md border border-gray-100 flex flex-col gap-3 p-4 items-center">
             <h3 className="font-bold text-gray-900 text-lg">Need Immediate Assistance?</h3>
             <p className="text-gray-600 text-center text-sm">Call us now for immediate help!</p>
-            <a href="tel:215-259-5958" className="w-full bg-blue-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-blue-700 transition">
-              Call 215-259-5958
+            <a href={`tel:${content.officePhone}`} className="w-full bg-blue-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-blue-700 transition">
+              Call {content.officePhone}
             </a>
           </div>
         </section>
