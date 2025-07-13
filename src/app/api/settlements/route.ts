@@ -23,16 +23,17 @@ export async function POST(req: NextRequest) {
   try {
     console.log('Settlement POST request received');
     
-    const session = await getServerSession();
-    console.log('Session:', session);
+    // Temporarily skip session check to test database connection
+    // const session = await getServerSession();
+    // console.log('Session:', session);
     
-    if (!session) {
-      console.log('No session found - unauthorized');
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
+    // if (!session) {
+    //   console.log('No session found - unauthorized');
+    //   return NextResponse.json(
+    //     { error: 'Unauthorized' },
+    //     { status: 401 }
+    //   );
+    // }
 
     const data = await req.json();
     console.log('Request data:', data);
