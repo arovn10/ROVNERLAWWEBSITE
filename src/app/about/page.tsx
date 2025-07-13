@@ -98,7 +98,7 @@ export default function AboutPage() {
             />
           </div>
           <div className="hero-content">
-            <h2>{content.heroTitle}</h2>
+            <h2>{firmName}</h2>
             <p>{content.heroSubtitle}</p>
           </div>
         </section>
@@ -107,7 +107,7 @@ export default function AboutPage() {
           <div className="about-content">
             <div className="about-text">
               <div className="content-title-section">
-                <h2 className="content-title">{content.mainTitle}</h2>
+                <h2 className="content-title">{firmName}</h2>
                 <div className="accent-bar"></div>
               </div>
               <div className="content-text-blocks">

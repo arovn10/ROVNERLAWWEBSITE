@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Save } from 'lucide-react';
+import { useFirmName } from '@/lib/FirmNameContext';
 
 interface AboutUsData {
   id: string;
@@ -25,6 +26,7 @@ interface AboutUsData {
 
 export default function AboutUsEditPage() {
   const router = useRouter();
+  const { firmName } = useFirmName();
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [data, setData] = useState<AboutUsData | null>(null);
@@ -144,14 +146,16 @@ export default function AboutUsEditPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Hero Title
+                  Hero Title (Firm Name)
                 </label>
                 <input
                   type="text"
-                  value={data.heroTitle}
-                  onChange={(e) => handleInputChange('heroTitle', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={firmName}
+                  disabled
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-600 cursor-not-allowed"
+                  title="This field is automatically set to the firm name from the main settings"
                 />
+                <p className="text-xs text-gray-500 mt-1">This field is automatically set to the firm name from the main settings</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -173,14 +177,16 @@ export default function AboutUsEditPage() {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Main Title
+                  Main Title (Firm Name)
                 </label>
                 <input
                   type="text"
-                  value={data.mainTitle}
-                  onChange={(e) => handleInputChange('mainTitle', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={firmName}
+                  disabled
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-600 cursor-not-allowed"
+                  title="This field is automatically set to the firm name from the main settings"
                 />
+                <p className="text-xs text-gray-500 mt-1">This field is automatically set to the firm name from the main settings</p>
               </div>
               
               <div>
