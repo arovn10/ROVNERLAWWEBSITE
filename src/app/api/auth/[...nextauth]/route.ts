@@ -17,30 +17,35 @@ const handler = NextAuth({
           return null
         }
 
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email
+        try {
+          const user = await prisma.user.findUnique({
+            where: {
+              email: credentials.email
+            }
+          })
+
+          if (!user) {
+            return null
           }
-        })
 
-        if (!user) {
-          return null
-        }
+          const isPasswordValid = await bcrypt.compare(
+            credentials.password,
+            user.password
+          )
 
-        const isPasswordValid = await bcrypt.compare(
-          credentials.password,
-          user.password
-        )
+          if (!isPasswordValid) {
+            return null
+          }
 
-        if (!isPasswordValid) {
-          return null
-        }
-
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          role: user.role,
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            role: user.role,
+          }
+        } catch (error) {
+          console.error("Auth error:", error);
+          return null;
         }
       }
     })
@@ -66,6 +71,7 @@ const handler = NextAuth({
   pages: {
     signIn: "/admin/login",
   },
+  debug: process.env.NODE_ENV === "development",
 })
 
 export { handler as GET, handler as POST } 
