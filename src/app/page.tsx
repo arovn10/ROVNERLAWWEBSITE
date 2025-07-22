@@ -111,19 +111,19 @@ export default function HomePage() {
             priority
           />
           <div className="absolute inset-0 bg-black/40 z-10" />
-          <div className="absolute inset-0 flex flex-col items-center justify-center z-20 text-center py-20 px-6 w-full">
-            <h1 className="font-extrabold text-5xl md:text-6xl text-white mb-4 tracking-tight drop-shadow-xl" style={{letterSpacing: '-0.03em'}}> {firmName} </h1>
-            <h2 className="text-2xl md:text-3xl font-semibold text-slate-100 mb-6 drop-shadow">Personal Injury Lawyers</h2>
-            <p className="text-lg md:text-xl text-slate-200 mb-10 max-w-2xl mx-auto drop-shadow">For over 40 years, {firmName} has been fighting for clients in Philadelphia who have been victims of negligence, auto accidents, personal injury, medical malpractice and premise liability.</p>
-            <a href="/contact" className="inline-block bg-white text-slate-900 font-bold text-lg px-10 py-4 rounded-full shadow-lg hover:bg-slate-100 transition-all duration-150">Get a Free Consultation</a>
-            <div className="flex gap-12 mt-14">
+          <div className="absolute inset-0 flex flex-col items-center justify-center z-20 text-center px-6 w-full" style={{paddingTop: '48px', paddingBottom: '48px'}}>
+            <h1 className="font-extrabold text-4xl md:text-5xl lg:text-6xl text-white mb-2 tracking-tight drop-shadow-xl" style={{letterSpacing: '-0.03em'}}>Rovner, Allen, Rovner And Sigman</h1>
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-slate-100 mb-3 drop-shadow">Personal Injury Lawyers</h2>
+            <p className="text-base md:text-lg lg:text-xl text-slate-200 mb-6 max-w-2xl mx-auto drop-shadow">For over 40 years, Rovner, Allen, Rovner And Sigman has been fighting for clients in Philadelphia who have been victims of negligence, auto accidents, personal injury, medical malpractice and premise liability.</p>
+            <a href="/contact" className="inline-block bg-white text-slate-900 font-bold text-lg px-8 py-3 rounded-full shadow-lg hover:bg-slate-100 transition-all duration-150 mb-6">Get a Free Consultation</a>
+            <div className="flex flex-row gap-10 mt-2 justify-center">
               <div className="flex flex-col items-center">
-                <span className="text-3xl font-extrabold text-yellow-400 mb-1 drop-shadow">150+</span>
-                <span className="text-slate-100 font-medium text-base drop-shadow">Years of Combined Experience</span>
+                <span className="text-2xl md:text-3xl font-extrabold text-yellow-400 mb-1 drop-shadow">150+</span>
+                <span className="text-slate-100 font-medium text-sm md:text-base drop-shadow">Years of Combined Experience</span>
               </div>
               <div className="flex flex-col items-center">
-                <span className="text-3xl font-extrabold text-yellow-400 mb-1 drop-shadow">25,000+</span>
-                <span className="text-slate-100 font-medium text-base drop-shadow">Cases Won</span>
+                <span className="text-2xl md:text-3xl font-extrabold text-yellow-400 mb-1 drop-shadow">25,000+</span>
+                <span className="text-slate-100 font-medium text-sm md:text-base drop-shadow">Cases Won</span>
               </div>
             </div>
           </div>
