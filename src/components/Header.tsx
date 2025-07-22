@@ -25,7 +25,7 @@ export default function Header({ currentPage = '' }: HeaderProps) {
             </div>
             <div className="header-contact">
               <div className="phone-number">215-259-5958</div>
-              <button className="cta-button">GET A FREE CONSULTATION!</button>
+              <Link href="/contact" className="cta-button">GET A FREE CONSULTATION!</Link>
               <p className="header-tagline">Serving Pennsylvania and New Jersey Since 1980</p>
             </div>
           </div>
