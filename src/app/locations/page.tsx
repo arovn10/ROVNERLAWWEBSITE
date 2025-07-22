@@ -109,6 +109,10 @@ export default function LocationsPage() {
 
   return (
     <div>
+      {/* Desktop Header/Nav */}
+      <div className="hidden lg:block w-full">
+        <Header currentPage="locations" />
+      </div>
       {/* Desktop Hero Banner */}
       <div className="hidden lg:block w-full">
         <section className="relative w-full flex items-center justify-center overflow-hidden border-b border-slate-100" style={{ minHeight: '240px', background: 'black' }}>
@@ -120,10 +124,6 @@ export default function LocationsPage() {
             priority
           />
         </section>
-      </div>
-      {/* Desktop Header/Nav */}
-      <div className="hidden lg:block w-full">
-        <Header currentPage="locations" />
       </div>
       {/* Mobile Header/Nav */}
       <div className="block lg:hidden w-full">

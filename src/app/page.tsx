@@ -102,18 +102,18 @@ export default function HomePage() {
       {/* Desktop Content */}
       <div className="hidden lg:block w-full">
         {/* Hero Banner - Use <Image> for best quality, not backgroundImage */}
-        <section className="relative w-full flex items-center justify-center overflow-hidden border-b border-slate-100" style={{ minHeight: '240px', background: 'black' }}>
+        <section className="relative w-full flex items-center justify-center overflow-hidden border-b border-slate-100" style={{ minHeight: '400px', background: 'black' }}>
           <Image
             src="/photos/bannernewwebsite.png"
             alt="Rovner Law Banner"
             fill
-            style={{ objectFit: 'cover', width: '100%', height: '240px' }}
+            style={{ objectFit: 'cover', width: '100%', height: '400px' }}
             priority
           />
           <div className="absolute inset-0 bg-black/40 z-10" />
-          <div className="absolute inset-0 flex flex-col items-center justify-center z-20 text-center py-12 px-6 w-full">
+          <div className="absolute inset-0 flex flex-col items-center justify-center z-20 text-center py-20 px-6 w-full">
             <h1 className="font-extrabold text-5xl md:text-6xl text-white mb-4 tracking-tight drop-shadow-xl" style={{letterSpacing: '-0.03em'}}> {firmName} </h1>
-            <h2 className="text-2xl md:text-3xl font-semibold text-slate-100 mb-6 drop-shadow">Premier Injury Lawyers</h2>
+            <h2 className="text-2xl md:text-3xl font-semibold text-slate-100 mb-6 drop-shadow">Personal Injury Lawyers</h2>
             <p className="text-lg md:text-xl text-slate-200 mb-10 max-w-2xl mx-auto drop-shadow">For over 40 years, {firmName} has been fighting for clients in Philadelphia who have been victims of negligence, auto accidents, personal injury, medical malpractice and premise liability.</p>
             <a href="/contact" className="inline-block bg-white text-slate-900 font-bold text-lg px-10 py-4 rounded-full shadow-lg hover:bg-slate-100 transition-all duration-150">Get a Free Consultation</a>
             <div className="flex gap-12 mt-14">
@@ -295,12 +295,12 @@ export default function HomePage() {
       {/* Mobile Content */}
       <div className="block lg:hidden w-full bg-gradient-to-b from-white to-blue-50 min-h-screen">
         {/* Mobile Hero Banner */}
-        <section className="relative w-full flex items-center justify-center rounded-b-3xl shadow-md mb-4 overflow-hidden" style={{ minHeight: '160px', height: '160px' }}>
+        <section className="relative w-full flex items-center justify-center rounded-b-3xl shadow-md mb-4 overflow-hidden" style={{ minHeight: '200px', height: '200px' }}>
           <Image
             src="/photos/bannernewwebsite.png"
             alt="Rovner Law Banner"
             fill
-            style={{ objectFit: 'cover', width: '100%', height: '160px' }}
+            style={{ objectFit: 'cover', width: '100%', height: '200px' }}
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900/70 to-purple-900/70" />
