@@ -74,7 +74,7 @@ export default function AttorneysClient({ attorneys }: { attorneys: any[] }) {
         {/* Hero Banner Section */}
         <section style={{position:'relative',width:'100%',height:'320px',marginBottom:'2.5rem',overflow:'hidden',display:'flex',alignItems:'center',justifyContent:'center'}}>
           <Image 
-            src="/photos/banner-about-1-1024x128.png"
+            src="/photos/bannernewwebsite.png"
             alt="About Our Legal Team"
             fill
             style={{objectFit:'cover',objectPosition:'center top',zIndex:0}}

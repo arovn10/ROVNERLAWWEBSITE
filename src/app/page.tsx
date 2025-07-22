@@ -101,19 +101,18 @@ export default function HomePage() {
 
       {/* Desktop Content */}
       <div className="hidden lg:block w-full">
-        {/* Parallax Hero Banner */}
-        <section
-          className="relative w-full flex items-center justify-center min-h-[480px] overflow-hidden border-b border-slate-100"
-          style={{
-            backgroundImage: 'url(/photos/banner-home-new-1-1024x343.png)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
-            backgroundRepeat: 'no-repeat',
-          }}
-        >
+        {/* Hero Banner - Use <Image> for best quality, not backgroundImage */}
+        <section className="relative w-full flex items-center justify-center min-h-[128px] overflow-hidden border-b border-slate-100" style={{ background: 'black' }}>
+          <Image
+            src="/photos/bannernewwebsite.png"
+            alt="Rovner Law Banner"
+            width={1024}
+            height={128}
+            style={{ objectFit: 'none', width: '1024px', height: '128px', maxWidth: '100%', maxHeight: '100%' }}
+            priority
+          />
           <div className="absolute inset-0 bg-black/40 z-10" />
-          <div className="relative z-20 w-full flex flex-col items-center text-center py-28 px-6">
+          <div className="absolute inset-0 flex flex-col items-center justify-center z-20 text-center py-12 px-6 w-full">
             <h1 className="font-extrabold text-5xl md:text-6xl text-white mb-4 tracking-tight drop-shadow-xl" style={{letterSpacing: '-0.03em'}}> {firmName} </h1>
             <h2 className="text-2xl md:text-3xl font-semibold text-slate-100 mb-6 drop-shadow">Premier Injury Lawyers</h2>
             <p className="text-lg md:text-xl text-slate-200 mb-10 max-w-2xl mx-auto drop-shadow">For over 40 years, {firmName} has been fighting for clients in Philadelphia who have been victims of negligence, auto accidents, personal injury, medical malpractice and premise liability.</p>
@@ -297,17 +296,17 @@ export default function HomePage() {
       {/* Mobile Content */}
       <div className="block lg:hidden w-full bg-gradient-to-b from-white to-blue-50 min-h-screen">
         {/* Mobile Hero Banner */}
-        <section className="relative w-full h-44 overflow-hidden flex items-center justify-center rounded-b-3xl shadow-md mb-4">
+        <section className="relative w-full flex items-center justify-center rounded-b-3xl shadow-md mb-4" style={{ minHeight: '128px', height: '128px', overflow: 'hidden' }}>
           <Image
-            src="/photos/banner-home-new-1-1024x343.png"
-            alt="Rovner Law - Personal Injury & Criminal Defense"
-            fill
-            className="object-cover object-center"
-            style={{ objectPosition: 'center 20%' }}
+            src="/photos/bannernewwebsite.png"
+            alt="Rovner Law Banner"
+            width={1024}
+            height={128}
+            style={{ objectFit: 'none', width: '1024px', height: '128px', maxWidth: '100%', maxHeight: '100%' }}
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900/70 to-purple-900/70" />
-          <div className="relative z-10 text-center text-white px-4 w-full">
+          <div className="absolute inset-0 flex flex-col items-center justify-center z-10 text-center text-white px-4 w-full">
             <h1 className="text-2xl font-bold mb-2" style={{textShadow:'0 2px 8px #000', letterSpacing: '-0.01em'}}>Rovner, Allen, Rovner And Sigman</h1>
             <p className="text-sm mb-4 font-medium" style={{textShadow:'0 2px 8px #000'}}>Personal Injury & Criminal Defense</p>
             <div className="flex justify-center gap-2">

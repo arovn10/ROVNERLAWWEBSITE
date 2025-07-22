@@ -88,7 +88,7 @@ export default function AboutPage() {
         <section className="hero-professional">
           <div className="hero-image-overlay">
             <Image 
-              src="/photos/banner-about2-1024x128.png" 
+              src="/photos/bannernewwebsite.png"
               alt="About Our Law Firm" 
               width={1024}
               height={128}
@@ -266,7 +266,7 @@ export default function AboutPage() {
         {/* Mobile Hero Banner */}
         <section className="relative w-full h-44 overflow-hidden flex items-center justify-center rounded-b-3xl shadow-md mb-4">
           <Image
-            src="/photos/banner-about2-1024x128.png"
+            src="/photos/bannernewwebsite.png"
             alt="About Our Law Firm"
             fill
             className="object-cover object-center"

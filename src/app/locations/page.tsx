@@ -7,6 +7,7 @@ import MobileHeader from '@/components/MobileHeader';
 import MobileNav from '@/components/MobileNav';
 import { useFirmName } from '@/lib/FirmNameContext';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 interface LocationsData {
   id: string;
@@ -108,6 +109,19 @@ export default function LocationsPage() {
 
   return (
     <div>
+      {/* Desktop Hero Banner */}
+      <div className="hidden lg:block w-full">
+        <section className="relative w-full flex items-center justify-center min-h-[128px] overflow-hidden border-b border-slate-100" style={{ background: 'black' }}>
+          <Image
+            src="/photos/bannernewwebsite.png"
+            alt="Rovner Law Banner"
+            width={1024}
+            height={128}
+            style={{ objectFit: 'none', width: '1024px', height: '128px', maxWidth: '100%', maxHeight: '100%' }}
+            priority
+          />
+        </section>
+      </div>
       {/* Desktop Header/Nav */}
       <div className="hidden lg:block w-full">
         <Header currentPage="locations" />
@@ -273,12 +287,15 @@ export default function LocationsPage() {
       {/* Mobile Content */}
       <div className="block lg:hidden w-full bg-gradient-to-b from-white to-blue-50 min-h-screen">
         {/* Mobile Hero Banner */}
-        <section className="relative w-full h-44 overflow-hidden flex items-center justify-center rounded-b-3xl shadow-md mb-4">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900 to-blue-700" />
-          <div className="relative z-10 text-center text-white px-4 w-full">
-            <h1 className="text-2xl font-bold mb-2" style={{textShadow:'0 2px 8px #000', letterSpacing: '-0.01em'}}>{content.heroTitle}</h1>
-            <p className="text-base mb-4 font-medium" style={{textShadow:'0 2px 8px #000'}}>{content.heroSubtitle}</p>
-          </div>
+        <section className="relative w-full flex items-center justify-center rounded-b-3xl shadow-md mb-4" style={{ minHeight: '128px', height: '128px', overflow: 'hidden' }}>
+          <Image
+            src="/photos/bannernewwebsite.png"
+            alt="Rovner Law Banner"
+            width={1024}
+            height={128}
+            style={{ objectFit: 'none', width: '1024px', height: '128px', maxWidth: '100%', maxHeight: '100%' }}
+            priority
+          />
         </section>
 
         {/* Mobile Main Content */}
