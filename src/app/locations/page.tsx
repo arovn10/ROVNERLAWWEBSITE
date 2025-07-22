@@ -113,16 +113,21 @@ export default function LocationsPage() {
       <div className="hidden lg:block w-full">
         <Header currentPage="locations" />
       </div>
-      {/* Desktop Hero Banner */}
+      {/* Desktop Hero Banner with Overlayed Title */}
       <div className="hidden lg:block w-full">
-        <section className="relative w-full flex items-center justify-center overflow-hidden border-b border-slate-100" style={{ minHeight: '240px', background: 'black' }}>
+        <section className="relative w-full flex items-center justify-center overflow-hidden border-b border-slate-100" style={{ minHeight: '320px', background: 'black' }}>
           <Image
             src="/photos/bannernewwebsite.png"
             alt="Rovner Law Banner"
             fill
-            style={{ objectFit: 'cover', width: '100%', height: '240px' }}
+            style={{ objectFit: 'cover', width: '100%', height: '320px' }}
             priority
           />
+          <div className="absolute inset-0 bg-black/40 z-10" />
+          <div className="absolute inset-0 flex flex-col items-center justify-center z-20 text-center px-6 w-full" style={{paddingTop: '48px', paddingBottom: '48px'}}>
+            <h1 className="font-extrabold text-4xl md:text-5xl lg:text-6xl text-white mb-2 tracking-tight drop-shadow-xl">Our Locations</h1>
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-slate-100 mb-3 drop-shadow">Serving Pennsylvania and New Jersey</h2>
+          </div>
         </section>
       </div>
       {/* Mobile Header/Nav */}
@@ -130,14 +135,6 @@ export default function LocationsPage() {
         <MobileHeader isMenuOpen={mobileMenuOpen} onMenuClick={() => setMobileMenuOpen((v) => !v)} />
         <MobileNav isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
       </div>
-
-      {/* Hero Section */}
-      <section className="hero-professional">
-        <div className="hero-content">
-          <h2>{content.heroTitle}</h2>
-          <p>{content.heroSubtitle}</p>
-        </div>
-      </section>
 
       {/* Main Content */}
       <section className="section">
