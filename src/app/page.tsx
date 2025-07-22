@@ -102,13 +102,12 @@ export default function HomePage() {
       {/* Desktop Content */}
       <div className="hidden lg:block w-full">
         {/* Hero Banner - Use <Image> for best quality, not backgroundImage */}
-        <section className="relative w-full flex items-center justify-center min-h-[128px] overflow-hidden border-b border-slate-100" style={{ background: 'black' }}>
+        <section className="relative w-full flex items-center justify-center overflow-hidden border-b border-slate-100" style={{ minHeight: '240px', background: 'black' }}>
           <Image
             src="/photos/bannernewwebsite.png"
             alt="Rovner Law Banner"
-            width={1024}
-            height={128}
-            style={{ objectFit: 'none', width: '1024px', height: '128px', maxWidth: '100%', maxHeight: '100%' }}
+            fill
+            style={{ objectFit: 'cover', width: '100%', height: '240px' }}
             priority
           />
           <div className="absolute inset-0 bg-black/40 z-10" />
@@ -296,13 +295,12 @@ export default function HomePage() {
       {/* Mobile Content */}
       <div className="block lg:hidden w-full bg-gradient-to-b from-white to-blue-50 min-h-screen">
         {/* Mobile Hero Banner */}
-        <section className="relative w-full flex items-center justify-center rounded-b-3xl shadow-md mb-4" style={{ minHeight: '128px', height: '128px', overflow: 'hidden' }}>
+        <section className="relative w-full flex items-center justify-center rounded-b-3xl shadow-md mb-4 overflow-hidden" style={{ minHeight: '160px', height: '160px' }}>
           <Image
             src="/photos/bannernewwebsite.png"
             alt="Rovner Law Banner"
-            width={1024}
-            height={128}
-            style={{ objectFit: 'none', width: '1024px', height: '128px', maxWidth: '100%', maxHeight: '100%' }}
+            fill
+            style={{ objectFit: 'cover', width: '100%', height: '160px' }}
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900/70 to-purple-900/70" />
