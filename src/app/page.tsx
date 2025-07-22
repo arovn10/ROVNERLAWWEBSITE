@@ -143,9 +143,10 @@ export default function HomePage() {
             ) : settlements.length === 0 ? (
               <div className="text-center py-8 text-gray-500">No settlements found.</div>
             ) : (
-              <div className="relative max-w-4xl mx-auto">
-                <div className="bg-neutral-900 rounded-3xl shadow-lg py-8 px-2">
-                  <button
+              <div className="w-full flex justify-center">
+                <div className="w-full bg-gray-100 py-8 flex justify-center">
+                  <div className="relative max-w-4xl w-full">
+                    <button
                     onClick={prevSettlement}
                     className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow border border-slate-200 hover:bg-slate-100 transition"
                     style={{ width: 44, height: 44 }}
@@ -182,6 +183,7 @@ export default function HomePage() {
                   >
                     <span className="text-slate-600 text-2xl">›</span>
                   </button>
+                  </div>
                 </div>
               </div>
             )}
@@ -196,8 +198,10 @@ export default function HomePage() {
               <p className="text-slate-500">Comprehensive legal services with proven results</p>
             </div>
             <div className="relative">
-              <div className="bg-neutral-900 rounded-3xl shadow-lg py-8 px-2">
-                <button
+              <div className="w-full flex justify-center">
+                <div className="w-full bg-gray-100 py-8 flex justify-center">
+                  <div className="relative max-w-4xl w-full">
+                    <button
                   onClick={prevPracticeArea}
                   className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow border border-slate-200 hover:bg-slate-100 transition"
                   style={{ width: 44, height: 44 }}
@@ -233,6 +237,8 @@ export default function HomePage() {
                 >
                   <span className="text-slate-600 text-2xl">›</span>
                 </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
