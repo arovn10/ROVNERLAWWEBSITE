@@ -110,7 +110,7 @@ export default function HomePage() {
             style={{ objectFit: 'cover', width: '100%', height: '400px' }}
             priority
           />
-          <div className="absolute inset-0 bg-black/40 z-10" />
+          <div className="absolute inset-0 bg-black/60 z-10" />
           <div className="absolute inset-0 flex flex-col items-center justify-center z-20 text-center px-6 w-full" style={{paddingTop: '48px', paddingBottom: '48px'}}>
             <h1 className="font-extrabold text-4xl md:text-5xl lg:text-6xl text-white mb-2 tracking-tight drop-shadow-xl" style={{letterSpacing: '-0.03em'}}>Rovner, Allen, Rovner And Sigman</h1>
             <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-slate-100 mb-3 drop-shadow">Personal Injury Lawyers</h2>
@@ -129,8 +129,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Settlements Section */}
-        <section className="w-full py-20 border-b border-slate-100 bg-white">
+        {/* Settlements Section with Themed Background */}
+        <section className="w-full py-20 border-b border-slate-100 bg-gradient-to-b from-blue-900 via-blue-800 to-blue-700">
           <div className="max-w-6xl mx-auto px-6">
             <div className="mb-10 text-center">
               <h3 className="text-2xl font-bold text-slate-900 mb-1">Recent Results</h3>
@@ -186,8 +186,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Practice Areas Section */}
-        <section className="w-full py-20 bg-white">
+        {/* Practice Areas Section with Themed Background */}
+        <section className="w-full py-20 bg-gradient-to-b from-blue-700 via-blue-800 to-blue-900">
           <div className="max-w-6xl mx-auto px-6">
             <div className="mb-10 text-center">
               <h3 className="text-2xl font-bold text-slate-900 mb-1">Our Practice Areas</h3>
