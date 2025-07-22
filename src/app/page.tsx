@@ -130,7 +130,7 @@ export default function HomePage() {
         </section>
 
         {/* Settlements Section with Themed Background */}
-        <section className="w-full py-20 border-t border-slate-700 bg-neutral-900" style={{background: 'linear-gradient(180deg, #23272f 0%, #23272f 80%, #222 100%)'}}>
+        <section className="w-full py-20 border-t border-slate-100 bg-white">
           <div className="max-w-6xl mx-auto px-6">
             <div className="mb-10 text-center">
               <h3 className="text-2xl font-bold text-slate-900 mb-1">Recent Results</h3>
@@ -189,7 +189,7 @@ export default function HomePage() {
         </section>
 
         {/* Practice Areas Section with Themed Background */}
-        <section className="w-full py-20 border-t border-slate-700 bg-neutral-900" style={{background: 'linear-gradient(180deg, #23272f 0%, #23272f 80%, #222 100%)'}}>
+        <section className="w-full py-20 border-t border-slate-100 bg-white">
           <div className="max-w-6xl mx-auto px-6">
             <div className="mb-10 text-center">
               <h3 className="text-2xl font-bold text-slate-900 mb-1">Our Practice Areas</h3>
