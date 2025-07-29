@@ -21,26 +21,38 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
+    console.log('Creating lawyer with data:', body);
+    
     const { name, title, bio, education, experience, specialties, image, email, phone, order, active } = body;
+
+    // Validate required fields
+    if (!name) {
+      return NextResponse.json({ error: "Name is required" }, { status: 400 });
+    }
 
     const lawyer = await prisma.lawyer.create({
       data: {
         name,
-        title,
-        bio,
-        education,
-        experience,
-        specialties,
-        image,
-        email,
-        phone,
+        title: title || null,
+        bio: bio || null,
+        education: education || null,
+        experience: experience || null,
+        specialties: specialties || null,
+        image: image || null,
+        email: email || null,
+        phone: phone || null,
         order: order || 0,
         active: active !== undefined ? active : true,
       },
     });
 
+    console.log('Lawyer created successfully:', lawyer);
     return NextResponse.json(lawyer, { status: 201 });
-  } catch {
-    return NextResponse.json({ error: "Failed to create lawyer" }, { status: 500 });
+  } catch (error) {
+    console.error('Error creating lawyer:', error);
+    return NextResponse.json({ 
+      error: "Failed to create lawyer", 
+      details: error instanceof Error ? error.message : 'Unknown error' 
+    }, { status: 500 });
   }
 } 
