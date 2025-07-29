@@ -18,6 +18,7 @@ export interface Lawyer {
   phone?: string;
   image?: string;
   active?: boolean;
+  order?: number;
 }
 
 function LawyerCard({ lawyer }: { lawyer: Lawyer }) {
@@ -75,6 +76,11 @@ function LawyerCard({ lawyer }: { lawyer: Lawyer }) {
         <div className="flex flex-wrap gap-6 mt-6 text-base text-gray-600 items-center">
           {lawyer.email && <span className="flex items-center gap-1">📧 {lawyer.email}</span>}
           {lawyer.phone && <span className="flex items-center gap-1">📞 {lawyer.phone}</span>}
+          {lawyer.order !== undefined && (
+            <span className="inline-flex items-center px-3 py-1 rounded-full font-semibold bg-blue-100 text-blue-800">
+              Order: {lawyer.order}
+            </span>
+          )}
           {lawyer.active !== undefined && (
             <span className={`inline-flex items-center px-3 py-1 rounded-full font-semibold ${lawyer.active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>{lawyer.active ? 'Active' : 'Inactive'}</span>
           )}

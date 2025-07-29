@@ -31,6 +31,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Name is required" }, { status: 400 });
     }
 
+    // If no order is provided, get the highest order number and add 1
+    let finalOrder = order;
+    if (!order && order !== 0) {
+      const highestOrderLawyer = await prisma.lawyer.findFirst({
+        orderBy: { order: 'desc' }
+      });
+      finalOrder = (highestOrderLawyer?.order || 0) + 1;
+    }
+
     const lawyer = await prisma.lawyer.create({
       data: {
         name,
@@ -42,7 +51,7 @@ export async function POST(request: NextRequest) {
         image: image || null,
         email: email || null,
         phone: phone || null,
-        order: order || 0,
+        order: finalOrder,
         active: active !== undefined ? active : true,
       },
     });

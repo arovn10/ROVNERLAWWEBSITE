@@ -267,6 +267,37 @@ export default function LawyerForm({ lawyer }: LawyerFormProps) {
           </div>
         </div>
       </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+        <div>
+          <label htmlFor="order" className="block text-sm font-semibold text-gray-700 mb-2">Display Order</label>
+          <input
+            type="number"
+            name="order"
+            id="order"
+            value={formData.order || ''}
+            onChange={handleChange}
+            className="block w-full rounded-lg border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 text-base"
+            placeholder="Leave empty for auto-assignment"
+          />
+          <p className="text-sm text-gray-500 mt-1">Leave empty to automatically place at the end of the list</p>
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Status</label>
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              name="active"
+              id="active"
+              checked={formData.active || false}
+              onChange={handleChange}
+              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+            />
+            <label htmlFor="active" className="ml-2 block text-sm text-gray-900">
+              Active (visible on website)
+            </label>
+          </div>
+        </div>
+      </div>
       <div className="flex items-center gap-6 mt-8">
         <button
           type="submit"
