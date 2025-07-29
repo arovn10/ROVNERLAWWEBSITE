@@ -31,11 +31,10 @@ export async function PUT(
   try {
     console.log('Lawyer PUT request received');
     
-    // Temporarily skip session check to test database connection
-    // const session = await getServerSession();
-    // if (!session) {
-    //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    // }
+    const session = await getServerSession();
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
 
     const { id } = await params;
     const data = await request.json();
