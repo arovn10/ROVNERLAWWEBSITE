@@ -20,6 +20,11 @@ export default function AttorneysClient({ attorneys }: { attorneys: any[] }) {
   // Only show 'View More' if bio is over a certain length
   const BIO_LENGTH_LIMIT = 350;
 
+  // Debug: Log the attorneys order on client side
+  useEffect(() => {
+    console.log('AttorneysClient received attorneys with order:', attorneys.map(a => ({ name: a.name, order: a.order })));
+  }, [attorneys]);
+
   useEffect(() => {
     // TEMP: Show 'View More' for any bio over the length limit
     const newOverflowing: { [id: string]: boolean } = {};

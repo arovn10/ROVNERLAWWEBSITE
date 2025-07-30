@@ -6,5 +6,8 @@ export default async function AttorneysPage() {
     where: { active: true },
     orderBy: { order: 'asc' },
   });
+  
+  console.log('Attorneys fetched with order:', attorneys.map(a => ({ name: a.name, order: a.order })));
+  
   return <AttorneysClient attorneys={attorneys} />;
 } 
