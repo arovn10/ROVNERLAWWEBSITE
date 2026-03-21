@@ -1,0 +1,192 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Lawyer {
+  id          String   @id @default(cuid())
+  name        String
+  title       String?
+  bio         String?
+  education   String?
+  experience  String?
+  specialties String?
+  image       String?
+  email       String?  @unique
+  phone       String?
+  order       Int      @default(0)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Settlement {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  amount      Float
+  date        DateTime
+  caseType    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model News {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  date      DateTime
+  source    String
+  url       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  imageUrl  String?
+}
+
+model Archive {
+  id        String   @id @default(cuid())
+  title     String
+  content   String?
+  date      DateTime
+  category  String
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Settings {
+  id        String   @id @default(cuid())
+  firmName  String
+  updatedAt DateTime @updatedAt
+}
+
+model ContactSubmission {
+  id             String    @id @default(cuid())
+  name           String
+  email          String
+  phone          String?
+  address        String?
+  dateOfIncident DateTime?
+  caseType       String?
+  represented    String?
+  facts          String
+  createdAt      DateTime  @default(now())
+}
+
+model Photo {
+  id          String   @id
+  title       String
+  description String?
+  section     String
+  imageUrl    String
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+}
+
+model PracticeArea {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  content     String
+  slug        String   @unique
+  features    String?
+  image       String?
+  banner      String?
+  color       String?
+  imageUrl    String?
+  order       Int      @default(0)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AboutUs {
+  id                    String   @id @default(cuid())
+  heroTitle             String   @default("About Our Firm")
+  heroSubtitle          String   @default("Rovner Law")
+  mainTitle             String   @default("Rovner Law")
+  paragraph1            String
+  paragraph2            String
+  paragraph3            String
+  paragraph4            String
+  blueHighlightTitle    String   @default("When you meet with an unexpected injury")
+  blueHighlightContent  String
+  paragraph5            String
+  paragraph6            String
+  paragraph7            String
+  goldHighlightTitle    String   @default("At the law offices of Rovner Law, \"We Get Results!\"")
+  goldHighlightContent  String
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model Locations {
+  id                    String   @id @default(cuid())
+  heroTitle             String   @default("Our Locations")
+  heroSubtitle          String   @default("Serving Pennsylvania and New Jersey")
+  mainTitle             String   @default("Conveniently Located to Serve You")
+  paragraph1            String
+  paragraph2            String
+  areasWeServeTitle     String   @default("Areas We Serve")
+  paCountiesTitle       String   @default("Pennsylvania Counties:")
+  paCounties            String
+  njCountiesTitle       String   @default("New Jersey Counties:")
+  njCounties            String
+  paragraph3            String
+  mainOfficeTitle       String   @default("Main Office")
+  officeName            String
+  officeAddress         String
+  officePhone           String
+  officeEmail           String
+  officeHours           String
+  directionsTitle       String   @default("Directions & Parking")
+  directionsFromPhilly  String
+  directionsFromNJ      String
+  parkingInfo           String
+  communitiesTitle      String   @default("Communities We Serve")
+  communitiesSubtitle   String   @default("Trusted legal representation throughout the region")
+  philadelphiaArea      String
+  bucksCounty           String
+  montgomeryCounty      String
+  delawareCounty        String
+  southernNJ            String
+  centralNJ             String
+  ctaTitle              String   @default("Ready to Get Started?")
+  ctaDescription        String
+  ctaButtonText         String   @default("Schedule Free Consultation")
+  ctaPhoneText          String   @default("Call 215-259-5958")
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model ContactUs {
+  id                    String   @id @default(cuid())
+  heroTitle             String   @default("Contact Us")
+  heroSubtitle          String   @default("Get in touch for a free consultation")
+  mainTitle             String   @default("Get Your Free Consultation Today")
+  paragraph1            String
+  paragraph2            String
+  whyChooseTitle        String   @default("Why Choose Rovner Law?")
+  whyChooseList         String
+  officeAddress         String
+  officePhone           String
+  officeEmail           String
+  officeHours           String
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
