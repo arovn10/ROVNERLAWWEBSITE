@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { authOptions } from "@/lib/auth";
 import LawyersManagementClient from './LawyersManagementClient';
 
 interface Lawyer {
@@ -18,7 +19,7 @@ interface Lawyer {
 }
 
 export default async function LawyersManagement() {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   if (!session) {
     redirect('/admin/login');
   }
