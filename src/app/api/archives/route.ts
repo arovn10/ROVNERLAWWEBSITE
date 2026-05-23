@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { prisma } from "@/lib/prisma";
+import { authOptions } from "@/lib/auth";
 
 // GET /api/archives
 export async function GET() {
@@ -29,7 +30,7 @@ export async function GET() {
 
 // POST /api/archives
 export async function POST(request: Request) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   if (!session) {
     return NextResponse.json(
       { error: 'Unauthorized' },

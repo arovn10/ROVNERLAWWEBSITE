@@ -3,13 +3,14 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Settings, FileText, Briefcase, Users, Plus, Edit, Trash2, Eye, ExternalLink, Home, LogOut } from "lucide-react";
 import clsx from "clsx";
+import { authOptions } from "@/lib/auth";
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   // TEMPORARILY DISABLED - Server-side session check and redirect
   // if (!session) {
