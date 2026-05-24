@@ -22,7 +22,6 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    console.log('Creating lawyer with data:', body);
 
     const { name, title, bio, education, experience, specialties, image, email, phone, order, active } = body;
 
@@ -56,7 +55,6 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    console.log('Lawyer created successfully:', lawyer);
     return NextResponse.json(lawyer, { status: 201 });
   } catch (error) {
     console.error('Error creating lawyer:', error);
