@@ -8,7 +8,6 @@ import Footer from '@/components/Footer';
 import MobileHeader from '@/components/MobileHeader';
 import MobileNav from '@/components/MobileNav';
 import { useFirmName } from '@/lib/FirmNameContext';
-import { practiceAreas } from './practice/page';
 import { Phone, Users, Briefcase, Mail, DollarSign, MapPin } from 'lucide-react';
 
 // Settlement type for fetched data
@@ -506,7 +505,7 @@ export default function HomePage() {
   );
 }
 
-function groupPracticeAreasForCarousel(areas: typeof practiceAreas, groupSize: number) {
+function groupPracticeAreasForCarousel<T>(areas: T[], groupSize: number) {
   const groups = [];
   for (let i = 0; i < areas.length; i += groupSize) {
     groups.push(areas.slice(i, i + groupSize));
