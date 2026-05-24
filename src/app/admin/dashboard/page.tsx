@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useFirmName } from "@/lib/FirmNameContext";
-import { Users, FileText, Settings, Award, Archive, Plus, ExternalLink, Save, CheckCircle, Briefcase } from "lucide-react";
+import { Users, FileText, Settings, Award, Archive, Plus, ExternalLink, Save, CheckCircle, Briefcase, Inbox } from "lucide-react";
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
@@ -244,6 +244,24 @@ export default function AdminDashboard() {
             <p className="text-gray-600 text-sm">Edit the Contact Us page content including contact info and why choose us</p>
             <div className="mt-3 text-sm font-semibold text-pink-600">
               Edit content
+            </div>
+          </div>
+        </Link>
+
+        <Link href="/admin/contact-us/submissions" className="group">
+          <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 hover:border-indigo-200 hover:scale-[1.02]">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
+                <Inbox className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-gray-900">Submissions</h3>
+                <p className="text-sm text-gray-500">Contact form entries</p>
+              </div>
+            </div>
+            <p className="text-gray-600 text-sm">Read messages submitted through the public contact form</p>
+            <div className="mt-3 text-sm font-semibold text-indigo-600">
+              View submissions
             </div>
           </div>
         </Link>

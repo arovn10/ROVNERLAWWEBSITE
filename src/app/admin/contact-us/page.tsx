@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Save } from 'lucide-react';
+import { ArrowLeft, Save, Inbox } from 'lucide-react';
 
 interface ContactUsData {
   id: string;
@@ -118,6 +118,13 @@ export default function ContactUsEditPage() {
             </Link>
             <h1 className="text-3xl font-bold text-gray-900">Edit Contact Us Page</h1>
           </div>
+          <Link
+            href="/admin/contact-us/submissions"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg font-medium border border-blue-100 transition-colors shadow-sm hover:shadow-md"
+          >
+            <Inbox size={18} />
+            View Submissions
+          </Link>
         </div>
 
         {/* Message */}
