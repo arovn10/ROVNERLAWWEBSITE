@@ -111,6 +111,36 @@ export async function POST(request: NextRequest) {
       `,
     });
 
+    // 4. Auto-reply confirmation to the submitter. Best-effort: a failure here
+    //    must not break the form submission (the lead is already saved + notified).
+    try {
+      const replyTo = process.env.MAILGUN_REPLY_TO || getRecipients()[0];
+      const firmName = "Rovner Law";
+      const confirmationText = `Hi ${data.name},
+
+Thank you for reaching out to ${firmName}. We have received your message and a member of our team will be in touch with you shortly — usually within one business day.
+
+If your matter is urgent, please call 215-259-5958.
+
+— The team at ${firmName}`;
+
+      await mg.messages.create(domain, {
+        from: fromAddress,
+        to: [data.email],
+        "h:Reply-To": replyTo,
+        subject: "We received your message — Rovner Law",
+        text: confirmationText,
+        html: `
+          <p>Hi ${escapeHtml(data.name)},</p>
+          <p>Thank you for reaching out to <strong>${firmName}</strong>. We have received your message and a member of our team will be in touch with you shortly — usually within one business day.</p>
+          <p>If your matter is urgent, please call <a href="tel:215-259-5958">215-259-5958</a>.</p>
+          <p>— The team at ${firmName}</p>
+        `,
+      });
+    } catch (confirmationError) {
+      console.error("Confirmation email failed (notification email already sent):", confirmationError);
+    }
+
     return NextResponse.json({
       success: true,
       message: "Thank you for your message. We will contact you soon!",
