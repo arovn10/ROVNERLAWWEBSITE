@@ -1,37 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rovner Law Website
 
-## Getting Started
+Marketing + lead-capture site for the **Law Offices of Rovner, Allen, Rovner & Sigman** (Philadelphia personal injury & criminal defense).
 
-First, run the development server:
+- **Production:** <https://rovnerlawwebsite.vercel.app>
+- **Stack:** Next.js 15 (App Router) · React 19 · TypeScript · Tailwind 3 · Prisma 6 + PostgreSQL · NextAuth 4 (Credentials/JWT) · AWS S3 · Mailgun · Vercel
+- **Architecture overview:** see [`CODEBASE.md`](./CODEBASE.md)
+- **Deep operational reference, landmines, conventions:** see [`.claude/SKILL.md`](.claude/SKILL.md)
+- **Per-session project memory and cleanup-PR plan:** see [`CLAUDE.md`](./CLAUDE.md)
+
+## Quickstart
 
 ```bash
+git clone https://github.com/arovn10/ROVNERLAWWEBSITE.git
+cd ROVNERLAWWEBSITE
+npm install
+cp .env.example .env.local        # fill in DATABASE_URL, NEXTAUTH_SECRET, MAILGUN_*, AWS_*, etc.
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open <http://localhost:3000>.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The first dev start needs a reachable Postgres at `DATABASE_URL`. Migrations apply automatically on `npm run build`; for local iteration, run `npx prisma migrate dev` after schema changes.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Apple Silicon contributors: there's a `./run-dev.sh` wrapper that forces arm64 Node via nvm.
 
-## Learn More
+## Scripts
 
-To learn more about Next.js, take a look at the following resources:
+| Command | What it does |
+|---|---|
+| `npm run dev` | `next dev --turbopack` |
+| `npm run build` | `prisma generate && prisma migrate deploy && next build` |
+| `npm run start` | Production server (`next start`) |
+| `npm run lint` | `next lint` (strict — TS + ESLint errors fail the build) |
+| `npm run create-admin` | Seeds the admin user from `ADMIN_EMAIL` / `ADMIN_PASSWORD` env vars |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Required environment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+At minimum you need:
 
-## Deploy on Vercel
+- `DATABASE_URL` — Postgres
+- `NEXTAUTH_SECRET` — random 32-byte secret for JWT signing
+- `AWS_BUCKET_NAME`, `AWS_REGION`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` — S3 admin uploads
+- `MAILGUN_API_KEY`, `MAILGUN_DOMAIN` — contact form notification + confirmation emails
+- `CONTACT_EMAIL` — recipient inbox for new leads (comma-separated for multiple)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Optional: `HCAPTCHA_SECRET`, `NEXT_PUBLIC_HCAPTCHA_SITE_KEY`, `MAILGUN_FROM`, `MAILGUN_REPLY_TO`, `MAILGUN_EU`, `NEXTAUTH_URL`, `NEXT_PUBLIC_SITE_URL`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# ROVNERLAWWEBSITE
+Full table with purposes lives in [`CODEBASE.md`](./CODEBASE.md#environment-variables).
+
+## Deployment
+
+- Vercel auto-deploys `main`.
+- `prisma migrate deploy` is part of the build, so committed migrations apply to the target DB on every deploy.
+- Type and lint errors **fail** the build (no suppression).
+
+## Contributing
+
+PRs follow a one-concern-per-PR convention with `cleanup/<NN-name>` branches. See [`CLAUDE.md`](./CLAUDE.md) for the active cleanup plan and conventions.
+
+## Contact
+
+Office: 175 Bustleton Pike, Feasterville-Trevose, PA 19053 · 215-259-5958 / 888-DIAL-LAW
