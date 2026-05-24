@@ -23,6 +23,16 @@ export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
 
+    // Honeypot: the `website` field is invisible to humans (display:none, tabIndex=-1).
+    // Bots fill every input they see — so a non-empty value is a strong spam signal.
+    // Return 200 OK without saving or emailing so we don't tip off the bot.
+    if (data.website && String(data.website).trim() !== "") {
+      return NextResponse.json({
+        success: true,
+        message: "Thank you for your message. We will contact you soon!",
+      });
+    }
+
     // Basic validation
     if (!data.name?.trim() || !data.email?.trim()) {
       return NextResponse.json(

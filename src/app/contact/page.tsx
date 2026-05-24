@@ -34,7 +34,10 @@ export default function ContactPage() {
     dateOfIncident: '',
     caseType: '',
     represented: '',
-    facts: ''
+    facts: '',
+    // `website` is a honeypot: invisible to humans, irresistible to bots.
+    // Server treats any non-empty value as spam and silently drops the submission.
+    website: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
@@ -127,7 +130,8 @@ export default function ContactPage() {
           dateOfIncident: '',
           caseType: '',
           represented: '',
-          facts: ''
+          facts: '',
+          website: ''
         });
         setCaptchaToken('');
         desktopCaptchaRef.current?.resetCaptcha();
@@ -261,6 +265,17 @@ export default function ContactPage() {
                 </div>
               )}
               <form className="contact-form" onSubmit={handleSubmit}>
+                {/* Honeypot — hidden from humans, filled by naive bots. */}
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={formData.website}
+                  onChange={handleInputChange}
+                  aria-hidden="true"
+                  style={{ display: 'none' }}
+                />
                 <div className="form-group">
                   <label>Full Name *</label>
                   <input 
@@ -470,6 +485,17 @@ export default function ContactPage() {
             <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-4">
               <h3 className="font-bold text-gray-900 mb-4 text-lg">Contact Form</h3>
               <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+                {/* Honeypot — hidden from humans, filled by naive bots. */}
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={formData.website}
+                  onChange={handleInputChange}
+                  aria-hidden="true"
+                  style={{ display: 'none' }}
+                />
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
                   <input 
