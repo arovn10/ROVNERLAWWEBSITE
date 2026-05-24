@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import Mailgun from "mailgun.js";
 import formData from "form-data";
+import { contactSubmissionSchema, parseOrError } from "@/lib/schemas";
 
 // Recipient(s) from env; comma-separated for multiple. Default: rovneralec@gmail.com
 const getRecipients = (): string[] => {
@@ -21,15 +22,10 @@ function escapeHtml(text: string | undefined | null): string {
 
 export async function POST(request: NextRequest) {
   try {
-    const data = await request.json();
-
-    // Basic validation
-    if (!data.name?.trim() || !data.email?.trim()) {
-      return NextResponse.json(
-        { error: "Name and email are required" },
-        { status: 400 }
-      );
-    }
+    const rawBody = await request.json();
+    const parsed = parseOrError(contactSubmissionSchema, rawBody);
+    if (parsed instanceof NextResponse) return parsed;
+    const data = parsed;
 
     // 1. Verify hCaptcha token if HCAPTCHA_SECRET is configured.
     // When the secret is unset, captcha is bypassed entirely (dev/test).

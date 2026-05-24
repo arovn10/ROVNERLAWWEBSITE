@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
+import { lawyerCreateSchema, parseOrError } from "@/lib/schemas";
 
 export async function GET() {
   try {
@@ -21,19 +22,11 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const body = await request.json();
-    console.log('Creating lawyer with data:', body);
+    const parsed = parseOrError(lawyerCreateSchema, await request.json());
+    if (parsed instanceof NextResponse) return parsed;
 
-    const { name, title, bio, education, experience, specialties, image, email, phone, order, active } = body;
-
-    // Validate required fields
-    if (!name) {
-      return NextResponse.json({ error: "Name is required" }, { status: 400 });
-    }
-
-    // If no order is provided, get the highest order number and add 1
-    let finalOrder = order;
-    if (!order && order !== 0) {
+    let finalOrder = parsed.order;
+    if (finalOrder === undefined) {
       const highestOrderLawyer = await prisma.lawyer.findFirst({
         orderBy: { order: 'desc' }
       });
@@ -42,17 +35,17 @@ export async function POST(request: NextRequest) {
 
     const lawyer = await prisma.lawyer.create({
       data: {
-        name,
-        title: title || null,
-        bio: bio || null,
-        education: education || null,
-        experience: experience || null,
-        specialties: specialties || null,
-        image: image || null,
-        email: email || null,
-        phone: phone || null,
+        name: parsed.name,
+        title: parsed.title,
+        bio: parsed.bio,
+        education: parsed.education,
+        experience: parsed.experience,
+        specialties: parsed.specialties,
+        image: parsed.image,
+        email: parsed.email,
+        phone: parsed.phone,
         order: finalOrder,
-        active: active !== undefined ? active : true,
+        active: parsed.active ?? true,
       },
     });
 

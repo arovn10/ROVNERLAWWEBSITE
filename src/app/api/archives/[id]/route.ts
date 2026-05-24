@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { prisma } from '@/lib/prisma';
 import { authOptions } from '@/lib/auth';
+import { archiveUpdateSchema, parseOrError } from '@/lib/schemas';
 
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
@@ -20,15 +21,19 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
   const { id } = params;
-  const data = await req.json();
+  const parsed = parseOrError(archiveUpdateSchema, await req.json());
+  if (parsed instanceof NextResponse) return parsed;
   try {
     const updated = await prisma.archive.update({
       where: { id },
       data: {
-        title: data.title,
-        imageUrl: data.imageUrl,
-        date: data.date,
-        content: data.description,
+        ...(parsed.title !== undefined && { title: parsed.title }),
+        ...(parsed.imageUrl !== undefined && { imageUrl: parsed.imageUrl }),
+        ...(parsed.date !== undefined && { date: new Date(parsed.date) }),
+        ...((parsed.description !== undefined || parsed.content !== undefined) && {
+          content: parsed.description ?? parsed.content,
+        }),
+        ...(parsed.category !== undefined && { category: parsed.category }),
       },
     });
     return NextResponse.json(updated);
