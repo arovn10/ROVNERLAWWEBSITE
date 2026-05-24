@@ -1,11 +1,14 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import HCaptcha from '@hcaptcha/react-hcaptcha';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import MobileHeader from '@/components/MobileHeader';
 import MobileNav from '@/components/MobileNav';
 import { useFirmName } from '@/lib/FirmNameContext';
+
+const HCAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY;
 
 interface ContactUsData {
   id: string;
@@ -41,6 +44,9 @@ export default function ContactPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [contactUsData, setContactUsData] = useState<ContactUsData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [captchaToken, setCaptchaToken] = useState<string>('');
+  const desktopCaptchaRef = useRef<HCaptcha>(null);
+  const mobileCaptchaRef = useRef<HCaptcha>(null);
 
   useEffect(() => {
     const fetchContactUsData = async () => {
@@ -85,6 +91,15 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (HCAPTCHA_SITE_KEY && !captchaToken) {
+      setSubmitStatus({
+        type: 'error',
+        message: 'Please complete the captcha before submitting.',
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus({ type: null, message: '' });
 
@@ -94,7 +109,7 @@ export default function ContactPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ...formData }),
+        body: JSON.stringify({ ...formData, captchaToken }),
       });
 
       const result = await response.json();
@@ -114,6 +129,9 @@ export default function ContactPage() {
           represented: '',
           facts: ''
         });
+        setCaptchaToken('');
+        desktopCaptchaRef.current?.resetCaptcha();
+        mobileCaptchaRef.current?.resetCaptcha();
         // Scroll to top to show success message
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
@@ -334,14 +352,24 @@ export default function ContactPage() {
                     required
                   ></textarea>
                 </div>
+                {HCAPTCHA_SITE_KEY && (
+                  <div className="form-group">
+                    <HCaptcha
+                      ref={desktopCaptchaRef}
+                      sitekey={HCAPTCHA_SITE_KEY}
+                      onVerify={(token) => setCaptchaToken(token)}
+                      onExpire={() => setCaptchaToken('')}
+                    />
+                  </div>
+                )}
                 <div className="form-disclaimer">
                   <label className="checkbox-label">
                     <input type="checkbox" required />
                     *I understand and agree that the submission of this form does not create an attorney-client relationship. There will be no representation until a formal, written contract is signed by both parties.
                   </label>
                 </div>
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className="submit-btn"
                   disabled={isSubmitting}
                 >
@@ -541,6 +569,16 @@ export default function ContactPage() {
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                   ></textarea>
                 </div>
+                {HCAPTCHA_SITE_KEY && (
+                  <div>
+                    <HCaptcha
+                      ref={mobileCaptchaRef}
+                      sitekey={HCAPTCHA_SITE_KEY}
+                      onVerify={(token) => setCaptchaToken(token)}
+                      onExpire={() => setCaptchaToken('')}
+                    />
+                  </div>
+                )}
                 <div>
                   <label className="flex items-start">
                     <input type="checkbox" required className="mr-2 mt-1" />
@@ -549,8 +587,8 @@ export default function ContactPage() {
                     </span>
                   </label>
                 </div>
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   disabled={isSubmitting}
                   className="w-full bg-orange-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-orange-700 transition disabled:opacity-50"
                 >

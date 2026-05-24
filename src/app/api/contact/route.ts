@@ -31,6 +31,33 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // 1. Verify hCaptcha token if HCAPTCHA_SECRET is configured.
+    // When the secret is unset, captcha is bypassed entirely (dev/test).
+    const captchaSecret = process.env.HCAPTCHA_SECRET;
+    if (captchaSecret) {
+      if (!data.captchaToken) {
+        return NextResponse.json(
+          { error: "Captcha is required" },
+          { status: 400 }
+        );
+      }
+      const verifyResponse = await fetch("https://hcaptcha.com/siteverify", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          secret: captchaSecret,
+          response: data.captchaToken,
+        }).toString(),
+      });
+      const verifyResult = (await verifyResponse.json()) as { success?: boolean };
+      if (!verifyResult.success) {
+        return NextResponse.json(
+          { error: "Captcha verification failed" },
+          { status: 400 }
+        );
+      }
+    }
+
     // 2. Save to database
     await prisma.contactSubmission.create({
       data: {
