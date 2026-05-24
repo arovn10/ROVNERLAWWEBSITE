@@ -9,6 +9,36 @@ const getRecipients = (): string[] => {
   return env.split(",").map((e) => e.trim()).filter(Boolean);
 };
 
+// Sliding-window rate limit: max RATE_LIMIT_MAX requests per IP per RATE_LIMIT_WINDOW_MS.
+// In-memory only — resets when the serverless function cold-starts, and is not shared
+// across concurrent Vercel function instances. Good enough as a first-line throttle;
+// not a substitute for Cloudflare or a Redis-backed limiter.
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const RATE_LIMIT_MAX = 5;
+const rateLimitHits = new Map<string, number[]>();
+
+function getClientIp(request: NextRequest): string {
+  const forwarded = request.headers.get("x-forwarded-for");
+  if (forwarded) {
+    const first = forwarded.split(",")[0]?.trim();
+    if (first) return first;
+  }
+  return request.headers.get("x-real-ip") || "unknown";
+}
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const windowStart = now - RATE_LIMIT_WINDOW_MS;
+  const recent = (rateLimitHits.get(ip) || []).filter((t) => t > windowStart);
+  if (recent.length >= RATE_LIMIT_MAX) {
+    rateLimitHits.set(ip, recent);
+    return true;
+  }
+  recent.push(now);
+  rateLimitHits.set(ip, recent);
+  return false;
+}
+
 function escapeHtml(text: string | undefined | null): string {
   if (text == null) return "";
   return String(text)
@@ -21,6 +51,14 @@ function escapeHtml(text: string | undefined | null): string {
 
 export async function POST(request: NextRequest) {
   try {
+    const ip = getClientIp(request);
+    if (isRateLimited(ip)) {
+      return NextResponse.json(
+        { error: "Too many requests" },
+        { status: 429 }
+      );
+    }
+
     const data = await request.json();
 
     // Basic validation
