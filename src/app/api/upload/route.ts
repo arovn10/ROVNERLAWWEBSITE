@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { getServerSession } from 'next-auth/next';
 import { awsConfig } from '@/lib/aws-config';
+import { authOptions } from '@/lib/auth';
 
 const s3Client = new S3Client({
   region: awsConfig.region,
@@ -11,6 +13,11 @@ const s3Client = new S3Client({
 });
 
 export async function POST(request: Request) {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     console.log('--- Upload API called ---');
     console.log('AWS Config:', awsConfig);
