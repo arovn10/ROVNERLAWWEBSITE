@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth/next';
 import { prisma } from '@/lib/prisma';
+import { authOptions } from '@/lib/auth';
 
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
@@ -13,6 +15,10 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 }
 
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
   try {
     console.log('Settlement PUT request received for ID:', params.id);
     
@@ -60,6 +66,10 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 }
 
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
   const { id } = params;
   try {
     await prisma.settlement.delete({ where: { id } });
