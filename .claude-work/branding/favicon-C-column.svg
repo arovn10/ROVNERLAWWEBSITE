@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Option C: Classical Doric column — timeless, institutional -->
+  <rect width="32" height="32" rx="6" fill="#0f172a"/>
+  <!-- capital (top) -->
+  <rect x="7" y="7" width="18" height="3" fill="#a16207"/>
+  <!-- shaft -->
+  <rect x="11" y="10" width="10" height="15" fill="#a16207"/>
+  <!-- fluting lines -->
+  <line x1="13.5" y1="11" x2="13.5" y2="24" stroke="#0f172a" stroke-width="0.6"/>
+  <line x1="16" y1="11" x2="16" y2="24" stroke="#0f172a" stroke-width="0.6"/>
+  <line x1="18.5" y1="11" x2="18.5" y2="24" stroke="#0f172a" stroke-width="0.6"/>
+  <!-- base -->
+  <rect x="7" y="25" width="18" height="3" fill="#a16207"/>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80">
+  <!-- Logo concept 2: Monogram badge + wordmark -->
+  <!-- Badge -->
+  <rect x="8" y="14" width="52" height="52" rx="6" fill="#0f172a"/>
+  <text x="34" y="51" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="30" fill="#a16207" text-anchor="middle">RL</text>
+  <!-- Vertical divider -->
+  <line x1="74" y1="22" x2="74" y2="58" stroke="#a16207" stroke-width="1.5"/>
+  <!-- Wordmark -->
+  <text x="86" y="38" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="22" fill="#0f172a" letter-spacing="1">Rovner Law</text>
+  <text x="86" y="58" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="400" font-size="10" fill="#475569" letter-spacing="2">PERSONAL INJURY · CRIMINAL DEFENSE</text>
+</svg>

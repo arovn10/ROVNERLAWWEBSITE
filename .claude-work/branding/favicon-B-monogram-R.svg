@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Option B: Serif monogram R on navy with gold accent bar -->
+  <rect width="32" height="32" rx="6" fill="#0f172a"/>
+  <rect x="4" y="26" width="24" height="2" rx="1" fill="#a16207"/>
+  <text x="16" y="22" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="22" fill="#a16207" text-anchor="middle">R</text>
+</svg>
