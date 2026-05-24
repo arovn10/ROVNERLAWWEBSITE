@@ -36,7 +36,7 @@ export default function EditPracticeAreaPage() {
             try {
               const featuresArray = JSON.parse(data.features);
               featuresString = featuresArray.join(', ');
-            } catch (_) {
+            } catch {
               featuresString = data.features;
             }
           }

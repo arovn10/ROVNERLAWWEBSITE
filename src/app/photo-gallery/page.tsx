@@ -1,4 +1,5 @@
 "use client";
+import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import MobileHeader from '@/components/MobileHeader';
@@ -6,7 +7,6 @@ import MobileNav from '@/components/MobileNav';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { useFirmName } from '@/lib/FirmNameContext';
 import { Mail } from 'lucide-react';
 
 // Archive type definition
@@ -53,7 +53,6 @@ function Lightbox({ src, desc, onClose }: { src: string; desc?: string; onClose:
 }
 
 export default function PhotoGalleryPage() {
-  const { firmName } = useFirmName();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [lightbox, setLightbox] = useState<{src: string, desc?: string} | null>(null);
   const [archives, setArchives] = useState<Archive[]>([]);
@@ -290,10 +289,10 @@ export default function PhotoGalleryPage() {
               <div className="text-orange-600 text-2xl mb-2">📍</div>
               <div className="font-semibold text-gray-800 text-sm">Locations</div>
             </a>
-            <a href="/practice" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            <Link href="/practice" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">⚖️</div>
               <div className="font-semibold text-gray-800 text-sm">Practice Areas</div>
-            </a>
+            </Link>
           </div>
         </section>
 

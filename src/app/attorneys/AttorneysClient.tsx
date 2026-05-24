@@ -8,7 +8,22 @@ import MobileHeader from '@/components/MobileHeader';
 import MobileNav from '@/components/MobileNav';
 import { useState, useRef, useEffect } from 'react';
 
-export default function AttorneysClient({ attorneys }: { attorneys: any[] }) {
+interface Attorney {
+  id: string;
+  name: string;
+  title?: string | null;
+  bio?: string | null;
+  image?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  education?: string | null;
+  experience?: string | null;
+  specialties?: string | null;
+  active?: boolean;
+  order?: number;
+}
+
+export default function AttorneysClient({ attorneys }: { attorneys: Attorney[] }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   // Track expanded bios by attorney id
   const [expanded, setExpanded] = useState<{ [id: string]: boolean }>({});
@@ -24,7 +39,7 @@ export default function AttorneysClient({ attorneys }: { attorneys: any[] }) {
     // TEMP: Show 'View More' for any bio over the length limit
     const newOverflowing: { [id: string]: boolean } = {};
     attorneys.forEach((attorney) => {
-      newOverflowing[attorney.id] = (attorney.bio?.length > BIO_LENGTH_LIMIT);
+      newOverflowing[attorney.id] = (attorney.bio?.length ?? 0) > BIO_LENGTH_LIMIT;
     });
     setOverflowing(newOverflowing);
   }, [attorneys, expanded]);
@@ -34,7 +49,7 @@ export default function AttorneysClient({ attorneys }: { attorneys: any[] }) {
     const handleResize = () => {
       const newOverflowing: { [id: string]: boolean } = {};
       attorneys.forEach((attorney) => {
-        newOverflowing[attorney.id] = (attorney.bio?.length > BIO_LENGTH_LIMIT);
+        newOverflowing[attorney.id] = (attorney.bio?.length ?? 0) > BIO_LENGTH_LIMIT;
       });
       setOverflowing(newOverflowing);
     };

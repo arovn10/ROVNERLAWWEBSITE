@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Save } from 'lucide-react';
 
@@ -43,7 +42,6 @@ interface LocationsData {
 }
 
 export default function LocationsEditPage() {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [data, setData] = useState<LocationsData | null>(null);
@@ -62,7 +60,7 @@ export default function LocationsEditPage() {
       } else {
         setMessage({ type: 'error', text: 'Failed to load locations content' });
       }
-    } catch (error) {
+    } catch {
       setMessage({ type: 'error', text: 'Failed to load locations content' });
     } finally {
       setIsLoading(false);
@@ -92,7 +90,7 @@ export default function LocationsEditPage() {
         const errorData = await response.json();
         setMessage({ type: 'error', text: errorData.error || 'Failed to update content' });
       }
-    } catch (error) {
+    } catch {
       setMessage({ type: 'error', text: 'Failed to update content' });
     } finally {
       setIsSaving(false);

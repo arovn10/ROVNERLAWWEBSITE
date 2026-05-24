@@ -64,7 +64,7 @@ export default function EditSettlementPage() {
       } else {
         setError(result.error || 'Failed to update settlement');
       }
-    } catch (err) {
+    } catch {
       setError('Error updating settlement');
     } finally {
       setSaving(false);

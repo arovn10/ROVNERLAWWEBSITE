@@ -8,7 +8,6 @@ import Footer from '@/components/Footer';
 import MobileHeader from '@/components/MobileHeader';
 import MobileNav from '@/components/MobileNav';
 import { useFirmName } from '@/lib/FirmNameContext';
-import { practiceAreas } from './practice/page';
 import { Phone, Users, Briefcase, Mail, DollarSign, MapPin } from 'lucide-react';
 
 // Settlement type for fetched data
@@ -32,14 +31,25 @@ function groupSettlementsForCarousel(settlements: Settlement[], groupSize: numbe
   return groups;
 }
 
+interface PracticeAreaItem {
+  id: string;
+  title: string;
+  slug: string;
+  description?: string | null;
+  image?: string | null;
+  banner?: string | null;
+  color?: string | null;
+  imageUrl?: string | null;
+}
+
 export default function HomePage() {
   const { firmName } = useFirmName();
   const [settlements, setSettlements] = useState<Settlement[]>([]);
-  const [settlementGroups, setSettlementGroups] = useState<Settlement[][]>([]);
+  const [, setSettlementGroups] = useState<Settlement[][]>([]);
   const [currentSettlementIndex, setCurrentSettlementIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [practiceAreas, setPracticeAreas] = useState<any[]>([]);
+  const [practiceAreas, setPracticeAreas] = useState<PracticeAreaItem[]>([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentPracticeAreaIndex, setCurrentPracticeAreaIndex] = useState(0);
   const settlementsTrackRef = useRef<HTMLDivElement>(null);
@@ -56,7 +66,7 @@ export default function HomePage() {
         setSettlementGroups(groupSettlementsForCarousel(data, 3));
         setLoading(false);
       })
-      .catch((err) => {
+      .catch(() => {
         setError('Failed to load settlements');
         setLoading(false);
       });
@@ -239,13 +249,13 @@ export default function HomePage() {
                       transform: `translateX(-${currentPracticeAreaIndex * 260}px)`
                     }}
                   >
-                    {practiceAreas.map((area: any) => (
+                    {practiceAreas.map((area) => (
                       <Link key={area.id} href={`/practice/${area.slug}`} className="group block bg-white rounded-xl shadow-sm border border-slate-200/80 px-8 py-10 text-center hover:shadow-md hover:border-slate-300 transition-all duration-200 min-w-[240px] max-w-[260px] mx-2">
                         <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 group-hover:bg-slate-200 mx-auto">
                           <Briefcase size={24} className="text-slate-600 group-hover:text-slate-700" />
                         </div>
                         <div className="font-semibold text-slate-900 mb-2 group-hover:text-slate-700 transition-colors">{area.title}</div>
-                        <div className="text-slate-500 text-sm leading-relaxed">{area.description?.slice(0, 80)}{area.description?.length > 80 ? '...' : ''}</div>
+                        <div className="text-slate-500 text-sm leading-relaxed">{area.description?.slice(0, 80)}{(area.description?.length ?? 0) > 80 ? '...' : ''}</div>
                       </Link>
                     ))}
                   </div>
@@ -476,10 +486,10 @@ export default function HomePage() {
               <Users className="w-8 h-8 mx-auto mb-2 text-slate-600" />
               <div className="font-semibold text-slate-800 text-sm">Our Attorneys</div>
             </a>
-            <a href="/practice" className="bg-white rounded-xl p-4 shadow-sm border border-slate-200 text-center hover:shadow-md hover:border-slate-300 transition">
+            <Link href="/practice" className="bg-white rounded-xl p-4 shadow-sm border border-slate-200 text-center hover:shadow-md hover:border-slate-300 transition">
               <Briefcase className="w-8 h-8 mx-auto mb-2 text-slate-600" />
               <div className="font-semibold text-slate-800 text-sm">Practice Areas</div>
-            </a>
+            </Link>
             <a href="/locations" className="bg-white rounded-xl p-4 shadow-sm border border-slate-200 text-center hover:shadow-md hover:border-slate-300 transition">
               <MapPin className="w-8 h-8 mx-auto mb-2 text-slate-600" />
               <div className="font-semibold text-slate-800 text-sm">Locations</div>
@@ -506,64 +516,3 @@ export default function HomePage() {
   );
 }
 
-function groupPracticeAreasForCarousel(areas: typeof practiceAreas, groupSize: number) {
-  const groups = [];
-  for (let i = 0; i < areas.length; i += groupSize) {
-    groups.push(areas.slice(i, i + groupSize));
-  }
-  return groups;
-}
-
-function PracticeAreasCarousel({ practiceAreas }: { practiceAreas: any[] }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const visibleCount = 3;
-  const maxIndex = practiceAreas.length - visibleCount;
-
-  useEffect(() => {
-    if (practiceAreas.length <= visibleCount) return;
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1 > maxIndex ? 0 : prev + 1));
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [maxIndex, practiceAreas.length]);
-
-  const next = () => setCurrentIndex((prev) => (prev + 1 > maxIndex ? 0 : prev + 1));
-  const prev = () => setCurrentIndex((prev) => (prev - 1 < 0 ? maxIndex : prev - 1));
-
-  return (
-    <div className="carousel-container" style={{maxWidth: '1400px', margin: '0 auto'}}>
-      <button className="carousel-btn prev-btn" onClick={prev}>&#8249;</button>
-      <div className="settlements-carousel">
-        <div className="grid grid-3" style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '3rem'}}>
-          {practiceAreas.slice(currentIndex, currentIndex + visibleCount).map((area: any) => (
-            <div key={area.id} className="card settlement-card" style={{
-              background:'#fff',
-              borderRadius:'14px',
-              boxShadow:'0 2px 10px rgba(20,28,38,0.07)',
-              padding:'1.1rem 1.2rem 1.2rem 1.2rem',
-              display:'flex',
-              flexDirection:'column',
-              alignItems:'center',
-              minHeight:'320px',
-              maxWidth:'370px',
-              margin:'0 auto',
-              gap:'0.7rem',
-            }}>
-              <div className="settlement-icon" style={{marginBottom:'0.5rem'}}>
-                {area.image && <img src={area.image} alt={area.title} style={{maxWidth:'100%',height:'120px',objectFit:'cover',borderRadius:'10px'}} />}
-              </div>
-              <div style={{fontWeight:700,fontSize:'1.08rem',margin:'0.3rem 0 0.2rem',color:'#1a202c',textAlign:'center',lineHeight:1.2}}>{area.title}</div>
-              <div style={{fontSize:'0.93rem',color:'#444',marginBottom:'0.7rem',lineHeight:1.5,fontWeight:400,textAlign:'center',minHeight:0}}>{area.description}</div>
-            </div>
-          ))}
-        </div>
-        <div className="carousel-indicators" style={{display:'flex',justifyContent:'center',marginTop:'1.5rem'}}>
-          {Array.from({length: maxIndex + 1}).map((_, idx) => (
-            <button key={idx} className={`indicator ${idx === currentIndex ? 'active' : ''}`} onClick={() => setCurrentIndex(idx)} />
-          ))}
-        </div>
-      </div>
-      <button className="carousel-btn next-btn" onClick={next}>&#8250;</button>
-    </div>
-  );
-}
