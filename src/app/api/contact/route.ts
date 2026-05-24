@@ -23,6 +23,15 @@ export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
 
+    // Honeypot: a real form leaves `website` empty. If it's filled, a bot
+    // auto-completed every input. Return a 200 so the bot thinks it won.
+    if (typeof data.website === "string" && data.website.trim() !== "") {
+      return NextResponse.json({
+        success: true,
+        message: "Thank you for your message. We will contact you soon!",
+      });
+    }
+
     // Basic validation
     if (!data.name?.trim() || !data.email?.trim()) {
       return NextResponse.json(
