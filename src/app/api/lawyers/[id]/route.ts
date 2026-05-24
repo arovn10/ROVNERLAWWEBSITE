@@ -29,14 +29,13 @@ export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     console.log('Lawyer PUT request received');
-    
-    // Temporarily disable session check for debugging
-    // const session = await getServerSession();
-    // if (!session) {
-    //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    // }
 
     const { id } = await params;
     const data = await request.json();

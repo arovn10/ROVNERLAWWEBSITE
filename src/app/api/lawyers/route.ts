@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
 
 export async function GET() {
   try {
@@ -14,16 +15,15 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  try {
-    // Temporarily disable session check for debugging
-    // const session = await getServerSession();
-    // if (!session) {
-    //   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    // }
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
+  try {
     const body = await request.json();
     console.log('Creating lawyer with data:', body);
-    
+
     const { name, title, bio, education, experience, specialties, image, email, phone, order, active } = body;
 
     // Validate required fields
