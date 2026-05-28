@@ -118,85 +118,77 @@ export default function PhotoGalleryPage() {
       {/* Desktop Content */}
       <div className="hidden lg:block">
         {/* Hero/Intro Section */}
-        <section style={{position:'relative',width:'100%',height:'340px',marginBottom:'2.5rem',overflow:'hidden',display:'flex',alignItems:'center',justifyContent:'flex-start',background:'linear-gradient(90deg, #e8f0fe 0%, #fffbe6 100%)'}}>
-          <div style={{position:'relative',height:'100%',width:'340px',flexShrink:0,display:'flex',alignItems:'center',justifyContent:'center',zIndex:2}}>
-            <Image 
-              src="/photos/Attorneys/rrovner.png"
-              alt="Senator Bob Rovner"
-              width={220}
-              height={300}
-              style={{objectFit:'cover',borderRadius:'18px',boxShadow:'0 4px 24px rgba(20,28,38,0.13)'}}
-            />
-          </div>
-          <div style={{padding:'0 2.5rem',zIndex:3}}>
-            <h1 style={{fontSize:'2.7rem',fontWeight:900,marginBottom:'0.7rem',color:'#1a237e',letterSpacing:'-0.01em'}}>The Bob Rovner Archives</h1>
-            <div style={{height:'5px',width:'80px',borderRadius:'2px',background:'var(--gold-accent)',marginBottom:'1.2rem'}}></div>
-            <p style={{fontSize:'1.25rem',color:'#444',maxWidth:'700px',lineHeight:1.6}}>
-              Explore the remarkable journey of Senator Bob Rovner, attorney, legislator, broadcaster, and community leader. These archives chronicle a lifetime of service, achievement, and unforgettable moments with presidents, politicians, and icons of our time.
-            </p>
+        <section className="relative w-full bg-gradient-to-br from-slate-50 via-white to-amber-50/40 py-16 mb-4">
+          <div className="max-w-7xl mx-auto px-8 flex items-center gap-12">
+            <div className="flex-shrink-0">
+              <Image
+                src="/photos/Attorneys/rrovner.png"
+                alt="Senator Bob Rovner"
+                width={220}
+                height={280}
+                className="rounded-2xl shadow-xl object-cover"
+                style={{width:220,height:280}}
+              />
+            </div>
+            <div>
+              <p className="text-amber-700 text-sm font-semibold uppercase tracking-widest mb-2">A Legacy of Service</p>
+              <h1 className="font-serif text-5xl font-bold text-slate-900 tracking-tight mb-4">The Bob Rovner Archives</h1>
+              <div className="h-1 w-16 rounded bg-amber-500 mb-5" />
+              <p className="text-lg text-slate-600 max-w-2xl leading-relaxed">
+                Explore the remarkable journey of Senator Bob Rovner — attorney, legislator, broadcaster, and community leader. These archives chronicle a lifetime of service, achievement, and unforgettable moments with presidents, politicians, and icons of our time.
+              </p>
+            </div>
           </div>
         </section>
+
         {/* Page Content */}
-        <section className="py-16 bg-[var(--gray-50)]">
-          <div style={{maxWidth:'1200px',margin:'0 auto',paddingLeft:'2.5rem',paddingRight:'2.5rem'}}>
-            {categories.map((cat) => (
-              <div key={cat} style={{marginBottom:'3.5rem'}}>
-                {/* Section Header as Chapter */}
-                <div style={{display:'flex',alignItems:'center',gap:'1.2rem',marginBottom:'0.7rem',marginLeft:0}}>
-                  <h2 style={{fontSize:'2rem',fontWeight:800,color:'#1a237e',letterSpacing:'-0.01em',margin:0,textAlign:'left'}}>{cat}</h2>
-                  <div style={{height:'5px',width:'60px',borderRadius:'2px',background:'var(--gold-accent)'}}></div>
+        <section className="py-16 bg-slate-50/50">
+          <div className="max-w-7xl mx-auto px-8">
+            {categories.map((cat, catIdx) => {
+              let intro = '';
+              if (cat === 'Presidents') intro = 'Moments with U.S. Presidents — snapshots of history and leadership.';
+              else if (cat === 'Senate & Politicians') intro = 'Encounters with influential lawmakers and public servants.';
+              else if (cat === 'Celebrities') intro = 'A lifetime among icons of music, film, and culture.';
+              else if (cat === 'Archives') intro = 'Personal memories, rare documents, and the legacy of a public life.';
+              const items = archives.filter(archive => archive.category === cat);
+              return (
+                <div key={cat} className={catIdx > 0 ? 'mt-20' : ''}>
+                  <div className="mb-8">
+                    <h2 className="font-serif text-3xl font-bold text-slate-900 tracking-tight mb-2">{cat}</h2>
+                    <div className="h-1 w-12 rounded bg-amber-500 mb-3" />
+                    {intro && <p className="text-slate-500 max-w-2xl">{intro}</p>}
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    {items.map((archive, idx) => (
+                      <button
+                        key={archive.id + idx}
+                        type="button"
+                        onClick={() => setLightbox({src: archive.imageUrl, desc: archive.title})}
+                        className="group bg-white rounded-xl overflow-hidden border border-slate-200/70 hover:shadow-xl hover:border-amber-500/40 transition-all duration-300 text-left"
+                      >
+                        <div className="relative aspect-[4/3] bg-slate-100 overflow-hidden">
+                          <Image
+                            src={archive.imageUrl}
+                            alt={archive.title || 'Archive photo'}
+                            fill
+                            sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, 50vw"
+                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                        </div>
+                        <div className="p-5">
+                          {archive.title && (
+                            <h3 className="font-semibold text-slate-900 leading-snug mb-1 line-clamp-2 group-hover:text-amber-700 transition-colors">
+                              {archive.title}
+                            </h3>
+                          )}
+                          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{cat}</p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
                 </div>
-                {/* Section Intro */}
-                <div style={{marginBottom:'1.5rem',marginLeft:0}}>
-                  {(() => {
-                    let intro = '';
-                    if (cat === 'Presidents') intro = 'Moments with U.S. Presidents—snapshots of history and leadership.';
-                    else if (cat === 'Senate & Politicians') intro = 'Encounters with influential lawmakers and public servants.';
-                    else if (cat === 'Celebrities') intro = 'A lifetime among icons of music, film, and culture.';
-                    else if (cat === 'Archives') intro = 'Personal memories, rare documents, and the legacy of a public life.';
-                    return (
-                      <p style={{ fontSize: '1.08rem', color: '#555', maxWidth: 700, lineHeight: 1.5 }}>{intro}</p>
-                    );
-                  })()}
-                </div>
-                {/* Timeline Card Layout */}
-                <div style={{display:'flex',flexDirection:'column',gap:'2.2rem',alignItems:'flex-start',position:'relative',paddingLeft:'32px'}}>
-                  {/* Timeline vertical bar */}
-                  <div style={{position:'absolute',left:'8px',top:0,bottom:0,width:'4px',background:'linear-gradient(180deg,#1a237e 0%,#f59e0b 100%)',borderRadius:'2px',zIndex:1,opacity:0.18}}></div>
-                  {archives.filter(archive => archive.category === cat).map((archive, idx) => (
-                    <div
-                      key={archive.id + idx}
-                      className="group relative flex flex-row items-stretch bg-white rounded-2xl shadow-lg border-none overflow-hidden transition-all hover:shadow-2xl hover:-translate-y-1"
-                      style={{ maxWidth: '900px', minHeight: '170px', marginLeft:0, position: 'relative', width:'100%', boxShadow:'0 4px 24px rgba(20,28,38,0.10)', background:'linear-gradient(90deg, #f7fafc 0%, #fffbe6 100%)', padding:'1.5rem 2.2rem 1.5rem 0', alignItems:'center' }}
-                      onClick={() => setLightbox({src: archive.imageUrl, desc: archive.title})}
-                    >
-                      {/* Timeline dot */}
-                      <div style={{position:'absolute',left:'-26px',top:'50%',transform:'translateY(-50%)',width:'18px',height:'18px',background:'linear-gradient(180deg,#1a237e 0%,#f59e0b 100%)',borderRadius:'50%',boxShadow:'0 2px 8px rgba(20,28,38,0.10)',zIndex:3,border:'3px solid #fff'}}></div>
-                      {/* Photo Section */}
-                      <div style={{width:'150px',height:'150px',background:'#f3f4f6',borderRadius:'12px',overflow:'hidden',display:'flex',alignItems:'center',justifyContent:'center',zIndex:3,boxShadow:'0 1px 6px rgba(20,28,38,0.08)',marginRight:'2.2rem'}}>
-                        <Image
-                          src={archive.imageUrl}
-                          alt={archive.title || 'Archive photo'}
-                          width={150}
-                          height={150}
-                          className="rounded-lg group-hover:scale-105 transition-transform duration-200 shadow"
-                          style={{objectFit:'cover',width:'140px',height:'140px'}}
-                        />
-                      </div>
-                      {/* Details Section */}
-                      <div style={{flex:1,display:'flex',flexDirection:'column',justifyContent:'center',zIndex:3,alignItems:'flex-start'}}>
-                        {archive.title && (
-                          <div style={{fontWeight:700,fontSize:'1.18rem',color:'#1a237e',marginBottom:'0.2rem',textAlign:'left',whiteSpace:'normal',overflow:'hidden',textOverflow:'ellipsis',letterSpacing:'-0.01em'}}>{archive.title}</div>
-                        )}
-                        <div style={{fontWeight:500,fontSize:'0.97rem',color:'#f59e0b',textAlign:'left',letterSpacing:'0.01em',marginTop:archive.title?'.2rem':'0'}}>{cat}</div>
-                      </div>
-                      {/* Hover overlay */}
-                      <div className="absolute inset-0 bg-[var(--orange-accent)] bg-opacity-0 group-hover:bg-opacity-10 transition" />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
       </div>

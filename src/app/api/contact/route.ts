@@ -2,12 +2,23 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import Mailgun from "mailgun.js";
 import formData from "form-data";
+import { rateLimit } from "@/lib/rate-limit";
+
+const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW_MS = 60_000;
 
 // Recipient(s) from env; comma-separated for multiple. Default: rovneralec@gmail.com
 const getRecipients = (): string[] => {
   const env = process.env.CONTACT_EMAIL || "rovneralec@gmail.com";
   return env.split(",").map((e) => e.trim()).filter(Boolean);
 };
+
+function getClientIp(request: NextRequest): string {
+  const forwardedFor = request.headers.get("x-forwarded-for");
+  const realIp = request.headers.get("x-real-ip");
+  const ip = forwardedFor?.split(",")[0]?.trim() || realIp || "unknown";
+  return ip.toLowerCase();
+}
 
 function escapeHtml(text: string | undefined | null): string {
   if (text == null) return "";
@@ -21,7 +32,30 @@ function escapeHtml(text: string | undefined | null): string {
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limit by client IP — best-effort, in-memory, per-instance.
+    // Production behind a global limit would need Vercel KV/Redis.
+    const ip = getClientIp(request);
+    const rl = rateLimit(`contact:${ip}`, RATE_LIMIT_MAX, RATE_LIMIT_WINDOW_MS);
+    if (!rl.ok) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again shortly." },
+        {
+          status: 429,
+          headers: { "Retry-After": String(rl.retryAfterSec) },
+        }
+      );
+    }
+
     const data = await request.json();
+
+    // Honeypot: a real form leaves `website` empty. If it's filled, a bot
+    // auto-completed every input. Return a 200 so the bot thinks it won.
+    if (typeof data.website === "string" && data.website.trim() !== "") {
+      return NextResponse.json({
+        success: true,
+        message: "Thank you for your message. We will contact you soon!",
+      });
+    }
 
     // Basic validation
     if (!data.name?.trim() || !data.email?.trim()) {
@@ -110,6 +144,40 @@ export async function POST(request: NextRequest) {
         <p>${escapeHtml(data.facts) || "(none provided)"}</p>
       `,
     });
+
+    // 4. Send confirmation auto-reply to the submitter. Best-effort —
+    // failures here must not break the user-facing flow.
+    const replyTo =
+      process.env.MAILGUN_REPLY_TO || getRecipients()[0] || `noreply@${domain}`;
+    try {
+      await mg.messages.create(domain, {
+        from: fromAddress,
+        to: [data.email],
+        "h:Reply-To": replyTo,
+        subject: "We received your message — Law Offices of Rovner, Allen, Rovner & Sigman",
+        html: `
+          <p>Hi ${escapeHtml(data.name)},</p>
+          <p>Thank you for reaching out to the Law Offices of Rovner, Allen, Rovner &amp; Sigman.
+          We received your message and a member of our team will be in touch shortly.</p>
+          <p>For your records, here is a copy of what you sent us:</p>
+          <ul>
+            <li><strong>Phone:</strong> ${escapeHtml(data.phone) || "(not provided)"}</li>
+            <li><strong>Date of incident:</strong> ${escapeHtml(data.dateOfIncident) || "(not provided)"}</li>
+            <li><strong>Case type:</strong> ${escapeHtml(data.caseType) || "(not provided)"}</li>
+            <li><strong>Currently represented:</strong> ${escapeHtml(data.represented) || "(not provided)"}</li>
+          </ul>
+          <p><strong>Your message:</strong></p>
+          <p>${escapeHtml(data.facts) || "(none provided)"}</p>
+          <p>If your matter is urgent, please call us at <strong>215-259-5958</strong>.</p>
+          <p>— Rovner Law</p>
+        `,
+      });
+    } catch (confirmError) {
+      console.error(
+        "Confirmation email to submitter failed:",
+        confirmError instanceof Error ? confirmError.message : confirmError
+      );
+    }
 
     return NextResponse.json({
       success: true,

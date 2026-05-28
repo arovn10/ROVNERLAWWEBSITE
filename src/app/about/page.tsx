@@ -83,9 +83,9 @@ export default function AboutPage() {
       <div className="hidden lg:block">
         {/* Hero Section */}
         <section className="relative w-full h-64 md:h-80 overflow-hidden">
-          <SmoothImage 
-            src="/photos/banner-about-1-1024x128.png"
-            alt="About Our Law Firm" 
+          <SmoothImage
+            src="/photos/banner-sign-hero.webp"
+            alt="Rovner Law Offices — Feasterville-Trevose, PA"
             fill
             sizes="100vw"
             className="object-cover object-center"
@@ -262,8 +262,8 @@ export default function AboutPage() {
         {/* Mobile Hero Banner */}
         <section className="relative w-full h-44 overflow-hidden flex items-center justify-center rounded-b-3xl shadow-md mb-4">
           <SmoothImage
-            src="/photos/banner-about-1-1024x128.png"
-            alt="About Our Law Firm"
+            src="/photos/banner-sign-hero.webp"
+            alt="Rovner Law Offices"
             fill
             sizes="100vw"
             className="object-cover object-center"
