@@ -34,7 +34,9 @@ export default function ContactPage() {
     dateOfIncident: '',
     caseType: '',
     represented: '',
-    facts: ''
+    facts: '',
+    // Honeypot — must stay empty. Bots that auto-fill every input get caught.
+    website: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
@@ -127,7 +129,8 @@ export default function ContactPage() {
           dateOfIncident: '',
           caseType: '',
           represented: '',
-          facts: ''
+          facts: '',
+          website: ''
         });
         setCaptchaToken('');
         desktopCaptchaRef.current?.resetCaptcha();
@@ -261,10 +264,34 @@ export default function ContactPage() {
                 </div>
               )}
               <form className="contact-form" onSubmit={handleSubmit}>
+                {/* Honeypot: must stay empty. Hidden from real users. */}
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: 'absolute',
+                    left: '-10000px',
+                    top: 'auto',
+                    width: '1px',
+                    height: '1px',
+                    overflow: 'hidden',
+                  }}
+                >
+                  <label>
+                    Website (do not fill)
+                    <input
+                      type="text"
+                      name="website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={formData.website}
+                      onChange={handleInputChange}
+                    />
+                  </label>
+                </div>
                 <div className="form-group">
                   <label>Full Name *</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
@@ -470,10 +497,34 @@ export default function ContactPage() {
             <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-4">
               <h3 className="font-bold text-gray-900 mb-4 text-lg">Contact Form</h3>
               <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+                {/* Honeypot: must stay empty. Hidden from real users. */}
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: 'absolute',
+                    left: '-10000px',
+                    top: 'auto',
+                    width: '1px',
+                    height: '1px',
+                    overflow: 'hidden',
+                  }}
+                >
+                  <label>
+                    Website (do not fill)
+                    <input
+                      type="text"
+                      name="website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={formData.website}
+                      onChange={handleInputChange}
+                    />
+                  </label>
+                </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
