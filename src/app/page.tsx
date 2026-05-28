@@ -104,8 +104,8 @@ export default function HomePage() {
         {/* Hero Banner - Refined Professional */}
         <section className="relative w-full aspect-[3/1] min-h-[420px] overflow-hidden bg-slate-900">
           <SmoothImage
-              src="/photos/banner-home-new-1024x343.png"
-              alt="Rovner Law - Philadelphia Personal Injury Lawyers"
+              src="/photos/banner-sign-hero.webp"
+              alt="Rovner Law Offices — 175 Bustleton Pike, Feasterville-Trevose, PA"
               fill
               sizes="100vw"
               className="object-cover object-center"
@@ -330,8 +330,8 @@ export default function HomePage() {
         {/* Mobile Hero Banner */}
         <section className="relative w-full h-44 overflow-hidden flex items-center justify-center rounded-b-3xl shadow-md mb-4">
           <SmoothImage
-            src="/photos/banner-home-new-1024x343.png"
-            alt="Rovner Law"
+            src="/photos/banner-sign-hero.webp"
+            alt="Rovner Law Offices"
             fill
             sizes="100vw"
             className="object-cover object-center"

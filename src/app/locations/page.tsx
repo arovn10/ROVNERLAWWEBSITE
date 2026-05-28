@@ -124,11 +124,11 @@ export default function LocationsPage() {
         {/* Desktop Hero Banner */}
         <section className="relative w-full aspect-[3/1] min-h-[340px] overflow-hidden bg-slate-900">
           <Image
-            src="/photos/banner-sign-rovner-law.png"
-            alt="Our Locations"
+            src="/photos/banner-building-hero.webp"
+            alt="Rovner Law Offices building — 175 Bustleton Pike, Feasterville-Trevose, PA"
             fill
             sizes="100vw"
-            className="object-cover object-[center_35%]"
+            className="object-cover object-center"
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900/70 to-slate-900/95" />
@@ -287,11 +287,11 @@ export default function LocationsPage() {
         {/* Mobile Hero Banner */}
         <section className="relative w-full aspect-[2/1] min-h-[200px] overflow-hidden">
           <Image
-            src="/photos/banner-sign-rovner-law.png"
-            alt="Our Locations"
+            src="/photos/banner-building-hero.webp"
+            alt="Rovner Law Offices building — 175 Bustleton Pike, Feasterville-Trevose, PA"
             fill
             sizes="100vw"
-            className="object-cover object-[center_35%]"
+            className="object-cover object-center"
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 via-slate-900/75 to-slate-900/95" />
