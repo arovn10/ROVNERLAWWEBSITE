@@ -2,9 +2,8 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import MobileHeader from '@/components/MobileHeader';
-import MobileNav from '@/components/MobileNav';
 import { prisma } from '@/lib/prisma';
+import MobileNavClient from './MobileNavClient';
 
 async function getNewsArticle(id: string) {
   try {
@@ -34,8 +33,7 @@ export default async function NewsArticlePage({ params }: { params: Promise<{ id
       </div>
       {/* Mobile Header/Nav */}
       <div className="block lg:hidden w-full">
-        <MobileHeader isMenuOpen={false} onMenuClick={() => {}} />
-        <MobileNav isOpen={false} onClose={() => {}} />
+        <MobileNavClient />
       </div>
 
       {/* Desktop Content */}
