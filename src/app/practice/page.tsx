@@ -7,260 +7,34 @@ import Footer from '@/components/Footer';
 import MobileHeader from '@/components/MobileHeader';
 import MobileNav from '@/components/MobileNav';
 import { useFirmName } from '@/lib/FirmNameContext';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Mail } from 'lucide-react';
 
-const practiceAreas = [
-  {
-    id: 1,
-    title: "Personal Injury",
-    slug: "personal-injury",
-    description: "Our personal injury attorneys are dedicated to helping victims of negligence recover the compensation they deserve. We handle all types of personal injury cases with skill and compassion.",
-    features: [
-      "Slip and fall accidents",
-      "Wrongful death claims", 
-      "Catastrophic injuries",
-      "Brain and spinal cord injuries",
-      "Burn injuries"
-    ],
-    image: "/photos/personal-injury.jpg",
-    banner: "/photos/banner-personal-injury-1024x128.png",
-    color: "blue"
-  },
-  {
-    id: 2,
-    title: "Auto Accidents",
-    slug: "auto-accidents", 
-    description: "If you have been injured in a motor vehicle accident, our experienced attorneys can help you understand your legal options and develop a strategy for maximizing compensation.",
-    features: [
-      "Car accidents",
-      "Motorcycle accidents", 
-      "Truck accidents",
-      "Bicycle accidents",
-      "Pedestrian accidents"
-    ],
-    image: "/photos/auto-accidents.jpg",
-    banner: "/photos/banner-auto-1024x128.png", 
-    color: "red"
-  },
-  {
-    id: 3,
-    title: "Medical Malpractice",
-    slug: "medical-malpractice",
-    description: "Even well-meaning doctors make mistakes that can have a devastating effect on a patient's health. If you or someone you love has been a victim of medical malpractice, contact us today.",
-    features: [
-      "Surgical errors",
-      "Misdiagnosis/delayed diagnosis",
-      "Medication errors", 
-      "Birth injuries",
-      "Hospital negligence"
-    ],
-    image: "/photos/medical.jpg",
-    banner: "/photos/banner-medical-1024x128.png",
-    color: "green"
-  },
-  {
-    id: 4,
-    title: "Premises Liability",
-    slug: "premises-liability",
-    description: "Property owners have an obligation to keep their premises safe. If they fail to do so, they may be liable for the damages, losses and injuries they've caused.",
-    features: [
-      "Slip and fall accidents",
-      "Trip and fall accidents",
-      "Inadequate security",
-      "Swimming pool accidents", 
-      "Construction site accidents"
-    ],
-    image: "/photos/premises.jpg",
-    banner: "/photos/banner-premises-1024x128.png",
-    color: "purple"
-  },
-  {
-    id: 5,
-    title: "Workers' Compensation",
-    slug: "workers-compensation",
-    description: "If you've been injured on the job, you may be entitled to workers' compensation benefits. Our experienced attorneys can help you navigate the complex claims process.",
-    features: [
-      "Workplace injuries",
-      "Occupational diseases",
-      "Repetitive stress injuries",
-      "Construction accidents",
-      "Benefits appeals"
-    ],
-    image: "/photos/workers-comp.jpg",
-    banner: "/photos/banner-workers-1024x128.png",
-    color: "blue"
-  },
-  {
-    id: 6,
-    title: "Product Liability",
-    slug: "defective-products",
-    description: "When defective products cause injuries, manufacturers and distributors can be held responsible. We help victims of dangerous and defective products seek justice.",
-    features: [
-      "Defective automobiles",
-      "Dangerous pharmaceuticals",
-      "Defective medical devices",
-      "Faulty consumer products",
-      "Industrial equipment failures"
-    ],
-    image: "/photos/products.jpg",
-    banner: "/photos/banner-products-1024x128.png",
-    color: "red"
-  },
-  {
-    id: 7,
-    title: "Motorcycle Accidents",
-    slug: "motorcycle-accidents",
-    description: "Motorcycle accidents often result in serious injuries due to the lack of protection. Our attorneys understand the unique challenges motorcyclists face and fight for fair compensation.",
-    features: [
-      "Lane splitting accidents",
-      "Intersection collisions", 
-      "Road hazard accidents",
-      "Defective motorcycle parts",
-      "Insurance claim disputes"
-    ],
-    image: "/photos/motorcycle.jpg",
-    banner: "/photos/banner-motorcycle-1024x128.png",
-    color: "green"
-  },
-  {
-    id: 8,
-    title: "Truck Accidents",
-    slug: "truck-accidents",
-    description: "Commercial truck accidents can cause devastating injuries and complex legal issues. Our experienced attorneys know how to handle these challenging cases.",
-    features: [
-      "18-wheeler accidents",
-      "Delivery truck accidents",
-      "Driver fatigue cases",
-      "Improper loading accidents",
-      "Commercial vehicle violations"
-    ],
-    image: "/photos/truck-accident.jpg",
-    banner: "/photos/banner-truck-1024x128.png",
-    color: "purple"
-  },
-  {
-    id: 9,
-    title: "Family Law",
-    slug: "family-law",
-    description: "Our family law attorneys provide compassionate representation during difficult times, helping families navigate complex legal matters with care and understanding.",
-    features: [
-      "Divorce proceedings",
-      "Child custody disputes",
-      "Child support matters",
-      "Alimony/spousal support",
-      "Adoption services"
-    ],
-    image: "/photos/general.jpg",
-    banner: "/photos/banner-family-1024x128.png",
-    color: "blue"
-  },
-  {
-    id: 10,
-    title: "Criminal Defense",
-    slug: "criminal-defense",
-    description: "If you're facing criminal charges, you need experienced legal representation. Our criminal defense attorneys protect your rights and fight for the best possible outcome.",
-    features: [
-      "DUI/DWI defense",
-      "Drug crime defense",
-      "Assault charges",
-      "Theft and fraud charges",
-      "Traffic violations"
-    ],
-    image: "/photos/criminal.jpg",
-    banner: "/photos/banner-court-1024x128.png",
-    color: "red"
-  },
-  {
-    id: 11,
-    title: "Social Security Disability",
-    description: "When disability prevents you from working, Social Security benefits can provide crucial financial support. We help clients navigate the complex application and appeals process.",
-    features: [
-      "Initial applications",
-      "Appeals and hearings",
-      "Disability determinations",
-      "Benefits calculations",
-      "Ongoing representation"
-    ],
-    image: "/photos/social-security.jpg",
-    banner: "/photos/banner-social-1024x128.png",
-    color: "green"
-  },
-  {
-    id: 12,
-    title: "General Legal Matters",
-    description: "Our experienced team handles a wide range of legal matters, including real estate, landlord-tenant disputes, wills, estates, and probate, providing trusted guidance for your general legal needs.",
-    features: [
-      "Real Estate",
-      "Landlord-Tenant Disputes and Litigation",
-      "Wills",
-      "Estates and Probate"
-    ],
-    image: "/photos/general.jpg",
-    banner: "/photos/banner-court-1024x128.png",
-    color: "blue"
-  },
-  {
-    id: 13,
-    title: "Limited Tort Lawyer",
-    description: "We help limited tort clients fight for fair compensation and prove their injuries meet the serious injury threshold.",
-    features: [
-      "Limited tort insurance exceptions",
-      "Full tort qualification",
-      "Insurance coverage review",
-      "Serious injury litigation"
-    ],
-    image: "/photos/auto-accidents.jpg",
-    banner: "/photos/banner-auto-1024x128.png",
-    color: "red"
-  },
-  {
-    id: 14,
-    title: "Uber Lawyer",
-    description: "Injured in an Uber or Lyft? We handle rideshare accident claims and insurance issues for drivers and passengers.",
-    features: [
-      "Uber/Lyft accident claims",
-      "Insurance coverage gaps",
-      "Passenger and driver representation",
-      "Settlement negotiation"
-    ],
-    image: "/photos/auto-accidents.jpg",
-    banner: "/photos/banner-auto-1024x128.png",
-    color: "green"
-  },
-  {
-    id: 15,
-    title: "Taxi Lawyer",
-    description: "We represent clients injured in taxi accidents, guiding you through claims, insurance, and legal proceedings.",
-    features: [
-      "Taxi accident claims",
-      "Insurance and legal system navigation",
-      "Medical bill assistance",
-      "Settlement and trial representation"
-    ],
-    image: "/photos/auto-accidents.jpg",
-    banner: "/photos/banner-auto-1024x128.png",
-    color: "purple"
-  },
-  {
-    id: 16,
-    title: "Septa Bus Accident Lawyer",
-    description: "We help victims of SEPTA bus, trolley, and train accidents recover compensation for injuries and losses.",
-    features: [
-      "SEPTA bus, trolley, and train accidents",
-      "Pedestrian and passenger injury claims",
-      "Insurance and legal claims",
-      "Expert investigation and evidence gathering"
-    ],
-    image: "/photos/auto-accidents.jpg",
-    banner: "/photos/banner-auto-1024x128.png",
-    color: "blue"
-  }
-];
+interface PracticeArea {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  // Stored in the DB as newline-separated string; split on render.
+  features: string | null;
+  image: string | null;
+  banner: string | null;
+  color: string | null;
+}
+
+const DEFAULT_PRACTICE_IMAGE = '/photos/general.jpg';
 
 export default function PracticeAreasPage() {
   const { firmName } = useFirmName();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [practiceAreas, setPracticeAreas] = useState<PracticeArea[]>([]);
+
+  useEffect(() => {
+    fetch('/api/practice-areas')
+      .then((res) => res.json())
+      .then((data: PracticeArea[]) => setPracticeAreas(data))
+      .catch((err) => console.error('Failed to load practice areas:', err));
+  }, []);
 
   return (
     <div style={{backgroundColor: '#fafafa'}}>
@@ -348,8 +122,8 @@ export default function PracticeAreasPage() {
               <div key={area.id} className="practice-card">
                 {/* Image */}
                 <div className="practice-card-image-container">
-                  <Image 
-                    src={area.image} 
+                  <Image
+                    src={area.image || DEFAULT_PRACTICE_IMAGE}
                     alt={area.title}
                     fill
                     className="practice-card-image"
@@ -411,7 +185,7 @@ export default function PracticeAreasPage() {
                       gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
                       gap: '0.5rem'
                     }}>
-                        {area.features.map((feature, index) => (
+                        {(area.features?.split('\n').filter(Boolean) || []).map((feature, index) => (
                         <li key={index} style={{
                           fontSize: '0.9rem',
                           color: '#666',
@@ -611,12 +385,12 @@ export default function PracticeAreasPage() {
             {practiceAreas.map((area) => (
               <Link
                 key={area.id}
-                href={`/practice/${area.slug || area.title.toLowerCase().replace(/\s+/g, '-')}`}
+                href={`/practice/${area.slug}`}
                 className="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden hover:shadow-lg transition"
               >
                 <div className="relative h-32">
                   <Image
-                    src={area.image}
+                    src={area.image || DEFAULT_PRACTICE_IMAGE}
                     alt={area.title}
                     fill
                     className="object-cover"
@@ -677,6 +451,5 @@ export default function PracticeAreasPage() {
       </div>
     </div>
   );
-} 
-
+}
  
