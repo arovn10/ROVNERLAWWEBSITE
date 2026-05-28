@@ -2,12 +2,23 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import Mailgun from "mailgun.js";
 import formData from "form-data";
+import { rateLimit } from "@/lib/rate-limit";
+
+const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW_MS = 60_000;
 
 // Recipient(s) from env; comma-separated for multiple. Default: rovneralec@gmail.com
 const getRecipients = (): string[] => {
   const env = process.env.CONTACT_EMAIL || "rovneralec@gmail.com";
   return env.split(",").map((e) => e.trim()).filter(Boolean);
 };
+
+function getClientIp(request: NextRequest): string {
+  const forwardedFor = request.headers.get("x-forwarded-for");
+  const realIp = request.headers.get("x-real-ip");
+  const ip = forwardedFor?.split(",")[0]?.trim() || realIp || "unknown";
+  return ip.toLowerCase();
+}
 
 function escapeHtml(text: string | undefined | null): string {
   if (text == null) return "";
@@ -21,6 +32,20 @@ function escapeHtml(text: string | undefined | null): string {
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limit by client IP — best-effort, in-memory, per-instance.
+    // Production behind a global limit would need Vercel KV/Redis.
+    const ip = getClientIp(request);
+    const rl = rateLimit(`contact:${ip}`, RATE_LIMIT_MAX, RATE_LIMIT_WINDOW_MS);
+    if (!rl.ok) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again shortly." },
+        {
+          status: 429,
+          headers: { "Retry-After": String(rl.retryAfterSec) },
+        }
+      );
+    }
+
     const data = await request.json();
 
     // Basic validation
