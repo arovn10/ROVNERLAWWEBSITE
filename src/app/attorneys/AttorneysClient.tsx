@@ -87,117 +87,107 @@ export default function AttorneysClient({ attorneys }: { attorneys: any[] }) {
         {/* Attorneys List */}
         <section className="max-w-5xl mx-auto px-6 py-16">
           <div className="text-center mb-14">
-            <h2 className="font-serif text-2xl font-bold text-slate-900">Meet Our Attorneys</h2>
-            <p className="text-slate-500 mt-2">Dedicated legal professionals committed to your case</p>
+            <p className="text-slate-500 text-sm font-semibold uppercase tracking-widest mb-2">Our Team</p>
+            <h2 className="font-serif text-3xl font-bold text-slate-900">Meet Our Attorneys</h2>
+            <p className="text-slate-500 mt-2 max-w-xl mx-auto">Dedicated legal professionals committed to your case</p>
           </div>
-          <div style={{display:'grid',gridTemplateColumns:'1fr',gap:'2.5rem',justifyContent:'center',alignItems:'center',margin:'2rem 0'}}>
-          {attorneys.map((attorney) => (
-            <div key={attorney.id} style={{
-              display:'grid',
-              gridTemplateColumns:'160px 1fr 1.2fr',
-              gridTemplateRows:'1fr auto',
-              alignItems:'center',
-              maxWidth:'1400px',
-              margin:'0 auto',
-              width:'100%',
-              background:'#fafafa',
-              borderRadius:'18px',
-              border:'none',
-              boxShadow:'0 4px 24px rgba(20,28,38,0.10)',
-              position:'relative',
-              overflow:'hidden',
-              fontFamily:'system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif',
-              padding:'2.5rem 2.5rem 1.5rem 2.5rem',
-            }}
-            className="attorney-card-hover"
-            >
-              {/* Gradient Left Border */}
-              <div style={{position:'absolute',left:0,top:0,bottom:0,width:'12px',background:'linear-gradient(180deg, #1e293b 0%, #475569 100%)',borderRadius:'18px 0 0 18px',zIndex:2,gridRow:'1 / span 2'}} />
-              {/* Photo Section */}
-              <div style={{gridColumn:1,gridRow:1,display:'flex',alignItems:'center',justifyContent:'center',height:'220px',background:'#f3f4f6',borderRadius:'12px 0 0 12px',overflow:'hidden',boxShadow:'0 1px 6px rgba(20,28,38,0.08)',zIndex:3}}>
-              <SmoothImage
-                src={attorney.image || '/photos/default-headshot.jpg'}
-                alt={attorney.name}
-                width={160}
-                height={220}
-                style={{objectFit:'cover',width:'160px',height:'220px'}}
-              />
-              </div>
-              {/* About Section */}
-              <div style={{gridColumn:2,gridRow:1,padding:'0 2rem 0 2.5rem',display:'flex',flexDirection:'column',justifyContent:'center',height:'100%',zIndex:3}}>
-                <div style={{fontWeight:700,fontSize:'1.18rem',color:'#1e293b',marginBottom:'0.2rem',textAlign:'left',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis',letterSpacing:'-0.01em'}}>{attorney.name}</div>
-                <div style={{fontWeight:500,fontSize:'1.01rem',color:'#64748b',marginBottom:'0.7rem',textAlign:'left',letterSpacing:'0.01em'}}>{attorney.title}</div>
-                {attorney.bio && (
-                  <div style={{position:'relative'}}>
-                    <div
-                      ref={el => { bioRefs.current[attorney.id] = el; }}
-                      style={{
-                        fontSize:'0.95rem',color:'#444',marginBottom:'0.7rem',textAlign:'left',lineHeight:1.6,letterSpacing:'0.01em',
-                        maxHeight: expanded[attorney.id] ? 'none' : '96px',
-                        overflow: expanded[attorney.id] ? 'visible' : 'hidden',
-                        transition: 'max-height 0.3s',
-                        whiteSpace: 'pre-line',
-                      }}
-                    >
-                      {attorney.bio}
+          <div className="space-y-10">
+            {attorneys.map((attorney) => (
+              <article
+                key={attorney.id}
+                className="relative bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-slate-100"
+              >
+                <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-slate-700 via-slate-500 to-amber-500" />
+                <div className="flex flex-row gap-10 p-10 pl-12">
+                  <div className="flex-shrink-0">
+                    <div className="rounded-xl overflow-hidden shadow-md bg-slate-100" style={{width:220,height:280}}>
+                      <SmoothImage
+                        src={attorney.image || '/photos/default-headshot.jpg'}
+                        alt={attorney.name}
+                        width={220}
+                        height={280}
+                        style={{objectFit:'cover',width:220,height:280}}
+                      />
                     </div>
-                    {overflowing[attorney.id] && (
-                      <button
-                        style={{
-                          position:'absolute',right:0,bottom:0,background:'rgba(255,255,255,0.95)',color:'#1976d2',border:'none',fontWeight:600,fontSize:'0.95rem',cursor:'pointer',padding:'0.2rem 0.7rem',borderRadius:'8px',boxShadow:'0 1px 4px rgba(20,28,38,0.07)',zIndex:5
-                        }}
-                        onClick={() => setExpanded(e => ({...e, [attorney.id]: !e[attorney.id]}))}
-                      >
-                        {expanded[attorney.id] ? 'View Less' : 'View More'}
-                      </button>
+                  </div>
+                  <div className="flex-1 flex flex-col min-w-0">
+                    <header className="mb-5">
+                      <h3 className="font-serif text-2xl font-bold text-slate-900 tracking-tight">{attorney.name}</h3>
+                      {attorney.title && (
+                        <p className="text-slate-500 text-base mt-1">{attorney.title}</p>
+                      )}
+                    </header>
+                    <div className="h-px bg-slate-200 mb-5" />
+                    {attorney.bio && (
+                      <div className="mb-5 relative">
+                        <div
+                          ref={el => { bioRefs.current[attorney.id] = el; }}
+                          className="text-slate-700 text-[15px] leading-relaxed whitespace-pre-line transition-all duration-300"
+                          style={{
+                            maxHeight: expanded[attorney.id] ? 'none' : '96px',
+                            overflow: expanded[attorney.id] ? 'visible' : 'hidden',
+                          }}
+                        >
+                          {attorney.bio}
+                        </div>
+                        {overflowing[attorney.id] && (
+                          <button
+                            type="button"
+                            onClick={() => setExpanded(e => ({...e, [attorney.id]: !e[attorney.id]}))}
+                            className="mt-2 inline-flex items-center text-sm font-semibold text-slate-700 hover:text-amber-700 transition-colors"
+                          >
+                            {expanded[attorney.id] ? 'View less ↑' : 'View more ↓'}
+                          </button>
+                        )}
+                      </div>
+                    )}
+                    <dl className="grid grid-cols-1 gap-y-2 mb-6 text-[14px] text-slate-700 leading-relaxed">
+                      {attorney.specialties && (
+                        <div>
+                          <dt className="inline font-semibold text-slate-900">Specialties: </dt>
+                          <dd className="inline">{Array.isArray(attorney.specialties) ? attorney.specialties.join(', ') : attorney.specialties}</dd>
+                        </div>
+                      )}
+                      {attorney.education && (
+                        <div>
+                          <dt className="inline font-semibold text-slate-900">Education: </dt>
+                          <dd className="inline">{attorney.education}</dd>
+                        </div>
+                      )}
+                      {attorney.experience && (
+                        <div>
+                          <dt className="inline font-semibold text-slate-900">Experience: </dt>
+                          <dd className="inline">{attorney.experience}</dd>
+                        </div>
+                      )}
+                      {attorney.email && (
+                        <div>
+                          <dt className="inline font-semibold text-slate-900">Email: </dt>
+                          <dd className="inline"><a href={`mailto:${attorney.email}`} className="text-slate-700 hover:text-amber-700 underline-offset-2 hover:underline">{attorney.email}</a></dd>
+                        </div>
+                      )}
+                      {attorney.phone && (
+                        <div>
+                          <dt className="inline font-semibold text-slate-900">Phone: </dt>
+                          <dd className="inline"><a href={`tel:${attorney.phone}`} className="text-slate-700 hover:text-amber-700">{attorney.phone}</a></dd>
+                        </div>
+                      )}
+                    </dl>
+                    {attorney.name !== 'Robert A. Rovner' && (
+                      <div className="mt-auto flex justify-end">
+                        <Link
+                          href="/contact"
+                          className="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900 hover:bg-amber-600 text-white font-semibold text-sm uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
+                        >
+                          Contact {attorney.name.split(' ')[0]}
+                          <span aria-hidden="true">→</span>
+                        </Link>
+                      </div>
                     )}
                   </div>
-                )}
-              </div>
-              {/* Divider */}
-              <div style={{gridColumn:3,gridRow:1,position:'absolute',left:'calc(160px + 2.5rem)',top:'10%',bottom:'10%',width:'1.5px',background:'#e3e7ee',borderRadius:'2px',zIndex:4}} />
-              {/* Specialty & Details Section */}
-              <div style={{gridColumn:3,gridRow:1,padding:'0 2.5rem 0 2rem',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'flex-start',height:'100%',zIndex:3}}>
-                {attorney.specialties && (
-                  <div style={{fontSize:'0.97rem',color:'#1976d2',marginBottom:'0.7rem',fontWeight:500,letterSpacing:'0.01em'}}>
-                    <strong>Specialties:</strong> {Array.isArray(attorney.specialties) ? attorney.specialties.join(', ') : attorney.specialties}
-                  </div>
-                )}
-                {attorney.education && (
-                  <div style={{fontSize:'0.94rem',color:'#333',marginBottom:'0.5rem',letterSpacing:'0.01em'}}><strong>Education:</strong> {attorney.education}</div>
-                )}
-                {attorney.experience && (
-                  <div style={{fontSize:'0.94rem',color:'#333',marginBottom:'0.5rem',letterSpacing:'0.01em'}}><strong>Experience:</strong> {attorney.experience}</div>
-                )}
-                {attorney.email && (
-                  <div style={{fontSize:'0.94rem',color:'#333',marginBottom:'0.5rem',letterSpacing:'0.01em'}}><strong>Email:</strong> {attorney.email}</div>
-                )}
-                {attorney.phone && (
-                  <div style={{fontSize:'0.94rem',color:'#333',marginBottom:'0.5rem',letterSpacing:'0.01em'}}><strong>Phone:</strong> {attorney.phone}</div>
-                )}
-              </div>
-              {/* Contact Button Row */}
-              {attorney.name !== 'Robert A. Rovner' && (
-                <div style={{gridColumn:'2 / span 2',gridRow:2,display:'flex',justifyContent:'center',alignItems:'center',paddingTop:'1.2rem',width:'100%'}}>
-                  <Link href="/contact" style={{
-                    display:'inline-block',
-                    background:'#1e293b',
-                    color:'#fff',
-                    fontWeight:700,
-                    fontSize:'1.08rem',
-                    padding:'0.8rem 2.5rem',
-                    borderRadius:10,
-                    boxShadow:'0 2px 8px rgba(20,28,38,0.10)',
-                    textDecoration:'none',
-                    letterSpacing:'0.01em',
-                    transition:'background 0.2s, box-shadow 0.2s',
-                  }}
-                  className="attorney-btn-hover"
-                  >Contact {attorney.name.split(' ')[0]}</Link>
                 </div>
-              )}
-            </div>
-          ))}
+              </article>
+            ))}
           </div>
         </section>
         {/* Why Choose Our Team */}
