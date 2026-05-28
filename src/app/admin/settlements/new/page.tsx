@@ -42,7 +42,7 @@ export default function NewSettlementPage() {
       } else {
         setError(result.error || 'Failed to create settlement');
       }
-    } catch (err) {
+    } catch {
       setError('Error creating settlement');
     } finally {
       setLoading(false);

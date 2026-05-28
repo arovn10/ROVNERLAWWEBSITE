@@ -6,10 +6,18 @@ import { Plus, Edit, Trash2 } from 'lucide-react';
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
+interface PracticeAreaRow {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  active: boolean;
+}
+
 export default function PracticeAreasAdminPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [practiceAreas, setPracticeAreas] = useState<any[]>([]);
+  const [practiceAreas, setPracticeAreas] = useState<PracticeAreaRow[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -99,7 +107,7 @@ export default function PracticeAreasAdminPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {practiceAreas.map((area: any) => (
+                {practiceAreas.map((area) => (
                   <tr key={area.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4">
                       <div className="font-medium text-gray-900">{area.title}</div>

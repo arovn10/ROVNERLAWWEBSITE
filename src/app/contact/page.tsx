@@ -1,5 +1,6 @@
 "use client";
 
+import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import Header from '@/components/Header';
@@ -34,7 +35,9 @@ export default function ContactPage() {
     dateOfIncident: '',
     caseType: '',
     represented: '',
-    facts: ''
+    facts: '',
+    // Honeypot — must stay empty. Bots that auto-fill every input get caught.
+    website: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
@@ -43,7 +46,6 @@ export default function ContactPage() {
   }>({ type: null, message: '' });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [contactUsData, setContactUsData] = useState<ContactUsData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [captchaToken, setCaptchaToken] = useState<string>('');
   const desktopCaptchaRef = useRef<HCaptcha>(null);
   const mobileCaptchaRef = useRef<HCaptcha>(null);
@@ -58,8 +60,6 @@ export default function ContactPage() {
         }
       } catch (error) {
         console.error('Error fetching contact us data:', error);
-      } finally {
-        setIsLoading(false);
       }
     };
 
@@ -127,7 +127,8 @@ export default function ContactPage() {
           dateOfIncident: '',
           caseType: '',
           represented: '',
-          facts: ''
+          facts: '',
+          website: ''
         });
         setCaptchaToken('');
         desktopCaptchaRef.current?.resetCaptcha();
@@ -140,7 +141,7 @@ export default function ContactPage() {
           message: result.error || 'Failed to send message. Please try again.'
         });
       }
-    } catch (_) {
+    } catch {
       setSubmitStatus({
         type: 'error',
         message: 'Failed to send message. Please try again.'
@@ -261,10 +262,34 @@ export default function ContactPage() {
                 </div>
               )}
               <form className="contact-form" onSubmit={handleSubmit}>
+                {/* Honeypot: must stay empty. Hidden from real users. */}
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: 'absolute',
+                    left: '-10000px',
+                    top: 'auto',
+                    width: '1px',
+                    height: '1px',
+                    overflow: 'hidden',
+                  }}
+                >
+                  <label>
+                    Website (do not fill)
+                    <input
+                      type="text"
+                      name="website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={formData.website}
+                      onChange={handleInputChange}
+                    />
+                  </label>
+                </div>
                 <div className="form-group">
                   <label>Full Name *</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
@@ -470,10 +495,34 @@ export default function ContactPage() {
             <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-4">
               <h3 className="font-bold text-gray-900 mb-4 text-lg">Contact Form</h3>
               <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+                {/* Honeypot: must stay empty. Hidden from real users. */}
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: 'absolute',
+                    left: '-10000px',
+                    top: 'auto',
+                    width: '1px',
+                    height: '1px',
+                    overflow: 'hidden',
+                  }}
+                >
+                  <label>
+                    Website (do not fill)
+                    <input
+                      type="text"
+                      name="website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={formData.website}
+                      onChange={handleInputChange}
+                    />
+                  </label>
+                </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
@@ -611,10 +660,10 @@ export default function ContactPage() {
               <div className="text-orange-600 text-2xl mb-2">📍</div>
               <div className="font-semibold text-gray-800 text-sm">Locations</div>
             </a>
-            <a href="/practice" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            <Link href="/practice" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">⚖️</div>
               <div className="font-semibold text-gray-800 text-sm">Practice Areas</div>
-            </a>
+            </Link>
             <a href="/about" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">ℹ️</div>
               <div className="font-semibold text-gray-800 text-sm">About Us</div>

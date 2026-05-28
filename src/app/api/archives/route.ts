@@ -6,13 +6,11 @@ import { authOptions } from "@/lib/auth";
 // GET /api/archives
 export async function GET() {
   try {
-    console.log('Fetching archives from database...');
     const archives = await prisma.archive.findMany({
       orderBy: {
         date: 'desc'
       }
     });
-    console.log(`Found ${archives.length} archives`);
     return NextResponse.json(archives);
   } catch (error) {
     console.error('Error fetching archives:', error);
