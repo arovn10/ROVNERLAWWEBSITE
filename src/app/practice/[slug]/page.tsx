@@ -1,6 +1,4 @@
 import { notFound, redirect } from 'next/navigation';
-import fs from 'fs';
-import path from 'path';
 
 export default async function PracticeAreaDynamicPage({ params }: { params: Promise<{ slug: string }> }) {
   // List of dedicated slugs (directories with their own page)

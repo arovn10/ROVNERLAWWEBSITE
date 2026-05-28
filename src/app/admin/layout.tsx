@@ -1,9 +1,13 @@
+import type { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
-import { redirect } from "next/navigation";
 import Link from "next/link";
-import { Settings, FileText, Briefcase, Users, Plus, Edit, Trash2, Eye, ExternalLink, Home, LogOut } from "lucide-react";
+import { Home, LogOut } from "lucide-react";
 import clsx from "clsx";
 import { authOptions } from "@/lib/auth";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false, nocache: true },
+};
 
 export default async function AdminLayout({
   children,

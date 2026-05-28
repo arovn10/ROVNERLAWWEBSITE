@@ -293,10 +293,10 @@ export default function AutoAccidentsPage() {
               <div className="text-orange-600 text-2xl mb-2">📍</div>
               <div className="font-semibold text-gray-800 text-sm">Locations</div>
             </a>
-            <a href="/practice" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            <Link href="/practice" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">⚖️</div>
               <div className="font-semibold text-gray-800 text-sm">Practice Areas</div>
-            </a>
+            </Link>
           </div>
         </section>
 

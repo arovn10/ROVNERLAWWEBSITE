@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Save, Inbox } from 'lucide-react';
 
@@ -21,7 +20,6 @@ interface ContactUsData {
 }
 
 export default function ContactUsEditPage() {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [data, setData] = useState<ContactUsData | null>(null);
@@ -40,7 +38,7 @@ export default function ContactUsEditPage() {
       } else {
         setMessage({ type: 'error', text: 'Failed to load contact us content' });
       }
-    } catch (error) {
+    } catch {
       setMessage({ type: 'error', text: 'Failed to load contact us content' });
     } finally {
       setIsLoading(false);
@@ -70,7 +68,7 @@ export default function ContactUsEditPage() {
         const errorData = await response.json();
         setMessage({ type: 'error', text: errorData.error || 'Failed to update content' });
       }
-    } catch (error) {
+    } catch {
       setMessage({ type: 'error', text: 'Failed to update content' });
     } finally {
       setIsSaving(false);

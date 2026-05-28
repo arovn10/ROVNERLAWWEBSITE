@@ -87,17 +87,6 @@ model ContactSubmission {
   createdAt      DateTime  @default(now())
 }
 
-model Photo {
-  id          String   @id
-  title       String
-  description String?
-  section     String
-  imageUrl    String
-  order       Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime
-}
-
 model PracticeArea {
   id          String   @id @default(cuid())
   title       String
