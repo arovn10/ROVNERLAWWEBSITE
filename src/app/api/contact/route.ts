@@ -145,6 +145,40 @@ export async function POST(request: NextRequest) {
       `,
     });
 
+    // 4. Send confirmation auto-reply to the submitter. Best-effort —
+    // failures here must not break the user-facing flow.
+    const replyTo =
+      process.env.MAILGUN_REPLY_TO || getRecipients()[0] || `noreply@${domain}`;
+    try {
+      await mg.messages.create(domain, {
+        from: fromAddress,
+        to: [data.email],
+        "h:Reply-To": replyTo,
+        subject: "We received your message — Law Offices of Rovner, Allen, Rovner & Sigman",
+        html: `
+          <p>Hi ${escapeHtml(data.name)},</p>
+          <p>Thank you for reaching out to the Law Offices of Rovner, Allen, Rovner &amp; Sigman.
+          We received your message and a member of our team will be in touch shortly.</p>
+          <p>For your records, here is a copy of what you sent us:</p>
+          <ul>
+            <li><strong>Phone:</strong> ${escapeHtml(data.phone) || "(not provided)"}</li>
+            <li><strong>Date of incident:</strong> ${escapeHtml(data.dateOfIncident) || "(not provided)"}</li>
+            <li><strong>Case type:</strong> ${escapeHtml(data.caseType) || "(not provided)"}</li>
+            <li><strong>Currently represented:</strong> ${escapeHtml(data.represented) || "(not provided)"}</li>
+          </ul>
+          <p><strong>Your message:</strong></p>
+          <p>${escapeHtml(data.facts) || "(none provided)"}</p>
+          <p>If your matter is urgent, please call us at <strong>215-259-5958</strong>.</p>
+          <p>— Rovner Law</p>
+        `,
+      });
+    } catch (confirmError) {
+      console.error(
+        "Confirmation email to submitter failed:",
+        confirmError instanceof Error ? confirmError.message : confirmError
+      );
+    }
+
     return NextResponse.json({
       success: true,
       message: "Thank you for your message. We will contact you soon!",
