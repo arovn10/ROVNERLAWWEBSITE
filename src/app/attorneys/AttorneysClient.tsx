@@ -69,11 +69,13 @@ export default function AttorneysClient({ attorneys }: { attorneys: any[] }) {
       <div className="hidden lg:block">
         {/* Hero Banner Section */}
         <section className="relative w-full h-64 md:h-80 overflow-hidden">
-          <SmoothImage 
-            src="/photos/banner-sign-rovner-law.png"
-            alt="Our Legal Team"
+          <SmoothImage
+            src="/photos/banner-sign-hero.webp"
+            alt="Rovner Law Offices — our team"
             fill
+            sizes="100vw"
             className="object-cover object-center"
+            priority
           />
           <div className="absolute inset-0 bg-slate-900/80" />
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6">
