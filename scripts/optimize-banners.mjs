@@ -20,8 +20,9 @@ const TARGETS = [
     src: path.join(photos, 'banner-sign-rovner-law.png'),
     out: path.join(photos, 'banner-sign-hero.webp'),
     // Source: 844×1024 portrait. Sign panel y≈70..680.
-    // 3:1 band centered on the headline + scales emblem.
-    extract: { left: 0, top: 130, width: 844, height: 281 },
+    // 4:1 cinematic band over the LAW OFFICES headline + scales emblem.
+    extract: { left: 0, top: 140, width: 844, height: 211 },
+    resize: { w: 3200, h: 800 },
   },
   {
     label: 'building',
@@ -30,13 +31,14 @@ const TARGETS = [
     // Source: 1024×1024 square. Trim sky top + lawn bottom.
     // 3:1 band over sign-letters + roofline.
     extract: { left: 0, top: 140, width: 1024, height: 341 },
+    resize: { w: 2400, h: 800 },
   },
 ];
 
 for (const t of TARGETS) {
   const info = await sharp(t.src)
     .extract(t.extract)
-    .resize(2400, 800, { kernel: 'lanczos3', fit: 'fill' })
+    .resize(t.resize.w, t.resize.h, { kernel: 'lanczos3', fit: 'fill' })
     .webp({ quality: 88, effort: 6 })
     .toFile(t.out);
   console.log(`${t.label}: ${path.basename(t.out)} ${info.width}x${info.height} ${Math.round(info.size / 1024)}KB`);
