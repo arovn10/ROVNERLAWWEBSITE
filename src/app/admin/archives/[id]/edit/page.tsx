@@ -56,7 +56,7 @@ export default function EditArchivePage() {
       } else {
         setError('Failed to update archive');
       }
-    } catch (err) {
+    } catch {
       setError('Error updating archive');
     } finally {
       setSaving(false);

@@ -1,8 +1,6 @@
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import MobileHeader from '@/components/MobileHeader';
-import MobileNav from '@/components/MobileNav';
 import DisclaimerClient from './DisclaimerClient';
 import type { Metadata } from 'next';
 

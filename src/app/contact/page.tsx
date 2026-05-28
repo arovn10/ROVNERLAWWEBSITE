@@ -1,5 +1,6 @@
 "use client";
 
+import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import Header from '@/components/Header';
@@ -45,7 +46,6 @@ export default function ContactPage() {
   }>({ type: null, message: '' });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [contactUsData, setContactUsData] = useState<ContactUsData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [captchaToken, setCaptchaToken] = useState<string>('');
   const desktopCaptchaRef = useRef<HCaptcha>(null);
   const mobileCaptchaRef = useRef<HCaptcha>(null);
@@ -60,8 +60,6 @@ export default function ContactPage() {
         }
       } catch (error) {
         console.error('Error fetching contact us data:', error);
-      } finally {
-        setIsLoading(false);
       }
     };
 
@@ -143,7 +141,7 @@ export default function ContactPage() {
           message: result.error || 'Failed to send message. Please try again.'
         });
       }
-    } catch (_) {
+    } catch {
       setSubmitStatus({
         type: 'error',
         message: 'Failed to send message. Please try again.'
@@ -662,10 +660,10 @@ export default function ContactPage() {
               <div className="text-orange-600 text-2xl mb-2">📍</div>
               <div className="font-semibold text-gray-800 text-sm">Locations</div>
             </a>
-            <a href="/practice" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            <Link href="/practice" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">⚖️</div>
               <div className="font-semibold text-gray-800 text-sm">Practice Areas</div>
-            </a>
+            </Link>
             <a href="/about" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">ℹ️</div>
               <div className="font-semibold text-gray-800 text-sm">About Us</div>

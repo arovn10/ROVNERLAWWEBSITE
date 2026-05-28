@@ -237,7 +237,7 @@ export default function HomePage() {
                   style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
                   <div className="flex gap-6">
-                    {practiceAreas.map((area: any) => (
+                    {practiceAreas.map((area) => (
                       <Link
                         data-carousel-card
                         key={area.id}
@@ -251,7 +251,7 @@ export default function HomePage() {
                           {area.title}
                         </h3>
                         <p className="text-slate-500 text-sm leading-relaxed mb-5 flex-1">
-                          {area.description?.slice(0, 100)}{area.description?.length > 100 ? '…' : ''}
+                          {area.description?.slice(0, 100)}{(area.description?.length ?? 0) > 100 ? '…' : ''}
                         </p>
                         <span className="text-amber-700 text-sm font-semibold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
                           Learn more <span aria-hidden="true">→</span>

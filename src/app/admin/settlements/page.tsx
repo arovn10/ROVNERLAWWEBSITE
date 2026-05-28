@@ -6,8 +6,16 @@ import { Plus, Edit, Trash2 } from 'lucide-react';
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
+interface SettlementRow {
+  id: string;
+  title: string;
+  amount: number;
+  caseType: string;
+  date: string;
+}
+
 export default function SettlementsAdminPage() {
-  const [settlements, setSettlements] = useState<any[]>([]);
+  const [settlements, setSettlements] = useState<SettlementRow[]>([]);
   const [loading, setLoading] = useState(true);
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -98,7 +106,7 @@ export default function SettlementsAdminPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {settlements.map((s: any) => (
+                {settlements.map((s) => (
                   <tr key={s.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4 font-medium text-gray-900">{s.title}</td>
                     <td className="px-6 py-4 text-green-700 font-bold">${s.amount.toLocaleString()}</td>

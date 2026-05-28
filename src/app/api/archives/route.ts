@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { prisma } from "@/lib/prisma";
 import { authOptions } from "@/lib/auth";
+import { archiveCreateSchema, parseOrError } from "@/lib/schemas";
 
 // GET /api/archives
 export async function GET() {
@@ -37,14 +38,16 @@ export async function POST(request: Request) {
   }
 
   try {
-    const data = await request.json();
+    const parsed = parseOrError(archiveCreateSchema, await request.json());
+    if (parsed instanceof NextResponse) return parsed;
+
     const archive = await prisma.archive.create({
       data: {
-        title: data.title,
-        content: data.content,
-        date: new Date(data.date),
-        category: data.category,
-        imageUrl: data.imageUrl
+        title: parsed.title,
+        content: parsed.content,
+        date: new Date(parsed.date),
+        category: parsed.category,
+        imageUrl: parsed.imageUrl,
       }
     });
     return NextResponse.json(archive);

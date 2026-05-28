@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { prisma } from '@/lib/prisma';
 import { authOptions } from '@/lib/auth';
+import { locationsUpdateSchema, parseOrError } from '@/lib/schemas';
 
 export async function GET() {
   try {
@@ -65,22 +66,19 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
   try {
-    const body = await request.json();
+    const parsed = parseOrError(locationsUpdateSchema, await request.json());
+    if (parsed instanceof NextResponse) return parsed;
 
     const locations = await prisma.locations.findFirst();
-    
+
     if (locations) {
-      // Update existing content
       const updatedLocations = await prisma.locations.update({
         where: { id: locations.id },
-        data: body
+        data: parsed
       });
       return NextResponse.json(updatedLocations);
     } else {
-      // Create new content
-      const newLocations = await prisma.locations.create({
-        data: body
-      });
+      const newLocations = await prisma.locations.create({ data: parsed as Parameters<typeof prisma.locations.create>[0]['data'] });
       return NextResponse.json(newLocations);
     }
   } catch (error) {

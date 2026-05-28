@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { prisma } from '@/lib/prisma';
 import { authOptions } from '@/lib/auth';
+import { aboutUsUpdateSchema, parseOrError } from '@/lib/schemas';
 
 export async function GET() {
   try {
@@ -46,22 +47,19 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
   try {
-    const body = await request.json();
+    const parsed = parseOrError(aboutUsUpdateSchema, await request.json());
+    if (parsed instanceof NextResponse) return parsed;
 
     const aboutUs = await prisma.aboutUs.findFirst();
-    
+
     if (aboutUs) {
-      // Update existing content
       const updatedAboutUs = await prisma.aboutUs.update({
         where: { id: aboutUs.id },
-        data: body
+        data: parsed
       });
       return NextResponse.json(updatedAboutUs);
     } else {
-      // Create new content
-      const newAboutUs = await prisma.aboutUs.create({
-        data: body
-      });
+      const newAboutUs = await prisma.aboutUs.create({ data: parsed as Parameters<typeof prisma.aboutUs.create>[0]['data'] });
       return NextResponse.json(newAboutUs);
     }
   } catch (error) {

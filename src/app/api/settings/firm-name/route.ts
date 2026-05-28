@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { getFirmName, setFirmName } from '@/lib/settings';
 import { authOptions } from '@/lib/auth';
+import { firmNameSchema, parseOrError } from '@/lib/schemas';
 
 export async function GET() {
   const firmName = await getFirmName();
@@ -13,11 +14,8 @@ export async function POST(req: Request) {
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
-  const body = await req.json();
-  const { firmName } = body;
-  if (!firmName || typeof firmName !== 'string') {
-    return NextResponse.json({ error: 'firmName is required' }, { status: 400 });
-  }
-  const updated = await setFirmName(firmName);
+  const parsed = parseOrError(firmNameSchema, await req.json());
+  if (parsed instanceof NextResponse) return parsed;
+  const updated = await setFirmName(parsed.firmName);
   return NextResponse.json({ firmName: updated.firmName });
 }
