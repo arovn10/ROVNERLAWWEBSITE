@@ -2,13 +2,13 @@
 
 import Link from 'next/link';
 import { SmoothImage } from '@/components/SmoothImage';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import MobileHeader from '@/components/MobileHeader';
 import MobileNav from '@/components/MobileNav';
 import { useFirmName } from '@/lib/FirmNameContext';
-import { Phone, Users, Briefcase, Mail, DollarSign, MapPin } from 'lucide-react';
+import { Phone, Users, Briefcase, Mail, DollarSign, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
 
 type Settlement = {
   id: string;
@@ -41,6 +41,15 @@ export default function HomePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentSettlementIndex, setCurrentSettlementIndex] = useState(0);
   const [currentPracticeAreaIndex, setCurrentPracticeAreaIndex] = useState(0);
+  const settlementsScrollRef = useRef<HTMLDivElement>(null);
+  const practiceAreasScrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollCarousel = (ref: React.RefObject<HTMLDivElement | null>, dir: 'left' | 'right') => {
+    if (!ref.current) return;
+    const card = ref.current.querySelector<HTMLElement>('[data-carousel-card]');
+    const step = card ? card.offsetWidth + 24 : 320;
+    ref.current.scrollBy({ left: dir === 'left' ? -step : step, behavior: 'smooth' });
+  };
 
   useEffect(() => {
     fetch('/api/settlements')
@@ -150,24 +159,53 @@ export default function HomePage() {
             ) : settlements.length === 0 ? (
               <div className="text-center py-8 text-gray-500">No settlements found.</div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {settlements.slice(0, 6).map((settlement: Settlement) => (
-                  <article
-                    key={settlement.id}
-                    className="group bg-white rounded-2xl border border-slate-200/80 p-8 hover:shadow-lg hover:border-amber-500/40 transition-all duration-200"
+              <div className="relative">
+                {settlements.length > 3 && (
+                  <button
+                    type="button"
+                    onClick={() => scrollCarousel(settlementsScrollRef, 'left')}
+                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-11 h-11 flex items-center justify-center bg-white rounded-full shadow-md border border-slate-200 hover:bg-slate-50 hover:shadow-lg transition-all"
+                    aria-label="Previous settlements"
                   >
-                    <div className="mb-5 flex items-center justify-center w-12 h-12 rounded-full bg-amber-50 group-hover:bg-amber-100 transition-colors">
-                      <DollarSign size={22} className="text-amber-700" />
-                    </div>
-                    <p className="font-serif text-3xl font-bold text-slate-900 mb-2 tracking-tight">
-                      ${settlement.amount.toLocaleString()}
-                    </p>
-                    <p className="text-xs font-semibold text-amber-700 uppercase tracking-wider mb-3">
-                      {settlement.caseType}
-                    </p>
-                    <p className="text-slate-600 text-sm leading-relaxed">{settlement.title}</p>
-                  </article>
-                ))}
+                    <ChevronLeft className="w-5 h-5 text-slate-700" />
+                  </button>
+                )}
+                <div
+                  ref={settlementsScrollRef}
+                  className="overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2"
+                  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                >
+                  <div className="flex gap-6">
+                    {settlements.map((settlement: Settlement) => (
+                      <article
+                        data-carousel-card
+                        key={settlement.id}
+                        className="group bg-white rounded-2xl border border-slate-200/80 p-8 hover:shadow-lg hover:border-amber-500/40 transition-all duration-200 flex-shrink-0 w-[320px] snap-start"
+                      >
+                        <div className="mb-5 flex items-center justify-center w-12 h-12 rounded-full bg-amber-50 group-hover:bg-amber-100 transition-colors">
+                          <DollarSign size={22} className="text-amber-700" />
+                        </div>
+                        <p className="font-serif text-3xl font-bold text-slate-900 mb-2 tracking-tight">
+                          ${settlement.amount.toLocaleString()}
+                        </p>
+                        <p className="text-xs font-semibold text-amber-700 uppercase tracking-wider mb-3">
+                          {settlement.caseType}
+                        </p>
+                        <p className="text-slate-600 text-sm leading-relaxed">{settlement.title}</p>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+                {settlements.length > 3 && (
+                  <button
+                    type="button"
+                    onClick={() => scrollCarousel(settlementsScrollRef, 'right')}
+                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-11 h-11 flex items-center justify-center bg-white rounded-full shadow-md border border-slate-200 hover:bg-slate-50 hover:shadow-lg transition-all"
+                    aria-label="Next settlements"
+                  >
+                    <ChevronRight className="w-5 h-5 text-slate-700" />
+                  </button>
+                )}
               </div>
             )}
           </div>
@@ -193,27 +231,56 @@ export default function HomePage() {
                 ))}
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {practiceAreas.map((area) => (
-                  <Link
-                    key={area.id}
-                    href={`/practice/${area.slug}`}
-                    className="group flex flex-col bg-white rounded-xl border border-slate-200 p-7 hover:shadow-lg hover:border-amber-500/60 hover:-translate-y-0.5 transition-all duration-200"
+              <div className="relative">
+                {practiceAreas.length > 4 && (
+                  <button
+                    type="button"
+                    onClick={() => scrollCarousel(practiceAreasScrollRef, 'left')}
+                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-11 h-11 flex items-center justify-center bg-white rounded-full shadow-md border border-slate-200 hover:bg-slate-50 hover:shadow-lg transition-all"
+                    aria-label="Previous practice areas"
                   >
-                    <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-lg bg-slate-100 group-hover:bg-amber-50 transition-colors">
-                      <Briefcase size={22} className="text-slate-700 group-hover:text-amber-700 transition-colors" />
-                    </div>
-                    <h3 className="font-semibold text-slate-900 text-lg mb-2 group-hover:text-amber-700 transition-colors">
-                      {area.title}
-                    </h3>
-                    <p className="text-slate-500 text-sm leading-relaxed mb-5 flex-1">
-                      {area.description?.slice(0, 100)}{(area.description?.length ?? 0) > 100 ? '…' : ''}
-                    </p>
-                    <span className="text-amber-700 text-sm font-semibold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-                      Learn more <span aria-hidden="true">→</span>
-                    </span>
-                  </Link>
-                ))}
+                    <ChevronLeft className="w-5 h-5 text-slate-700" />
+                  </button>
+                )}
+                <div
+                  ref={practiceAreasScrollRef}
+                  className="overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2"
+                  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                >
+                  <div className="flex gap-6">
+                    {practiceAreas.map((area) => (
+                      <Link
+                        data-carousel-card
+                        key={area.id}
+                        href={`/practice/${area.slug}`}
+                        className="group flex flex-col bg-white rounded-xl border border-slate-200 p-7 hover:shadow-lg hover:border-amber-500/60 hover:-translate-y-0.5 transition-all duration-200 flex-shrink-0 w-[260px] snap-start"
+                      >
+                        <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-lg bg-slate-100 group-hover:bg-amber-50 transition-colors">
+                          <Briefcase size={22} className="text-slate-700 group-hover:text-amber-700 transition-colors" />
+                        </div>
+                        <h3 className="font-semibold text-slate-900 text-lg mb-2 group-hover:text-amber-700 transition-colors">
+                          {area.title}
+                        </h3>
+                        <p className="text-slate-500 text-sm leading-relaxed mb-5 flex-1">
+                          {area.description?.slice(0, 100)}{(area.description?.length ?? 0) > 100 ? '…' : ''}
+                        </p>
+                        <span className="text-amber-700 text-sm font-semibold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                          Learn more <span aria-hidden="true">→</span>
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+                {practiceAreas.length > 4 && (
+                  <button
+                    type="button"
+                    onClick={() => scrollCarousel(practiceAreasScrollRef, 'right')}
+                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-11 h-11 flex items-center justify-center bg-white rounded-full shadow-md border border-slate-200 hover:bg-slate-50 hover:shadow-lg transition-all"
+                    aria-label="Next practice areas"
+                  >
+                    <ChevronRight className="w-5 h-5 text-slate-700" />
+                  </button>
+                )}
               </div>
             )}
           </div>
