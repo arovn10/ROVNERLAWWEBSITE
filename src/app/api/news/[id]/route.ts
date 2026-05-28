@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { prisma } from '@/lib/prisma';
 import { authOptions } from '@/lib/auth';
+import { newsUpdateSchema, parseOrError } from '@/lib/schemas';
 
 export async function GET(
   request: NextRequest,
@@ -34,24 +35,18 @@ export async function PUT(
   }
   try {
     const { id } = await params;
-    const body = await request.json();
-    const { title, content, date, source, url } = body;
-
-    if (!title || !content || !date || !source) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      );
-    }
+    const parsed = parseOrError(newsUpdateSchema, await request.json());
+    if (parsed instanceof NextResponse) return parsed;
 
     const news = await prisma.news.update({
       where: { id },
       data: {
-        title,
-        content,
-        date: new Date(date),
-        source,
-        url: url || null
+        ...(parsed.title !== undefined && { title: parsed.title }),
+        ...(parsed.content !== undefined && { content: parsed.content }),
+        ...(parsed.date !== undefined && { date: new Date(parsed.date) }),
+        ...(parsed.source !== undefined && { source: parsed.source }),
+        ...(parsed.url !== undefined && { url: parsed.url }),
+        ...(parsed.imageUrl !== undefined && { imageUrl: parsed.imageUrl }),
       }
     });
 

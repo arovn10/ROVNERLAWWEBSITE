@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
+import { lawyerUpdateSchema, parseOrError } from "@/lib/schemas";
 
 export async function GET(
   request: NextRequest,
@@ -35,35 +36,26 @@ export async function PUT(
   }
 
   try {
-
     const { id } = await params;
-    const data = await request.json();
-    
-    
-    // Validate required fields
-    if (!data.name) {
-      return NextResponse.json({ error: 'Name is required' }, { status: 400 });
-    }
+    const parsed = parseOrError(lawyerUpdateSchema, await request.json());
+    if (parsed instanceof NextResponse) return parsed;
 
-    
-    // Update the lawyer with the new data
     const updatedLawyer = await prisma.lawyer.update({
       where: { id },
       data: {
-        name: data.name,
-        title: data.title || null,
-        bio: data.bio || null,
-        education: data.education || null,
-        experience: data.experience || null,
-        specialties: data.specialties || null,
-        image: data.image || null,
-        email: data.email || null,
-        phone: data.phone || null,
-        order: data.order ? parseInt(data.order) : 0,
-        active: data.active !== undefined ? data.active : true,
+        ...(parsed.name !== undefined && { name: parsed.name }),
+        ...(parsed.title !== undefined && { title: parsed.title }),
+        ...(parsed.bio !== undefined && { bio: parsed.bio }),
+        ...(parsed.education !== undefined && { education: parsed.education }),
+        ...(parsed.experience !== undefined && { experience: parsed.experience }),
+        ...(parsed.specialties !== undefined && { specialties: parsed.specialties }),
+        ...(parsed.image !== undefined && { image: parsed.image }),
+        ...(parsed.email !== undefined && { email: parsed.email }),
+        ...(parsed.phone !== undefined && { phone: parsed.phone }),
+        ...(parsed.order !== undefined && { order: parsed.order }),
+        ...(parsed.active !== undefined && { active: parsed.active }),
       },
     });
-
     return NextResponse.json(updatedLawyer);
   } catch (error) {
     console.error('Error updating lawyer:', error);
