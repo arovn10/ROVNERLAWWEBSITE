@@ -1,6 +1,9 @@
 import { prisma } from '@/lib/prisma';
 import AttorneysClient from './AttorneysClient';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function AttorneysPage() {
   const attorneys = await prisma.lawyer.findMany({
     where: { active: true },
@@ -8,4 +11,4 @@ export default async function AttorneysPage() {
   });
 
   return <AttorneysClient attorneys={attorneys} />;
-} 
+}
