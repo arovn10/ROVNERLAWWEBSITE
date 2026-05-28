@@ -679,4 +679,4 @@ export default function PracticeAreasPage() {
   );
 } 
 
-export { practiceAreas }; 
+ 

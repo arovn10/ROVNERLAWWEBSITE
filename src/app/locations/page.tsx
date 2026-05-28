@@ -50,7 +50,6 @@ export default function LocationsPage() {
   const { firmName } = useFirmName();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [locationsData, setLocationsData] = useState<LocationsData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchLocationsData = async () => {
@@ -62,8 +61,6 @@ export default function LocationsPage() {
         }
       } catch (error) {
         console.error('Error fetching locations data:', error);
-      } finally {
-        setIsLoading(false);
       }
     };
 
@@ -434,10 +431,10 @@ export default function LocationsPage() {
               <div className="text-orange-600 text-2xl mb-2">📞</div>
               <div className="font-semibold text-gray-800 text-sm">Contact Us</div>
             </a>
-            <a href="/practice" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            <Link href="/practice" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">⚖️</div>
               <div className="font-semibold text-gray-800 text-sm">Practice Areas</div>
-            </a>
+            </Link>
             <a href="/about" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">ℹ️</div>
               <div className="font-semibold text-gray-800 text-sm">About Us</div>

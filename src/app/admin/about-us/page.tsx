@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Save } from 'lucide-react';
 import { useFirmName } from '@/lib/FirmNameContext';
@@ -25,7 +24,6 @@ interface AboutUsData {
 }
 
 export default function AboutUsEditPage() {
-  const router = useRouter();
   const { firmName } = useFirmName();
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -45,7 +43,7 @@ export default function AboutUsEditPage() {
       } else {
         setMessage({ type: 'error', text: 'Failed to load about us content' });
       }
-    } catch (error) {
+    } catch {
       setMessage({ type: 'error', text: 'Failed to load about us content' });
     } finally {
       setIsLoading(false);
@@ -75,7 +73,7 @@ export default function AboutUsEditPage() {
         const errorData = await response.json();
         setMessage({ type: 'error', text: errorData.error || 'Failed to update content' });
       }
-    } catch (error) {
+    } catch {
       setMessage({ type: 'error', text: 'Failed to update content' });
     } finally {
       setIsSaving(false);

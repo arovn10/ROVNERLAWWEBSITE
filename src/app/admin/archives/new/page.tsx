@@ -35,7 +35,7 @@ export default function NewArchivePage() {
       } else {
         setError('Failed to create archive');
       }
-    } catch (err) {
+    } catch {
       setError('Error creating archive');
     } finally {
       setLoading(false);
