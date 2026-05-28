@@ -35,31 +35,16 @@ export async function PUT(
   }
 
   try {
-    console.log('Lawyer PUT request received');
 
     const { id } = await params;
     const data = await request.json();
     
-    console.log('Update data for lawyer:', data);
     
     // Validate required fields
     if (!data.name) {
       return NextResponse.json({ error: 'Name is required' }, { status: 400 });
     }
 
-    console.log('Updating lawyer with data:', {
-      name: data.name,
-      title: data.title || null,
-      bio: data.bio || null,
-      education: data.education || null,
-      experience: data.experience || null,
-      specialties: data.specialties || null,
-      image: data.image || null,
-      email: data.email || null,
-      phone: data.phone || null,
-      order: data.order ? parseInt(data.order) : 0,
-      active: data.active !== undefined ? data.active : true,
-    });
     
     // Update the lawyer with the new data
     const updatedLawyer = await prisma.lawyer.update({
@@ -79,7 +64,6 @@ export async function PUT(
       },
     });
 
-    console.log('Lawyer updated successfully:', updatedLawyer);
     return NextResponse.json(updatedLawyer);
   } catch (error) {
     console.error('Error updating lawyer:', error);
