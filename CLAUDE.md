@@ -10,7 +10,13 @@ Marketing + lead-capture site for the **Law Offices of Rovner, Allen, Rovner & S
 personal injury / criminal defense). Public pages are content-managed through a password-protected
 admin area; the money path is the contact form at `/contact`.
 
-- **Repo:** github.com/arovn10/ROVNERLAWWEBSITE · **Prod:** rovnerlawwebsite.vercel.app (Vercel auto-deploys `main`)
+- **Repo:** github.com/arovn10/ROVNERLAWWEBSITE
+- **Prod:** **www.dial-law.com** (apex `dial-law.com` 307s to `www`). Also served at
+  `rovnerlawwebsite.vercel.app` and the usual Vercel aliases — don't mistake the `.vercel.app` host
+  for the canonical one, and see landmine 2.
+- **Vercel:** project `rovnerlawwebsite` (`prj_sBqewDKlfhqqPOli1h1R0eAt9vUL`) under team
+  "Alec Rovner's projects", auto-deploying `main`. Vercel builds on **Node 22.x** while the repo pins
+  `@types/node@^20` — worth knowing when a runtime API disagrees with the types.
 - Next.js 15 App Router · React 19 · TypeScript (strict) · Tailwind 3 · Prisma 6 + PostgreSQL ·
   NextAuth 4 (Credentials + JWT) · AWS S3 for images · Mailgun for email · zod for request validation
 
@@ -136,10 +142,11 @@ needs neither.
 - **Firm name:** singleton `Settings.firmName`, read via `src/lib/settings.ts`, hydrated client-side by
   `FirmNameContext` (localStorage first, then `/api/settings/firm-name`).
 - **SEO:** `src/lib/site.ts` exports `SITE_URL` from `NEXT_PUBLIC_SITE_URL`, falling back to
-  `https://rovnerlaw.com` — **not** the Vercel domain. It feeds `metadataBase`, the `LegalService`
-  JSON-LD in `src/app/layout.tsx`, `src/app/robots.ts`, and `src/app/sitemap.xml/route.ts` (static
-  entries + practice areas + news; a DB failure degrades to static-only). Set the env var or canonical
-  URLs point at the wrong host.
+  `https://rovnerlaw.com`. One value feeds `metadataBase`, `alternates.canonical`, the OpenGraph/
+  Twitter URLs, the `LegalService` JSON-LD in `src/app/layout.tsx`, `src/app/robots.ts`, and
+  `src/app/sitemap.xml/route.ts` (static entries + practice areas + news; a DB failure degrades to
+  static-only). Because `NEXT_PUBLIC_*` is inlined at build time, changing it requires a **redeploy**,
+  not just an env-var edit. It is currently wrong in production — landmine 2.
 - **Health:** `GET /api/health` runs `SELECT 1` — 200 `db: "up"`, 503 `db: "down"`. `force-dynamic`.
 
 ## Landmines
@@ -147,7 +154,22 @@ needs neither.
 1. **`src/app 2/` is a tracked dead-code duplicate.** Next routes only from `src/app/`. It is excluded
    in `tsconfig.json` and `eslint.config.mjs`, so it is never typechecked or linted and will rot.
    **Always edit `src/app/`.** Greps over `src/` will hit it — check the path before editing.
-2. **`/api/contact` has silently lost three shipped features.** PR 21 (zod validation, commit
+2. **Every canonical URL in production points at a parked domain.** Verified live 2026-08-01:
+   `https://www.dial-law.com/` serves `<link rel="canonical" href="https://rovnerlaw.com"/>`, and
+   `https://www.dial-law.com/robots.txt` advertises `Host: https://rovnerlaw.com` +
+   `Sitemap: https://rovnerlaw.com/sitemap.xml`. So `NEXT_PUBLIC_SITE_URL` is unset (or set to
+   `rovnerlaw.com`) on Vercel and `SITE_URL` is falling through to its default.
+
+   `rovnerlaw.com` is **not** the firm's site — it answers 200 with a parked lander
+   (`<script>window.onload=...href="/lander"</script>`) and has no `/api/health`, so it is not this
+   app. The live lead-capture site is therefore telling Google that the canonical version of every
+   page lives on a parking page, and pointing crawlers at a sitemap that isn't there. For a site whose
+   whole purpose is inbound leads, this is the most damaging thing currently wrong with it.
+
+   The fix is `NEXT_PUBLIC_SITE_URL=https://www.dial-law.com` in Vercel **plus a redeploy** (the value
+   is inlined at build time). Changing the fallback in `src/lib/site.ts` off `rovnerlaw.com` is worth
+   doing at the same time so an unset var fails safe.
+3. **`/api/contact` has silently lost three shipped features.** PR 21 (zod validation, commit
    `dbcf53b`) rewrote the route and dropped ~82 lines, removing:
    - the per-IP rate limit (PR 12) — `src/lib/rate-limit.ts` is now **dead code, imported nowhere**;
    - the server-side honeypot check (PR 13) — the `website` field is still rendered on the form
@@ -157,38 +179,43 @@ needs neither.
    The form is therefore unthrottled and bot-unprotected apart from hCaptcha, which is itself dormant
    unless `HCAPTCHA_SECRET` is set. Re-landing these is the highest-value fix in the repo; the prior
    implementations are recoverable from commits `973ccbe`, `76884a4`, `9e6b82a`.
-3. **The same PR reintroduced PII logging.** `src/app/api/lawyers/route.ts:52` logs the full created
+4. **The same PR reintroduced PII logging.** `src/app/api/lawyers/route.ts:52` logs the full created
    lawyer object — exactly what PR 22 stripped from every route. It is the only surviving
    `console.log` under `src/app/api/`.
-4. **`/api/contact` accepts `address` and then discards it.** It is in the zod schema and in the
+5. **`/api/contact` accepts `address` and then discards it.** It is in the zod schema and in the
    `ContactSubmission` model, but absent from the `prisma.contactSubmission.create()` data — the form
    collects it and the row never gets it.
-5. **Migrations have no baseline.** `prisma/migrations/` holds exactly one migration
+6. **Migrations have no baseline.** `prisma/migrations/` holds exactly one migration
    (`20260524000001_drop_photo_model`) against a schema with eleven models. `prisma migrate deploy`
    against an **empty** database will not create the schema — prod was built with `db push` before
    migrations existed. So: a fresh or branch DB needs `prisma db push` (or a hand-written baseline)
    rather than `migrate deploy`, and any new schema change must ship a real migration file or it will
    not reach prod.
-6. **Server-component + client-nav crash** — see the boundary section above. It escaped review because
+7. **Server-component + client-nav crash** — see the boundary section above. It escaped review because
    build-time error suppression was still on then; it would be caught now.
-7. **`.claude/SKILL.md` does not exist** and never did in git history, yet both `README.md` and
+8. **`.claude/SKILL.md` does not exist** and never did in git history, yet both `README.md` and
    `CODEBASE.md` link to it as the "deep reference". Don't chase it. `.claude-work/00-README.md` (the
    29-PR pack) is likewise absent — the plan was never committed.
-8. **No CSRF protection on admin mutations** — same-origin cookies only. Fine while the API is consumed
+9. **No CSRF protection on admin mutations** — same-origin cookies only. Fine while the API is consumed
    solely by this app's own admin UI; revisit before exposing it anywhere else.
-9. **SQLite leftovers are still tracked:** `prisma/prisma/dev.db` and `prisma/dev 2.db`. The schema is
+10. **SQLite leftovers are still tracked:** `prisma/prisma/dev.db` and `prisma/dev 2.db`. The schema is
    Postgres. Do not flip the provider back, and don't treat these as a local-dev path.
-10. **`prisma/seed.ts` is CommonJS** and requires `../src/lib/aws-config.cjs.js`. That file is now
+11. **`prisma/seed.ts` is CommonJS** and requires `../src/lib/aws-config.cjs.js`. That file is now
     committed so the seed resolves — but it is a hand-maintained duplicate of `src/lib/aws-config.ts`.
     Change one, change the other. One-off scripts live in `scripts/archive/` (PR 25), excluded from
     typecheck and lint.
-11. **Dead code to know about:** `src/data/settlements.ts` is imported nowhere (settlements come from
-    the DB), plus `src/lib/rate-limit.ts` per landmine 2.
+12. **Dead code to know about:** `src/data/settlements.ts` is imported nowhere (settlements come from
+    the DB), plus `src/lib/rate-limit.ts` per landmine 3.
+13. **Email is Mailgun. Resend is a decoy.** The account has a `dial-law.com` sending domain in Resend
+    sitting in **`failed`** (DNS unverified) state, created 2025-07-01 and used by nothing in this repo
+    — no `resend` dependency, no API call. CODEBASE.md's "Not Resend — earlier docs were stale" note is
+    correct. Don't switch `/api/contact` to Resend on the assumption it's provisioned; that domain
+    cannot send until its DNS is verified.
 
 ## Docs that are wrong
 
 `CODEBASE.md` was accurate when written (PR 20) and has since drifted. It currently claims, wrongly,
-that the contact-form rate limit / honeypot / confirmation email are live (landmine 2), that all three
+that the contact-form rate limit / honeypot / confirmation email are live (landmine 3), that all three
 admin auth layers are active (only two are), and that the lead inbox is at `/admin/submissions` — the
 real path is **`/admin/contact-us/submissions`**. `README.md` and `CODEBASE.md` both link to the
 nonexistent `.claude/SKILL.md`. Trust the code over both documents, and fix the docs when you touch
@@ -228,11 +255,11 @@ commit subjects. Match on branch name or commit SHA, not the "PR NN" label.
 | `NEXTAUTH_URL` | Canonical URL (optional) |
 | `AWS_BUCKET_NAME`, `AWS_REGION`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` | S3 uploads |
 | `MAILGUN_API_KEY`, `MAILGUN_DOMAIN` | `/api/contact` notification. Unset ⇒ email skipped, route still returns 200 |
-| `MAILGUN_FROM`, `MAILGUN_EU` | optional. `MAILGUN_REPLY_TO` is currently unread (landmine 2) |
+| `MAILGUN_FROM`, `MAILGUN_EU` | optional. `MAILGUN_REPLY_TO` is currently unread (landmine 3) |
 | `CONTACT_EMAIL` | Comma-separated lead recipients; defaults to `rovneralec@gmail.com` |
 | `HCAPTCHA_SECRET` | Server-side captcha verify. **Unset ⇒ captcha bypassed entirely** |
 | `NEXT_PUBLIC_HCAPTCHA_SITE_KEY` | Renders the widget; unset ⇒ hidden |
-| `NEXT_PUBLIC_SITE_URL` | `SITE_URL` for canonicals/sitemap/JSON-LD; falls back to `https://rovnerlaw.com` |
+| `NEXT_PUBLIC_SITE_URL` | `SITE_URL` for canonicals/sitemap/JSON-LD. **Currently not effective in prod** — the live site emits the `https://rovnerlaw.com` fallback (landmine 2). Inlined at build time, so a change needs a redeploy |
 | `ADMIN_EMAIL`, `ADMIN_PASSWORD` | `npm run create-admin` only |
 
 Set these in Vercel for prod and `.env.local` for dev. `.gitignore` covers `.env*` — keep it that way.
@@ -243,4 +270,4 @@ Set these in Vercel for prod and `.env.local` for dev. `.gitignore` covers `.env
 - Do not introduce SQLite to `schema.prisma`.
 - Do not change visible behavior for logged-out visitors as a side effect of a cleanup change.
 - Do not run destructive git operations (force-push, `reset --hard`, `branch -D`) without asking.
-- Do not add a schema change without a migration file (landmine 5).
+- Do not add a schema change without a migration file (landmine 6).
