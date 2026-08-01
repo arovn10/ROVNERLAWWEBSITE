@@ -146,7 +146,7 @@ needs neither.
   Twitter URLs, the `LegalService` JSON-LD in `src/app/layout.tsx`, `src/app/robots.ts`, and
   `src/app/sitemap.xml/route.ts` (static entries + practice areas + news; a DB failure degrades to
   static-only). Because `NEXT_PUBLIC_*` is inlined at build time, changing it requires a **redeploy**,
-  not just an env-var edit. It is currently wrong in production — landmine 2.
+  not just an env-var edit — and an unset var silently yields the parked-domain fallback (landmine 2).
 - **Health:** `GET /api/health` runs `SELECT 1` — 200 `db: "up"`, 503 `db: "down"`. `force-dynamic`.
 
 ## Landmines
@@ -154,21 +154,25 @@ needs neither.
 1. **`src/app 2/` is a tracked dead-code duplicate.** Next routes only from `src/app/`. It is excluded
    in `tsconfig.json` and `eslint.config.mjs`, so it is never typechecked or linted and will rot.
    **Always edit `src/app/`.** Greps over `src/` will hit it — check the path before editing.
-2. **Every canonical URL in production points at a parked domain.** Verified live 2026-08-01:
-   `https://www.dial-law.com/` serves `<link rel="canonical" href="https://rovnerlaw.com"/>`, and
-   `https://www.dial-law.com/robots.txt` advertises `Host: https://rovnerlaw.com` +
-   `Sitemap: https://rovnerlaw.com/sitemap.xml`. So `NEXT_PUBLIC_SITE_URL` is unset (or set to
-   `rovnerlaw.com`) on Vercel and `SITE_URL` is falling through to its default.
+2. **`src/lib/site.ts` falls back to a parked domain — never let `NEXT_PUBLIC_SITE_URL` go missing.**
+   Fixed in production 2026-08-01, but the trap is still in the code.
 
-   `rovnerlaw.com` is **not** the firm's site — it answers 200 with a parked lander
-   (`<script>window.onload=...href="/lander"</script>`) and has no `/api/health`, so it is not this
-   app. The live lead-capture site is therefore telling Google that the canonical version of every
-   page lives on a parking page, and pointing crawlers at a sitemap that isn't there. For a site whose
-   whole purpose is inbound leads, this is the most damaging thing currently wrong with it.
+   What happened: the variable was never set on Vercel, so `SITE_URL` fell through to its
+   `https://rovnerlaw.com` default and the live site served
+   `<link rel="canonical" href="https://rovnerlaw.com"/>` on **every** page, with `robots.txt`
+   advertising `Host`/`Sitemap` on that host too. `rovnerlaw.com` is not the firm's site — it answers
+   200 with a parked lander (`window.onload → /lander`) and has no `/api/health`. So the lead-capture
+   site was telling Google the canonical version of every page lived on a parking page.
 
-   The fix is `NEXT_PUBLIC_SITE_URL=https://www.dial-law.com` in Vercel **plus a redeploy** (the value
-   is inlined at build time). Changing the fallback in `src/lib/site.ts` off `rovnerlaw.com` is worth
-   doing at the same time so an unset var fails safe.
+   Fixed by setting `NEXT_PUBLIC_SITE_URL=https://www.dial-law.com` (production, plain) and
+   redeploying via no-op commit `4ced400`. Verified live: canonical, `og:url`, the `LegalService`
+   JSON-LD `url`/`logo`, `robots.txt` and `sitemap.xml` all now read `https://www.dial-law.com`, with
+   zero `rovnerlaw.com` references left on the homepage.
+
+   **Why it can regress:** `NEXT_PUBLIC_*` is inlined at **build time**, so the variable must exist in
+   the build environment — an unset var fails silently and *looks* fine locally. It is set for
+   `production` only; a preview deployment still renders the `rovnerlaw.com` fallback. Changing the
+   fallback in `src/lib/site.ts` to the real host would make this fail safe and is still worth doing.
 3. **`/api/contact` has silently lost three shipped features.** PR 21 (zod validation, commit
    `dbcf53b`) rewrote the route and dropped ~82 lines, removing:
    - the per-IP rate limit (PR 12) — `src/lib/rate-limit.ts` is now **dead code, imported nowhere**;
@@ -259,7 +263,7 @@ commit subjects. Match on branch name or commit SHA, not the "PR NN" label.
 | `CONTACT_EMAIL` | Comma-separated lead recipients; defaults to `rovneralec@gmail.com` |
 | `HCAPTCHA_SECRET` | Server-side captcha verify. **Unset ⇒ captcha bypassed entirely** |
 | `NEXT_PUBLIC_HCAPTCHA_SITE_KEY` | Renders the widget; unset ⇒ hidden |
-| `NEXT_PUBLIC_SITE_URL` | `SITE_URL` for canonicals/sitemap/JSON-LD. **Currently not effective in prod** — the live site emits the `https://rovnerlaw.com` fallback (landmine 2). Inlined at build time, so a change needs a redeploy |
+| `NEXT_PUBLIC_SITE_URL` | `SITE_URL` for canonicals/sitemap/JSON-LD. Set to `https://www.dial-law.com` on **production only** — preview builds still emit the parked-domain fallback (landmine 2). Inlined at build time, so a change needs a redeploy |
 | `ADMIN_EMAIL`, `ADMIN_PASSWORD` | `npm run create-admin` only |
 
 Set these in Vercel for prod and `.env.local` for dev. `.gitignore` covers `.env*` — keep it that way.
