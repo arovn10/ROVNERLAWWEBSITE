@@ -294,7 +294,7 @@ export default function LocationsPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 via-slate-900/75 to-slate-900/95" />
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
             <p className="text-amber-200/90 text-[10px] font-semibold uppercase tracking-[0.2em] mb-1">Find Us</p>
-            <h1 className="font-serif text-2xl font-bold mb-0.5">Our Locations</h1>
+            <p className="font-serif text-2xl font-bold mb-0.5">Our Locations</p>
             <p className="text-slate-200 text-sm">Serving PA & NJ</p>
           </div>
         </section>

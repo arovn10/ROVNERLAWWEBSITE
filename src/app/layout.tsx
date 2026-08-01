@@ -3,6 +3,7 @@ import { Inter, Libre_Baskerville } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { HideDevPortal } from "@/components/HideDevPortal";
+import MobileCallBar from "@/components/MobileCallBar";
 import { SITE_URL } from "@/lib/site";
 import { getFirmName } from "@/lib/settings";
 
@@ -21,11 +22,17 @@ export const metadata: Metadata = {
   },
   description: DEFAULT_DESCRIPTION,
   applicationName: "Rovner Law",
-  // NOTE: deliberately no `alternates.canonical` here. A canonical set in the
-  // root layout is inherited by every route, so hardcoding "/" made all 21
-  // pages declare themselves duplicates of the homepage — enough on its own to
-  // keep them out of the search index. With it absent, each URL self-
-  // canonicalises. Set a canonical per route via generateMetadata instead.
+  // This is the HOMEPAGE canonical, and it is only safe because every other
+  // public route now sets its own — via a route-segment layout.tsx, or
+  // generateMetadata on the dynamic routes. Previously nothing overrode it, so
+  // all 21 pages declared themselves duplicates of "/", which is enough on its
+  // own to keep them out of the index. If you add a public route, give it a
+  // canonical or it will inherit this one and be de-indexed in favour of "/".
+  //
+  // Worth keeping rather than relying on self-canonicalisation: Google Ads
+  // appends gclid/utm parameters, and without an explicit canonical
+  // "/?gclid=..." can be indexed as a URL separate from "/".
+  alternates: { canonical: "/" },
   robots: {
     index: true,
     follow: true,
@@ -110,6 +117,7 @@ export default async function RootLayout({
       <body className="font-sans antialiased">
         <HideDevPortal />
         <Providers initialFirmName={firmName}>{children}</Providers>
+        <MobileCallBar />
       </body>
     </html>
   );

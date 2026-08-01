@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useFirmName } from '@/lib/FirmNameContext';
 import { Phone } from 'lucide-react';
+import { PHONE_DISPLAY, PHONE_TOLLFREE_DISPLAY, TEL_HREF_TOLLFREE } from '@/lib/contact-details';
 
 interface HeaderProps {
   currentPage?: string;
@@ -19,17 +20,22 @@ export default function Header({ currentPage = '' }: HeaderProps) {
           <div className="max-w-6xl mx-auto px-6 lg:px-8 py-6 flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6">
             <div className="max-w-xl">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 mb-1">Law Offices of</p>
-              <h1 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight leading-tight">{firmName}</h1>
+              {/* Not an <h1>: this is the masthead logotype, repeated on every page.
+                  As a heading it made the firm name the primary heading of all 21
+                  pages instead of each page's own subject. */}
+              <p className="font-serif text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight leading-tight">{firmName}</p>
               <div className="w-16 h-0.5 bg-amber-800/70 mt-3 rounded-full" />
             </div>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-              <a href="tel:215-259-5958" className="flex items-center gap-2 text-slate-900 hover:text-amber-800 transition-colors group">
+              {/* Dials the toll-free number it displays. This used to show
+                  888-DIAL-LAW and dial the local line instead. */}
+              <a href={TEL_HREF_TOLLFREE} className="flex items-center gap-2 text-slate-900 hover:text-amber-800 transition-colors group">
                 <span className="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 group-hover:bg-slate-200 transition-colors">
                   <Phone className="w-4 h-4 text-slate-600 group-hover:text-amber-800" />
                 </span>
                 <div className="text-left">
-                  <span className="block text-xl font-bold tracking-tight">888-DIAL-LAW</span>
-                  <span className="text-xs text-slate-500">Toll Free · Local: 215-259-5958</span>
+                  <span className="block text-xl font-bold tracking-tight">{PHONE_TOLLFREE_DISPLAY}</span>
+                  <span className="text-xs text-slate-500">Toll Free · Local: {PHONE_DISPLAY}</span>
                 </div>
               </a>
               <Link

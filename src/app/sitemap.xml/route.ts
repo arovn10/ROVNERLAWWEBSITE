@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { SITE_URL } from '@/lib/site';
+import { DEDICATED_SLUGS, practiceAreaPath } from '@/lib/practice-areas';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -51,10 +52,26 @@ export async function GET() {
       }),
     ]);
 
+    // Resolve aliases, then de-duplicate: the `product-liability` row and the
+    // `defective-products` page are the same practice area, and a sitemap should
+    // list the destination URL rather than one that 301s. Deduping also keeps the
+    // hand-written page — previously absent from the sitemap entirely because it
+    // has no database row — from being listed twice.
+    const practiceLocs = new Map<string, Date>();
+    for (const a of practiceAreas) {
+      const loc = practiceAreaPath(a.slug).replace(/^\//, '');
+      const existing = practiceLocs.get(loc);
+      if (!existing || a.updatedAt > existing) practiceLocs.set(loc, a.updatedAt);
+    }
+    for (const slug of DEDICATED_SLUGS) {
+      const loc = `practice/${slug}`;
+      if (!practiceLocs.has(loc)) practiceLocs.set(loc, new Date(0));
+    }
+
     dynamicEntries = [
-      ...practiceAreas.map((a) => ({
-        loc: `practice/${a.slug}`,
-        lastmod: a.updatedAt,
+      ...[...practiceLocs.entries()].map(([loc, lastmod]) => ({
+        loc,
+        ...(lastmod.getTime() > 0 ? { lastmod } : {}),
         changefreq: 'monthly',
         priority: 0.8,
       })),

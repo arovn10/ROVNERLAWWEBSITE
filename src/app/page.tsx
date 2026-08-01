@@ -108,10 +108,15 @@ export default function HomePage() {
           <div className="absolute inset-0 flex flex-col items-center justify-center z-20 text-center px-6 pointer-events-none">
             <div className="pointer-events-auto">
               <p className="text-amber-200/90 text-[11px] font-semibold uppercase tracking-[0.3em] mb-3">Est. 1980 · Philadelphia</p>
-              <h1 className="font-serif font-bold text-3xl md:text-4xl lg:text-5xl text-white mb-3 tracking-tight leading-[1.1] max-w-4xl drop-shadow-lg">
+              {/* The firm name stays the dominant visual element, but it is the brand,
+                  not the page's subject — so the <h1> is the line that says what this
+                  page is about. Swap the two if you'd rather lead with the name. */}
+              <p className="font-serif font-bold text-3xl md:text-4xl lg:text-5xl text-white mb-3 tracking-tight leading-[1.1] max-w-4xl drop-shadow-lg">
                 {firmName}
+              </p>
+              <h1 className="text-base md:text-lg text-slate-200 font-medium mb-6">
+                Personal Injury &amp; Civil Litigation Attorneys in Philadelphia
               </h1>
-              <p className="text-base md:text-lg text-slate-200 font-medium mb-6">Personal Injury &amp; Civil Litigation</p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                 <Link                   href="/contact"
                   className="inline-flex items-center justify-center px-7 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold text-sm uppercase tracking-wider rounded-md transition-colors duration-200 shadow-lg hover:shadow-xl"
@@ -121,12 +126,17 @@ export default function HomePage() {
                 <div className="flex items-center gap-8">
                   <div className="text-center">
                     <span className="block text-xl md:text-2xl font-bold text-amber-400 leading-none">150+</span>
-                    <span className="text-[10px] text-slate-300 font-medium uppercase tracking-wider mt-1 block">Years Experience</span>
+                    {/* Qualified deliberately: PA RPC 7.1 forbids misleading claims about a
+                        lawyer's services, and "150+ Years Experience" read literally is
+                        impossible for a firm established in 1980. */}
+                    <span className="text-[10px] text-slate-300 font-medium uppercase tracking-wider mt-1 block">Years Combined Experience</span>
                   </div>
                   <div className="w-px h-8 bg-slate-600" aria-hidden="true" />
                   <div className="text-center">
                     <span className="block text-xl md:text-2xl font-bold text-amber-400 leading-none">25,000+</span>
-                    <span className="text-[10px] text-slate-300 font-medium uppercase tracking-wider mt-1 block">Cases Won</span>
+                    {/* "Cases Won" is an outcome claim the firm would have to substantiate.
+                        "Clients Represented" is verifiable and says the same thing about scale. */}
+                    <span className="text-[10px] text-slate-300 font-medium uppercase tracking-wider mt-1 block">Clients Represented</span>
                   </div>
                 </div>
               </div>
@@ -141,6 +151,12 @@ export default function HomePage() {
               <p className="text-slate-500 text-sm font-semibold uppercase tracking-widest mb-2">Proven Results</p>
               <h2 className="font-serif text-4xl font-bold text-slate-900 tracking-tight">Recent Verdicts &amp; Settlements</h2>
               <p className="text-slate-500 mt-3 max-w-xl mx-auto">Decades of experience translating into life-changing recoveries for our clients</p>
+              {/* Past-results disclaimer sits with the figures it qualifies, rather than
+                  only on /disclaimer where nobody reading these numbers will see it. */}
+              <p className="text-slate-400 text-xs mt-4 max-w-2xl mx-auto leading-relaxed">
+                Prior results do not guarantee a similar outcome. Every case is decided on its own
+                facts. See our <Link href="/disclaimer" className="underline hover:text-slate-600">full disclaimer</Link>.
+              </p>
             </div>
             {loading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -360,10 +376,10 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-black/50" />
           <div className="absolute inset-0 flex flex-col items-center justify-center z-10 text-center text-white px-4">
             <p className="text-amber-200/90 text-[10px] font-semibold uppercase tracking-[0.2em] mb-1">Est. 1980</p>
-            <h1 className="font-serif text-2xl font-bold mb-0.5 leading-tight">{firmName}</h1>
+            <p className="font-serif text-2xl font-bold mb-0.5 leading-tight">{firmName}</p>
             <p className="text-slate-200 text-xs mb-3">Personal Injury & Civil Litigation</p>
             <div className="flex gap-2">
-              <span className="bg-amber-600/90 text-white px-2.5 py-1 rounded text-xs font-semibold">150+ years of experience</span>
+              <span className="bg-amber-600/90 text-white px-2.5 py-1 rounded text-xs font-semibold">150+ years combined experience</span>
               <Link href="/contact" className="bg-white/20 text-white px-2.5 py-1 rounded text-xs font-medium backdrop-blur-sm hover:bg-white/30 transition-colors">Free Consultation</Link>
             </div>
           </div>

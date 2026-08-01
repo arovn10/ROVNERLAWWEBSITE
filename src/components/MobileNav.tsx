@@ -3,21 +3,27 @@
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { practiceAreaPath } from "@/lib/practice-areas";
 
+// Slugs are routed through practiceAreaPath() so an alias never produces a link
+// that merely redirects. This list previously contained "products-liability",
+// which existed neither as a page nor as a database row — a dead link in the
+// mobile menu — and omitted limited tort entirely.
 const practiceAreas = [
-  { name: "Personal Injury", href: "/practice/personal-injury" },
-  { name: "Auto Accidents", href: "/practice/auto-accidents" },
-  { name: "Motorcycle Accidents", href: "/practice/motorcycle-accidents" },
-  { name: "Truck Accidents", href: "/practice/truck-accidents" },
-  { name: "Premises Liability", href: "/practice/premises-liability" },
-  { name: "Medical Malpractice", href: "/practice/medical-malpractice" },
-  { name: "Products Liability", href: "/practice/products-liability" },
-  { name: "Workers' Compensation", href: "/practice/workers-compensation" },
-  { name: "Family Law", href: "/practice/family-law" },
-  { name: "Criminal Defense", href: "/practice/criminal-defense" },
-  { name: "Social Security Disability", href: "/practice/social-security-disability" },
-  { name: "General Legal Matters", href: "/practice/general-legal-matters" },
-];
+  { name: "Personal Injury", slug: "personal-injury" },
+  { name: "Auto Accidents", slug: "auto-accidents" },
+  { name: "Motorcycle Accidents", slug: "motorcycle-accidents" },
+  { name: "Truck Accidents", slug: "truck-accidents" },
+  { name: "Premises Liability", slug: "premises-liability" },
+  { name: "Medical Malpractice", slug: "medical-malpractice" },
+  { name: "Product Liability", slug: "product-liability" },
+  { name: "Workers' Compensation", slug: "workers-compensation" },
+  { name: "Limited Tort", slug: "limited-tort-lawyer" },
+  { name: "Social Security Disability", slug: "social-security-disability" },
+  { name: "Family Law", slug: "family-law" },
+  { name: "Criminal Defense", slug: "criminal-defense" },
+  { name: "General Legal Matters", slug: "general-legal-matters" },
+].map((a) => ({ name: a.name, href: practiceAreaPath(a.slug) }));
 
 export default function MobileNav({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
   const [practiceOpen, setPracticeOpen] = useState(false);

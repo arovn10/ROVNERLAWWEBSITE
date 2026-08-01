@@ -199,7 +199,7 @@ export default function FamilyLawPage() {
           />
           <div className="absolute inset-0 bg-black bg-opacity-50" />
           <div className="relative z-10 text-center text-white px-4 w-full">
-            <h1 className="text-2xl font-bold mb-2" style={{textShadow:'0 2px 8px #000', letterSpacing: '-0.01em'}}>Family Law</h1>
+            <p className="text-2xl font-bold mb-2" style={{textShadow:'0 2px 8px #000', letterSpacing: '-0.01em'}}>Family Law</p>
             <p className="text-base mb-4 font-medium" style={{textShadow:'0 2px 8px #000'}}>Expert representation for family law matters</p>
           </div>
         </section>

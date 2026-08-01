@@ -94,7 +94,7 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-slate-900/80" />
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6">
             <p className="text-slate-400 text-sm font-semibold uppercase tracking-widest mb-2">Est. 1980</p>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-2">{content.heroTitle}</h2>
+            <h1 className="font-serif text-3xl md:text-4xl font-bold mb-2">{content.heroTitle}</h1>
             <p className="text-slate-200 text-lg">{firmName}</p>
           </div>
         </section>
