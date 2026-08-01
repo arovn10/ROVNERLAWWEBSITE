@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Home, LogOut } from "lucide-react";
 import clsx from "clsx";
 import { authOptions } from "@/lib/auth";
+import AdminSessionProvider from "./AdminSessionProvider";
 
 export const metadata: Metadata = {
   robots: { index: false, follow: false, nocache: true },
@@ -31,6 +32,7 @@ export default async function AdminLayout({
   ];
 
   return (
+    <AdminSessionProvider>
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 font-sans">
       {/* Top Navigation Bar */}
       <nav
@@ -84,5 +86,6 @@ export default async function AdminLayout({
         {children}
       </main>
     </div>
+    </AdminSessionProvider>
   );
 } 

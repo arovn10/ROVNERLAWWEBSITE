@@ -113,12 +113,11 @@ export default function HomePage() {
               </h1>
               <p className="text-base md:text-lg text-slate-200 font-medium mb-6">Personal Injury &amp; Civil Litigation</p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                <a
-                  href="/contact"
+                <Link                   href="/contact"
                   className="inline-flex items-center justify-center px-7 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold text-sm uppercase tracking-wider rounded-md transition-colors duration-200 shadow-lg hover:shadow-xl"
                 >
                   Free Consultation
-                </a>
+                </Link>
                 <div className="flex items-center gap-8">
                   <div className="text-center">
                     <span className="block text-xl md:text-2xl font-bold text-amber-400 leading-none">150+</span>
@@ -295,9 +294,9 @@ export default function HomePage() {
               No recovery, no fee. Contact us today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="/contact" className="inline-flex items-center justify-center px-10 py-4 bg-slate-800 text-slate-100 font-semibold rounded-md hover:bg-slate-700 transition-all duration-200 shadow-sm">
+              <Link href="/contact" className="inline-flex items-center justify-center px-10 py-4 bg-slate-800 text-slate-100 font-semibold rounded-md hover:bg-slate-700 transition-all duration-200 shadow-sm">
                 Free Consultation
-              </a>
+              </Link>
               <a href="tel:215-259-5958" className="inline-flex items-center justify-center px-10 py-4 bg-white/5 text-slate-200 font-semibold rounded-md border border-slate-400/40 hover:bg-white/10 transition-all duration-200">
                 888-DIAL-LAW
               </a>

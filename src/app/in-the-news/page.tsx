@@ -222,12 +222,11 @@ export default function InTheNewsPage() {
               Contact us today for a free consultation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/contact"
+              <Link                 href="/contact"
                 className="inline-block bg-white text-orange-600 font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02]"
               >
                 Get Free Consultation
-              </a>
+              </Link>
             </div>
           </div>
         </section>
@@ -275,12 +274,11 @@ export default function InTheNewsPage() {
             <p className="text-orange-100 mb-4 text-sm">
               Contact us today for a free consultation or call <a href="tel:215-259-5958" className="underline">215-259-5958</a>
             </p>
-            <a
-              href="/contact"
+            <Link               href="/contact"
               className="inline-block bg-white text-orange-600 font-bold px-6 py-2 rounded-lg shadow hover:bg-orange-100 transition"
             >
               Get Free Consultation
-            </a>
+            </Link>
           </div>
         </section>
         <Footer />

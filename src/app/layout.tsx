@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { HideDevPortal } from "@/components/HideDevPortal";
 import { SITE_URL } from "@/lib/site";
+import { getFirmName } from "@/lib/settings";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const libreBaskerville = Libre_Baskerville({ weight: ["400", "700"], subsets: ["latin"], variable: "--font-serif" });
@@ -20,7 +21,11 @@ export const metadata: Metadata = {
   },
   description: DEFAULT_DESCRIPTION,
   applicationName: "Rovner Law",
-  alternates: { canonical: "/" },
+  // NOTE: deliberately no `alternates.canonical` here. A canonical set in the
+  // root layout is inherited by every route, so hardcoding "/" made all 21
+  // pages declare themselves duplicates of the homepage — enough on its own to
+  // keep them out of the search index. With it absent, each URL self-
+  // canonicalises. Set a canonical per route via generateMetadata instead.
   robots: {
     index: true,
     follow: true,
@@ -77,11 +82,22 @@ const legalServiceJsonLd = {
   sameAs: [],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Read the firm name on the server so it appears in the rendered HTML. The
+  // client provider would otherwise render its "Law Firm" placeholder until
+  // hydration, publishing that as the brand and site-wide heading. Degrades to
+  // the default rather than 500-ing the whole site if the database is down.
+  let firmName = "Rovner Law";
+  try {
+    firmName = await getFirmName();
+  } catch (error) {
+    console.error("Root layout: could not load firm name", error);
+  }
+
   return (
     <html lang="en" className={`${inter.variable} ${libreBaskerville.variable}`}>
       <head>
@@ -93,7 +109,7 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased">
         <HideDevPortal />
-        <Providers>{children}</Providers>
+        <Providers initialFirmName={firmName}>{children}</Providers>
       </body>
     </html>
   );

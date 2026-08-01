@@ -147,22 +147,22 @@ export default async function NewsArticlePage({ params }: { params: Promise<{ id
         <section className="px-4 pt-4 pb-2">
           <h3 className="text-lg font-bold mb-3 text-blue-900">Quick Access</h3>
           <div className="grid grid-cols-2 gap-3 mb-4">
-            <a href="/attorneys" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            <Link href="/attorneys" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-blue-600 text-2xl mb-2">👥</div>
               <div className="font-semibold text-gray-800 text-sm">Our Attorneys</div>
-            </a>
-            <a href="/contact" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            </Link>
+            <Link href="/contact" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-blue-600 text-2xl mb-2">📞</div>
               <div className="font-semibold text-gray-800 text-sm">Contact Us</div>
-            </a>
+            </Link>
             <Link href="/practice" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-blue-600 text-2xl mb-2">⚖️</div>
               <div className="font-semibold text-gray-800 text-sm">Practice Areas</div>
             </Link>
-            <a href="/about" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            <Link href="/about" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-blue-600 text-2xl mb-2">ℹ️</div>
               <div className="font-semibold text-gray-800 text-sm">About Us</div>
-            </a>
+            </Link>
           </div>
         </section>
 
@@ -172,9 +172,9 @@ export default async function NewsArticlePage({ params }: { params: Promise<{ id
             <h3 className="font-bold text-gray-900 text-lg text-center">Need Legal Help?</h3>
             <p className="text-gray-600 text-center text-sm">Contact us today for a free consultation</p>
             <div className="flex flex-col gap-2 w-full">
-              <a href="/contact" className="w-full bg-green-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-green-700 transition">
+              <Link href="/contact" className="w-full bg-green-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-green-700 transition">
                 Get Free Consultation
-              </a>
+              </Link>
               <a href="tel:215-259-5958" className="w-full bg-blue-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-blue-700 transition">
                 Call 215-259-5958
               </a>
