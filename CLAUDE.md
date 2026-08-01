@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-> Last verified against the tree at commit `d7279de` (default branch `main`), 2026-08-01.
+> Last verified against the tree at commit `1fa7ca0` (branch `claude/claude-md-docs-285lgn`), 2026-08-01.
 
 ## What this is
 
@@ -70,10 +70,11 @@ Desktop shell is `Header` + `Footer`; mobile shell is `MobileHeader` + `MobileNa
 across the boundary — Next 15 throws at SSR time. That is exactly how `/in-the-news/[id]` shipped a
 production 500 (hotfix `d7279de`).
 
-The fix pattern, and the one to copy: a tiny `"use client"` wrapper that owns the `useState` and
-renders the mobile shell itself — `src/app/in-the-news/[id]/MobileNavClient.tsx`. The server page
-renders `<MobileNavClient />`, a component *reference*, which is serializable. **Any server page that
-needs mobile nav must go through a client subcomponent.**
+The fix pattern: a `"use client"` wrapper that owns the `useState` and renders the mobile shell
+itself. **`src/components/MobileNavShell.tsx` is the reusable one — use it.** The server page renders
+`<MobileNavShell />`, a component *reference*, which is serializable.
+(`src/app/in-the-news/[id]/MobileNavClient.tsx` is the original route-local version and does the same
+thing.) **Any server page that needs mobile nav must go through one of these.**
 
 ### API routes: two shapes
 
@@ -121,18 +122,66 @@ subtree, which is the likely reason it was disabled.
 Credentials provider + bcrypt + JWT strategy; `role` is threaded through the jwt/session callbacks
 and typed in `src/types/next-auth.d.ts`.
 
-### Practice areas are in three places
+### Practice-area routing — `src/lib/practice-areas.ts` is the source of truth
 
-- The **listing** at `/practice` is DB-driven — a client component fetching `/api/practice-areas`
-  (PR 17 removed the hardcoded array).
-- Ten **dedicated sub-pages** at `src/app/practice/<slug>/page.tsx` keep handcrafted copy and are
-  *not* generated from the DB.
-- `src/app/practice/[slug]/page.tsx` is a catch-all guard with its **own hardcoded `dedicatedSlugs`
-  array**: a listed slug `notFound()`s so the static route wins; anything else redirects to `/practice`.
+Practice areas used to be defined in **four** places with three disagreeing slug sets (an earlier
+version of this file said three). The damage: four DB slugs had no page and answered 200 with an empty
+shell — soft 404s that were in the submitted sitemap; `defective-products` had real copy but no DB row
+so nothing linked to it; and the mobile menu linked `products-liability`, which existed nowhere.
 
-Adding a dedicated practice page means creating the directory **and** adding its slug to
-`dedicatedSlugs` — miss the second step and the new page redirects away. A DB-only practice area
-needs neither.
+Now:
+
+- **`src/lib/practice-areas.ts`** holds `DEDICATED_SLUGS`, the `SLUG_ALIASES` map, and
+  `practiceAreaPath()`. Every link and sitemap entry goes through `practiceAreaPath()` so a generated
+  URL never merely redirects.
+- The **listing** at `/practice` is a server component querying Prisma, passing data to
+  `PracticeAreasClient`. Its 13 links are now in the HTML.
+- **Ten dedicated sub-pages** at `src/app/practice/<slug>/page.tsx` keep handcrafted copy (809–1,640
+  words each). Their slugs must be in `DEDICATED_SLUGS` or the catch-all will shadow them.
+- **`src/app/practice/[slug]/page.tsx`** renders the DB record for areas with no dedicated page —
+  `notFound()` for a dedicated slug so the static route wins, `permanentRedirect` for an alias, a real
+  404 for an unknown slug.
+
+Adding a dedicated page means creating the directory **and** adding the slug to `DEDICATED_SLUGS`.
+Adding a DB-only area needs neither — it gets a page automatically.
+
+### Metadata lives in route-segment layouts
+
+A page marked `"use client"` cannot export `metadata`, and 15 of 21 public pages are client
+components. Rather than restructure them all, each route has a tiny `layout.tsx` that exports
+`metadata` and returns `children` unchanged. **When you add a public route, give it one** — or it
+inherits the root layout's canonical (`/`) and gets de-indexed in favour of the homepage.
+
+Dynamic routes use `generateMetadata` in the page instead, since they are already server components:
+`/in-the-news/[id]` per article and `/practice/[slug]` per DB row.
+
+Do not put `| Rovner Law` in a title — `layout.tsx`'s title template already appends it. That is what
+produced `Disclaimer | Rovner Law | Rovner Law`.
+
+### Server-rendered data, and the one flag that broke it
+
+`src/app/providers.tsx` once loaded NextAuth's `SessionProvider` with
+`dynamic(..., { ssr: false })`. Because `Providers` wraps `{children}` in the root layout, that opted
+the **entire site** out of server rendering: every page shipped 9 words and a
+`BAILOUT_TO_CLIENT_SIDE_RENDERING` marker. `SessionProvider` now lives in
+`src/app/admin/AdminSessionProvider.tsx`, scoped to the only routes that call `useSession`.
+**Never reintroduce `ssr: false` in the root layout's tree.**
+
+`/attorneys`, `/practice`, `/in-the-news` and `/photo-gallery` are server components that query Prisma
+and pass serialised data to a client child. Copy that pattern rather than fetching from `/api/*` in a
+`useEffect` — a client fetch means the server prerenders only the loading skeleton, so the content is
+absent from the HTML. Serialise `Date` to ISO strings at the boundary so the client's types are
+unchanged.
+
+The root layout reads `Settings.firmName` on the server and seeds `FirmNameProvider` with it. Without
+that the provider's `'Law Firm'` placeholder would be the server-rendered brand and heading.
+
+### Headings
+
+Exactly **one `<h1>` per page**, naming the page's subject. The header's firm name is a `<p>` — as an
+`<h1>` it made the brand the primary heading of all 21 pages. Where a page renders duplicated
+desktop/mobile trees, the mobile copy of the heading is a `<p>` with the same classes so only one
+`<h1>` reaches the DOM.
 
 ### Other pieces worth knowing
 
@@ -147,6 +196,13 @@ needs neither.
   `src/app/sitemap.xml/route.ts` (static entries + practice areas + news; a DB failure degrades to
   static-only). Because `NEXT_PUBLIC_*` is inlined at build time, changing it requires a **redeploy**,
   not just an env-var edit — and an unset var silently yields the parked-domain fallback (landmine 2).
+- **Phone numbers:** `src/lib/contact-details.ts`. The header used to display `888-DIAL-LAW` while
+  the link dialled the local number; the toll-free now dials `888-342-5529`. Import from there rather
+  than typing a number into a component — 56 hardcoded copies is what made the mismatch invisible. It
+  is also where per-channel call-tracking numbers would go, which is the only way to attribute a call
+  to Ads versus organic.
+- **Mobile call bar:** `src/components/MobileCallBar.tsx`, mounted once in the root layout, hidden on
+  `/admin` and `/contact` via `usePathname`.
 - **Health:** `GET /api/health` runs `SELECT 1` — 200 `db: "up"`, 503 `db: "down"`. `force-dynamic`.
 
 ## Landmines
@@ -173,22 +229,18 @@ needs neither.
    the build environment — an unset var fails silently and *looks* fine locally. It is set for
    `production` only; a preview deployment still renders the `rovnerlaw.com` fallback. Changing the
    fallback in `src/lib/site.ts` to the real host would make this fail safe and is still worth doing.
-3. **`/api/contact` has silently lost three shipped features.** PR 21 (zod validation, commit
-   `dbcf53b`) rewrote the route and dropped ~82 lines, removing:
-   - the per-IP rate limit (PR 12) — `src/lib/rate-limit.ts` is now **dead code, imported nowhere**;
-   - the server-side honeypot check (PR 13) — the `website` field is still rendered on the form
-     (twice: desktop + mobile) and still accepted by the zod schema, but nothing inspects it;
-   - the confirmation auto-reply to the submitter (PR 14), and with it `MAILGUN_REPLY_TO`.
-
-   The form is therefore unthrottled and bot-unprotected apart from hCaptcha, which is itself dormant
-   unless `HCAPTCHA_SECRET` is set. Re-landing these is the highest-value fix in the repo; the prior
-   implementations are recoverable from commits `973ccbe`, `76884a4`, `9e6b82a`.
-4. **The same PR reintroduced PII logging.** `src/app/api/lawyers/route.ts:52` logs the full created
-   lawyer object — exactly what PR 22 stripped from every route. It is the only surviving
-   `console.log` under `src/app/api/`.
-5. **`/api/contact` accepts `address` and then discards it.** It is in the zod schema and in the
-   `ContactSubmission` model, but absent from the `prisma.contactSubmission.create()` data — the form
-   collects it and the row never gets it.
+3. **`/api/contact` regressions — FIXED, but know the history.** PR 21 (zod validation, commit
+   `dbcf53b`) rewrote the route and dropped ~82 lines, silently removing the per-IP rate limit
+   (PR 12), the server-side honeypot check (PR 13) and the confirmation auto-reply (PR 14). All three
+   were re-landed on top of the zod validation. The lesson generalises: **this repo has a track record
+   of refactors dropping behaviour that had no test to protect it.** When you rewrite a route, diff it
+   against the previous version rather than reimplementing from the schema.
+4. **PII logging — FIXED.** `src/app/api/lawyers/route.ts` logged the full created lawyer object,
+   the exact pattern PR 22 stripped and PR 21 reintroduced. Now logs the id only.
+5. **`address` was never collected at all — CORRECTED.** An earlier version of this file said the
+   form collected `address` and the route discarded it. Verified false: the form has no address input.
+   It existed only in the zod schema and the DB column. Dropped from the schema; the nullable column
+   remains, since removing it is a destructive migration for no gain.
 6. **Migrations have no baseline.** `prisma/migrations/` holds exactly one migration
    (`20260524000001_drop_photo_model`) against a schema with eleven models. `prisma migrate deploy`
    against an **empty** database will not create the schema — prod was built with `db push` before
@@ -248,6 +300,11 @@ commit subjects. Match on branch name or commit SHA, not the "PR NN" label.
 - Validate mutating input with a zod schema from `src/lib/schemas.ts`; never trust `await req.json()`
   directly.
 - Import Prisma from `@/lib/prisma` (the singleton) — never `new PrismaClient()` in a route.
+- **A new public route needs a `layout.tsx` with `metadata`** (title, description, canonical), or it
+  inherits the homepage canonical and is de-indexed.
+- **One `<h1>` per page**, and it is not the firm name.
+- Prefer server components that query Prisma over client components that fetch `/api/*` — the latter
+  ships an empty skeleton to crawlers.
 - `@/*` maps to `./src/*`.
 
 ## Environment variables
