@@ -4,9 +4,12 @@ import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import MobileNavShell from '@/components/MobileNavShell';
+import JsonLd from '@/components/JsonLd';
 import { prisma } from '@/lib/prisma';
 import { isDedicatedSlug, resolveAlias } from '@/lib/practice-areas';
 import { PHONE_TOLLFREE_DISPLAY, TEL_HREF_TOLLFREE } from '@/lib/contact-details';
+import { breadcrumbListJsonLd, faqPageJsonLd } from '@/lib/schema-org';
+import { PRACTICE_AREA_FAQS } from '@/lib/practice-area-faqs';
 
 /**
  * Catch-all for practice areas that live only in the database.
@@ -86,8 +89,19 @@ export default async function PracticeAreaDynamicPage({ params }: { params: Prom
     .map((f) => f.trim())
     .filter(Boolean);
 
+  const faqs = PRACTICE_AREA_FAQS[slug] ?? [];
+
   return (
     <div className="min-h-screen bg-white flex flex-col">
+      <JsonLd
+        data={breadcrumbListJsonLd([
+          { name: 'Home', path: '/' },
+          { name: 'Practice Areas', path: '/practice' },
+          { name: area.title, path: `/practice/${slug}` },
+        ])}
+      />
+      {faqs.length > 0 && <JsonLd data={faqPageJsonLd(faqs)} />}
+
       <div className="hidden lg:block w-full">
         <Header currentPage="practice" />
       </div>
@@ -133,6 +147,22 @@ export default async function PracticeAreaDynamicPage({ params }: { params: Prom
                     </li>
                   ))}
                 </ul>
+              </div>
+            )}
+
+            {faqs.length > 0 && (
+              <div className="mt-12">
+                <h2 className="font-serif text-2xl font-bold text-slate-900 mb-5">
+                  Frequently asked questions
+                </h2>
+                <div className="divide-y divide-slate-200 rounded-lg border border-slate-200">
+                  {faqs.map((faq, i) => (
+                    <div key={i} className="p-5">
+                      <h3 className="font-semibold text-slate-900">{faq.question}</h3>
+                      <p className="mt-2 text-slate-600 leading-relaxed">{faq.answer}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
 

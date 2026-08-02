@@ -1,5 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import PracticeAreasClient from './PracticeAreasClient';
+import JsonLd from '@/components/JsonLd';
+import { breadcrumbListJsonLd } from '@/lib/schema-org';
 
 /**
  * Practice-area listing — the most commercially important page on the site.
@@ -30,5 +32,15 @@ export default async function PracticeAreasPage() {
     console.error('Practice areas: failed to load', error);
   }
 
-  return <PracticeAreasClient practiceAreas={practiceAreas} />;
+  return (
+    <>
+      <JsonLd
+        data={breadcrumbListJsonLd([
+          { name: 'Home', path: '/' },
+          { name: 'Practice Areas', path: '/practice' },
+        ])}
+      />
+      <PracticeAreasClient practiceAreas={practiceAreas} />
+    </>
+  );
 }
