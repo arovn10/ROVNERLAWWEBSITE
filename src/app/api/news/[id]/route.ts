@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth/next';
 import { prisma } from '@/lib/prisma';
 import { authOptions } from '@/lib/auth';
 import { newsUpdateSchema, parseOrError } from '@/lib/schemas';
+import { revalidatePath } from 'next/cache';
 
 export async function GET(
   request: NextRequest,
@@ -50,6 +51,8 @@ export async function PUT(
       }
     });
 
+    revalidatePath('/in-the-news');
+    revalidatePath(`/in-the-news/${id}`);
     return NextResponse.json(news);
   } catch (error) {
     console.error('Error updating news:', error);
@@ -71,6 +74,7 @@ export async function DELETE(
       where: { id }
     });
 
+    revalidatePath('/in-the-news');
     return NextResponse.json({ message: 'News deleted successfully' });
   } catch (error) {
     console.error('Error deleting news:', error);

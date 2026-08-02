@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
@@ -35,6 +36,9 @@ export async function POST(req: NextRequest) {
         description: parsed.description,
       },
     });
+    // The homepage runs on hourly ISR — without this a new settlement would
+    // not appear there for up to an hour.
+    revalidatePath('/');
     return NextResponse.json(newSettlement, { status: 201 });
   } catch (error) {
     console.error('Error creating settlement:', error);

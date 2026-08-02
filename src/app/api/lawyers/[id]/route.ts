@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
@@ -56,6 +57,7 @@ export async function PUT(
         ...(parsed.active !== undefined && { active: parsed.active }),
       },
     });
+    revalidatePath('/attorneys');
     return NextResponse.json(updatedLawyer);
   } catch (error) {
     console.error('Error updating lawyer:', error);
@@ -82,6 +84,7 @@ export async function DELETE(
       where: { id },
     });
 
+    revalidatePath('/attorneys');
     return new NextResponse(null, { status: 204 });
   } catch (error) {
     console.error('Error deleting lawyer:', error);

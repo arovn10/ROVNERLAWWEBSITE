@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth/next';
 import { prisma } from '@/lib/prisma';
 import { authOptions } from '@/lib/auth';
 import { archiveUpdateSchema, parseOrError } from '@/lib/schemas';
+import { revalidatePath } from 'next/cache';
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -36,6 +37,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
         ...(parsed.category !== undefined && { category: parsed.category }),
       },
     });
+    revalidatePath('/photo-gallery');
     return NextResponse.json(updated);
   } catch {
     return NextResponse.json({ error: 'Failed to update archive' }, { status: 500 });
@@ -50,6 +52,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
   const { id } = await params;
   try {
     await prisma.archive.delete({ where: { id } });
+    revalidatePath('/photo-gallery');
     return NextResponse.json({ success: true });
   } catch {
     return NextResponse.json({ error: 'Failed to delete archive' }, { status: 500 });

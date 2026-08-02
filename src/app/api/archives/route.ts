@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { prisma } from "@/lib/prisma";
 import { authOptions } from "@/lib/auth";
 import { archiveCreateSchema, parseOrError } from "@/lib/schemas";
+import { revalidatePath } from "next/cache";
 
 // GET /api/archives
 export async function GET() {
@@ -50,6 +51,7 @@ export async function POST(request: Request) {
         imageUrl: parsed.imageUrl,
       }
     });
+    revalidatePath('/photo-gallery');
     return NextResponse.json(archive);
   } catch (error) {
     console.error('Error creating archive:', error);

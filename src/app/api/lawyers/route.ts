@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
@@ -52,6 +53,10 @@ export async function POST(request: NextRequest) {
     // Log the id only. This previously logged the whole record — the exact
     // pattern PR 22 stripped from every other route, reintroduced by PR 21.
     console.log('Lawyer created successfully:', lawyer.id);
+    // /attorneys now runs on hourly ISR (previously revalidate: 0, a
+    // Postgres query on every view) — without this, a new attorney would not
+    // appear on the public site for up to an hour.
+    revalidatePath('/attorneys');
     return NextResponse.json(lawyer, { status: 201 });
   } catch (error) {
     console.error('Error creating lawyer:', error);
