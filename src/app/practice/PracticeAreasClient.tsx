@@ -119,6 +119,7 @@ export default function PracticeAreasClient({ practiceAreas }: { practiceAreas: 
                     src={area.image || DEFAULT_PRACTICE_IMAGE}
                     alt={area.title}
                     fill
+                    sizes="(min-width: 768px) 400px, 100vw"
                     className="practice-card-image"
                   />
                   <div style={{
@@ -386,6 +387,7 @@ export default function PracticeAreasClient({ practiceAreas }: { practiceAreas: 
                     src={area.image || DEFAULT_PRACTICE_IMAGE}
                     alt={area.title}
                     fill
+                    sizes="100vw"
                     className="object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -440,8 +442,13 @@ export default function PracticeAreasClient({ practiceAreas }: { practiceAreas: 
             </Link>
           </div>
         </section>
-        <Footer />
       </div>
+
+      {/* Shared footer, moved outside the mobile-only wrapper above — nested
+         there, it (and its fixed "Free Consultation" tab) never rendered on
+         desktop at all, since a hidden ancestor collapses a child regardless
+         of the child's own responsive classes. */}
+      <Footer />
     </div>
   );
 }

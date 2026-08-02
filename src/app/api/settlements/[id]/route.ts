@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth/next';
 import { prisma } from '@/lib/prisma';
 import { authOptions } from '@/lib/auth';
 import { parseOrError, settlementUpdateSchema } from '@/lib/schemas';
+import { revalidatePath } from 'next/cache';
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -35,6 +36,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
         ...(parsed.date !== undefined && { date: new Date(parsed.date) }),
       },
     });
+    revalidatePath('/');
     return NextResponse.json(updated);
   } catch (error) {
     console.error('Error updating settlement:', error);
@@ -53,6 +55,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
   const { id } = await params;
   try {
     await prisma.settlement.delete({ where: { id } });
+    revalidatePath('/');
     return NextResponse.json({ success: true });
   } catch {
     return NextResponse.json({ error: 'Failed to delete settlement' }, { status: 500 });

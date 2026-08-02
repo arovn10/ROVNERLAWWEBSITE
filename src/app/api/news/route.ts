@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { prisma } from "@/lib/prisma";
 import { authOptions } from "@/lib/auth";
 import { newsCreateSchema, parseOrError } from "@/lib/schemas";
+import { revalidatePath } from "next/cache";
 
 // GET /api/news
 export async function GET() {
@@ -47,6 +48,7 @@ export async function POST(request: NextRequest) {
       }
     });
 
+    revalidatePath('/in-the-news');
     return NextResponse.json(news);
   } catch (error) {
     console.error('Error creating news:', error);

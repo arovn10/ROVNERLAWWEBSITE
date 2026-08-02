@@ -288,8 +288,13 @@ export default function PremisesLiabilityPage() {
             </a>
           </div>
         </section>
-        <Footer />
       </div>
+
+      {/* Shared footer, moved outside the mobile-only wrapper above — nested
+         there, it (and its fixed "Free Consultation" tab) never rendered on
+         desktop at all, since a hidden ancestor collapses a child regardless
+         of the child's own responsive classes. */}
+      <Footer />
     </div>
   );
 } 

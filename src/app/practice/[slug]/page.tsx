@@ -24,6 +24,10 @@ import { PHONE_TOLLFREE_DISPLAY, TEL_HREF_TOLLFREE } from '@/lib/contact-details
  * to nothing.
  */
 
+// Hourly ISR instead of a Postgres query on every view — admin writes call
+// revalidatePath(`/practice/${slug}`) for instant publication on edit.
+export const revalidate = 3600;
+
 async function getPracticeArea(slug: string) {
   try {
     return await prisma.practiceArea.findUnique({ where: { slug } });
