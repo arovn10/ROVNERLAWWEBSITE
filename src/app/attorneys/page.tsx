@@ -1,5 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import AttorneysClient from './AttorneysClient';
+import JsonLd from '@/components/JsonLd';
+import { breadcrumbListJsonLd, attorneyPersonJsonLd } from '@/lib/schema-org';
 
 // Attorneys change rarely — hourly ISR instead of a Postgres query on every
 // view, with admin writes calling revalidatePath('/attorneys') for instant
@@ -12,5 +14,18 @@ export default async function AttorneysPage() {
     orderBy: { order: 'asc' },
   });
 
-  return <AttorneysClient attorneys={attorneys} />;
+  return (
+    <>
+      <JsonLd
+        data={breadcrumbListJsonLd([
+          { name: 'Home', path: '/' },
+          { name: 'Attorneys', path: '/attorneys' },
+        ])}
+      />
+      {attorneys.map((attorney) => (
+        <JsonLd key={attorney.id} data={attorneyPersonJsonLd(attorney)} />
+      ))}
+      <AttorneysClient attorneys={attorneys} />
+    </>
+  );
 }
