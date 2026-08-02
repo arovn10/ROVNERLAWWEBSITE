@@ -5,4 +5,8 @@
 --
 -- Additive and nullable: existing rows predate the field and are left NULL,
 -- which correctly represents "not recorded" rather than "did not consent".
-ALTER TABLE "ContactSubmission" ADD COLUMN "disclaimerAcceptedAt" TIMESTAMP(3);
+-- IF NOT EXISTS because these migrations have no baseline: the table itself was
+-- created with `prisma db push`, so this file must tolerate being re-run against
+-- a database whose state Prisma cannot fully reconstruct. A failed migration
+-- fails the Vercel build and blocks every subsequent deploy.
+ALTER TABLE "ContactSubmission" ADD COLUMN IF NOT EXISTS "disclaimerAcceptedAt" TIMESTAMP(3);

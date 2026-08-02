@@ -323,7 +323,7 @@ export default function AboutPage() {
         {/* Free Consultation Button at Bottom */}
         <section className="px-4 pt-4 pb-6">
           <div className="bg-white rounded-2xl shadow-md border border-gray-100 flex flex-col gap-3 p-4 items-center">
-            <Link href="/contact" className="w-full bg-green-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-green-700 transition flex items-center justify-center gap-2">
+            <Link href="/contact" className="w-full bg-slate-800 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-slate-700 transition flex items-center justify-center gap-2">
               <Mail size={20} />
               Free Consultation
             </Link>

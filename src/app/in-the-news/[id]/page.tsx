@@ -204,10 +204,10 @@ export default async function NewsArticlePage({ params }: { params: Promise<{ id
             <h3 className="font-bold text-gray-900 text-lg text-center">Need Legal Help?</h3>
             <p className="text-gray-600 text-center text-sm">Contact us today for a free consultation</p>
             <div className="flex flex-col gap-2 w-full">
-              <Link href="/contact" className="w-full bg-green-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-green-700 transition">
+              <Link href="/contact" className="w-full bg-slate-800 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-slate-700 transition">
                 Get Free Consultation
               </Link>
-              <a href="tel:215-259-5958" className="w-full bg-blue-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-blue-700 transition">
+              <a href="tel:215-259-5958" className="w-full bg-slate-800 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-slate-700 transition">
                 Call 215-259-5958
               </a>
             </div>

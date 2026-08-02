@@ -3,27 +3,9 @@
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
-import { practiceAreaPath } from "@/lib/practice-areas";
+import { PRACTICE_LINKS, practiceAreaPath } from "@/lib/practice-areas";
 
-// Slugs are routed through practiceAreaPath() so an alias never produces a link
-// that merely redirects. This list previously contained "products-liability",
-// which existed neither as a page nor as a database row — a dead link in the
-// mobile menu — and omitted limited tort entirely.
-const practiceAreas = [
-  { name: "Personal Injury", slug: "personal-injury" },
-  { name: "Auto Accidents", slug: "auto-accidents" },
-  { name: "Motorcycle Accidents", slug: "motorcycle-accidents" },
-  { name: "Truck Accidents", slug: "truck-accidents" },
-  { name: "Premises Liability", slug: "premises-liability" },
-  { name: "Medical Malpractice", slug: "medical-malpractice" },
-  { name: "Product Liability", slug: "product-liability" },
-  { name: "Workers' Compensation", slug: "workers-compensation" },
-  { name: "Limited Tort", slug: "limited-tort-lawyer" },
-  { name: "Social Security Disability", slug: "social-security-disability" },
-  { name: "Family Law", slug: "family-law" },
-  { name: "Criminal Defense", slug: "criminal-defense" },
-  { name: "General Legal Matters", slug: "general-legal-matters" },
-].map((a) => ({ name: a.name, href: practiceAreaPath(a.slug) }));
+const practiceAreas = PRACTICE_LINKS.map((a) => ({ name: a.name, href: practiceAreaPath(a.slug) }));
 
 export default function MobileNav({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
   const [practiceOpen, setPracticeOpen] = useState(false);

@@ -14,7 +14,10 @@
   --navy-primary: #0f172a;
   --navy-secondary: #1e293b;
   --navy-light: #334155;
-  --orange-accent: #ea580c;
+  /* Retained as the focus-ring / accent token, retuned from #ea580c retail orange
+     to the firm's own gold (tailwind.config gold-light) so the legacy CSS
+     components match the Tailwind ones. */
+  --orange-accent: #b45309;
   --orange-light: #f97316;
   --gold-accent: #92400e;
   --gold-muted: #a16207;
@@ -42,7 +45,10 @@
   
   /* Professional Gradients */
   --gradient-navy: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
-  --gradient-orange: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+  /* Primary action on light grounds is the firm's navy, matching every Tailwind
+     CTA. The dark hero keeps an amber accent, which is the one place boldness
+     is spent deliberately. */
+  --gradient-orange: linear-gradient(135deg, #1e293b 0%, #334155 100%);
   --gradient-gold: linear-gradient(135deg, #92400e 0%, #a16207 100%);
   --gradient-subtle: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
   

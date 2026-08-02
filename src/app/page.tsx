@@ -425,7 +425,7 @@ export default function HomePage() {
                     key={idx}
                     onClick={() => setCurrentSettlementIndex(idx)}
                     className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                      idx === currentSettlementIndex ? 'bg-orange-600' : 'bg-gray-300'
+                      idx === currentSettlementIndex ? 'bg-slate-800' : 'bg-gray-300'
                     }`}
                     aria-label={`Go to settlement ${idx + 1}`}
                   />
@@ -494,7 +494,7 @@ export default function HomePage() {
                     key={index}
                     onClick={() => setCurrentPracticeAreaIndex(index)}
                     className={`w-2 h-2 rounded-full transition-colors ${
-                      index === currentPracticeAreaIndex ? 'bg-orange-600' : 'bg-gray-300'
+                      index === currentPracticeAreaIndex ? 'bg-slate-800' : 'bg-gray-300'
                     }`}
                     aria-label={`Go to practice area ${index + 1}`}
                   />

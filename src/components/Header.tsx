@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useFirmName } from '@/lib/FirmNameContext';
 import { Phone } from 'lucide-react';
 import { PHONE_DISPLAY, PHONE_TOLLFREE_DISPLAY, TEL_HREF_TOLLFREE } from '@/lib/contact-details';
+import { PRACTICE_LINKS, practiceAreaPath } from '@/lib/practice-areas';
 
 interface HeaderProps {
   currentPage?: string;
@@ -62,7 +63,7 @@ export default function Header({ currentPage = '' }: HeaderProps) {
             { href: '/in-the-news', page: 'in-the-news', label: 'In the News' },
             { href: '/contact', page: 'contact', label: 'Contact' },
           ].map(({ href, page, label }) => (
-            <li key={href}>
+            <li key={href} className={page === 'practice' ? 'group relative' : undefined}>
               <Link
                 href={href}
                 className={`block px-5 py-4 text-sm font-medium tracking-wide transition-all duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)] border-b-2 ${
@@ -73,6 +74,37 @@ export default function Header({ currentPage = '' }: HeaderProps) {
               >
                 {label}
               </Link>
+
+              {/* Practice-area dropdown.
+                  CSS-only (group-hover + focus-within) rather than React state: the
+                  links are then always present in the HTML, so every page links to all
+                  13 practice pages. That internal linking is the main route by which
+                  authority reaches them — previously they were linked only from
+                  /practice. Keyboard users get it via focus-within. */}
+              {page === 'practice' && (
+                <div className="invisible absolute left-1/2 top-full z-50 w-[34rem] -translate-x-1/2 opacity-0 shadow-xl transition-[opacity,visibility] duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 motion-reduce:transition-none">
+                  <ul className="grid grid-cols-2 gap-x-2 gap-y-0 rounded-b-md border-x border-b border-slate-700 bg-slate-800 p-3 [&>li]:m-0">
+                    {PRACTICE_LINKS.map((a) => (
+                      <li key={a.slug} className="leading-none">
+                        <Link
+                          href={practiceAreaPath(a.slug)}
+                          className="block rounded px-3 py-2 text-sm leading-tight text-slate-300 transition-colors hover:bg-white/10 hover:text-white focus-visible:bg-white/10 focus-visible:text-white"
+                        >
+                          {a.name}
+                        </Link>
+                      </li>
+                    ))}
+                    <li className="col-span-2 mt-1 border-t border-slate-700 pt-2">
+                      <Link
+                        href="/practice"
+                        className="block rounded px-3 py-2 text-sm font-semibold text-amber-500 transition-colors hover:bg-white/10"
+                      >
+                        View all practice areas →
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              )}
             </li>
           ))}
         </ul>

@@ -451,7 +451,7 @@ export default function LocationsPage() {
               <Link href="/contact" className="w-full bg-slate-800 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-slate-700 transition">
                 {content.ctaButtonText}
               </Link>
-              <a href={`tel:${content.officePhone}`} className="w-full bg-orange-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-orange-700 transition">
+              <a href={`tel:${content.officePhone}`} className="w-full bg-slate-800 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-slate-700 transition">
                 {content.ctaPhoneText}
               </a>
             </div>

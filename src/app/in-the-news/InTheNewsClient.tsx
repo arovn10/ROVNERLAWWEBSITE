@@ -247,7 +247,7 @@ export default function InTheNewsClient({ news }: { news: News[] }) {
         </section>
         {/* Mobile Contact CTA */}
         <section className="px-4 pb-8">
-          <div className="bg-orange-600 rounded-xl p-5 text-white text-center shadow">
+          <div className="bg-slate-800 rounded-xl p-5 text-white text-center shadow">
             <h3 className="text-lg font-bold mb-2">Need Legal Help?</h3>
             <p className="text-orange-100 mb-4 text-sm">
               Contact us today for a free consultation or call <a href="tel:215-259-5958" className="underline">215-259-5958</a>

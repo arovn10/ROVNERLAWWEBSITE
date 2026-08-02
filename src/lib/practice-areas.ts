@@ -45,6 +45,28 @@ export const SLUG_ALIASES: Record<string, string> = {
   'products-liability': 'defective-products',
 };
 
+/**
+ * The practice areas shown in navigation, in the order they should appear.
+ * Shared by the desktop dropdown and the mobile menu so the two cannot drift —
+ * they previously held separate hardcoded lists, and the mobile one contained a
+ * slug that existed nowhere. Route every href through practiceAreaPath().
+ */
+export const PRACTICE_LINKS = [
+  { name: 'Personal Injury', slug: 'personal-injury' },
+  { name: 'Auto Accidents', slug: 'auto-accidents' },
+  { name: 'Truck Accidents', slug: 'truck-accidents' },
+  { name: 'Motorcycle Accidents', slug: 'motorcycle-accidents' },
+  { name: 'Medical Malpractice', slug: 'medical-malpractice' },
+  { name: 'Premises Liability', slug: 'premises-liability' },
+  { name: "Workers' Compensation", slug: 'workers-compensation' },
+  { name: 'Product Liability', slug: 'product-liability' },
+  { name: 'Limited Tort', slug: 'limited-tort-lawyer' },
+  { name: 'Social Security Disability', slug: 'social-security-disability' },
+  { name: 'Criminal Defense', slug: 'criminal-defense' },
+  { name: 'Family Law', slug: 'family-law' },
+  { name: 'General Legal Matters', slug: 'general-legal-matters' },
+] as const;
+
 export function isDedicatedSlug(slug: string): boolean {
   return (DEDICATED_SLUGS as readonly string[]).includes(slug);
 }

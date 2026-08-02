@@ -176,7 +176,7 @@ export default function ContactPage() {
       {submitStatus.type && (
         <div className={`fixed top-20 left-1/2 transform -translate-x-1/2 z-50 p-4 rounded-lg shadow-lg ${
           submitStatus.type === 'success' 
-            ? 'bg-green-500 text-white' 
+            ? 'bg-slate-800 text-white' 
             : 'bg-red-500 text-white'
         }`}>
           {submitStatus.message}
@@ -447,7 +447,7 @@ export default function ContactPage() {
         {submitStatus.type && (
           <div className={`mx-4 mb-4 p-4 rounded-lg shadow-lg ${
             submitStatus.type === 'success' 
-              ? 'bg-green-500 text-white' 
+              ? 'bg-slate-800 text-white' 
               : 'bg-red-500 text-white'
           }`}>
             {submitStatus.message}
@@ -661,7 +661,7 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-orange-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-orange-700 transition disabled:opacity-50"
+                  className="w-full bg-slate-800 text-white font-bold py-3 px-4 rounded-lg hover:bg-slate-700 transition disabled:opacity-50"
                 >
                   {isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}
                 </button>
@@ -698,7 +698,7 @@ export default function ContactPage() {
           <div className="bg-white rounded-2xl shadow-md border border-gray-100 flex flex-col gap-3 p-4 items-center">
             <h3 className="font-bold text-gray-900 text-lg">Need Immediate Assistance?</h3>
             <p className="text-gray-600 text-center text-sm">Call us now for immediate help!</p>
-            <a href={`tel:${content.officePhone}`} className="w-full bg-orange-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-orange-700 transition">
+            <a href={`tel:${content.officePhone}`} className="w-full bg-slate-800 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-slate-700 transition">
               Call {content.officePhone}
             </a>
           </div>
