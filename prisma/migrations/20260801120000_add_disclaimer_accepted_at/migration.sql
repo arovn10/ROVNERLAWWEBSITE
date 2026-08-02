@@ -1,0 +1,12 @@
+-- Records that a contact-form submitter ticked the "no attorney-client
+-- relationship" disclaimer, and when. The checkbox already gated submission but
+-- carried no name attribute, so the acknowledgement was never transmitted or
+-- stored — the firm was requiring consent it kept no record of.
+--
+-- Additive and nullable: existing rows predate the field and are left NULL,
+-- which correctly represents "not recorded" rather than "did not consent".
+-- IF NOT EXISTS because these migrations have no baseline: the table itself was
+-- created with `prisma db push`, so this file must tolerate being re-run against
+-- a database whose state Prisma cannot fully reconstruct. A failed migration
+-- fails the Vercel build and blocks every subsequent deploy.
+ALTER TABLE "ContactSubmission" ADD COLUMN IF NOT EXISTS "disclaimerAcceptedAt" TIMESTAMP(3);

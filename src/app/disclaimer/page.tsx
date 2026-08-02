@@ -5,8 +5,11 @@ import DisclaimerClient from './DisclaimerClient';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Disclaimer | Rovner Law',
-  description: 'Legal disclaimer and policies for Rovner, Allen, Rovner And Sigman.',
+  // No "| Rovner Law" here — the root layout's title template appends the brand,
+  // so including it produced "Disclaimer | Rovner Law | Rovner Law".
+  title: 'Disclaimer & Legal Policies',
+  description: 'Legal disclaimer, past-results notice and site policies for the Law Offices of Rovner, Allen, Rovner & Sigman.',
+  alternates: { canonical: '/disclaimer' },
 };
 
 export default function DisclaimerPage() {

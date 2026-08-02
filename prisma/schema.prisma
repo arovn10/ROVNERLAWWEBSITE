@@ -79,11 +79,18 @@ model ContactSubmission {
   name           String
   email          String
   phone          String?
+  // Present in the schema but never collected by the form and never written by
+  // /api/contact. Left in place because dropping a column is a destructive
+  // migration for no gain; it is simply unused.
   address        String?
   dateOfIncident DateTime?
   caseType       String?
   represented    String?
   facts          String
+  // Evidentiary record that the submitter ticked the "no attorney-client
+  // relationship" disclaimer. The checkbox gated submission but had no name, so
+  // nothing was ever transmitted or stored.
+  disclaimerAcceptedAt DateTime?
   createdAt      DateTime  @default(now())
 }
 

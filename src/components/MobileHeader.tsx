@@ -2,6 +2,7 @@
 
 import { Menu, X, Phone } from "lucide-react";
 import { useFirmName } from '@/lib/FirmNameContext';
+import { TEL_HREF_TOLLFREE } from '@/lib/contact-details';
 
 export default function MobileHeader({ onMenuClick, isMenuOpen }: { onMenuClick: () => void, isMenuOpen: boolean }) {
   const { firmName } = useFirmName();
@@ -9,7 +10,7 @@ export default function MobileHeader({ onMenuClick, isMenuOpen }: { onMenuClick:
     <header className="flex items-center justify-between px-4 h-16 bg-white border-b border-slate-200 lg:hidden sticky top-0 z-50 shadow-sm">
       <span className="font-serif font-bold text-slate-900 text-sm truncate max-w-[60vw]">{firmName}</span>
       <div className="flex items-center gap-1">
-        <a href="tel:215-259-5958" className="p-3 text-slate-600 hover:text-slate-800 rounded-lg hover:bg-slate-50 transition-colors" aria-label="Call Rovner Law">
+        <a href={TEL_HREF_TOLLFREE} className="p-3 text-slate-600 hover:text-slate-800 rounded-lg hover:bg-slate-50 transition-colors" aria-label="Call Rovner Law">
           <Phone className="h-5 w-5" />
         </a>
         <button

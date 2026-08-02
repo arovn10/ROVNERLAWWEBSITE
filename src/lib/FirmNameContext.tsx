@@ -10,9 +10,18 @@ interface FirmNameContextType {
 
 const FirmNameContext = createContext<FirmNameContextType | undefined>(undefined);
 
-export function FirmNameProvider({ children }: { children: ReactNode }) {
-  const [firmName, setFirmNameState] = useState('Law Firm');
-  const [loading, setLoading] = useState(true);
+export function FirmNameProvider({
+  children,
+  initialFirmName = 'Law Firm',
+}: {
+  children: ReactNode;
+  initialFirmName?: string;
+}) {
+  // Seeded from the database by the root layout so the real firm name is in the
+  // server-rendered HTML. Falling back to a placeholder here would publish
+  // "Law Firm" as the site-wide brand and <h1> to crawlers.
+  const [firmName, setFirmNameState] = useState(initialFirmName);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // Only run on client side
@@ -21,18 +30,17 @@ export function FirmNameProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    // Check if firm name is already cached in localStorage
+    // Keep localStorage in step with the server-rendered value, so an admin
+    // rename is reflected without a stale cached name winning.
     try {
-      const cachedFirmName = localStorage.getItem('firmName');
-      if (cachedFirmName) {
-        setFirmNameState(cachedFirmName);
-        setLoading(false);
-      }
+      localStorage.setItem('firmName', initialFirmName);
     } catch (error) {
       console.error('Error accessing localStorage:', error);
     }
 
-    // Fetch firm name from API
+    // Re-check against the API. Redundant while pages render per-request, but it
+    // keeps the name correct if the page is ever served from a cache that
+    // predates an admin rename.
     fetch('/api/settings/firm-name')
       .then(res => res.json())
       .then(data => {
@@ -46,7 +54,7 @@ export function FirmNameProvider({ children }: { children: ReactNode }) {
         console.error('Error fetching firm name:', error);
         setLoading(false);
       });
-  }, []);
+  }, [initialFirmName]);
 
   const setFirmName = (name: string) => {
     setFirmNameState(name);

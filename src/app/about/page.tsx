@@ -94,7 +94,7 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-slate-900/80" />
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6">
             <p className="text-slate-400 text-sm font-semibold uppercase tracking-widest mb-2">Est. 1980</p>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-2">{content.heroTitle}</h2>
+            <h1 className="font-serif text-3xl md:text-4xl font-bold mb-2">{content.heroTitle}</h1>
             <p className="text-slate-200 text-lg">{firmName}</p>
           </div>
         </section>
@@ -302,31 +302,31 @@ export default function AboutPage() {
         <section className="px-4 pt-4 pb-2">
           <h3 className="text-lg font-bold mb-3 text-slate-900">Quick Access</h3>
           <div className="grid grid-cols-2 gap-3 mb-4">
-            <a href="/attorneys" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            <Link href="/attorneys" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">👥</div>
               <div className="font-semibold text-gray-800 text-sm">Our Attorneys</div>
-            </a>
+            </Link>
             <Link href="/practice" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">⚖️</div>
               <div className="font-semibold text-gray-800 text-sm">Practice Areas</div>
             </Link>
-            <a href="/locations" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            <Link href="/locations" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">📍</div>
               <div className="font-semibold text-gray-800 text-sm">Locations</div>
-            </a>
-            <a href="/contact" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            </Link>
+            <Link href="/contact" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">📞</div>
               <div className="font-semibold text-gray-800 text-sm">Contact Us</div>
-            </a>
+            </Link>
           </div>
         </section>
         {/* Free Consultation Button at Bottom */}
         <section className="px-4 pt-4 pb-6">
           <div className="bg-white rounded-2xl shadow-md border border-gray-100 flex flex-col gap-3 p-4 items-center">
-            <a href="/contact" className="w-full bg-green-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-green-700 transition flex items-center justify-center gap-2">
+            <Link href="/contact" className="w-full bg-slate-800 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-slate-700 transition flex items-center justify-center gap-2">
               <Mail size={20} />
               Free Consultation
-            </a>
+            </Link>
           </div>
         </section>
         <Footer />

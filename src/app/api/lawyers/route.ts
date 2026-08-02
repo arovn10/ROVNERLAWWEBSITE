@@ -49,7 +49,9 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    console.log('Lawyer created successfully:', lawyer);
+    // Log the id only. This previously logged the whole record — the exact
+    // pattern PR 22 stripped from every other route, reintroduced by PR 21.
+    console.log('Lawyer created successfully:', lawyer.id);
     return NextResponse.json(lawyer, { status: 201 });
   } catch (error) {
     console.error('Error creating lawyer:', error);

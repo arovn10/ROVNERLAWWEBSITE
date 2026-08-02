@@ -167,15 +167,17 @@ export const firmNameSchema = z.object({
 });
 
 // --- Contact form submission ---
+// `address` is deliberately absent: the form does not collect it and the route
+// never wrote it, so accepting it implied support that did not exist.
 export const contactSubmissionSchema = z.object({
   name: z.string().min(1),
   email: z.string().email(),
   phone: optionalNullableString,
-  address: optionalNullableString,
   dateOfIncident: z.string().nullish(),
   caseType: optionalNullableString,
   represented: optionalNullableString,
   facts: optionalNullableString,
   captchaToken: z.string().optional(),
-  website: z.string().optional(), // honeypot
+  website: z.string().optional(), // honeypot — must arrive empty
+  disclaimerAccepted: z.boolean().optional(),
 });

@@ -37,7 +37,11 @@ export default function ContactPage() {
     represented: '',
     facts: '',
     // Honeypot — must stay empty. Bots that auto-fill every input get caught.
-    website: ''
+    website: '',
+    // The disclaimer the visitor has to tick. It gated submission but had no
+    // name, so it was never transmitted and never stored — the firm was
+    // requiring an acknowledgement it kept no record of.
+    disclaimerAccepted: false
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
@@ -82,10 +86,14 @@ export default function ContactPage() {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
+    const { name, value, type } = e.target;
+    // Checkboxes carry their state in `checked`, not `value` — reading `value`
+    // would store the string "on" regardless of whether the box is ticked.
+    const nextValue =
+      type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: nextValue
     }));
   };
 
@@ -128,7 +136,8 @@ export default function ContactPage() {
           caseType: '',
           represented: '',
           facts: '',
-          website: ''
+          website: '',
+          disclaimerAccepted: false
         });
         setCaptchaToken('');
         desktopCaptchaRef.current?.resetCaptcha();
@@ -167,7 +176,7 @@ export default function ContactPage() {
       {submitStatus.type && (
         <div className={`fixed top-20 left-1/2 transform -translate-x-1/2 z-50 p-4 rounded-lg shadow-lg ${
           submitStatus.type === 'success' 
-            ? 'bg-green-500 text-white' 
+            ? 'bg-slate-800 text-white' 
             : 'bg-red-500 text-white'
         }`}>
           {submitStatus.message}
@@ -287,8 +296,8 @@ export default function ContactPage() {
                   </label>
                 </div>
                 <div className="form-group">
-                  <label>Full Name *</label>
-                  <input
+                  <label htmlFor="contact-name-d">Full Name *</label>
+                  <input id="contact-name-d"
                     type="text"
                     name="name"
                     value={formData.name}
@@ -297,8 +306,8 @@ export default function ContactPage() {
                   />
                 </div>
                 <div className="form-group">
-                  <label>Email Address *</label>
-                  <input 
+                  <label htmlFor="contact-email-d">Email Address *</label>
+                  <input id="contact-email-d" 
                     type="email" 
                     name="email"
                     value={formData.email}
@@ -307,8 +316,8 @@ export default function ContactPage() {
                   />
                 </div>
                 <div className="form-group">
-                  <label>Phone Number *</label>
-                  <input 
+                  <label htmlFor="contact-phone-d">Phone Number *</label>
+                  <input id="contact-phone-d" 
                     type="tel" 
                     name="phone"
                     value={formData.phone}
@@ -317,8 +326,8 @@ export default function ContactPage() {
                   />
                 </div>
                 <div className="form-group">
-                  <label>Date of Incident</label>
-                  <input 
+                  <label htmlFor="contact-dateOfIncident-d">Date of Incident</label>
+                  <input id="contact-dateOfIncident-d" 
                     type="date" 
                     name="dateOfIncident"
                     value={formData.dateOfIncident}
@@ -326,8 +335,8 @@ export default function ContactPage() {
                   />
                 </div>
                 <div className="form-group">
-                  <label>Type of Case</label>
-                  <select 
+                  <label htmlFor="contact-caseType-d">Type of Case</label>
+                  <select id="contact-caseType-d" 
                     name="caseType"
                     value={formData.caseType}
                     onChange={handleInputChange}
@@ -342,10 +351,10 @@ export default function ContactPage() {
                   </select>
                 </div>
                 <div className="form-group">
-                  <label>Are you currently represented by another lawyer for this matter?</label>
+                  <label htmlFor="contact-represented-d">Are you currently represented by another lawyer for this matter?</label>
                   <div className="radio-group">
                     <label className="radio-label">
-                      <input 
+                      <input id="contact-represented-d" 
                         type="radio" 
                         name="represented" 
                         value="no"
@@ -367,8 +376,8 @@ export default function ContactPage() {
                   </div>
                 </div>
                 <div className="form-group">
-                  <label>Please describe what happened *</label>
-                  <textarea 
+                  <label htmlFor="contact-facts-d">Please describe what happened *</label>
+                  <textarea id="contact-facts-d" 
                     rows={5} 
                     name="facts"
                     value={formData.facts}
@@ -389,7 +398,13 @@ export default function ContactPage() {
                 )}
                 <div className="form-disclaimer">
                   <label className="checkbox-label">
-                    <input type="checkbox" required />
+                    <input
+                      type="checkbox"
+                      name="disclaimerAccepted"
+                      checked={formData.disclaimerAccepted}
+                      onChange={handleInputChange}
+                      required
+                    />
                     *I understand and agree that the submission of this form does not create an attorney-client relationship. There will be no representation until a formal, written contract is signed by both parties.
                   </label>
                 </div>
@@ -432,7 +447,7 @@ export default function ContactPage() {
         {submitStatus.type && (
           <div className={`mx-4 mb-4 p-4 rounded-lg shadow-lg ${
             submitStatus.type === 'success' 
-              ? 'bg-green-500 text-white' 
+              ? 'bg-slate-800 text-white' 
               : 'bg-red-500 text-white'
           }`}>
             {submitStatus.message}
@@ -520,8 +535,8 @@ export default function ContactPage() {
                   </label>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
-                  <input
+                  <label htmlFor="contact-name-m" className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                  <input id="contact-name-m"
                     type="text"
                     name="name"
                     value={formData.name}
@@ -531,8 +546,8 @@ export default function ContactPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
-                  <input 
+                  <label htmlFor="contact-email-m" className="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                  <input id="contact-email-m" 
                     type="email" 
                     name="email"
                     value={formData.email}
@@ -542,8 +557,8 @@ export default function ContactPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
-                  <input 
+                  <label htmlFor="contact-phone-m" className="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
+                  <input id="contact-phone-m" 
                     type="tel" 
                     name="phone"
                     value={formData.phone}
@@ -553,8 +568,8 @@ export default function ContactPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Date of Incident</label>
-                  <input 
+                  <label htmlFor="contact-dateOfIncident-m" className="block text-sm font-medium text-gray-700 mb-1">Date of Incident</label>
+                  <input id="contact-dateOfIncident-m" 
                     type="date" 
                     name="dateOfIncident"
                     value={formData.dateOfIncident}
@@ -563,8 +578,8 @@ export default function ContactPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Type of Case</label>
-                  <select 
+                  <label htmlFor="contact-caseType-m" className="block text-sm font-medium text-gray-700 mb-1">Type of Case</label>
+                  <select id="contact-caseType-m" 
                     name="caseType"
                     value={formData.caseType}
                     onChange={handleInputChange}
@@ -580,10 +595,10 @@ export default function ContactPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Are you currently represented by another lawyer for this matter?</label>
+                  <label htmlFor="contact-represented-m" className="block text-sm font-medium text-gray-700 mb-2">Are you currently represented by another lawyer for this matter?</label>
                   <div className="flex gap-4">
                     <label className="flex items-center">
-                      <input 
+                      <input id="contact-represented-m" 
                         type="radio" 
                         name="represented" 
                         value="no"
@@ -607,8 +622,8 @@ export default function ContactPage() {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Please describe what happened *</label>
-                  <textarea 
+                  <label htmlFor="contact-facts-m" className="block text-sm font-medium text-gray-700 mb-1">Please describe what happened *</label>
+                  <textarea id="contact-facts-m" 
                     rows={4} 
                     name="facts"
                     value={formData.facts}
@@ -630,7 +645,14 @@ export default function ContactPage() {
                 )}
                 <div>
                   <label className="flex items-start">
-                    <input type="checkbox" required className="mr-2 mt-1" />
+                    <input
+                      type="checkbox"
+                      name="disclaimerAccepted"
+                      checked={formData.disclaimerAccepted}
+                      onChange={handleInputChange}
+                      required
+                      className="mr-2 mt-1"
+                    />
                     <span className="text-xs text-gray-600">
                       *I understand and agree that the submission of this form does not create an attorney-client relationship. There will be no representation until a formal, written contract is signed by both parties.
                     </span>
@@ -639,7 +661,7 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-orange-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-orange-700 transition disabled:opacity-50"
+                  className="w-full bg-slate-800 text-white font-bold py-3 px-4 rounded-lg hover:bg-slate-700 transition disabled:opacity-50"
                 >
                   {isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}
                 </button>
@@ -652,22 +674,22 @@ export default function ContactPage() {
         <section className="px-4 pt-4 pb-2">
           <h3 className="text-lg font-bold mb-3 text-slate-900">Quick Access</h3>
           <div className="grid grid-cols-2 gap-3 mb-4">
-            <a href="/attorneys" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            <Link href="/attorneys" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">👥</div>
               <div className="font-semibold text-gray-800 text-sm">Our Attorneys</div>
-            </a>
-            <a href="/locations" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            </Link>
+            <Link href="/locations" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">📍</div>
               <div className="font-semibold text-gray-800 text-sm">Locations</div>
-            </a>
+            </Link>
             <Link href="/practice" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">⚖️</div>
               <div className="font-semibold text-gray-800 text-sm">Practice Areas</div>
             </Link>
-            <a href="/about" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            <Link href="/about" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">ℹ️</div>
               <div className="font-semibold text-gray-800 text-sm">About Us</div>
-            </a>
+            </Link>
           </div>
         </section>
 
@@ -676,7 +698,7 @@ export default function ContactPage() {
           <div className="bg-white rounded-2xl shadow-md border border-gray-100 flex flex-col gap-3 p-4 items-center">
             <h3 className="font-bold text-gray-900 text-lg">Need Immediate Assistance?</h3>
             <p className="text-gray-600 text-center text-sm">Call us now for immediate help!</p>
-            <a href={`tel:${content.officePhone}`} className="w-full bg-orange-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-orange-700 transition">
+            <a href={`tel:${content.officePhone}`} className="w-full bg-slate-800 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-slate-700 transition">
               Call {content.officePhone}
             </a>
           </div>

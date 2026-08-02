@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500" role="img" aria-label="Attorney portrait placeholder">
+  <rect width="400" height="500" fill="#e2e8f0"/>
+  <circle cx="200" cy="190" r="72" fill="#cbd5e1"/>
+  <path d="M200 285c-66 0-119 44-119 98v117h238V383c0-54-53-98-119-98z" fill="#cbd5e1"/>
+</svg>

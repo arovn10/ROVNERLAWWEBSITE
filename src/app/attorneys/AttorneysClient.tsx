@@ -95,7 +95,7 @@ export default function AttorneysClient({ attorneys }: { attorneys: Attorney[] }
           <div className="absolute inset-0 bg-slate-900/80" />
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6">
             <p className="text-slate-400 text-sm font-semibold uppercase tracking-widest mb-2">Our Team</p>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-2">Our Attorneys</h2>
+            <h1 className="font-serif text-3xl md:text-4xl font-bold mb-2">Our Attorneys</h1>
             <p className="text-slate-200 text-lg">Experienced advocates fighting for your rights</p>
           </div>
         </section>
@@ -117,7 +117,7 @@ export default function AttorneysClient({ attorneys }: { attorneys: Attorney[] }
                   <div className="flex-shrink-0">
                     <div className="rounded-xl overflow-hidden shadow-md bg-slate-100" style={{width:220,height:280}}>
                       <SmoothImage
-                        src={attorney.image || '/photos/default-headshot.jpg'}
+                        src={attorney.image || '/photos/default-headshot.svg'}
                         alt={attorney.name}
                         width={220}
                         height={280}
@@ -245,7 +245,7 @@ export default function AttorneysClient({ attorneys }: { attorneys: Attorney[] }
           {attorneys.map((attorney) => (
             <div key={attorney.id} className="bg-white rounded-xl shadow p-4 flex flex-col items-center border border-orange-100">
               <SmoothImage
-                src={attorney.image || '/photos/default-headshot.jpg'}
+                src={attorney.image || '/photos/default-headshot.svg'}
                 alt={attorney.name}
                 width={120}
                 height={160}
@@ -289,7 +289,7 @@ export default function AttorneysClient({ attorneys }: { attorneys: Attorney[] }
                 <div className="text-xs text-gray-500 mb-2 text-center"><strong>Phone:</strong> {attorney.phone}</div>
               )}
               {attorney.name !== 'Robert A. Rovner' && (
-                <Link href="/contact" className="w-full bg-orange-600 text-white font-bold rounded-lg py-2 text-center text-base shadow hover:bg-orange-700 transition mt-2">Contact</Link>
+                <Link href="/contact" className="w-full bg-slate-800 text-white font-bold rounded-lg py-2 text-center text-base shadow hover:bg-slate-700 transition mt-2">Contact</Link>
               )}
             </div>
           ))}

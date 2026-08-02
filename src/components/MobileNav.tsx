@@ -3,21 +3,9 @@
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { PRACTICE_LINKS, practiceAreaPath } from "@/lib/practice-areas";
 
-const practiceAreas = [
-  { name: "Personal Injury", href: "/practice/personal-injury" },
-  { name: "Auto Accidents", href: "/practice/auto-accidents" },
-  { name: "Motorcycle Accidents", href: "/practice/motorcycle-accidents" },
-  { name: "Truck Accidents", href: "/practice/truck-accidents" },
-  { name: "Premises Liability", href: "/practice/premises-liability" },
-  { name: "Medical Malpractice", href: "/practice/medical-malpractice" },
-  { name: "Products Liability", href: "/practice/products-liability" },
-  { name: "Workers' Compensation", href: "/practice/workers-compensation" },
-  { name: "Family Law", href: "/practice/family-law" },
-  { name: "Criminal Defense", href: "/practice/criminal-defense" },
-  { name: "Social Security Disability", href: "/practice/social-security-disability" },
-  { name: "General Legal Matters", href: "/practice/general-legal-matters" },
-];
+const practiceAreas = PRACTICE_LINKS.map((a) => ({ name: a.name, href: practiceAreaPath(a.slug) }));
 
 export default function MobileNav({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
   const [practiceOpen, setPracticeOpen] = useState(false);

@@ -174,7 +174,7 @@ export default function PersonalInjuryPage() {
           />
           <div className="absolute inset-0 bg-black bg-opacity-50" />
           <div className="relative z-10 text-center text-white px-4 w-full">
-            <h1 className="text-2xl font-bold mb-2" style={{textShadow:'0 2px 8px #000', letterSpacing: '-0.01em'}}>Personal Injury</h1>
+            <p className="text-2xl font-bold mb-2" style={{textShadow:'0 2px 8px #000', letterSpacing: '-0.01em'}}>Personal Injury</p>
             <p className="text-base mb-4 font-medium" style={{textShadow:'0 2px 8px #000'}}>Expert representation for injury victims</p>
           </div>
         </section>
@@ -229,18 +229,18 @@ export default function PersonalInjuryPage() {
         <section className="px-4 pt-4 pb-2">
           <h3 className="text-lg font-bold mb-3 text-slate-900">Quick Access</h3>
           <div className="grid grid-cols-2 gap-3 mb-4">
-            <a href="/attorneys" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            <Link href="/attorneys" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">👥</div>
               <div className="font-semibold text-gray-800 text-sm">Our Attorneys</div>
-            </a>
-            <a href="/contact" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            </Link>
+            <Link href="/contact" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">📞</div>
               <div className="font-semibold text-gray-800 text-sm">Contact Us</div>
-            </a>
-            <a href="/locations" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            </Link>
+            <Link href="/locations" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">📍</div>
               <div className="font-semibold text-gray-800 text-sm">Locations</div>
-            </a>
+            </Link>
             <Link href="/practice" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">⚖️</div>
               <div className="font-semibold text-gray-800 text-sm">Practice Areas</div>
@@ -251,11 +251,11 @@ export default function PersonalInjuryPage() {
         {/* Mobile Free Consultation */}
         <section className="px-4 pt-4 pb-6">
           <div className="bg-white rounded-2xl shadow-md border border-gray-100 flex flex-col gap-3 p-4 items-center">
-            <a href="/contact" className="w-full bg-green-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-green-700 transition flex items-center justify-center gap-2">
+            <Link href="/contact" className="w-full bg-slate-800 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-slate-700 transition flex items-center justify-center gap-2">
               <Mail size={20} />
               Free Consultation
-            </a>
-            <a href="tel:215-259-5958" className="w-full bg-orange-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-orange-700 transition flex items-center justify-center gap-2">
+            </Link>
+            <a href="tel:215-259-5958" className="w-full bg-slate-800 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-slate-700 transition flex items-center justify-center gap-2">
               <Phone size={20} />
               Call 215-259-5958
             </a>

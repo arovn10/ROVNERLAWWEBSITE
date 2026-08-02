@@ -294,7 +294,7 @@ export default function LocationsPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 via-slate-900/75 to-slate-900/95" />
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
             <p className="text-amber-200/90 text-[10px] font-semibold uppercase tracking-[0.2em] mb-1">Find Us</p>
-            <h1 className="font-serif text-2xl font-bold mb-0.5">Our Locations</h1>
+            <p className="font-serif text-2xl font-bold mb-0.5">Our Locations</p>
             <p className="text-slate-200 text-sm">Serving PA & NJ</p>
           </div>
         </section>
@@ -423,22 +423,22 @@ export default function LocationsPage() {
         <section className="px-4 pt-4 pb-2">
           <h3 className="text-lg font-bold mb-3 text-slate-900">Quick Access</h3>
           <div className="grid grid-cols-2 gap-3 mb-4">
-            <a href="/attorneys" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            <Link href="/attorneys" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">👥</div>
               <div className="font-semibold text-gray-800 text-sm">Our Attorneys</div>
-            </a>
-            <a href="/contact" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            </Link>
+            <Link href="/contact" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">📞</div>
               <div className="font-semibold text-gray-800 text-sm">Contact Us</div>
-            </a>
+            </Link>
             <Link href="/practice" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">⚖️</div>
               <div className="font-semibold text-gray-800 text-sm">Practice Areas</div>
             </Link>
-            <a href="/about" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            <Link href="/about" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-orange-600 text-2xl mb-2">ℹ️</div>
               <div className="font-semibold text-gray-800 text-sm">About Us</div>
-            </a>
+            </Link>
           </div>
         </section>
 
@@ -448,10 +448,10 @@ export default function LocationsPage() {
             <h3 className="font-bold text-gray-900 text-lg text-center">{content.ctaTitle}</h3>
             <p className="text-gray-600 text-center text-sm">{content.ctaDescription}</p>
             <div className="flex flex-col gap-2 w-full">
-              <a href="/contact" className="w-full bg-slate-800 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-slate-700 transition">
+              <Link href="/contact" className="w-full bg-slate-800 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-slate-700 transition">
                 {content.ctaButtonText}
-              </a>
-              <a href={`tel:${content.officePhone}`} className="w-full bg-orange-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-orange-700 transition">
+              </Link>
+              <a href={`tel:${content.officePhone}`} className="w-full bg-slate-800 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-slate-700 transition">
                 {content.ctaPhoneText}
               </a>
             </div>

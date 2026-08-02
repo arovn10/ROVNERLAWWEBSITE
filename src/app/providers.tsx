@@ -1,20 +1,29 @@
 "use client";
 
-import dynamic from 'next/dynamic';
 import { FirmNameProvider } from "@/lib/FirmNameContext";
 
-// Dynamically import SessionProvider to avoid SSR issues
-const SessionProvider = dynamic(
-  () => import('next-auth/react').then(mod => ({ default: mod.SessionProvider })),
-  { ssr: false }
-);
-
-export function Providers({ children }: { children: React.ReactNode }) {
-  return (
-    <FirmNameProvider>
-      <SessionProvider session={null}>
-        {children}
-      </SessionProvider>
-    </FirmNameProvider>
-  );
-} 
+/**
+ * Client providers for the PUBLIC site.
+ *
+ * Deliberately does NOT include next-auth's SessionProvider. It used to, loaded
+ * via `dynamic(..., { ssr: false })` — and because this component wraps
+ * {children} in the root layout, that one flag opted the ENTIRE site out of
+ * server rendering. Every page shipped an empty shell with a
+ * BAILOUT_TO_CLIENT_SIDE_RENDERING marker and no crawlable content.
+ *
+ * Only the admin area consumes useSession, so SessionProvider now lives in
+ * src/app/admin/AdminSessionProvider.tsx. Do not reintroduce it here.
+ *
+ * `initialFirmName` is read from the database by the root layout so the firm
+ * name is present in the server-rendered HTML. Without it, SSR would emit the
+ * provider's placeholder ("Law Firm") as the site-wide brand and heading.
+ */
+export function Providers({
+  children,
+  initialFirmName,
+}: {
+  children: React.ReactNode;
+  initialFirmName: string;
+}) {
+  return <FirmNameProvider initialFirmName={initialFirmName}>{children}</FirmNameProvider>;
+}

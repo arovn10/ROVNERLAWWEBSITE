@@ -4,6 +4,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { prisma } from '@/lib/prisma';
 import MobileNavClient from './MobileNavClient';
+import type { Metadata } from 'next';
 
 async function getNewsArticle(id: string) {
   try {
@@ -15,6 +16,37 @@ async function getNewsArticle(id: string) {
     console.error('Error fetching news article:', error);
     return null;
   }
+}
+
+// Each article gets its own title, description and canonical. Previously all
+// five inherited the site-wide title and canonicalised to the homepage, so none
+// of them could rank or even be indexed separately.
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const article = await getNewsArticle(id);
+
+  if (!article) {
+    return { title: 'Article Not Found', robots: { index: false, follow: true } };
+  }
+
+  const summary = (article.content ?? '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 155);
+
+  return {
+    title: article.title,
+    description: summary || `${article.title} — press coverage of the Law Offices of Rovner, Allen, Rovner & Sigman.`,
+    alternates: { canonical: `/in-the-news/${article.id}` },
+    openGraph: {
+      type: 'article',
+      title: article.title,
+      description: summary || undefined,
+      url: `/in-the-news/${article.id}`,
+      publishedTime: article.date?.toISOString(),
+      images: article.imageUrl ? [{ url: article.imageUrl }] : undefined,
+    },
+  };
 }
 
 export default async function NewsArticlePage({ params }: { params: Promise<{ id: string }> }) {
@@ -96,7 +128,7 @@ export default async function NewsArticlePage({ params }: { params: Promise<{ id
         <section className="relative w-full h-32 overflow-hidden flex items-center justify-center rounded-b-3xl shadow-md mb-4">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900 to-blue-700" />
           <div className="relative z-10 text-center text-white px-4 w-full">
-            <h1 className="text-lg font-bold mb-1" style={{textShadow:'0 2px 8px #000', letterSpacing: '-0.01em'}}>In the News</h1>
+            <p className="text-lg font-bold mb-1" style={{textShadow:'0 2px 8px #000', letterSpacing: '-0.01em'}}>In the News</p>
             <p className="text-xs" style={{textShadow:'0 2px 8px #000'}}>Latest updates and media coverage</p>
           </div>
         </section>
@@ -109,7 +141,7 @@ export default async function NewsArticlePage({ params }: { params: Promise<{ id
             </Link>
             
             <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-4">
-              <h1 className="text-xl font-bold text-blue-900 mb-3">{article.title}</h1>
+              <p className="text-xl font-bold text-blue-900 mb-3">{article.title}</p>
               
               <div className="flex flex-col gap-2 mb-4 text-sm text-gray-600">
                 <span className="font-semibold">
@@ -147,22 +179,22 @@ export default async function NewsArticlePage({ params }: { params: Promise<{ id
         <section className="px-4 pt-4 pb-2">
           <h3 className="text-lg font-bold mb-3 text-blue-900">Quick Access</h3>
           <div className="grid grid-cols-2 gap-3 mb-4">
-            <a href="/attorneys" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            <Link href="/attorneys" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-blue-600 text-2xl mb-2">👥</div>
               <div className="font-semibold text-gray-800 text-sm">Our Attorneys</div>
-            </a>
-            <a href="/contact" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            </Link>
+            <Link href="/contact" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-blue-600 text-2xl mb-2">📞</div>
               <div className="font-semibold text-gray-800 text-sm">Contact Us</div>
-            </a>
+            </Link>
             <Link href="/practice" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-blue-600 text-2xl mb-2">⚖️</div>
               <div className="font-semibold text-gray-800 text-sm">Practice Areas</div>
             </Link>
-            <a href="/about" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
+            <Link href="/about" className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-center hover:shadow-md transition">
               <div className="text-blue-600 text-2xl mb-2">ℹ️</div>
               <div className="font-semibold text-gray-800 text-sm">About Us</div>
-            </a>
+            </Link>
           </div>
         </section>
 
@@ -172,10 +204,10 @@ export default async function NewsArticlePage({ params }: { params: Promise<{ id
             <h3 className="font-bold text-gray-900 text-lg text-center">Need Legal Help?</h3>
             <p className="text-gray-600 text-center text-sm">Contact us today for a free consultation</p>
             <div className="flex flex-col gap-2 w-full">
-              <a href="/contact" className="w-full bg-green-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-green-700 transition">
+              <Link href="/contact" className="w-full bg-slate-800 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-slate-700 transition">
                 Get Free Consultation
-              </a>
-              <a href="tel:215-259-5958" className="w-full bg-blue-600 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-blue-700 transition">
+              </Link>
+              <a href="tel:215-259-5958" className="w-full bg-slate-800 text-white font-bold rounded-lg py-4 text-center text-lg shadow hover:bg-slate-700 transition">
                 Call 215-259-5958
               </a>
             </div>
