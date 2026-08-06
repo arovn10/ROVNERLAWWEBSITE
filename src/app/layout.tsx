@@ -45,13 +45,16 @@ export const metadata: Metadata = {
     siteName: "Rovner Law",
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
-    images: [{ url: "/photos/banner-social-1024x128.png", width: 1024, height: 128, alt: "Rovner Law" }],
+    // 1200x630 (the standard social-preview ratio) — the old banner-social
+    // asset was 1024x128 (8:1), which Facebook/LinkedIn/Slack render as a
+    // thin, badly-cropped sliver rather than a real preview image.
+    images: [{ url: "/photos/og-social-1200x630.jpg", width: 1200, height: 630, alt: "Rovner Law Offices" }],
   },
   twitter: {
     card: "summary_large_image",
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
-    images: ["/photos/banner-social-1024x128.png"],
+    images: ["/photos/og-social-1200x630.jpg"],
   },
 };
 

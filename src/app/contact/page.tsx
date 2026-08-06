@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import Header from '@/components/Header';
@@ -28,6 +29,7 @@ interface ContactUsData {
 
 export default function ContactPage() {
   const { firmName } = useFirmName();
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -123,27 +125,13 @@ export default function ContactPage() {
       const result = await response.json();
 
       if (response.ok) {
-        setSubmitStatus({
-          type: 'success',
-          message: result.message || 'Thank you for your message. We will contact you soon!'
-        });
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          dateOfIncident: '',
-          caseType: '',
-          represented: '',
-          facts: '',
-          website: '',
-          disclaimerAccepted: false
-        });
-        setCaptchaToken('');
-        desktopCaptchaRef.current?.resetCaptcha();
-        mobileCaptchaRef.current?.resetCaptcha();
-        // Scroll to top to show success message
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // A dedicated URL instead of an inline banner on the same page: it
+        // gives a Google Ads conversion tag something reliable to fire on
+        // (a page load) rather than a same-page state change, and it means a
+        // bookmarked/shared link to this exact confirmation doesn't silently
+        // imply "the form was submitted" the way the old banner state could.
+        router.push('/contact/thank-you');
+        return;
       } else {
         setSubmitStatus({
           type: 'error',
@@ -251,25 +239,6 @@ export default function ContactPage() {
             {/* Contact Form */}
             <div className="sidebar-box contact-form-box">
               <h3 className="sidebar-title">Contact Form</h3>
-              {submitStatus.type === 'success' && (
-                <div style={{
-                  background: '#e6f9ed',
-                  color: '#217a3c',
-                  border: '2px solid #34d399',
-                  borderRadius: '12px',
-                  padding: '1.5rem',
-                  marginBottom: '2rem',
-                  fontSize: '1.25rem',
-                  fontWeight: 700,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '1rem',
-                  boxShadow: '0 2px 12px rgba(52,211,153,0.08)'
-                }}>
-                  <span style={{fontSize:'2rem',lineHeight:1}}>✅</span>
-                  {submitStatus.message || 'Your message has been sent! We will contact you soon.'}
-                </div>
-              )}
               <form className="contact-form" onSubmit={handleSubmit}>
                 {/* Honeypot: must stay empty. Hidden from real users. */}
                 <div

@@ -20,6 +20,25 @@ export default function EditSettlementPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
+  // Case Type used to be a free-text input, which let it drift from the
+  // practice-area names shown elsewhere on the site. Sourcing the dropdown
+  // from the same practice areas keeps it consistent; "Other" still allows a
+  // value outside that list — including whatever this settlement already
+  // has, if it predates this change and doesn't match any current title.
+  const [practiceAreaTitles, setPracticeAreaTitles] = useState<string[]>([]);
+  const [otherMode, setOtherMode] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/practice-areas')
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setPracticeAreaTitles(data.map((a: { title: string }) => a.title).filter(Boolean));
+        }
+      })
+      .catch(() => setOtherMode(true));
+  }, []);
+
   useEffect(() => {
     fetch(`/api/settlements/${id}`)
       .then(res => res.json())
@@ -38,6 +57,12 @@ export default function EditSettlementPage() {
         setLoading(false);
       });
   }, [id]);
+
+  useEffect(() => {
+    if (practiceAreaTitles.length > 0 && form.caseType && !practiceAreaTitles.includes(form.caseType)) {
+      setOtherMode(true);
+    }
+  }, [practiceAreaTitles, form.caseType]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -108,14 +133,47 @@ export default function EditSettlementPage() {
         </div>
         <div>
           <label className="block text-gray-700 font-semibold mb-2">Case Type</label>
-          <input
-            type="text"
-            name="caseType"
-            value={form.caseType}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500"
-          />
+          {otherMode || practiceAreaTitles.length === 0 ? (
+            <input
+              type="text"
+              name="caseType"
+              value={form.caseType}
+              onChange={handleChange}
+              required
+              placeholder="e.g. Auto Accidents"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500"
+            />
+          ) : (
+            <select
+              name="caseType"
+              value={form.caseType}
+              onChange={(e) => {
+                if (e.target.value === '__other__') {
+                  setOtherMode(true);
+                  setForm({ ...form, caseType: '' });
+                } else {
+                  setForm({ ...form, caseType: e.target.value });
+                }
+              }}
+              required
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500"
+            >
+              <option value="" disabled>Select a case type…</option>
+              {practiceAreaTitles.map((title) => (
+                <option key={title} value={title}>{title}</option>
+              ))}
+              <option value="__other__">Other…</option>
+            </select>
+          )}
+          {otherMode && practiceAreaTitles.length > 0 && (
+            <button
+              type="button"
+              onClick={() => setOtherMode(false)}
+              className="mt-2 text-sm text-green-700 hover:underline"
+            >
+              Choose from practice areas instead
+            </button>
+          )}
         </div>
         <div>
           <label className="block text-gray-700 font-semibold mb-2">Date</label>
