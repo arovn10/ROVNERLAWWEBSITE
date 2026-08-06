@@ -17,8 +17,15 @@ const STATIC_ENTRIES: Entry[] = [
   { loc: 'practice', changefreq: 'monthly', priority: 0.9 },
   { loc: 'in-the-news', changefreq: 'weekly', priority: 0.6 },
   { loc: 'photo-gallery', changefreq: 'monthly', priority: 0.4 },
+  // No backing content model — a static legal page with no real "last
+  // updated" signal to report, so it deliberately gets no lastmod rather
+  // than a fabricated one.
   { loc: 'disclaimer', changefreq: 'yearly', priority: 0.1 },
 ];
+
+function maxDate(dates: Date[]): Date | undefined {
+  return dates.length ? new Date(Math.max(...dates.map((d) => d.getTime()))) : undefined;
+}
 
 function escapeXml(s: string) {
   return s
@@ -40,17 +47,40 @@ function urlXml({ loc, lastmod, changefreq, priority }: Entry) {
 
 export async function GET() {
   let dynamicEntries: Entry[] = [];
+  const staticLastmods: Record<string, Date | undefined> = {};
 
   try {
-    const [practiceAreas, news] = await Promise.all([
-      prisma.practiceArea.findMany({
-        where: { active: true },
-        select: { slug: true, updatedAt: true },
-      }),
-      prisma.news.findMany({
-        select: { id: true, updatedAt: true },
-      }),
-    ]);
+    const [practiceAreas, news, aboutUs, locations, contactUs, lastLawyer, lastArchive, lastSettlement] =
+      await Promise.all([
+        prisma.practiceArea.findMany({
+          where: { active: true },
+          select: { slug: true, updatedAt: true },
+        }),
+        prisma.news.findMany({
+          select: { id: true, updatedAt: true },
+        }),
+        prisma.aboutUs.findFirst({ select: { updatedAt: true } }),
+        prisma.locations.findFirst({ select: { updatedAt: true } }),
+        prisma.contactUs.findFirst({ select: { updatedAt: true } }),
+        prisma.lawyer.findFirst({ where: { active: true }, orderBy: { updatedAt: 'desc' }, select: { updatedAt: true } }),
+        prisma.archive.findFirst({ orderBy: { updatedAt: 'desc' }, select: { updatedAt: true } }),
+        prisma.settlement.findFirst({ orderBy: { updatedAt: 'desc' }, select: { updatedAt: true } }),
+      ]);
+
+    const practiceAreaDates = practiceAreas.map((a) => a.updatedAt);
+    const newsDates = news.map((n) => n.updatedAt);
+
+    // Each static page's real "last changed" signal, sourced from whatever
+    // model actually backs its content — not a per-request timestamp, which
+    // would misrepresent an unchanged page as freshly edited on every crawl.
+    staticLastmods[''] = maxDate([...practiceAreaDates, ...(lastSettlement ? [lastSettlement.updatedAt] : [])]);
+    staticLastmods['about'] = aboutUs?.updatedAt;
+    staticLastmods['attorneys'] = lastLawyer?.updatedAt;
+    staticLastmods['contact'] = contactUs?.updatedAt;
+    staticLastmods['locations'] = locations?.updatedAt;
+    staticLastmods['practice'] = maxDate(practiceAreaDates);
+    staticLastmods['in-the-news'] = maxDate(newsDates);
+    staticLastmods['photo-gallery'] = lastArchive?.updatedAt;
 
     // Resolve aliases, then de-duplicate: the `product-liability` row and the
     // `defective-products` page are the same practice area, and a sitemap should
@@ -86,7 +116,12 @@ export async function GET() {
     console.error('Sitemap: failed to load dynamic entries', error);
   }
 
-  const entries = [...STATIC_ENTRIES, ...dynamicEntries];
+  const staticEntries = STATIC_ENTRIES.map((entry) => {
+    const lastmod = staticLastmods[entry.loc];
+    return lastmod ? { ...entry, lastmod } : entry;
+  });
+
+  const entries = [...staticEntries, ...dynamicEntries];
   const body = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries
     .map(urlXml)
     .join('\n')}\n</urlset>\n`;
