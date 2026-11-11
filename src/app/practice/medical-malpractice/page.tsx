@@ -1,6 +1,8 @@
 "use client";
 
 import Link from 'next/link';
+import PracticeFaq from '@/components/PracticeFaq';
+import ServiceAreaLinks from '@/components/ServiceAreaLinks';
 import Image from 'next/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -50,7 +52,8 @@ export default function MedicalMalpracticePage() {
             </div>
             
             <div className="practice-text-content">
-              <h1 className="practice-title">Medical Malpractice Attorney & Lawyer</h1>
+              <h1 className="practice-title">Medical Malpractice Lawyers in Philadelphia and Bucks County</h1>
+              <ServiceAreaLinks />
               
               <div className="practice-service-areas">
                 <h2 className="service-areas-title">Our Service Areas</h2>
@@ -214,7 +217,8 @@ export default function MedicalMalpracticePage() {
         {/* Mobile Main Content */}
         <section className="px-4 py-4">
           <div className="flex flex-col gap-6">
-            <h2 className="text-xl font-bold text-slate-900 mb-2">Medical Malpractice Attorney & Lawyer</h2>
+            <h2 className="text-xl font-bold text-slate-900 mb-2">Medical Malpractice Lawyers in Philadelphia and Bucks County</h2>
+            <ServiceAreaLinks />
             <div className="bg-orange-50 rounded-xl p-4 shadow-sm">
               <h3 className="font-bold text-slate-900 mb-2 text-lg">Our Service Areas</h3>
               <div className="grid grid-cols-1 gap-2">
@@ -309,6 +313,7 @@ export default function MedicalMalpracticePage() {
          there, it (and its fixed "Free Consultation" tab) never rendered on
          desktop at all, since a hidden ancestor collapses a child regardless
          of the child's own responsive classes. */}
+      <PracticeFaq slug="medical-malpractice" />
       <Footer />
     </div>
   );

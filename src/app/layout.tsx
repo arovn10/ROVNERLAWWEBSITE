@@ -6,11 +6,14 @@ import { HideDevPortal } from "@/components/HideDevPortal";
 import MobileCallBar from "@/components/MobileCallBar";
 import { SITE_URL } from "@/lib/site";
 import { getFirmName } from "@/lib/settings";
+import { publicFirmName } from "@/lib/firm";
+import { firmGraphJsonLd } from "@/lib/schema-org";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const libreBaskerville = Libre_Baskerville({ weight: ["400", "700"], subsets: ["latin"], variable: "--font-serif" });
 
-const DEFAULT_TITLE = "Rovner Law — Premier Personal Injury Lawyers in Philadelphia, PA";
+const DEFAULT_TITLE =
+  "Personal Injury Lawyers in Feasterville-Trevose & Philadelphia | Rovner Law";
 const DEFAULT_DESCRIPTION =
   "Over 40 years fighting for clients across Pennsylvania and New Jersey. Personal injury, auto accidents, medical malpractice, workers' compensation. Free consultation — no fee unless we win.";
 
@@ -58,40 +61,6 @@ export const metadata: Metadata = {
   },
 };
 
-const legalServiceJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "LegalService",
-  name: "Rovner Law",
-  alternateName: "Law Offices of Rovner Law",
-  url: SITE_URL,
-  logo: `${SITE_URL}/photos/rovner-logo-5.png`,
-  image: `${SITE_URL}/photos/rovner-logo-5.png`,
-  description: DEFAULT_DESCRIPTION,
-  telephone: "+1-215-259-5958",
-  priceRange: "Free consultation",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "175 Bustleton Pike",
-    addressLocality: "Feasterville-Trevose",
-    addressRegion: "PA",
-    postalCode: "19053",
-    addressCountry: "US",
-  },
-  areaServed: [
-    { "@type": "State", name: "Pennsylvania" },
-    { "@type": "State", name: "New Jersey" },
-  ],
-  openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      opens: "09:00",
-      closes: "17:00",
-    },
-  ],
-  sameAs: [],
-};
-
 export default async function RootLayout({
   children,
 }: {
@@ -103,10 +72,12 @@ export default async function RootLayout({
   // the default rather than 500-ing the whole site if the database is down.
   let firmName = "Rovner Law";
   try {
-    firmName = await getFirmName();
+    firmName = publicFirmName(await getFirmName());
   } catch (error) {
     console.error("Root layout: could not load firm name", error);
+    firmName = publicFirmName(null);
   }
+  const firmGraph = firmGraphJsonLd(firmName, DEFAULT_DESCRIPTION);
 
   return (
     <html lang="en" className={`${inter.variable} ${libreBaskerville.variable}`}>
@@ -114,7 +85,7 @@ export default async function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(legalServiceJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(firmGraph) }}
         />
       </head>
       <body className="font-sans antialiased">

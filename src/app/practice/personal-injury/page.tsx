@@ -1,6 +1,8 @@
 "use client";
 
 import Link from 'next/link';
+import PracticeFaq from '@/components/PracticeFaq';
+import ServiceAreaLinks from '@/components/ServiceAreaLinks';
 import Image from 'next/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -49,7 +51,8 @@ export default function PersonalInjuryPage() {
               />
             </div>
             <div style={{flex:'1 1 400px',minWidth:'260px',maxWidth:'600px',display:'flex',flexDirection:'column',gap:'1.2rem'}}>
-              <h1 className="practice-title" style={{fontSize:'1.45rem',fontWeight:700,margin:'0 0 0.5rem',color:'#1a237e'}}>Personal Injury Lawyer & Attorney</h1>
+              <h1 className="practice-title" style={{fontSize:'1.45rem',fontWeight:700,margin:'0 0 0.5rem',color:'#1a237e'}}>Personal Injury Lawyers in Philadelphia and Bucks County</h1>
+              <ServiceAreaLinks />
               <div className="practice-description" style={{fontSize:'1.01rem',color:'#444',lineHeight:1.6,marginBottom:'0.2rem'}}>
                 <p>
                   {firmName}'s team of lawyers has proven success in representing injured parties. With dedicated professionalism and personal attention, our lawyers are at the forefront of protecting our clients and getting the results they deserve. Our team of over 15 lawyers, plus our paralegals and investigators, have hundreds of years of combined experience.
@@ -182,7 +185,8 @@ export default function PersonalInjuryPage() {
         {/* Mobile Main Content */}
         <section className="px-4 py-4">
           <div className="flex flex-col gap-6">
-            <h2 className="text-xl font-bold text-slate-900 mb-2">Personal Injury Lawyer & Attorney</h2>
+            <h2 className="text-xl font-bold text-slate-900 mb-2">Personal Injury Lawyers in Philadelphia and Bucks County</h2>
+            <ServiceAreaLinks />
             <div className="flex flex-col gap-4 text-base text-gray-800 leading-relaxed">
               <p>{firmName}'s team of lawyers has proven success in representing injured parties. With dedicated professionalism and personal attention, our lawyers are at the forefront of protecting our clients and getting the results they deserve. Our team of over 15 lawyers, plus our paralegals and investigators, have hundreds of years of combined experience.</p>
               <p>The {firmName} law firm is committed and determined to serving justice and treating our clients with the evenhanded respect that they deserve. Known for our personal contact and close working relationship with our clients, to our professionalism and aggressive pursuit of legality, our firm strives to serve the interests of injured people while taking on those accused of causing our clients pain. Look to us to validate and prove your case utilizing truth and precision.</p>
@@ -267,6 +271,7 @@ export default function PersonalInjuryPage() {
          there, it (and its fixed "Free Consultation" tab) never rendered on
          desktop at all, since a hidden ancestor collapses a child regardless
          of the child's own responsive classes. */}
+      <PracticeFaq slug="personal-injury" />
       <Footer />
     </div>
   );

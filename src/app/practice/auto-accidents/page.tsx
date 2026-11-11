@@ -1,6 +1,8 @@
 "use client";
 
 import Link from 'next/link';
+import PracticeFaq from '@/components/PracticeFaq';
+import ServiceAreaLinks from '@/components/ServiceAreaLinks';
 import Image from 'next/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -50,7 +52,7 @@ export default function AutoAccidentsPage() {
             </div>
             
             <div className="practice-text-content">
-              <h1 className="practice-title">Automotive Accident Lawyers</h1>
+              <h1 className="practice-title">Car Accident Lawyers in Philadelphia and Bucks County</h1>
               <div className="practice-subtitle">
                 <p>Accidents Free Initial Consultation</p>
                 <p>No Fee if No Recovery!</p>
@@ -58,6 +60,7 @@ export default function AutoAccidentsPage() {
               
               <div className="practice-service-area">
                 <p><strong>Serving Philadelphia, New Jersey, Pennsylvania, especially Bucks County, Montgomery County, Delaware County, Mercer County, Camden County, Atlantic County, and Burlington County</strong></p>
+                <ServiceAreaLinks />
               </div>
               
               <div className="practice-description">
@@ -227,7 +230,7 @@ export default function AutoAccidentsPage() {
         {/* Mobile Main Content */}
         <section className="px-4 py-4">
           <div className="flex flex-col gap-6">
-            <h2 className="text-xl font-bold text-slate-900 mb-2">Automotive Accident Lawyers</h2>
+            <h2 className="text-xl font-bold text-slate-900 mb-2">Car Accident Lawyers in Philadelphia and Bucks County</h2>
             <div className="bg-orange-50 rounded-xl p-4 shadow-sm">
               <p className="text-sm font-semibold text-slate-900 mb-2">Free Initial Consultation</p>
               <p className="text-sm font-semibold text-slate-900">No Fee if No Recovery!</p>
@@ -236,6 +239,9 @@ export default function AutoAccidentsPage() {
               <p className="text-sm text-gray-700 font-medium">
                 <strong>Serving Philadelphia, New Jersey, Pennsylvania, especially Bucks County, Montgomery County, Delaware County, Mercer County, Camden County, Atlantic County, and Burlington County</strong>
               </p>
+              <div className="text-sm text-gray-700 font-medium">
+                <ServiceAreaLinks />
+              </div>
             </div>
             <div className="flex flex-col gap-4 text-base text-gray-800 leading-relaxed">
               <p>At {firmName}, we represent drivers, passengers, pedestrians and other people who have been involved in motor vehicle accidents and car accidents. If you have been injured, we can help you understand your legal options and develop a strategy for maximizing compensation.</p>
@@ -319,6 +325,7 @@ export default function AutoAccidentsPage() {
          there, it (and its fixed "Free Consultation" tab) never rendered on
          desktop at all, since a hidden ancestor collapses a child regardless
          of the child's own responsive classes. */}
+      <PracticeFaq slug="auto-accidents" />
       <Footer />
     </div>
   );

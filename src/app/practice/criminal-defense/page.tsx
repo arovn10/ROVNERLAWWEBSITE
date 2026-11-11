@@ -1,6 +1,8 @@
 "use client";
 
 import Link from 'next/link';
+import PracticeFaq from '@/components/PracticeFaq';
+import ServiceAreaLinks from '@/components/ServiceAreaLinks';
 import Image from 'next/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -50,7 +52,7 @@ export default function CriminalDefensePage() {
             </div>
             
             <div className="practice-text-content">
-              <h1 className="practice-title">Criminal Defense Attorney & Lawyer</h1>
+              <h1 className="practice-title">Criminal Defense Attorneys in Philadelphia and Bucks County</h1>
               <div className="practice-subtitle">
                 <p>Free Initial Consultation</p>
                 <p>Aggressive Defense Representation</p>
@@ -58,6 +60,7 @@ export default function CriminalDefensePage() {
               
               <div className="practice-service-area">
                 <p><strong>Serving Philadelphia, New Jersey, Pennsylvania, especially Bucks County, Montgomery County, Delaware County, Mercer County, Camden County, Atlantic County, and Burlington County</strong></p>
+                <ServiceAreaLinks />
               </div>
               
               <div className="practice-description">
@@ -207,7 +210,7 @@ export default function CriminalDefensePage() {
         {/* Mobile Main Content */}
         <section className="px-4 py-4">
           <div className="flex flex-col gap-6">
-            <h2 className="text-xl font-bold text-slate-900 mb-2">Criminal Defense Attorney & Lawyer</h2>
+            <h2 className="text-xl font-bold text-slate-900 mb-2">Criminal Defense Attorneys in Philadelphia and Bucks County</h2>
             <div className="bg-orange-50 rounded-xl p-4 shadow-sm">
               <p className="text-sm font-semibold text-slate-900 mb-2">Free Initial Consultation</p>
               <p className="text-sm font-semibold text-slate-900">Aggressive Defense Representation</p>
@@ -216,6 +219,9 @@ export default function CriminalDefensePage() {
               <p className="text-sm text-gray-700 font-medium">
                 <strong>Serving Philadelphia, New Jersey, Pennsylvania, especially Bucks County, Montgomery County, Delaware County, Mercer County, Camden County, Atlantic County, and Burlington County</strong>
               </p>
+              <div className="text-sm text-gray-700 font-medium">
+                <ServiceAreaLinks />
+              </div>
             </div>
             <div className="flex flex-col gap-4 text-base text-gray-800 leading-relaxed">
               <p>If you're facing criminal charges, you need experienced legal representation. Our criminal defense attorneys protect your rights and fight for the best possible outcome. At {firmName}, we understand that being charged with a crime can be one of the most stressful experiences of your life.</p>
@@ -294,6 +300,7 @@ export default function CriminalDefensePage() {
          there, it (and its fixed "Free Consultation" tab) never rendered on
          desktop at all, since a hidden ancestor collapses a child regardless
          of the child's own responsive classes. */}
+      <PracticeFaq slug="criminal-defense" />
       <Footer />
     </div>
   );

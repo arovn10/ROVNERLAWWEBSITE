@@ -99,7 +99,7 @@ export default function HomeClient({
                 {firmName}
               </p>
               <h1 className="text-base md:text-lg text-slate-200 font-medium mb-6">
-                Personal Injury &amp; Civil Litigation Attorneys in Philadelphia
+                Personal Injury &amp; Civil Litigation Attorneys in Feasterville-Trevose, Bucks County and Philadelphia
               </h1>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                 <Link                   href="/contact"
@@ -125,6 +125,26 @@ export default function HomeClient({
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section className="bg-white border-b border-slate-200">
+          <div className="max-w-3xl mx-auto px-6 py-10">
+            <p className="text-lg text-slate-800 leading-relaxed">
+              {firmName} is a personal injury and civil litigation firm established in 1980.
+              The only office is at 175 Bustleton Pike, Feasterville-Trevose, PA 19053, in Bucks County.
+              The firm represents clients in Philadelphia, Bucks, Montgomery, Delaware and Chester counties,
+              and in Camden, Burlington, Mercer, Atlantic and Gloucester counties in New Jersey.
+              There is no Philadelphia office and no New Jersey office.
+              Consultations are free, and injury cases are handled with no fee unless the firm recovers.
+            </p>
+            <p className="mt-4 text-sm font-semibold text-slate-700 flex flex-wrap gap-x-4 gap-y-2">
+              <Link href="/locations" className="underline underline-offset-2 hover:text-amber-800">Office, hours and directions</Link>
+              <Link href="/locations/bucks-county" className="underline underline-offset-2 hover:text-amber-800">Bucks County</Link>
+              <Link href="/locations/philadelphia" className="underline underline-offset-2 hover:text-amber-800">Philadelphia</Link>
+              <Link href="/attorneys" className="underline underline-offset-2 hover:text-amber-800">Attorneys</Link>
+              <Link href="/practice" className="underline underline-offset-2 hover:text-amber-800">Practice areas</Link>
+            </p>
           </div>
         </section>
 
@@ -293,6 +313,16 @@ export default function HomeClient({
               <Link href="/contact" className="bg-white/20 text-white px-2.5 py-1 rounded text-xs font-medium backdrop-blur-sm hover:bg-white/30 transition-colors">Free Consultation</Link>
             </div>
           </div>
+        </section>
+        <section className="px-4 pb-2">
+          <p className="text-sm text-slate-700 leading-relaxed">
+            {firmName} is a personal injury firm established in 1980. The only office is at
+            175 Bustleton Pike, Feasterville-Trevose, PA 19053, in Bucks County. Philadelphia
+            and New Jersey clients are represented from there. Consultations are free.
+          </p>
+          <p className="mt-2 text-sm font-semibold">
+            <Link href="/locations" className="underline underline-offset-2">Office and directions</Link>
+          </p>
         </section>
         {/* Mobile Settlements Carousel */}
         <section className="px-4 py-4">

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import JsonLd from "@/components/JsonLd";
-import { breadcrumbListJsonLd } from "@/lib/schema-org";
+import PracticeJsonLd from "@/components/PracticeJsonLd";
 
 // Route-segment metadata. The page itself is a client component and so cannot
 // export metadata; a layout in the same segment can, which avoids restructuring
@@ -20,12 +19,11 @@ export const metadata: Metadata = {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <JsonLd
-        data={breadcrumbListJsonLd([
-          { name: "Home", path: "/" },
-          { name: "Practice Areas", path: "/practice" },
-          { name: "Personal Injury", path: "/practice/personal-injury" },
-        ])}
+      <PracticeJsonLd
+        slug="personal-injury"
+        name="Personal Injury"
+        path="/practice/personal-injury"
+        serviceType="Personal injury lawyer"
       />
       {children}
     </>

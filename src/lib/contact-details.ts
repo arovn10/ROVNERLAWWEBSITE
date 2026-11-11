@@ -33,6 +33,16 @@ export const OFFICE_ADDRESS = {
   postalCode: '19053',
 } as const;
 
+/** Published on the locations page and in the footer. */
+export const OFFICE_EMAIL = 'rovners@dial-law.com';
+
+/**
+ * OpenStreetMap house node for 175 Bustleton Pike, Feasterville-Trevose.
+ * One office, in Bucks County. Do not attach these coordinates to a
+ * Philadelphia or New Jersey address.
+ */
+export const OFFICE_GEO = { latitude: 40.1404711, longitude: -75.006411 } as const;
+
 /** `tel:` href for the toll-free number, e.g. href={TEL_HREF_TOLLFREE}. */
 export const TEL_HREF = `tel:${PHONE_TEL}`;
 export const TEL_HREF_TOLLFREE = `tel:${PHONE_TOLLFREE_TEL}`;

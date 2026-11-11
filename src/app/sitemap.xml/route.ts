@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { SITE_URL } from '@/lib/site';
 import { DEDICATED_SLUGS, practiceAreaPath } from '@/lib/practice-areas';
+import { SERVICE_AREAS } from '@/lib/service-areas';
+import { attorneySlug } from '@/lib/attorneys';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -13,7 +15,8 @@ const STATIC_ENTRIES: Entry[] = [
   { loc: 'about', changefreq: 'monthly', priority: 0.8 },
   { loc: 'attorneys', changefreq: 'monthly', priority: 0.8 },
   { loc: 'contact', changefreq: 'monthly', priority: 0.7 },
-  { loc: 'locations', changefreq: 'monthly', priority: 0.7 },
+  { loc: 'locations', changefreq: 'monthly', priority: 0.8 },
+  ...SERVICE_AREAS.map((area) => ({ loc: `locations/${area.slug}`, changefreq: 'monthly' as const, priority: 0.8 })),
   { loc: 'practice', changefreq: 'monthly', priority: 0.9 },
   { loc: 'in-the-news', changefreq: 'weekly', priority: 0.6 },
   { loc: 'photo-gallery', changefreq: 'monthly', priority: 0.4 },
@@ -50,7 +53,7 @@ export async function GET() {
   const staticLastmods: Record<string, Date | undefined> = {};
 
   try {
-    const [practiceAreas, news, aboutUs, locations, contactUs, lastLawyer, lastArchive, lastSettlement] =
+    const [practiceAreas, news, aboutUs, locations, contactUs, lawyers, lastArchive, lastSettlement] =
       await Promise.all([
         prisma.practiceArea.findMany({
           where: { active: true },
@@ -62,7 +65,7 @@ export async function GET() {
         prisma.aboutUs.findFirst({ select: { updatedAt: true } }),
         prisma.locations.findFirst({ select: { updatedAt: true } }),
         prisma.contactUs.findFirst({ select: { updatedAt: true } }),
-        prisma.lawyer.findFirst({ where: { active: true }, orderBy: { updatedAt: 'desc' }, select: { updatedAt: true } }),
+        prisma.lawyer.findMany({ where: { active: true }, orderBy: { order: 'asc' }, select: { name: true, updatedAt: true } }),
         prisma.archive.findFirst({ orderBy: { updatedAt: 'desc' }, select: { updatedAt: true } }),
         prisma.settlement.findFirst({ orderBy: { updatedAt: 'desc' }, select: { updatedAt: true } }),
       ]);
@@ -75,7 +78,7 @@ export async function GET() {
     // would misrepresent an unchanged page as freshly edited on every crawl.
     staticLastmods[''] = maxDate([...practiceAreaDates, ...(lastSettlement ? [lastSettlement.updatedAt] : [])]);
     staticLastmods['about'] = aboutUs?.updatedAt;
-    staticLastmods['attorneys'] = lastLawyer?.updatedAt;
+    staticLastmods['attorneys'] = maxDate(lawyers.map((lawyer) => lawyer.updatedAt));
     staticLastmods['contact'] = contactUs?.updatedAt;
     staticLastmods['locations'] = locations?.updatedAt;
     staticLastmods['practice'] = maxDate(practiceAreaDates);
@@ -110,6 +113,12 @@ export async function GET() {
         lastmod: n.updatedAt,
         changefreq: 'monthly',
         priority: 0.5,
+      })),
+      ...lawyers.map((lawyer) => ({
+        loc: `attorneys/${attorneySlug(lawyer.name)}`,
+        lastmod: lawyer.updatedAt,
+        changefreq: 'monthly',
+        priority: 0.6,
       })),
     ];
   } catch (error) {

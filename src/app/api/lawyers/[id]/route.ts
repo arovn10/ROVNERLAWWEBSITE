@@ -57,7 +57,7 @@ export async function PUT(
         ...(parsed.active !== undefined && { active: parsed.active }),
       },
     });
-    revalidatePath('/attorneys');
+    revalidatePath('/attorneys', 'layout');
     return NextResponse.json(updatedLawyer);
   } catch (error) {
     console.error('Error updating lawyer:', error);
@@ -84,7 +84,7 @@ export async function DELETE(
       where: { id },
     });
 
-    revalidatePath('/attorneys');
+    revalidatePath('/attorneys', 'layout');
     return new NextResponse(null, { status: 204 });
   } catch (error) {
     console.error('Error deleting lawyer:', error);

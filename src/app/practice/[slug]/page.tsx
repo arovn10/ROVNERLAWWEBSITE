@@ -8,7 +8,7 @@ import JsonLd from '@/components/JsonLd';
 import { prisma } from '@/lib/prisma';
 import { isDedicatedSlug, resolveAlias } from '@/lib/practice-areas';
 import { PHONE_TOLLFREE_DISPLAY, TEL_HREF_TOLLFREE } from '@/lib/contact-details';
-import { breadcrumbListJsonLd, faqPageJsonLd } from '@/lib/schema-org';
+import { breadcrumbListJsonLd, faqPageJsonLd, practiceServiceJsonLd } from '@/lib/schema-org';
 import { PRACTICE_AREA_FAQS } from '@/lib/practice-area-faqs';
 
 /**
@@ -100,6 +100,7 @@ export default async function PracticeAreaDynamicPage({ params }: { params: Prom
           { name: area.title, path: `/practice/${slug}` },
         ])}
       />
+      <JsonLd data={practiceServiceJsonLd({ name: area.title, path: `/practice/${slug}`, description: area.description ?? undefined })} />
       {faqs.length > 0 && <JsonLd data={faqPageJsonLd(faqs)} />}
 
       <div className="hidden lg:block w-full">

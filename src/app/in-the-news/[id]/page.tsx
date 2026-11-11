@@ -5,7 +5,7 @@ import Footer from '@/components/Footer';
 import { prisma } from '@/lib/prisma';
 import MobileNavClient from './MobileNavClient';
 import JsonLd from '@/components/JsonLd';
-import { breadcrumbListJsonLd } from '@/lib/schema-org';
+import { breadcrumbListJsonLd, newsArticleJsonLd } from '@/lib/schema-org';
 import type { Metadata } from 'next';
 
 async function getNewsArticle(id: string) {
@@ -67,6 +67,16 @@ export default async function NewsArticlePage({ params }: { params: Promise<{ id
           { name: 'In the News', path: '/in-the-news' },
           { name: article.title, path: `/in-the-news/${article.id}` },
         ])}
+      />
+      <JsonLd
+        data={newsArticleJsonLd({
+          title: article.title,
+          description: (article.content ?? '').replace(/\s+/g, ' ').trim().slice(0, 300),
+          path: `/in-the-news/${article.id}`,
+          datePublished: article.date,
+          dateModified: article.updatedAt,
+          source: article.source,
+        })}
       />
 
       {/* Desktop Header/Nav */}

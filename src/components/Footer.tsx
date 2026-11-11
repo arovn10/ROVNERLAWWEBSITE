@@ -29,6 +29,10 @@ export default function Footer() {
                 <li><Link href="/about" className="text-sm hover:text-slate-200 transition-colors">About</Link></li>
                 <li><Link href="/attorneys" className="text-sm hover:text-slate-200 transition-colors">Attorneys</Link></li>
                 <li><Link href="/locations" className="text-sm hover:text-slate-200 transition-colors">Locations</Link></li>
+                <li><Link href="/locations/bucks-county" className="text-sm hover:text-slate-200 transition-colors">Bucks County</Link></li>
+                <li><Link href="/locations/philadelphia" className="text-sm hover:text-slate-200 transition-colors">Philadelphia</Link></li>
+                <li><Link href="/locations/montgomery-county" className="text-sm hover:text-slate-200 transition-colors">Montgomery County</Link></li>
+                <li><Link href="/locations/new-jersey" className="text-sm hover:text-slate-200 transition-colors">New Jersey</Link></li>
                 <li><Link href="/photo-gallery" className="text-sm hover:text-slate-200 transition-colors">Photo Gallery</Link></li>
                 <li><Link href="/in-the-news" className="text-sm hover:text-slate-200 transition-colors">In the News</Link></li>
                 <li><Link href="/contact" className="text-sm hover:text-slate-200 transition-colors">Contact</Link></li>

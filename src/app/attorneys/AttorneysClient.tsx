@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import MobileHeader from '@/components/MobileHeader';
 import MobileNav from '@/components/MobileNav';
 import { useState, useRef, useEffect } from 'react';
+import { attorneyPath, HIDE_EDUCATION_EXPERIENCE_FOR } from '@/lib/attorneys';
 
 interface Attorney {
   id: string;
@@ -27,7 +28,6 @@ interface Attorney {
 // existing by-name pattern below that hides the "Contact" button for
 // Robert A. Rovner. If the underlying data should change instead of just its
 // display, edit the record in the admin CMS — this only hides the fields here.
-const HIDE_EDUCATION_EXPERIENCE_FOR = new Set(['Robert A. Rovner', 'Steven L. Rovner']);
 
 export default function AttorneysClient({ attorneys }: { attorneys: Attorney[] }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -134,7 +134,9 @@ export default function AttorneysClient({ attorneys }: { attorneys: Attorney[] }
                 </div>
                 <div className="flex-1 flex flex-col p-6">
                   <header className="mb-4">
-                    <h3 className="font-serif text-xl font-bold text-slate-900 tracking-tight">{attorney.name}</h3>
+                    <h3 className="font-serif text-xl font-bold text-slate-900 tracking-tight">
+                      <Link href={attorneyPath(attorney.name)} className="hover:text-amber-800">{attorney.name}</Link>
+                    </h3>
                     {attorney.title && (
                       <p className="text-slate-500 text-sm mt-1">{attorney.title}</p>
                     )}
@@ -259,7 +261,9 @@ export default function AttorneysClient({ attorneys }: { attorneys: Attorney[] }
                 height={160}
                 className="rounded-lg object-cover mb-2"
               />
-              <div className="text-lg font-bold text-slate-900 mb-1 text-center">{attorney.name}</div>
+              <div className="text-lg font-bold text-slate-900 mb-1 text-center">
+                <Link href={attorneyPath(attorney.name)}>{attorney.name}</Link>
+              </div>
               <div className="text-sm text-orange-600 mb-2 text-center">{attorney.title}</div>
               {attorney.bio && (
                 <div style={{position:'relative',width:'100%'}}>

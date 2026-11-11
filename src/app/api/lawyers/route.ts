@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
     // /attorneys now runs on hourly ISR (previously revalidate: 0, a
     // Postgres query on every view) — without this, a new attorney would not
     // appear on the public site for up to an hour.
-    revalidatePath('/attorneys');
+    revalidatePath('/attorneys', 'layout');
     return NextResponse.json(lawyer, { status: 201 });
   } catch (error) {
     console.error('Error creating lawyer:', error);
