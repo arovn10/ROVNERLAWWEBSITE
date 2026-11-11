@@ -33,7 +33,9 @@ export function FirmNameProvider({
     // Keep localStorage in step with the server-rendered value, so an admin
     // rename is reflected without a stale cached name winning.
     try {
-      localStorage.setItem('firmName', initialFirmName);
+      if (typeof localStorage?.setItem === 'function') {
+        localStorage.setItem('firmName', initialFirmName);
+      }
     } catch (error) {
       console.error('Error accessing localStorage:', error);
     }
@@ -46,7 +48,9 @@ export function FirmNameProvider({
       .then(data => {
         if (data.firmName) {
           setFirmNameState(data.firmName);
-          localStorage.setItem('firmName', data.firmName);
+          if (typeof localStorage?.setItem === 'function') {
+            localStorage.setItem('firmName', data.firmName);
+          }
         }
         setLoading(false);
       })
@@ -59,7 +63,7 @@ export function FirmNameProvider({
   const setFirmName = (name: string) => {
     setFirmNameState(name);
     try {
-      if (typeof window !== 'undefined') {
+      if (typeof window !== 'undefined' && typeof localStorage?.setItem === 'function') {
         localStorage.setItem('firmName', name);
       }
     } catch (error) {

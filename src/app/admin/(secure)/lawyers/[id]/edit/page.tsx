@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import LawyerForm from "@/app/admin/components/LawyerForm";
+import LawyerForm from "@/app/admin/(secure)/components/LawyerForm";
 
 interface PageProps {
   params: Promise<{ id: string }>;

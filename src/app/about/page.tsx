@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import MobileHeader from '@/components/MobileHeader';
 import MobileNav from '@/components/MobileNav';
 import { useFirmName } from '@/lib/FirmNameContext';
+import { PRACTICE_LINKS, practiceAreaPath } from '@/lib/practice-areas';
 import { useState, useEffect } from 'react';
 import { Mail } from 'lucide-react';
 
@@ -32,6 +33,18 @@ export default function AboutPage() {
   const { firmName } = useFirmName();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [aboutUsData, setAboutUsData] = useState<AboutUsData | null>(null);
+  const [sidebarForm, setSidebarForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    dateOfIncident: '',
+    represented: 'no',
+    facts: '',
+    agreed: false,
+    website: '',
+  });
+  const [sidebarSubmitting, setSidebarSubmitting] = useState(false);
+  const [sidebarMessage, setSidebarMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchAboutUsData = async () => {
@@ -48,6 +61,57 @@ export default function AboutPage() {
 
     fetchAboutUsData();
   }, []);
+
+  const handleSidebarSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSidebarMessage(null);
+    if (!sidebarForm.agreed) {
+      setSidebarMessage('Please agree to the disclaimer before sending.');
+      return;
+    }
+    if (!sidebarForm.name.trim() || !sidebarForm.email.trim() || !sidebarForm.facts.trim()) {
+      setSidebarMessage('Please fill in the required fields.');
+      return;
+    }
+    setSidebarSubmitting(true);
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: sidebarForm.name,
+          email: sidebarForm.email,
+          phone: sidebarForm.phone || null,
+          dateOfIncident: sidebarForm.dateOfIncident || null,
+          caseType: 'general-inquiry',
+          represented: sidebarForm.represented,
+          facts: sidebarForm.facts,
+          disclaimerAccepted: true,
+          website: sidebarForm.website,
+        }),
+      });
+      const result = await response.json();
+      if (response.ok) {
+        setSidebarMessage(result.message || 'Thank you. We will contact you soon.');
+        setSidebarForm({
+          name: '',
+          email: '',
+          phone: '',
+          dateOfIncident: '',
+          represented: 'no',
+          facts: '',
+          agreed: false,
+          website: '',
+        });
+      } else {
+        setSidebarMessage(result.error || 'Failed to send. Please try the Contact page or call us.');
+      }
+    } catch {
+      setSidebarMessage('Failed to send. Please use the Contact page or call 215-259-5958.');
+    } finally {
+      setSidebarSubmitting(false);
+    }
+  };
 
   // Use default content if data is not loaded yet
   const content = aboutUsData || {
@@ -156,70 +220,70 @@ export default function AboutPage() {
               <div className="sidebar-box practice-areas-box">
                 <h3 className="sidebar-title">PRACTICE AREAS:</h3>
                 <ul className="practice-areas-list">
-                  <li><Link href="/practice">Personal Injury</Link></li>
-                  <li><Link href="/practice">Auto Accidents</Link></li>
-                  <li><Link href="/practice">Motorcycle Accidents</Link></li>
-                  <li><Link href="/practice">Truck Accidents</Link></li>
-                  <li><Link href="/practice">Premises Liability</Link></li>
-                  <li><Link href="/practice">Medical Malpractice</Link></li>
-                  <li><Link href="/practice">Defective Products</Link></li>
-                  <li><Link href="/practice">Workers' Compensation</Link></li>
-                  <li><Link href="/practice">Divorce/ Family Law/ Custody</Link></li>
-                  <li><Link href="/practice">Criminal Defense</Link></li>
-                  <li><Link href="/practice">Social Security Disability</Link></li>
-                  <li><Link href="/practice">General Legal Matters</Link></li>
+                  {PRACTICE_LINKS.map((area) => (
+                    <li key={area.slug}>
+                      <Link href={practiceAreaPath(area.slug)}>{area.name}</Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
 
               {/* Contact Form */}
               <div className="sidebar-box contact-form-box">
                 <h3 className="sidebar-title">Contact Us!</h3>
-                <form className="contact-form">
+                {sidebarMessage && <p className="text-sm mb-3" role="status">{sidebarMessage}</p>}
+                <form className="contact-form" onSubmit={handleSidebarSubmit}>
+                  <input
+                    type="text"
+                    name="website"
+                    value={sidebarForm.website}
+                    onChange={(e) => setSidebarForm((f) => ({ ...f, website: e.target.value }))}
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    style={{ position: 'absolute', left: '-9999px' }}
+                  />
                   <div className="form-group">
-                    <label>Name *</label>
-                    <input type="text" />
+                    <label htmlFor="about-name">Name *</label>
+                    <input id="about-name" type="text" required value={sidebarForm.name} onChange={(e) => setSidebarForm((f) => ({ ...f, name: e.target.value }))} />
                   </div>
                   <div className="form-group">
-                    <label>Email *</label>
-                    <input type="email" />
+                    <label htmlFor="about-email">Email *</label>
+                    <input id="about-email" type="email" required value={sidebarForm.email} onChange={(e) => setSidebarForm((f) => ({ ...f, email: e.target.value }))} />
                   </div>
                   <div className="form-group">
-                    <label>Phone *</label>
-                    <input type="tel" />
+                    <label htmlFor="about-phone">Phone</label>
+                    <input id="about-phone" type="tel" value={sidebarForm.phone} onChange={(e) => setSidebarForm((f) => ({ ...f, phone: e.target.value }))} />
                   </div>
                   <div className="form-group">
-                    <label>Home Address</label>
-                    <input type="text" />
-                  </div>
-                  <div className="form-group">
-                    <label>Date of Incident *</label>
-                    <input type="date" />
+                    <label htmlFor="about-incident">Date of Incident</label>
+                    <input id="about-incident" type="date" value={sidebarForm.dateOfIncident} onChange={(e) => setSidebarForm((f) => ({ ...f, dateOfIncident: e.target.value }))} />
                   </div>
                   <div className="form-group">
                     <label>Are you represented by another lawyer for this matter?</label>
                     <div className="radio-group">
                       <label className="radio-label">
-                        <input type="radio" name="represented" value="no" />
+                        <input type="radio" name="about-represented" value="no" checked={sidebarForm.represented === 'no'} onChange={() => setSidebarForm((f) => ({ ...f, represented: 'no' }))} />
                         No
                       </label>
                       <label className="radio-label">
-                        <input type="radio" name="represented" value="yes" />
+                        <input type="radio" name="about-represented" value="yes" checked={sidebarForm.represented === 'yes'} onChange={() => setSidebarForm((f) => ({ ...f, represented: 'yes' }))} />
                         Yes
                       </label>
                     </div>
                   </div>
                   <div className="form-group">
-                    <label>Facts of what happened *</label>
-                    <textarea rows={4}></textarea>
+                    <label htmlFor="about-facts">Facts of what happened *</label>
+                    <textarea id="about-facts" rows={4} required value={sidebarForm.facts} onChange={(e) => setSidebarForm((f) => ({ ...f, facts: e.target.value }))} />
                   </div>
                   <div className="form-disclaimer">
                     <label className="checkbox-label">
-                      <input type="checkbox" />
+                      <input type="checkbox" checked={sidebarForm.agreed} onChange={(e) => setSidebarForm((f) => ({ ...f, agreed: e.target.checked }))} />
                       *I understand and agree that the submission of this form does not create an attorney-client relationship.
                     </label>
                   </div>
-                  <button type="submit" className="submit-btn">
-                    SEND MESSAGE
+                  <button type="submit" className="submit-btn" disabled={sidebarSubmitting}>
+                    {sidebarSubmitting ? 'SENDING…' : 'SEND MESSAGE'}
                   </button>
                 </form>
               </div>
