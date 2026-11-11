@@ -10,6 +10,7 @@ import { isDedicatedSlug, resolveAlias } from '@/lib/practice-areas';
 import { PHONE_TOLLFREE_DISPLAY, TEL_HREF_TOLLFREE } from '@/lib/contact-details';
 import { breadcrumbListJsonLd, faqPageJsonLd, practiceServiceJsonLd } from '@/lib/schema-org';
 import { PRACTICE_AREA_FAQS } from '@/lib/practice-area-faqs';
+import { parseFeatureList } from '@/lib/feature-list';
 
 /**
  * Catch-all for practice areas that live only in the database.
@@ -84,10 +85,7 @@ export default async function PracticeAreaDynamicPage({ params }: { params: Prom
     notFound();
   }
 
-  const features = (area.features ?? '')
-    .split('\n')
-    .map((f) => f.trim())
-    .filter(Boolean);
+  const features = parseFeatureList(area.features);
 
   const faqs = PRACTICE_AREA_FAQS[slug] ?? [];
 

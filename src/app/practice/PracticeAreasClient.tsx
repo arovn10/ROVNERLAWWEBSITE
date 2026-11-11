@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import MobileHeader from '@/components/MobileHeader';
 import MobileNav from '@/components/MobileNav';
 import { useFirmName } from '@/lib/FirmNameContext';
+import { parseFeatureList } from '@/lib/feature-list';
 import { useState } from 'react';
 import { Mail } from 'lucide-react';
 import { practiceAreaPath } from '@/lib/practice-areas';
@@ -16,7 +17,7 @@ interface PracticeArea {
   title: string;
   slug: string;
   description: string;
-  // Stored in the DB as newline-separated string; split on render.
+  // JSON array string from the admin form, or one item per line on older rows.
   features: string | null;
   image: string | null;
   banner: string | null;
@@ -179,7 +180,7 @@ export default function PracticeAreasClient({ practiceAreas }: { practiceAreas: 
                       gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
                       gap: '0.5rem'
                     }}>
-                        {(area.features?.split('\n').filter(Boolean) || []).map((feature, index) => (
+                        {parseFeatureList(area.features).map((feature, index) => (
                         <li key={index} style={{
                           fontSize: '0.9rem',
                           color: '#666',
